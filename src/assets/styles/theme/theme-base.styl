@@ -1,0 +1,214 @@
+@import "../table-layout.styl"
+// 基础布局样式
+.app-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  overflow-x: hidden;
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 1001;
+    transition: width .2s ease-in-out;
+    overflow: hidden;
+    .logo {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      height: 60px;
+      overflow: hidden;
+      .icon {
+        height: 40px;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 0 10px;
+        white-space: nowrap
+        color: #002140;
+      }
+    }
+    .aside {
+      padding: 5px 0;
+      height: calc(100% - 60px);
+      .no-aside-menu {
+        margin: 0 10px;
+        background-color: rgba(0, 0, 0, .05);
+        border-radius: 4px;
+        color: #606266;
+        transition: .3s;
+        .iconfont {
+          font-size: 30px;
+        }
+        .label {
+          padding: 10px;
+        }
+      }
+    }
+    // 收起菜单样式
+    .side-menu-wrapper .menu-collapsed .bin-dropdown, .side-menu-wrapper .menu-collapsed .bin-dropdown .bin-dropdown-rel a,
+    .side-menu-wrapper .menu-collapsed .bin-tooltip, .side-menu-wrapper .menu-collapsed .bin-tooltip .bin-tooltip-rel {
+      width: 100%;
+    }
+    .side-menu-wrapper a.drop-menu-a {
+      display: inline-block;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: center;
+      color: #495060;
+    }
+  }
+  .main-container {
+    height: 100%;
+    min-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left .2s ease-in-out;
+    background-color: #ffffff;
+    color: #303133;
+    .header-box {
+      .bin-menu-horizontal.bin-menu-light:after {
+        display: none;
+      }
+    }
+    .app-main {
+      position: relative;
+      flex: 1;
+      background: #eff1f7;
+      overflow: hidden;
+    }
+  }
+}
+
+// 全局头部样式
+.global-header {
+  position: relative;
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  .toggle-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    .iconfont {
+      display: inline-block;
+      cursor: pointer;
+      font-size: 24px;
+      transition: .3s;
+      &:hover {
+        color: #409EFF;
+      }
+    }
+  }
+  .header-box {
+    padding: 0 20px 0 60px;
+    display: flex;
+    justify-content: space-between;
+    .left-box {
+      line-height: 60px;
+    }
+    .right-ctrl {
+      height: 60px;
+      .btn {
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 10px;
+        color: #666;
+        transition: all .3s;
+        &:hover {
+          background-color: #f6f6f6;
+        }
+        .iconfont {
+          font-size: 20px;
+        }
+      }
+      .avatar {
+        cursor: pointer;
+        color: #666;
+        padding: 0 12px;
+        .iconfont {
+          font-size: 20px;
+        }
+        .user-link {
+          display: flex;
+          align-items: center;
+          .iconfont {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 主题弹窗样式
+.setting-panel {
+  .theme-tab {
+    span {
+      display: inline-block;
+      position: relative;
+      margin-right: 10px;
+      cursor: pointer;
+      .iconfont {
+        position: absolute;
+        right: 2px;
+        bottom: 10px;
+        font-size: 30px;
+        color: #409fee;
+      }
+    }
+  }
+}
+//tags-view 样式
+.tags-view-container {
+  background: #fff;
+  padding: 4px 15px 2px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #e3e3e3;
+  box-shadow: inset 0 0 15px hsla(0, 0, 39.2%, .1);
+  .bin-tabs-wrapper.tag .tab-item {
+    background: #fff;
+    margin-right: 5px;
+    font-size: 12px;
+    line-height: 34px;
+  }
+  .bin-tabs-wrapper .contextmenu li {
+    i {
+      position: relative;
+      top: -1px;
+      margin-right: 4px;
+    }
+  }
+}
+// 全局收起菜单样式
+.collased-menu-dropdown {
+  width: 100%;
+  margin: 0;
+  line-height: normal;
+  padding: 7px 0 6px 17px;
+  clear: both;
+  font-size: 12px !important;
+  white-space: nowrap;
+  list-style: none;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+  .drop-menu-a {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    color: #515a6e;
+    .icon-ios-arrow-forward {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      transition: transform .2s;
+    }
+  }
+}

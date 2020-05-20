@@ -1,0 +1,116 @@
+// 1: 横向滚动条隐藏
+#app .bin-scrollbar__wrap {
+  overflow-x: hidden;
+}
+
+.bin-drawer-wrapper .drawer-box {
+  .header {
+    padding: 19px 16px;
+  }
+  .body {
+    height: calc(100% - 125px);
+    padding: 10px 0 10px 20px;
+  }
+}
+// 2: 按钮图标右间距
+.bin-button .iconfont {
+  margin-right: 4px;
+}
+.bin-button--text.link {
+  color: #2d8cf0;
+}
+.bin-button--text.link.is-disabled {
+  color: #c0c4cc;
+}
+//  表格
+.bin-table-wrapper {
+  border: none;
+  .bin-loading {
+    border: none;
+  }
+}
+.bin-table-cell {
+  padding: 0 8px;
+}
+.bin-table {
+  .bin-table-header th, .bin-table-fixed-header th {
+    color: #333;
+    font-weight: 500;
+    background-color: #f3faff;
+  }
+  th, td {
+    line-height: 38px;
+    border-bottom: none;
+  }
+  &:before, &:after {
+    display: none;
+  }
+}
+.bin-table-small .bin-table-cell {
+  font-size: 12px;
+}
+
+//  container
+.bin-container .bin-container-footer {
+  line-height: 1.5em;
+}
+
+
+.bin-collapse > .bin-collapse-item.bin-collapse-item-active > .bin-collapse-header,
+.bin-collapse > .bin-collapse-item > .bin-collapse-header {
+  border-bottom: none;
+}
+
+.bin-modal {
+  .bin-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+}
+
+.bin-select-disabled .bin-select-selection {
+  background-color: #f9f9f9;
+  .bin-select-selected-value {
+    color: #6b6b6b;
+  }
+}
+
+.my-gather {
+  // table-view 抽屉覆盖
+  .bin-drawer-wrapper, .bin-drawer-wrapper.is-right .drawer-box {
+    position: absolute;
+    top: 0;
+  }
+  .bin-drawer.is-fixed .bin-drawer-wrapper {
+    position: fixed;
+  }
+  .bin-drawer-wrapper .drawer-box .header {
+    padding: 10px 20px;
+  }
+  .bin-drawer-wrapper .drawer-box .footer {
+    text-align: center;
+  }
+  .bin-drawer-wrapper {
+    z-index: 10;
+  }
+}
+
+.file-dialog {
+  .file-list {
+    padding: 2px;
+    transition: .3s;
+    &:hover {
+      background: #eeeeee;
+    }
+  }
+  .bin-modal-footer {
+    padding: 8px 20px;
+  }
+}
+
+// 可同步至bin-ui
+.bin-button--text.is-disabled, .bin-button--text.is-disabled:hover {
+  background: transparent;
+}
+.bin-button {
+  font-weight: normal;
+}

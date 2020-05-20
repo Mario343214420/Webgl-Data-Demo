@@ -1,0 +1,73 @@
+{
+  "name": "bin-admin",
+  "version": "2.0.0",
+  "description": "后台管理系统精简版2.0",
+  "keywords": [
+    "bin-ui",
+    "bin",
+    "ui",
+    "admin",
+    "bin-admin",
+    "components"
+  ],
+  "author": "wang bin",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build --report",
+    "lint": "vue-cli-service lint",
+    "dev:doc": "vuepress dev docs",
+    "build:doc": "vuepress build docs"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bin-ui": "^2.6.6",
+    "core-js": "^2.6.5",
+    "dayjs": "^1.8.15",
+    "echarts": "^4.6.0",
+    "element-ui": "^2.13.0",
+    "good-storage": "^1.1.0",
+    "js-base64": "^2.5.1",
+    "js-cookie": "^2.2.0",
+    "mockjs": "^1.1.0",
+    "particles.js": "^2.0.0",
+    "qs": "^6.7.0",
+    "three": "^0.115.0",
+    "vue": "^2.6.10",
+    "vue-echarts": "^5.0.0-beta.0",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.6.3",
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.6",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "lint-staged": "^8.1.5",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.0.2"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}
