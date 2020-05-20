@@ -8,6 +8,7 @@ const Overview2 = () => import('../pages/data/overview/Overview2')
 const Overview = () => import('../pages/data/overview/Overview')
 const Summary = () => import('../pages/data/summary/Summary')
 const Public = () => import('../pages/data/public/Public')
+const Union = () => import('../pages/data/union/Union')
 
 Vue.use(BinUI)
 
@@ -38,6 +39,10 @@ const router = new VueRouter({
     {
       path: '/public',
       component: Public
+    },
+    {
+      path: '/union',
+      component: Union
     },
     {
       path: '/',

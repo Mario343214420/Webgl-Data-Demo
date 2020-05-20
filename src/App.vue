@@ -20,10 +20,12 @@
         switch (route) {
           case '/overview':
             return '系统概况专题'
-          case '/overview2':
-            return '系统概况专题'
           case '/summary':
             return '数据归集专题'
+          case '/public':
+            return '双公示专题'
+          case '/union':
+            return '联合奖惩专题'
         }
       }
     }

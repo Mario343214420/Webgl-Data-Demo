@@ -62,6 +62,7 @@
                 <i class="tab" :class="dateTab === 0 ? 'active' : ''" @click="dateTab = 0">本月</i>
                 <i class="tab" :class="dateTab === 1 ? 'active' : ''" @click="dateTab = 1">本年</i>
                 <b-date-picker
+                  placement="bottom-end"
                   :open="open"
                   :value="date"
                   confirm
@@ -72,7 +73,8 @@
                       <template v-if="date === ''">请选择日期</template>
                       <template v-else>{{ date }}</template>
                     </a>
-                  </b-date-picker>
+                  </b-date-picker
+>
               </span>
             </div>
           </template>
@@ -194,11 +196,11 @@
               <div flex="main:justify">
                 <span>数据归集来源对比</span>
                 <span class="handle-date" flex="main:justify">
-                <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
-                                                                                     style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
-                <i class="tab active" v-show="dateTab === 1" @click="dateTab = 0"><i class="iconfont icon-ios-repeat"
-                                                                                     style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>自然人</i>
-              </span>
+                  <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
+                                                                                       style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
+                  <i class="tab active" v-show="dateTab === 1" @click="dateTab = 0"><i class="iconfont icon-ios-repeat"
+                                                                                       style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>自然人</i>
+                </span>
               </div>
             </template>
             <template slot="content">

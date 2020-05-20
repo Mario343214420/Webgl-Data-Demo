@@ -4,6 +4,7 @@ import Overview2 from '../pages/data/overview/Overview2'
 import Overview from '../pages/data/overview/Overview'
 import Summary from '../pages/data/summary/Summary.vue'
 import Public from '../pages/data/public/Public.vue'
+import Union from '../pages/data/union/Union.vue'
 
 export const constantRouterMap = [
   {
@@ -33,8 +34,13 @@ export const constantRouterMap = [
   },
   {
     path: '/public',
-    component: public,
+    component: Public,
     redirect: { name: 'Public' }
+  },
+  {
+    path: '/union',
+    component: Union,
+    redirect: { name: 'Union' }
   },
   // 登录
   {
