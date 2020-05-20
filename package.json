@@ -1,14 +1,9 @@
 {
   "name": "m-data",
-  "version": "2.0.0",
-  "description": "后台管理系统精简版2.0",
+  "version": "1.0.0",
+  "description": "大数据可视化系统",
   "keywords": [
-    "bin-ui",
-    "bin",
-    "ui",
-    "admin",
-    "bin-admin",
-    "components"
+    "big-data"
   ],
   "author": "mario",
   "files": [
