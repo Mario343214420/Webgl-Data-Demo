@@ -1,5 +1,5 @@
 {
-  "name": "bin-admin",
+  "name": "m-data",
   "version": "2.0.0",
   "description": "后台管理系统精简版2.0",
   "keywords": [
@@ -10,7 +10,7 @@
     "bin-admin",
     "components"
   ],
-  "author": "wang bin",
+  "author": "mario",
   "files": [
     "lib",
     "src"
