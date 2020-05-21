@@ -17,7 +17,7 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
   $lightBgc = rgba(5, 16, 40, 1)
   $lightBdc = rgba(2, 203, 255, .1)
   $lightShadowColor = rgba(180, 203, 255, .1)
@@ -26,7 +26,6 @@
   $bdh = 2px
   .panel
     padding 0 20px
-
     .light-bg
       background-color: $lightBgc
       border: 1px solid $lightBdc
@@ -34,7 +33,6 @@
       position relative
       padding 10px 20px
       animation shadowShine linear infinite 4s
-
       .light-corner
         content: ''
         display block

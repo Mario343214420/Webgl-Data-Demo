@@ -98,9 +98,9 @@
     <Panel style="padding-left: 0; padding-right: 0;" flex="main:justify dir:top">
       <template slot="outer">
         <div class="outer-wrapper">
-          <div class="tip-wrapper" flex="content:around">
+          <div class="tip-wrapper" flex="space:around">
             <div class="tip-item">
-              <div class="tip-item-inner" flex="content:around cross:center">
+              <div class="tip-item-inner" flex="space:around cross:center">
                 <img src="~@/assets/images/summary/icon_zyxx.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
@@ -113,7 +113,7 @@
               <span class="light-corner"></span>
             </div>
             <div class="tip-item">
-              <div class="tip-item-inner" flex="content:around cross:center">
+              <div class="tip-item-inner" flex="space:around cross:center">
                 <img src="~@/assets/images/summary/icon_sjgj.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
@@ -127,7 +127,7 @@
             </div>
             <div class="tip-item">
 
-              <div class="tip-item-inner" flex="content:around cross:center">
+              <div class="tip-item-inner" flex="space:around cross:center">
                 <img src="~@/assets/images/summary/icon_bygj.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
@@ -583,7 +583,7 @@
   .green-font
     color #05f2e4
 
-  [flex~="content:around"] {
+  [flex~="space:around"] {
     -webkit-box-pack: justify;
     -webkit-justify-content: space-around;
     -ms-flex-pack: justify;
