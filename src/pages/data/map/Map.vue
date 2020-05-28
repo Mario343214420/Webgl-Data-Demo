@@ -3,6 +3,9 @@
     <Panel>
       <template slot="inner">
         <div id="map" style="width: 100%;height: 100%;"></div>
+        <div class="rotate-cir-1"></div>
+        <div class="rotate-cir-2"></div>
+        <div class="rotate-cir-3"></div>
       </template>
     </Panel>
   </div>
@@ -257,31 +260,66 @@
             }
           );
         });
+        /*
         var option = {
           tooltip: {},
           geo: { // 这个是重点配置区
             map: 'china', // 表示中国地图
             roam: false,
+            label:{
+              show: false,
+              color: '#fff'
+            },
             itemStyle: {
-              color:'rgba(40,50,80,0.8)',
-              borderColor: 'rgba(255, 255, 255, 1)',
-              label:{show:false},
-              emphasis: {
-                label:{
-                  show: false,
-                  color: '#fff'
-                },
-                areaColor: '#535e83',
-                shadowOffsetX: 0,
-                shadowOffsetY: 0,
-                shadowBlur: 20,
-                borderWidth: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              normal:{
+                areaColor:'rgba(40,50,80,0.8)',
+                borderColor: 'rgba(255, 255, 255, 0.5)',
               }
             }
           },
           series:series
         }
+*/
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            borderColor: '#FFFFCC',
+            showDelay: 0,
+            hideDelay: 0,
+            enterable: true,
+            transitionDuration: 0,
+            extraCssText: 'z-index:100',
+            formatter: function(params, ticket, callback) {
+              //根据业务自己拓展要显示的内容
+              var res = "";
+              var name = params.name;
+              var value = params.value[params.seriesIndex + 1];
+              res = "<span style='color:#fff;'>" + name + "</span><br/>数据：" + value;
+              return res;
+            }
+          },
+          geo: {
+            map: 'china',
+            zoom: 1.2,
+            label: {
+              emphasis: {
+                show: false
+              }
+            },
+            roam: true, //是否允许缩放
+            itemStyle: {
+              normal: {
+                color: 'rgba(51, 69, 89, .5)', //地图背景色
+                borderColor: '#516a89', //省市边界线00fcff 516a89
+                borderWidth: 1
+              },
+              emphasis: {
+                color: 'rgba(37, 43, 61, .5)' //悬浮背景
+              }
+            }
+          },
+          series: series
+        };
         var chart = echarts.init(document.getElementById(paramObj.id))
         chart.setOption(option)
       }
@@ -302,4 +340,26 @@
       >>> .light-bg
         width: 100%
         height: 100%
+    position relative
+    .rotate-cir-1
+      position absolute
+      bottom 10px
+      width 600px
+      height: 600px
+      -webkit-border-radius: 50%
+      -moz-border-radius: 50%
+      border-radius: 50%
+      border: 1px solid #ffffff
+      left: 50%
+      transform translateX(-50%) rotateX(60deg)
+      animation rotate linear 10s infinite
+      &::before
+        content '>'
+        display inline-block
+        color #fff
+@keyframes rotate{
+  0% {transform: translateX(-50%) rotateX(60deg) rotateZ(0)}
+  50% {transform: translateX(-50%) rotateX(60deg) rotateZ(0.5turn)}
+  100% {transform: translateX(-50%) rotateX(60deg) rotateZ(1turn)}
+}
 </style>
