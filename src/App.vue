@@ -26,6 +26,8 @@
             return '双公示专题'
           case '/union':
             return '联合奖惩专题'
+          case '/map':
+            return '地图专栏'
         }
       }
     }
