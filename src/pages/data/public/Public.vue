@@ -574,8 +574,9 @@
         .table-row
           line-height: 40px
     .center
-      height: 600px
+      height: 556px
       position relative
+      transform: translateY(48px);
       .light
         position absolute
         top: 50%
@@ -649,8 +650,8 @@
           padding-right: 30px
           position relative
         &.liner-item-1
-          left: 26%
-          top: 88px
+          left: 29%
+          top: 76px
           transform translate(-50%, -50%)
           .cir-light
             position absolute
@@ -659,8 +660,8 @@
             opacity 1
             z-index 20
         &.liner-item-2
-          left: 72%
-          top: 88px
+          left: 69%
+          top: 76px
           transform translate(-50%, -50%)
           .cir-light
             position absolute
@@ -669,8 +670,8 @@
             opacity 1
             z-index 20
         &.liner-item-3
-          left: 21%
-          top: 201px;
+          left: 24%
+          top: 183px;
           transform translate(-50%, -50%)
           .cir-light
             position absolute
@@ -679,8 +680,8 @@
             opacity 1
             z-index 20
         &.liner-item-4
-          left: 77%
-          top: 201px;
+          left: 74%
+          top: 183px;
           transform translate(-50%, -50%)
           .cir-light
             position absolute

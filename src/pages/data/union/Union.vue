@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="union" flex>
     <Panel flex="main:justify dir:top">
       <template slot="outer">
       </template>
@@ -7,13 +7,9 @@
         <Card>
           <template slot="title">
             <div flex="main:justify">
-              <span>部门双公示数据统计情况</span>
+              <span>联合奖惩页面</span>
               <span class="handle-date" flex="main:justify">
-                  <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
-                                                                                       style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
-                  <i class="tab active" v-show="dateTab === 1" @click="dateTab = 0"><i class="iconfont icon-ios-repeat"
-                                                                                       style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>自然人</i>
-                </span>
+              </span>
             </div>
           </template>
           <template slot="content">
@@ -26,14 +22,36 @@
       <template slot="outer">
       </template>
       <template slot="inner">
-        123
+        <Card>
+          <template slot="title">
+            <div flex="main:justify">
+              <span>联合奖惩趋势分析</span>
+              <span class="handle-date" flex="main:justify">
+              </span>
+            </div>
+          </template>
+          <template slot="content">
+
+          </template>
+        </Card>
       </template>
     </Panel>
     <Panel flex="main:justify dir:top">
       <template slot="outer">
       </template>
       <template slot="inner">
-        123
+        <Card>
+          <template slot="title">
+            <div flex="main:justify">
+              <span>奖惩执行情况</span>
+              <span class="handle-date" flex="main:justify">
+              </span>
+            </div>
+          </template>
+          <template slot="content">
+
+          </template>
+        </Card>
       </template>
     </Panel>
   </div>
@@ -53,6 +71,14 @@
 </script>
 
 <style lang="stylus" scoped>
+.union
+
+  height: calc(100% - 72px)
+  >div
+    &:nth-child(2)
+      flex: 1
+    &:nth-child(1),&:nth-child(3)
+      width: 460px
   .handle-date
     font-size: 12px
     white-space nowrap
