@@ -577,6 +577,7 @@
       height: 556px
       position relative
       transform: translateY(48px);
+      background-image: url('~@/assets/images/overview/ge.png')
       .light
         position absolute
         top: 50%
