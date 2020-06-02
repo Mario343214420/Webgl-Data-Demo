@@ -5,7 +5,13 @@
     </div>
     <div class="bg-wrapper"></div>
     <div class="earth-wrapper">
-      <img src="../../../assets/images/home-example/earth2.png" alt="">
+      <div class="light">
+        <div class="rotate">
+          <img src="../../../assets/images/home-example/earth2.png" alt="">
+          <div class="star" v-for="(item,index) in starList"
+               :style="{top:item.y+'px',left:item.x+'px',animationDelay:parseInt(index%6) + 's'}"></div>
+        </div>
+      </div>
     </div>
     <div class="center-wrapper">
       <div class="title">
@@ -139,11 +145,26 @@
             }
           },
           'retina_detect': true
-        }
+        },
+        starList: [
+          {x:610,y:570},
+          {x:440,y:600},
+          {x:320,y:450},
+          {x:260,y:350},
+          {x:310,y:440},
+          {x:420,y:510},
+          {x:780,y:500},
+          {x:680,y:640},
+        ]
       }
     },
     mounted() {
       // this.createModel();
+      for(var i = 0; i< 40; i++){
+        var x = Math.random() * 600 + 200
+        var y = Math.random() * 600 + 200
+        this.starList.push({x,y})
+      }
       window.particlesJS('particlesId', this.particleJson)
     }
   }
@@ -178,12 +199,20 @@
       background-image: url('~@/assets/images/home-example/light2.png')
       background-position: left bottom;
       background-size: cover;
-
-      img
-        width: 1000px
-        height: auto
+      .rotate
+        position relative
         animation rotate linear infinite 60s
-
+        img
+          width: 1000px
+          height: auto
+        .star
+          background-image: radial-gradient(#fff 5%, rgba(10,80,150,0.8) 50%, transparent 60%);
+          width: 10px
+          height: 10px
+          z-index 200
+          opacity 0
+          position absolute
+          animation star-shine infinite ease-in-out 5s
     .center-wrapper
       position absolute
       top: 50%
@@ -253,5 +282,10 @@
       transform: rotate(360deg);
       opacity: 0.9
     }
+  }
+  @keyframes star-shine{
+    0% {opacity:0}
+    50% {opacity:0.6}
+    100% {opacity:0}
   }
 </style>
