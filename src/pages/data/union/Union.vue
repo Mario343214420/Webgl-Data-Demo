@@ -6,8 +6,7 @@
           <template slot="title">
             <div flex="main:justify">
               <span>联合奖惩页面</span>
-              <span class="handle-date" flex="main:justify">
-              </span>
+              <span class="handle-date" flex="main:justify"></span>
             </div>
           </template>
           <template slot="content">
@@ -137,7 +136,6 @@
               </div>
             </template>
           </Card>
-
           <Card style="height: 270px;">
             <template slot="title">
               <div flex="main:justify">
@@ -153,7 +151,6 @@
               </div>
             </template>
           </Card>
-
           <Card style="height: 270px;">
             <template slot="title">
               <div flex="main:justify">
