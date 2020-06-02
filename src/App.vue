@@ -57,7 +57,6 @@
     background-color: $bgc
     overflow-x auto
     overflow-y auto
-
   i
     font-style normal
 

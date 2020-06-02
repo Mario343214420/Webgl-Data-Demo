@@ -578,6 +578,7 @@
       position relative
       transform: translateY(48px);
       background-image: url('~@/assets/images/overview/ge.png')
+      background-position: center 0
       .light
         position absolute
         top: 50%

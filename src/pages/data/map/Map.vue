@@ -2,11 +2,14 @@
   <div class="map" flex>
     <Panel>
       <template slot="inner">
-        <div id="map" style="width: 100%;height: 100%;"></div>
-        <div class="mask-cir-container">
-          <div class="rotate-cir-1"></div>
-          <div class="rotate-cir-2"></div>
-          <div class="rotate-cir-3"></div>
+        <div class="map-container">
+          <div id="map" style="width: 100%;height: 100%;"></div>
+          <div class="mask-cir-container">
+            <div class="mask-inner">
+              <div class="rotate-cir-1"></div>
+              <div class="rotate-cir-2"></div>
+            </div>
+          </div>
         </div>
       </template>
     </Panel>
@@ -29,30 +32,30 @@
     methods: {
       renderMap: function (paramObj) {
         var chinaGeoCoordMap = {
-          '黑龙江': [126.642464, 45.756967],
+          '黑龙江': [126.642464, 47.756967],
           '内蒙古': [110.3467, 41.4899],
           '吉林': [125.8154, 44.2584],
           '北京市': [116.4551, 40.2539],
           '徐州市': [117.192941,34.269397],
           '辽宁': [123.1238, 42.1216],
-          '河北': [114.4995, 38.1006],
+          '河北': [115.4995, 38.1006],
           '天津': [117.4219, 39.4189],
           '山西': [112.3352, 37.9413],
           '陕西': [109.1162, 34.2004],
           '甘肃': [103.5901, 36.3043],
           '宁夏': [106.3586, 38.1775],
-          '青海': [101.4038, 36.8207],
+          '青海': [97.4038, 36.8207],
           '新疆': [87.617733, 43.792818],
           '西藏': [91.11, 29.97],
           '四川': [103.9526, 30.7617],
           '重庆': [108.384366, 30.439702],
           '山东': [117.1582, 36.8701],
           '河南': [113.4668, 34.6234],
-          '江苏': [118.8062, 31.9208],
+          '江苏': [119.9062, 33.2208],
           '安徽': [117.29, 32.0581],
           '湖北': [114.3896, 30.6628],
           '浙江': [119.5313, 29.8773],
-          '福建': [119.4543, 25.9222],
+          '福建': [117.4543, 25.9222],
           '江西': [116.0046, 28.6633],
           '湖南': [113.0823, 28.2568],
           '贵州': [106.6992, 26.7682],
@@ -60,7 +63,8 @@
           '广东': [113.12244, 23.009505],
           '广西': [108.479, 23.1152],
           '海南': [110.3893, 19.8516],
-          '上海': [121.4648, 31.2891]
+          '上海': [121.4648, 31.2891],
+          '云南': [102.712251,25.040609]
         }
         var chinaDatas = [
           [{
@@ -150,6 +154,9 @@
           }], [{
             name: '上海',
             value: 0
+          }], [{
+            name: '云南',
+            value: 0
           }]
         ]
         var convertData = function (data) {
@@ -183,15 +190,15 @@
               effect: {
                 show: true,
                 period: 10, // 箭头指向速度，值越小速度越快
-                trailLength: 0.01, // 特效尾迹长度[0,1]值越大，尾迹越长重
+                trailLength: 0.1, // 特效尾迹长度[0,1]值越大，尾迹越长重
                 symbol: 'arrow',
-                symbolSize: [5, 5] // 图标大小
+                symbolSize: [5, 10] // 图标大小
               },
               lineStyle: {
-                color: '#05f2e4',
+                color: 'rgba(5,242,228,0.6)',
                 width: 1, // 尾迹线条宽度
                 opacity: 0.1, // 尾迹线条透明度
-                curveness: 0.5 // 尾迹线条曲直度
+                curveness: 0.8 // 尾迹线条曲直度
               },
               data: convertData(item[1])
             },
@@ -202,13 +209,13 @@
               rippleEffect: { // 涟漪特效
                 period: 4, // 动画时间，值越小速度越快
                 brushType: 'stroke', // 波纹绘制方式 stroke, fill
-                scale: 4 // 波纹圆环最大限制，值越大波纹越大
+                scale: 3 // 波纹圆环最大限制，值越大波纹越大
               },
               label: {
                 normal: {
                   show: true,
                   position: 'right', // 显示位置
-                  offset: [5, 0], // 偏移设置
+                  offset: [4, 0], // 偏移设置
                   // 圆环显示文字
                   formatter: function (params) {
                     return params.data.name
@@ -221,12 +228,12 @@
               },
               symbol: 'circle',
               symbolSize: function (val) {
-                return 5 + val[2] * 5 // 圆环大小
+                return 8 + val[2] * 5 // 圆环大小
               },
               itemStyle: {
                 normal: {
                   show: false,
-                  color: '#02cbff'
+                  color: '#f4e925'
                 }
               },
               data: item[1].map(function (dataItem) {
@@ -254,8 +261,8 @@
                   color: '#00d0ff',
                   formatter: '{b}',
                   textStyle: {
-                    fontSize: 18,
-                    color: '#00d0ff'
+                    fontSize: 22,
+                    color: '#fff'
                   }
                 },
                 emphasis: {
@@ -301,9 +308,12 @@
             roam: false, // 是否允许缩放
             itemStyle: {
               normal: {
-                color: 'rgba(51, 69, 89, 1)', // 地图背景色
-                borderColor: '#516a89', // 省市边界线00fcff 516a89
-                borderWidth: 1
+                color: 'rgba(51, 69, 89, 0.2)', // 地图背景色
+                // color:'#0f1d37',
+                borderColor: '#029fd4', // 省市边界线00fcff 516a89
+                borderWidth: 1,
+                shadowColor: 'rgba(10, 50, 100, 0.5)',
+                shadowBlur: 4
               },
               emphasis: {
                 color: 'rgba(37, 43, 61, .5)' // 悬浮背景
@@ -320,60 +330,77 @@
 </script>
 
 <style lang="stylus" scoped>
+  .panel
+    overflow hidden
+    >>> .light-bg
+      height: 100%
   .map
-    width: 100%
-    height: calc(100% - 72px)
+    height: auto
     position relative
+    padding: 20px 0
+    box-sizing border-box
     #map
       position absolute
-      z-index 0
+      z-index 30
       top: 0
       left: 0
+
+      overflow hidden
     #map1
       position absolute
       z-index 10
       top: 0
       left: 0
-    .panel
-      width: 100%
-      height: 100%
-      padding 20px
-
-      >>> .light-bg
-        width: 100%
-        height: 100%
+    .map-container
+      padding 30px 0
     .mask-cir-container
-      position relative
+      position absolute
       z-index 20
-      .rotate-cir-1
-        position absolute
-        z-index 1
-        bottom 10px
-        width 600px
-        height: 600px
-        -webkit-border-radius: 50%
-        -moz-border-radius: 50%
-        border-radius: 50%
-        border: 1px solid #ffffff
-        left: 50%
-        transform translateX(-50%) rotateX(60deg)
-        animation rotate linear 10s infinite
-        text-align center
-
+      bottom: -100px
+      left: 50%
+      transform translateX(-50%)
+      .mask-inner
+        position relative
         &::before
-          content '>'
-          display inline-block
-          color #fff
+          position absolute
+          left: 30px;
+          transform: translateX(-50%);
+          bottom: 315px;
+          content: '';
+          display: inline-block;
+          width: 558px;
+          height: 90px;
+          background-color: #051028;
+          z-index: 200;
+        .rotate-cir-1
+          position absolute
+          z-index 1
+          width 100px
+          height: 100px
+          -webkit-border-radius: 50%
+          -moz-border-radius: 50%
+          border-radius: 50%
+          border: 1px dashed #11387f
+          left: 50%
+          animation rotate linear 10s infinite
+          text-align center
+          box-shadow 0 0 4px rgba(20,140,250,0.2),0 0 4px rgba(20,140,250,0.2) inset
+        .rotate-cir-2
+          @extend .rotate-cir-1
+          border-style solid
+          animation none
+          box-shadow 0 0 4px rgba(20,140,250,0.2),0 0 4px rgba(20,140,250,0.2) inset
+          transform: translate(-50%,-320px) rotateX(80deg) rotateZ(0) scale(10)
 
   @keyframes rotate {
     0% {
-      transform: translateX(-50%) rotateX(60deg) rotateZ(0)
+      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(0) scale(10)
     }
     50% {
-      transform: translateX(-50%) rotateX(60deg) rotateZ(0.5turn)
+      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(0.5turn) scale(10)
     }
     100% {
-      transform: translateX(-50%) rotateX(60deg) rotateZ(1turn)
+      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(1turn) scale(10)
     }
   }
 </style>

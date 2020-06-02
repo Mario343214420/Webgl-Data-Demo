@@ -319,11 +319,9 @@
           { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 }
         ],
         newClassifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 },
           { name: '部门名称一', count: 8848, percent: 10 },
@@ -592,10 +590,7 @@
 
   .summary
     padding 20px 0
-
     > div
-      height: 942px
-
       &:nth-child(1)
         width 460px
 
@@ -761,7 +756,7 @@
 
     .table
       margin-top: 10px
-
+      padding-bottom: 14px
       .table-row
         line-height: 32px
 
@@ -930,10 +925,10 @@
       transform: rotateY(0.5turn) scale(1.2) rotateX(70deg) rotateZ(0)
     }
     50% {
-      transform: rotateY(0.5turn) scale(1.2) rotateX(70deg) rotateZ(-0.5turn)
+      transform: rotateY(0.5turn) scale(1.2) rotateX(70deg) rotateZ(1turn)
     }
     100% {
-      transform: rotateY(0.5turn) scale(1.2) rotateX(70deg) rotateZ(-1turn)
+      transform: rotateY(0.5turn) scale(1.2) rotateX(70deg) rotateZ(2turn)
     }
   }
 

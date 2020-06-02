@@ -613,6 +613,7 @@
 
   .overview
     width: 100%
+
     padding: 20px 0
     background-image: url('~@/assets/images/overview/ge.png')
     background-repeat: no-repeat

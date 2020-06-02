@@ -9,7 +9,7 @@
         <div class="rotate">
           <img src="../../../assets/images/home-example/earth2.png" alt="">
           <div class="star" v-for="(item,index) in starList"
-               :style="{top:item.y+'px',left:item.x+'px',animationDelay:parseInt(index%6) + 's'}"></div>
+               :style="{top:item.y+'px',left:item.x+'px',animationDelay:parseInt(index%8) + 's'}"></div>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
         <router-link to="/overview">系统概况专题</router-link>
         <router-link to="/summary">数据归集专题</router-link>
         <router-link to="/public">双公示专题</router-link>
-        <!--<router-link to="/union">联合奖惩专题</router-link>-->
+        <router-link to="/union">联合奖惩专题</router-link>
         <router-link to="/map">地图专栏</router-link>
         <!--<a href="javascript:;">信用评级专题</a>-->
       </div>
@@ -160,7 +160,7 @@
     },
     mounted() {
       // this.createModel();
-      for(var i = 0; i< 40; i++){
+      for(var i = 0; i< 100; i++){
         var x = Math.random() * 600 + 200
         var y = Math.random() * 600 + 200
         this.starList.push({x,y})
@@ -212,7 +212,7 @@
           z-index 200
           opacity 0
           position absolute
-          animation star-shine infinite ease-in-out 5s
+          animation star-shine infinite linear 10s
     .center-wrapper
       position absolute
       top: 50%
@@ -285,7 +285,9 @@
   }
   @keyframes star-shine{
     0% {opacity:0}
+    25% {opacity:0.1}
     50% {opacity:0.6}
+    75% {opacity:0.1}
     100% {opacity:0}
   }
 </style>

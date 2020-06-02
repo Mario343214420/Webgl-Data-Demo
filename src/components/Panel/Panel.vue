@@ -26,6 +26,9 @@
   $bdh = 2px
   .panel
     padding 0 20px
+    width: 100%
+    height: 924px
+    box-sizing border-box
     .light-bg
       background-color: $lightBgc
       border: 1px solid $lightBdc
