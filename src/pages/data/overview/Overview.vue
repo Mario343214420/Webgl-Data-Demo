@@ -25,16 +25,16 @@
               <i class="btn" :class="handleBtnTab === 0 ? 'active' : ''" @click="handleBtnTab = 0">本月</i>
               <i class="btn" :class="handleBtnTab === 1 ? 'active' : ''" @click="handleBtnTab = 1">本年</i>
               <b-date-picker type="date"
-                             :open="open"
-                             :value="date"
+                             :open="dateOpen1"
+                             :value="date1"
                              confirm
-                             @on-change="handleChange"
+                             @on-change="handleChange1"
                              @on-clear="handleClear"
                              @on-ok="handleOk"
                              placeholder="Select date">
-                <a href="javascript:void(0)" @click="handleClick">
-                  <template v-if="date === ''">选择日期</template>
-                  <template v-else>{{ date }}</template>
+                <a style="display: block;width: 76px;" href="javascript:void(0)" @click="handleClick('dateOpen1')">
+                  <template v-if="date1 === ''">选择日期</template>
+                  <template v-else>{{ date1 }}</template>
                 </a>
               </b-date-picker>
             </span>
@@ -253,16 +253,18 @@
               <i class="btn" :class="handleBtnTab === 0 ? 'active' : ''" @click="handleBtnTab = 0">本月</i>
               <i class="btn" :class="handleBtnTab === 1 ? 'active' : ''" @click="handleBtnTab = 1">本年</i>
               <b-date-picker type="date"
-                             :open="open"
-                             :value="date"
+                             :open="dateOpen2"
+                             :value="date2"
                              confirm
-                             @on-change="handleChange"
+                             @on-change="handleChange2"
                              @on-clear="handleClear"
                              @on-ok="handleOk"
                              placeholder="Select date">
-                <a href="javascript:void(0)" @click="handleClick">
-                  <template v-if="date === ''">选择日期</template>
-                  <template v-else>{{ date }}</template>
+                <a style="display: block;width: 76px;"
+                   href="javascript:void(0)"
+                   @click="handleClick('dateOpen2')">
+                  <template v-if="date2 === ''">选择日期</template>
+                  <template v-else>{{ date2 }}</template>
                 </a>
               </b-date-picker>
             </span>
@@ -436,8 +438,8 @@
           color: '#00abfb',
           tooltip: {
             trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-              type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
             }
           },
           grid: {
@@ -485,7 +487,7 @@
               type: 'bar',
               barWidth: 10,
               itemStyle: {
-                barBorderRadius: 8,
+                barBorderRadius: 8
               },
               data: [1100, 800, 550, 350, 200, 100, 80]
             }
@@ -540,15 +542,17 @@
                 offset: 1,
                 color: 'rgba(2,203,255,0.2)'
               }])
-            },
+            }
           }]
         },
         deptList: [
-          { name: '部门名称', count: 56987, percent: '95%' },
+          { name: '部门名称', count: 56987, percent: '95%' }
         ],
         handleBtnTab: 0,
-        date: '',
-        open: false
+        date1: '',
+        date2: '',
+        dateOpen1: false,
+        dateOpen2: false
       }
     },
     components: {
@@ -579,17 +583,22 @@
         })
         return sum
       },
-      handleClick() {
-        this.open = !this.open
+      handleClick(param) {
+        this[param] = !this[param]
       },
-      handleChange(date) {
-        this.date = date
+      handleChange1(date) {
+        this.date1 = date
+      },
+      handleChange2(date) {
+        this.date2 = date
       },
       handleClear() {
-        this.open = false
+        this.dateOpen1 = false
+        this.dateOpen2 = false
       },
       handleOk() {
-        this.open = false
+        this.dateOpen1 = false
+        this.dateOpen2 = false
       }
     }
   }

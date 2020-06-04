@@ -642,8 +642,15 @@
           transform translate(-50%, -50%) scaleY(0.8)
       .liner-item
         width: 240px
-        height: 60px
+        height: 80px
         position absolute
+        background-image: url('~@/assets/images/public/sgs_bg.png')
+        .light-corner
+          opacity 0
+        .light-bg
+          box-shadow none
+          animation none
+          border: none
         .cir-light
           animation shine-light-1 infinite linear 4s
         .inner
@@ -653,42 +660,46 @@
           position relative
         &.liner-item-1
           left: 29%
-          top: 76px
+          top: 86px
           transform translate(-50%, -50%)
+          color #00e4ff
           .cir-light
             position absolute
             right: -5px
-            top: 33%;
+            top: 25%;
             opacity 1
             z-index 20
         &.liner-item-2
           left: 69%
-          top: 76px
+          top: 86px
           transform translate(-50%, -50%)
+          color #00efe3
+          .num
+            color #00efe3
           .cir-light
             position absolute
             left: -5px
-            top: 33%;
+            top: 25%;
             opacity 1
             z-index 20
         &.liner-item-3
           left: 24%
-          top: 183px;
+          top: 193px;
           transform translate(-50%, -50%)
           .cir-light
             position absolute
             right: -5px
-            top: 33%;
+            top: 25%;
             opacity 1
             z-index 20
         &.liner-item-4
           left: 74%
-          top: 183px;
+          top: 193px;
           transform translate(-50%, -50%)
           .cir-light
             position absolute
             left: -5px
-            top: 33%;
+            top: 25%;
             opacity 1
             z-index 20
     .top-wrapper

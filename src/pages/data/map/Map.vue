@@ -2,14 +2,33 @@
   <div class="map" flex>
     <Panel>
       <template slot="inner">
+        <div class="total-count">
+          <i>数据归集总量</i>
+          <i v-for="(item, index) in countNumList" :key="index" class="total-num" :class="'num' + item"></i>
+          <i>&nbsp;个</i>
+        </div>
         <div class="map-container">
-          <div id="map" style="width: 100%;height: 100%;"></div>
+          <div id="map"></div>
           <div class="mask-cir-container">
             <div class="mask-inner">
               <div class="rotate-cir-1"></div>
               <div class="rotate-cir-2"></div>
             </div>
           </div>
+        </div>
+        <div class="bar-container">
+          <Card>
+            <template slot="title">
+              <div flex="main:justify">
+                <span>各部门数据提报数量</span>
+                <span class="handle-date" flex="main:justify">
+              </span>
+              </div>
+            </template>
+            <template slot="content">
+              <chart ref="barChart" id="barChart" :options="barOption"></chart>
+            </template>
+          </Card>
         </div>
       </template>
     </Panel>
@@ -19,18 +38,112 @@
 <script>
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
+  import Card from '../../../components/Card/Card'
   import 'echarts/map/js/china'
   // import Bmap from 'bmap'
   export default {
     name: 'Map',
     mounted() {
       this.renderMap({ id: 'map' })
+
+      this.randomNumChange()
     },
     components: {
-      Panel
+      Panel, Card
+    },
+    data() {
+      return {
+        countNumList: [3, 9, 6, 3, 6, 0, 5, 8],
+        barOption: {
+          tooltip: {
+            show: false
+          },
+          grid: {
+            left: 10,
+            right: 10,
+            bottom: '10%',
+            top: '4%'
+          },
+          xAxis: {
+            show: false,
+            type: 'value',
+            boundaryGap: [0, 0.01]
+          },
+          yAxis: {
+            type: 'category',
+            data: ['部门1', '部门2', '部门3', '部门4', '部门5', '部门6', '部门7', '部门8', '部门9', '部门10'],
+            show: true,
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              inside: true,
+              color: '#fff',
+              padding: [-60, 0, 0, 0]
+            },
+            inverse: true
+          },
+          series: [
+            {
+              type: 'bar',
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(220, 220, 220, 0.8)'
+              },
+              barWidth: 10,
+              label: {
+                show: true,
+                color: '#fff',
+                offset: [0, -30],
+                position: 'insideRight',
+                formatter: (p) => {
+                  return p.value
+                }
+              },
+              itemStyle: {
+                barBorderRadius: 8,
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 1, 0,
+                  [
+                    { offset: 0, color: '#2f54ee' },
+                    { offset: 1, color: '#288cf1' }
+                  ]
+                )
+              },
+              data: [1100, 900, 850, 800, 750, 650, 550, 490, 480, 470]
+            }
+          ]
+        },
+      }
     },
     methods: {
-      renderMap: function (paramObj) {
+      randomNumChange(){
+        let change = setInterval(() => {
+          let arr = []
+          this.countNumList.forEach(item => {
+            arr.push(parseInt(Math.random() * 10))
+          })
+          this.countNumList = arr
+        }, 20)
+        setTimeout(() => {
+          window.clearInterval(change)
+        }, 2000)
+
+        let num = parseInt(this.countNumList.join(''))
+        setInterval(()=>{
+          num+=parseInt(Math.random()*10)
+          if(num>=99999999){
+            num = 10000000
+          }
+          let str = num.toString()
+          let arr = str.split('')
+          this.countNumList = arr
+        },100)
+      },
+      renderMap(paramObj) {
         var chinaGeoCoordMap = {
           '黑龙江': [126.642464, 47.756967],
           '内蒙古': [110.3467, 41.4899],
@@ -68,94 +181,94 @@
         var chinaDatas = [
           [{
             name: '黑龙江',
-            value: 0
+            value: 1
           }], [{
             name: '北京市',
-            value: 0
+            value: 3
           }], [{
             name: '内蒙古',
-            value: 0
+            value: 1
           }], [{
             name: '吉林',
-            value: 0
+            value: 1
           }], [{
             name: '辽宁',
-            value: 0
+            value: 1
           }], [{
             name: '河北',
-            value: 0
+            value: 2
           }], [{
             name: '天津',
-            value: 0
+            value: 2
           }], [{
             name: '山西',
-            value: 0
+            value: 1
           }], [{
             name: '陕西',
-            value: 0
+            value: 1
           }], [{
             name: '甘肃',
-            value: 0
+            value: 1
           }], [{
             name: '宁夏',
-            value: 0
+            value: 1
           }], [{
             name: '青海',
-            value: 0
+            value: 1
           }], [{
             name: '新疆',
-            value: 0
+            value: 1
           }], [{
             name: '西藏',
-            value: 0
+            value: 1
           }], [{
             name: '四川',
-            value: 0
+            value: 2
           }], [{
             name: '重庆',
-            value: 0
+            value: 2
           }], [{
             name: '山东',
-            value: 0
+            value: 1
           }], [{
             name: '河南',
-            value: 0
+            value: 1
           }], [{
             name: '江苏',
-            value: 0
+            value: 2
           }], [{
             name: '安徽',
-            value: 0
+            value: 1
           }], [{
             name: '湖北',
-            value: 0
+            value: 2
           }], [{
             name: '浙江',
-            value: 0
+            value: 2
           }], [{
             name: '福建',
-            value: 0
+            value: 2
           }], [{
             name: '江西',
-            value: 0
+            value: 1
           }], [{
             name: '湖南',
-            value: 0
+            value: 2
           }], [{
             name: '贵州',
-            value: 0
+            value: 1
           }], [{
             name: '广西',
-            value: 0
+            value: 1
           }], [{
             name: '海南',
-            value: 0
+            value: 2
           }], [{
             name: '上海',
-            value: 0
+            value: 3
           }], [{
             name: '云南',
-            value: 0
+            value: 1
           }]
         ]
         var convertData = function (data) {
@@ -188,7 +301,7 @@
               zlevel: 1,
               effect: {
                 show: true,
-                period: 10, // 箭头指向速度，值越小速度越快
+                period: 5, // 箭头指向速度，值越小速度越快
                 trailLength: 0.1, // 特效尾迹长度[0,1]值越大，尾迹越长重
                 symbol: 'arrow',
                 symbolSize: [5, 10] // 图标大小
@@ -214,7 +327,7 @@
                 normal: {
                   show: true,
                   position: 'right', // 显示位置
-                  offset: [4, 0], // 偏移设置
+                  offset: [8, 0], // 偏移设置
                   // 圆环显示文字
                   formatter: function (params) {
                     return params.data.name
@@ -227,7 +340,7 @@
               },
               symbol: 'circle',
               symbolSize: function (val) {
-                return 8 + val[2] * 5 // 圆环大小
+                return 8 + val[2] * 2 // 圆环大小
               },
               itemStyle: {
                 normal: {
@@ -253,17 +366,18 @@
                 scale: 2
               },
               label: {
-                normal: {
-                  show: true,
-                  position: 'right',
-                  // offset:[5, 0],
-                  color: '#00d0ff',
-                  formatter: '{b}',
-                  textStyle: {
-                    fontSize: 22,
-                    color: '#fff'
-                  }
+                textBorderColor: '#000',
+                show: true,
+                position: 'right',
+                // offset:[5, 0],
+                color: '#00d0ff',
+                formatter: '{b}',
+                textStyle: {
+                  fontSize: 22,
+                  color: '#fff'
                 },
+                // textShadowColor:'#fff',
+                // textShadowBlur:2,
                 emphasis: {
                   show: true,
                   color: '#f60'
@@ -331,8 +445,21 @@
 <style lang="stylus" scoped>
   .panel
     overflow hidden
+
+    background-position: bottom center
+    -webkit-background-size: contain
+    background-size: contain
+    background-repeat: no-repeat
+    background-image: url('~@/assets/images/map/map_bg.jpg')
     >>> .light-bg
       height: 100%
+      background-color: transparent
+      box-shadow 0 0 0 transparent
+      animation none
+      border: none
+      .light-corner
+        opacity 0
+
   .map
     height: auto
     position relative
@@ -341,41 +468,59 @@
     #map
       position absolute
       z-index 30
-      top: 0
+      top: 150px
       left: 0
-
       overflow hidden
-    #map1
-      position absolute
-      z-index 10
-      top: 0
-      left: 0
+      width: 1116px;
+      height: 722px;
+
     .map-container
+      height: 100%
+      width: 1860px
       padding 30px 0
+      margin: 0 auto
+      position relative
+
+    .bar-container
+      height: 100%
+      position absolute
+      top: 150px
+      right: 0
+
+      #barChart
+        width: 744px
+        height: 722px;
+
     .mask-cir-container
       position absolute
       z-index 20
-      bottom: -100px
-      left: 50%
+      bottom: -125px
+      left: 30%
       transform translateX(-50%)
+
       .mask-inner
         position relative
+
         &::before
           position absolute
           left: 30px;
           transform: translateX(-50%);
-          bottom: 315px;
+          bottom: 320px;
           content: '';
           display: inline-block;
-          width: 558px;
+          width: 465px;
           height: 90px;
-          background-color: #051028;
+          background-color: rgba(5,8,25,0.7);
           z-index: 200;
+          -webkit-border-radius: 0 0 200px 200px
+          -moz-border-radius: 0 0 200px 200px
+          border-radius: 0 0 200px 200px
+
         .rotate-cir-1
           position absolute
           z-index 1
-          width 100px
-          height: 100px
+          width 80px
+          height: 80px
           -webkit-border-radius: 50%
           -moz-border-radius: 50%
           border-radius: 50%
@@ -383,22 +528,88 @@
           left: 50%
           animation rotate linear 10s infinite
           text-align center
+
         .rotate-cir-2
           @extend .rotate-cir-1
           border-style solid
-          animation none
-          box-shadow 0 0 4px rgba(20,140,250,0.2),0 0 4px rgba(20,140,250,0.2) inset
-          transform: translate(-50%,-320px) rotateX(80deg) rotateZ(0) scale(10)
+          animation shadow-light infinite linear 3s
+          transform: translate(-50%, -320px) rotateX(80deg) rotateZ(0) scale(10)
+
+  .total-count
+    position absolute
+    top: 20px
+    left 50%
+    transform translateX(-50%)
+    width: 800px
+    text-align center
+    font-size: 26px
+    font-weight: 700
+    color #fff
+    letter-spacing 8px
+
+    i
+      display inline-block
+      vertical-align middle
+      margin 4px
+
+      &:first-of-type
+        padding-right: 20px
+
+      &.total-num
+        width 49px
+        height: 55px
+
+      &.num0
+        background-image: url('~@/assets/images/overview/0.png')
+
+      &.num1
+        background-image: url('~@/assets/images/overview/1.png')
+
+      &.num2
+        background-image: url('~@/assets/images/overview/2.png')
+
+      &.num3
+        background-image: url('~@/assets/images/overview/3.png')
+
+      &.num4
+        background-image: url('~@/assets/images/overview/4.png')
+
+      &.num5
+        background-image: url('~@/assets/images/overview/5.png')
+
+      &.num6
+        background-image: url('~@/assets/images/overview/6.png')
+
+      &.num7
+        background-image: url('~@/assets/images/overview/7.png')
+
+      &.num8
+        background-image: url('~@/assets/images/overview/8.png')
+
+      &.num9
+        background-image: url('~@/assets/images/overview/9.png')
 
   @keyframes rotate {
     0% {
-      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(0) scale(10)
+      transform: translate(-50%, -340px) rotateX(80deg) rotateZ(0) scale(10)
     }
     50% {
-      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(0.5turn) scale(10)
+      transform: translate(-50%, -340px) rotateX(80deg) rotateZ(0.5turn) scale(10)
     }
     100% {
-      transform: translate(-50%,-340px) rotateX(80deg) rotateZ(1turn) scale(10)
+      transform: translate(-50%, -340px) rotateX(80deg) rotateZ(1turn) scale(10)
+    }
+  }
+
+  @keyframes shadow-light {
+    0% {
+      box-shadow: 0 0 4px rgba(20, 140, 250, 0.2), 0 0 4px rgba(20, 140, 250, 0.2) inset
+    }
+    50% {
+      box-shadow: 0 0 16px rgba(20, 140, 250, 0.2), 0 0 16px rgba(20, 140, 250, 0.2) inset
+    }
+    100% {
+      box-shadow: 0 0 4px rgba(20, 140, 250, 0.2), 0 0 4px rgba(20, 140, 250, 0.2) inset
     }
   }
 </style>

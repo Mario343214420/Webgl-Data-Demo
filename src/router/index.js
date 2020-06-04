@@ -51,7 +51,7 @@ const router = new VueRouter({
     },
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/union'
     }
   ]
 })
