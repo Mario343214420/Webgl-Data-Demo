@@ -65,10 +65,10 @@
     background-repeat: no-repeat
     -webkit-background-size: auto 72px
     background-size: auto 72px
-    background-position: center center
+    background-position: top center
     width: 100%
     text-align center
-    height: 72px;
+    height: 80px;
     padding-top: 10px
     position relative
 

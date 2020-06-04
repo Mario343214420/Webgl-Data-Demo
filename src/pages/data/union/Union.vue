@@ -2,155 +2,157 @@
   <div class="union" flex>
     <Panel flex="main:justify dir:top">
       <template slot="inner">
-        <Card style="height: 370px;">
-          <template slot="title">
-            <div flex="main:justify">
-              <span>联合奖惩页面</span>
-              <span class="handle-date" flex="main:justify"></span>
-            </div>
-          </template>
-          <template slot="content">
-            <div>
-              <div class="status-wrapper" flex>
-                <div class="status-item">
-                  <p class="title">总计奖惩</p>
-                  <p><i class="num">8848</i><i>（次）</i></p>
-                </div>
-                <div class="status-item">
-                  <p class="title">备忘录总数</p>
-                  <p><i class="num">8848</i><i>（个）</i></p>
-                </div>
-                <div class="status-item">
-                  <p class="title">实施部门数量</p>
-                  <p><i class="num">8848</i><i>（个）</i></p>
-                </div>
+        <div flex="main:justify dir:top" style="height: 100%;">
+          <Card style="height: 370px;">
+            <template slot="title">
+              <div flex="main:justify">
+                <span>联合奖惩页面</span>
+                <span class="handle-date" flex="main:justify"></span>
               </div>
-              <div class="type-wrapper" flex="main:justify">
-                <div class="type-item">
-                  <div class="total" flex="cross:center">
-                    <span class="icon-person"><i class="iconfont icon-faren"></i></span>
-                    <!--                    <span><i class="iconfont icon-ren"></i></span>-->
-                    <span flex-box="1">
-                      <i class="simple-i">自然人</i><br>
-                      <i class="num">9527</i>
-                      <i class="simple-i">（个）</i>
-                    </span>
+            </template>
+            <template slot="content">
+              <div>
+                <div class="status-wrapper" flex>
+                  <div class="status-item">
+                    <p class="title">总计奖惩</p>
+                    <p><i class="num">8848</i><i>（次）</i></p>
                   </div>
-                  <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
-                  <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                  <div class="status-item">
+                    <p class="title">备忘录总数</p>
+                    <p><i class="num">8848</i><i>（个）</i></p>
+                  </div>
+                  <div class="status-item">
+                    <p class="title">实施部门数量</p>
+                    <p><i class="num">8848</i><i>（个）</i></p>
+                  </div>
                 </div>
-                <div class="type-item">
-                  <div class="total" flex="cross:center">
+                <div class="type-wrapper" flex="main:justify">
+                  <div class="type-item">
+                    <div class="total" flex="cross:center">
+                      <span class="icon-person"><i class="iconfont icon-faren"></i></span>
+                      <!--                    <span><i class="iconfont icon-ren"></i></span>-->
+                      <span flex-box="1">
+                        <i class="simple-i">自然人</i><br>
+                        <i class="num">9527</i>
+                        <i class="simple-i">（个）</i>
+                      </span>
+                    </div>
+                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                  </div>
+                  <div class="type-item">
+                    <div class="total" flex="cross:center">
                     <span class="icon-person" style="background-color: #124ec6;"><i
                       class="iconfont icon-ren"></i></span>
-                    <!--                    <span><i class="iconfont icon-ren"></i></span>-->
-                    <span flex-box="1">
+                      <!--                    <span><i class="iconfont icon-ren"></i></span>-->
+                      <span flex-box="1">
                       <i class="simple-i">自然人</i><br>
                       <i class="num">9527</i>
                       <i class="simple-i">（个）</i>
                     </span>
+                    </div>
+                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
                   </div>
-                  <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
-                  <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
                 </div>
               </div>
-            </div>
-          </template>
-        </Card>
-        <Card style="height: 500px;">
-          <template slot="title">
-            <div flex="main:justify">
-              <span>红黑名单统计</span>
-              <span class="handle-date" flex="main:justify">
+            </template>
+          </Card>
+          <Card style="height: 518px;">
+            <template slot="title">
+              <div flex="main:justify">
+                <span>红黑名单统计</span>
+                <span class="handle-date" flex="main:justify">
               </span>
-            </div>
-          </template>
-          <template slot="content">
-            <div class="red-black-wrapper" flex="dir:top">
-              <div class="container">
-                <div class="red-list">
-                  <img src="~@/assets/images/overview/icon_hong.png" alt="">
-                  <i class="white-font">红名单</i>
-                  <i class="num">12566</i>
-                  <i class="white-font">（个）</i>
-                </div>
-                <div class="msg-list" flex="wrap:wrap">
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
-                    <span>
+              </div>
+            </template>
+            <template slot="content">
+              <div class="red-black-wrapper" flex="dir:top">
+                <div class="container">
+                  <div class="red-list">
+                    <img src="~@/assets/images/overview/icon_hong.png" alt="">
+                    <i class="white-font">红名单</i>
+                    <i class="num">12566</i>
+                    <i class="white-font">（个）</i>
+                  </div>
+                  <div class="msg-list" flex="wrap:wrap">
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
+                      <span>
                   <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
-                    <span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
+                      <span>
                   <p class="white-font">A级纳税人</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
-                    <span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
+                      <span>
                   <p class="white-font">守信社会法人</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
-                    <span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
+                      <span>
                   <p class="white-font">优秀青年志愿者</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="red-list">
+                    <img src="~@/assets/images/overview/icon_hei.png" alt="">
+                    <i class="white-font">黑名单</i>
+                    <i class="num">12566</i>
+                    <i class="white-font">（个）</i>
+                  </div>
+                  <div class="msg-list" flex="wrap:wrap">
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
+                      <span>
+                  <p class="white-font">有关认证企业</p>
+                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                </span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
+                      <span>
+                  <p class="white-font">有关认证企业</p>
+                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                </span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
+                      <span>
+                  <p class="white-font">有关认证企业</p>
+                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                </span>
+                    </div>
+                    <div class="msg-list-item" flex="main:center">
+                      <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
+                      <span>
+                  <p class="white-font">有关认证企业</p>
+                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                </span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="container">
-                <div class="red-list">
-                  <img src="~@/assets/images/overview/icon_hei.png" alt="">
-                  <i class="white-font">黑名单</i>
-                  <i class="num">12566</i>
-                  <i class="white-font">（个）</i>
-                </div>
-                <div class="msg-list" flex="wrap:wrap">
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
-                    <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
-                    <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
-                    <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
-                  </div>
-                  <div class="msg-list-item" flex="main:center">
-                    <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
-                    <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </Card>
+            </template>
+          </Card>
+        </div>
       </template>
     </Panel>
     <Panel style="padding-left: 0; padding-right: 0;" flex="main:justify dir:top">
       <template slot="inner">
-        <div style="height: 881px;" flex="main:justify dir:top">
+        <div style="height: 100%;" flex="main:justify dir:top">
           <Card class="wrap-title" style="height: 290px;">
             <template slot="title">
               <div flex="main:justify">
@@ -234,7 +236,7 @@
       <template slot="outer">
       </template>
       <template slot="inner">
-        <div style="height: 881px;" flex="main:justify dir:top">
+        <div style="height: 100%;" flex="main:justify dir:top">
           <Card style="height: 290px;">
             <template slot="title">
               <div flex="main:justify">
@@ -265,7 +267,7 @@
               </div>
             </template>
           </Card>
-          <Card style="height: 270px;">
+          <Card>
             <template slot="title">
               <div flex="main:justify">
                 <span>处置措施Top100</span>
@@ -552,16 +554,13 @@
         measure: {
           color: '#00abfb',
           tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
+            axisPointer: {}
           },
           grid: {
             left: 10,
             right: 10,
-            bottom: 10,
-            top: '10%'
+            bottom: 0,
+            top: '8%'
           },
           xAxis: {
             show: false,
@@ -630,7 +629,7 @@
     color #fff
 
   .union
-    height: calc(100% - 72px)
+    height: 1000px
     box-sizing border-box
     padding: 20px 0
 
@@ -686,13 +685,14 @@
         width 48%
 
         .total
+          margin-bottom: 10px
           .icon-person
-            width: 60px
-            height: 60px
+            width: 50px
+            height: 50px
             display block
             font-weight: 700
             text-align center
-            line-height: 60px
+            line-height: 50px
             background-color: #097ee1
             -webkit-border-radius: 50%
             -moz-border-radius: 50%
@@ -701,7 +701,7 @@
             margin-right: 20px
 
             i
-              font-size: 30px
+              font-size: 20px
 
         .total
           padding 10px 2px
@@ -731,7 +731,7 @@
 
         .reward, .punish
           background-color: #031a43
-          margin-bottom: 4px
+          margin-bottom: 10px
           padding 20px 16px
 
           .scale-num

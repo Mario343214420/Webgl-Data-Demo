@@ -25,11 +25,13 @@
   $bdw = 2px
   $bdh = 2px
   .panel
+    display flex
     padding 0 20px
     width: 100%
-    height: 924px
+    height: 960px
     box-sizing border-box
     .light-bg
+      flex 1
       background-color: $lightBgc
       border: 1px solid $lightBdc
       box-shadow 0 0 10px $lightShadowColor

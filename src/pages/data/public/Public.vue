@@ -1,51 +1,53 @@
 <template>
   <div class="public" flex>
-    <Panel flex="main:justify dir:top">
+    <Panel>
       <template slot="inner">
-        <Card>
-          <template slot="title">
-            <div flex="main:justify" style="margin-top: 20px;">
-              <span>部门双公示数据统计情况</span>
-              <span class="handle-date" flex="main:justify">
-                <i class="tab" :class="dateTab === 0 ? 'active' : ''" @click="dateTab = 0">本月</i>
-                <i class="tab" :class="dateTab === 1 ? 'active' : ''" @click="dateTab = 1">本年</i>
-                <b-date-picker
-                  placement="bottom-end"
-                  :open="open"
-                  :value="date"
-                  confirm
-                  @on-change="handleChange"
-                  @on-clear="handleClear"
-                  @on-ok="handleOk">
-                    <a href="javascript:void(0)" @click="handleClick">
-                      <template v-if="date === ''">请选择日期</template>
-                      <template v-else>{{ date }}</template>
-                    </a>
-                  </b-date-picker>
-              </span>
-            </div>
-          </template>
-          <template slot="content">
-            <div class="table scroll-list-486" style="padding-top: 20px;">
-              <div class="table-row" flex="main:justify">
-                <span>部门名称</span>
-                <span>资源信息</span>
+        <div flex="main:justify dir:top" style="height: 100%;">
+          <Card>
+            <template slot="title">
+              <div flex="main:justify" style="margin-top: 20px;">
+                <span>部门双公示数据统计情况</span>
+                <span class="handle-date" flex="main:justify">
+                  <i class="tab" :class="dateTab === 0 ? 'active' : ''" @click="dateTab = 0">本月</i>
+                  <i class="tab" :class="dateTab === 1 ? 'active' : ''" @click="dateTab = 1">本年</i>
+                  <b-date-picker
+                    placement="bottom-end"
+                    :open="open"
+                    :value="date"
+                    confirm
+                    @on-change="handleChange"
+                    @on-clear="handleClear"
+                    @on-ok="handleOk">
+                      <a href="javascript:void(0)" @click="handleClick">
+                        <template v-if="date === ''">请选择日期</template>
+                        <template v-else>{{ date }}</template>
+                      </a>
+                    </b-date-picker>
+                </span>
               </div>
-              <div class="table-row" v-for="(item, index) in newClassifyList" :key="index" flex="main:justify">
-                <span>{{ item.name }}</span>
-                <span>{{ item.count }}</span>
+            </template>
+            <template slot="content">
+              <div class="table scroll-list-486" style="padding-top: 20px;">
+                <div class="table-row" flex="main:justify">
+                  <span>部门名称</span>
+                  <span>资源信息</span>
+                </div>
+                <div class="table-row" v-for="(item, index) in newClassifyList" :key="index" flex="main:justify">
+                  <span>{{ item.name }}</span>
+                  <span>{{ item.count }}</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </Card>
-        <Card>
-          <template slot="title">
-            <span>双公示数据7天提报率</span>
-          </template>
-          <template slot="content">
-            <chart ref="chart1" :options="classify" style="width: 100%; height: 326px;"></chart>
-          </template>
-        </Card>
+            </template>
+          </Card>
+          <Card>
+            <template slot="title">
+              <span>双公示数据7天提报率</span>
+            </template>
+            <template slot="content">
+              <chart ref="chart1" :options="classify" style="width: 100%; height: 326px;"></chart>
+            </template>
+          </Card>
+        </div>
       </template>
     </Panel>
     <Panel style="padding-left: 0; padding-right: 0;" flex="main:justify dir:top">
@@ -144,10 +146,8 @@
       </template>
     </Panel>
     <Panel flex="main:justify dir:top">
-      <template slot="outer">
-      </template>
       <template slot="inner">
-        <div style="padding-top: 10px;">
+        <div flex="main:justify dir:top" style="height: 100%; padding-top: 10px;">
           <Card>
             <template slot="title">
               <span>一周新增</span>
@@ -534,9 +534,9 @@
 
   .public
     padding 20px 0
-
+    height: 1000px
+    box-sizing border-box
     > div
-      height: 942px
       &:nth-child(1)
         width 460px
 
@@ -644,9 +644,14 @@
         height: 80px
         position absolute
         background-image: url('~@/assets/images/public/sgs_bg.png')
+        background-repeat: no-repeat
+        -webkit-background-size: cover
+        background-size: cover
+        background-origin: border-box;
         .light-corner
           opacity 0
         .light-bg
+          background-color: transparent
           box-shadow none
           animation none
           border: none
@@ -685,6 +690,9 @@
           left: 24%
           top: 193px;
           transform translate(-50%, -50%)
+          color #fc9530
+          .num
+            color #fc9530
           .cir-light
             position absolute
             right: -5px
@@ -695,6 +703,9 @@
           left: 74%
           top: 193px;
           transform translate(-50%, -50%)
+          color #085af5
+          .num
+            color #085af5
           .cir-light
             position absolute
             left: -5px

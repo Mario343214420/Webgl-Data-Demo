@@ -2,7 +2,7 @@
   <div class="overview" flex>
     <Panel>
       <template slot="inner">
-        <div style="height: 902px" flex="main:justify dir:top">
+        <div style="height: 100%" flex="main:justify dir:top">
           <div class="title">联合奖惩</div>
           <div class="count-wrapper">
             <span class="square-bg">
@@ -224,7 +224,7 @@
     </Panel>
     <Panel>
       <template slot="inner">
-        <div style="height: 902px" flex="main:justify dir:top">
+        <div style="height: 100%" flex="main:justify dir:top">
           <div class="title">
             资源信息分类统计
           </div>
@@ -274,7 +274,7 @@
           <div class="title">
             数据提报部门
           </div>
-          <div class="dept-list">
+          <div class="dept-list" style="margin-bottom: 10px;">
             <div class="header-wrapper" flex="main:justify">
               <span class="list-header" flex-box="1">部门名称</span>
               <span class="list-header" flex-box="1">数量</span>
@@ -622,7 +622,8 @@
 
   .overview
     width: 100%
-
+    height: 1000px
+    box-sizing border-box
     padding: 20px 0
     background-image: url('~@/assets/images/overview/ge.png')
     background-repeat: no-repeat
@@ -718,7 +719,7 @@
     .inner
       position relative
       width ($rotateW) px
-      height: ($rotateH + 5) px
+      height: 640 px
       margin 0 auto
 
       .total-count

@@ -61,7 +61,7 @@
           grid: {
             left: 10,
             right: 10,
-            bottom: '10%',
+            bottom: '4%',
             top: '4%'
           },
           xAxis: {
@@ -450,7 +450,7 @@
     -webkit-background-size: contain
     background-size: contain
     background-repeat: no-repeat
-    background-image: url('~@/assets/images/map/map_bg.jpg')
+    background-image: url('~@/assets/images/map/map_bg.png')
 
     >>> .light-bg
       height: 100%
@@ -463,11 +463,10 @@
         opacity 0
 
   .map
-    height: auto
+    height: 1000px
     position relative
     padding: 20px 0
     box-sizing border-box
-
     #map
       position absolute
       z-index 30
@@ -506,18 +505,15 @@
 
         &::before
           position absolute
-          left: 30px;
-          transform: translateX(-50%);
-          bottom: 320px;
+          left: -94px;
+          bottom: 327px;
           content: '';
           display: inline-block;
-          width: 465px;
+          width: 358px;
           height: 90px;
-          background-color: rgba(5, 8, 25, 0.7);
+          background-color: rgba(5, 8, 25, 1);
           z-index: 200;
-          -webkit-border-radius: 0 0 200px 200px
-          -moz-border-radius: 0 0 200px 200px
-          border-radius: 0 0 200px 200px
+          border-radius: 200px 0 200px 0
 
         .rotate-cir-1
           position absolute

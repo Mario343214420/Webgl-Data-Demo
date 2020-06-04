@@ -2,63 +2,64 @@
   <div class="summary" flex>
     <Panel>
       <template slot="inner">
-        <Card>
-          <template slot="title">
-            <span>本月数据分析</span>
-          </template>
-          <template slot="content">
-            <div flex="main:justify">
+        <div flex="main:justify dir:top" style="height: 100%;">
+          <Card>
+            <template slot="title">
+              <span>本月数据分析</span>
+            </template>
+            <template slot="content">
+              <div flex="main:justify">
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_01.png" alt="">
               <i class="font">归集数量</i>
               <i class="num">560</i>
             </span>
-              <span class="count-wrapper-item" flex="main:justify dir:top">
+                <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_02.png" alt="">
               <i class="font">归集数量</i>
               <i class="num">560</i>
             </span>
-              <span class="count-wrapper-item" flex="main:justify dir:top">
+                <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_03.png" alt="">
               <i class="font">归集数量</i>
               <i class="num">560</i>
             </span>
-            </div>
-          </template>
-        </Card>
-        <Card>
-          <template slot="title">
-            <span>资源信息分类统计</span>
-          </template>
-          <template slot="content">
-            <div flex="main:justify">
+              </div>
+            </template>
+          </Card>
+          <Card>
+            <template slot="title">
+              <span>资源信息分类统计</span>
+            </template>
+            <template slot="content">
+              <div flex="main:justify">
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">一级分类（个）</i>
               <i class="num">560</i>
             </span>
-              <span class="count-wrapper-item" flex="main:justify dir:top">
+                <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">二级分类（个）</i>
               <i class="num">560</i>
             </span>
-              <span class="count-wrapper-item" flex="main:justify dir:top">
+                <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">资源数（个）</i>
               <i class="num">560</i>
             </span>
-              <span class="count-wrapper-item" flex="main:justify dir:top">
+                <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">部门数（个）</i>
               <i class="num">560</i>
             </span>
-            </div>
-            <div>
-              <chart ref="chart1" :options="classify" style="width: 100%; height: 220px;"></chart>
-            </div>
-          </template>
-        </Card>
-        <Card>
-          <template slot="title">
-            <div flex="main:justify">
-              <span>资源信息分类统计</span>
-              <span class="handle-date" flex="main:justify">
+              </div>
+              <div>
+                <chart ref="chart1" :options="classify" style="width: 100%; height: 220px;"></chart>
+              </div>
+            </template>
+          </Card>
+          <Card>
+            <template slot="title">
+              <div flex="main:justify">
+                <span>资源信息分类统计</span>
+                <span class="handle-date" flex="main:justify">
                 <i class="tab" :class="dateTab === 0 ? 'active' : ''" @click="dateTab = 0">本月</i>
                 <i class="tab" :class="dateTab === 1 ? 'active' : ''" @click="dateTab = 1">本年</i>
                 <b-date-picker
@@ -74,25 +75,26 @@
                       <template v-else>{{ date }}</template>
                     </a>
                   </b-date-picker
->
+                  >
               </span>
-            </div>
-          </template>
-          <template slot="content">
-            <div class="table">
-              <div class="table-row" flex="main:justify">
-                <span>部门名称</span>
-                <span>轨迹数量（个）</span>
-                <span>占比</span>
               </div>
-              <div class="table-row" v-for="(item, index) in classifyList" :key="index" flex="main:justify">
-                <span>{{ item.name }}</span>
-                <span>{{ item.count }}</span>
-                <span>{{ item.percent }}%</span>
+            </template>
+            <template slot="content">
+              <div class="table">
+                <div class="table-row" flex="main:justify">
+                  <span>部门名称</span>
+                  <span>轨迹数量（个）</span>
+                  <span>占比</span>
+                </div>
+                <div class="table-row" v-for="(item, index) in classifyList" :key="index" flex="main:justify">
+                  <span>{{ item.name }}</span>
+                  <span>{{ item.count }}</span>
+                  <span>{{ item.percent }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </Card>
+            </template>
+          </Card>
+        </div>
       </template>
     </Panel>
     <Panel style="padding-left: 0; padding-right: 0;" flex="main:justify dir:top">
@@ -182,7 +184,7 @@
     </Panel>
     <Panel>
       <template slot="inner">
-        <div flex="main:justify dir:top">
+        <div flex="main:justify dir:top" style="height: 100%;">
           <Card>
             <template slot="title">
               <span>数据归集来源对比</span>
@@ -589,7 +591,9 @@
   }
 
   .summary
+    height: 1000px
     padding 20px 0
+    box-sizing border-box
     > div
       &:nth-child(1)
         width 460px
