@@ -567,7 +567,6 @@
           span:nth-child(3)
             color #02d8cf
 
-
       &.scroll-list-486
         height: 486px
         overflow-y auto

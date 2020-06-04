@@ -116,11 +116,11 @@
               data: [1100, 900, 850, 800, 750, 650, 550, 490, 480, 470]
             }
           ]
-        },
+        }
       }
     },
     methods: {
-      randomNumChange(){
+      randomNumChange() {
         let change = setInterval(() => {
           let arr = []
           this.countNumList.forEach(item => {
@@ -133,15 +133,15 @@
         }, 2000)
 
         let num = parseInt(this.countNumList.join(''))
-        setInterval(()=>{
-          num+=parseInt(Math.random()*10)
-          if(num>=99999999){
+        setInterval(() => {
+          num += parseInt(Math.random() * 10)
+          if (num >= 99999999) {
             num = 10000000
           }
           let str = num.toString()
           let arr = str.split('')
           this.countNumList = arr
-        },100)
+        }, 100)
       },
       renderMap(paramObj) {
         var chinaGeoCoordMap = {
@@ -307,7 +307,7 @@
                 symbolSize: [5, 10] // 图标大小
               },
               lineStyle: {
-                color: 'rgba(5,242,228,0.6)',
+                color: 'rgba(0,239,227,0.4)',
                 width: 1, // 尾迹线条宽度
                 opacity: 0.1, // 尾迹线条透明度
                 curveness: 0.8 // 尾迹线条曲直度
@@ -451,12 +451,14 @@
     background-size: contain
     background-repeat: no-repeat
     background-image: url('~@/assets/images/map/map_bg.jpg')
+
     >>> .light-bg
       height: 100%
       background-color: transparent
       box-shadow 0 0 0 transparent
       animation none
       border: none
+
       .light-corner
         opacity 0
 
@@ -465,6 +467,7 @@
     position relative
     padding: 20px 0
     box-sizing border-box
+
     #map
       position absolute
       z-index 30
@@ -510,7 +513,7 @@
           display: inline-block;
           width: 465px;
           height: 90px;
-          background-color: rgba(5,8,25,0.7);
+          background-color: rgba(5, 8, 25, 0.7);
           z-index: 200;
           -webkit-border-radius: 0 0 200px 200px
           -moz-border-radius: 0 0 200px 200px
