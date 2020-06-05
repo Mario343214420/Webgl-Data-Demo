@@ -302,7 +302,8 @@
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
-
+  // import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+  // import 'swiper/css/swiper.css'
   // 统一变量
   const xyLineColor = '#535e83'
   const splitLineColor = '#212343'
