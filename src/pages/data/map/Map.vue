@@ -605,7 +605,7 @@
       box-shadow: 0 0 4px rgba(20, 140, 250, 0.2), 0 0 4px rgba(20, 140, 250, 0.2) inset
     }
     50% {
-      box-shadow: 0 0 16px rgba(20, 140, 250, 0.2), 0 0 16px rgba(20, 140, 250, 0.2) inset
+      box-shadow: 0 0 10px rgba(20, 140, 250, 0.5), 0 0 10px rgba(20, 140, 250, 0.5) inset
     }
     100% {
       box-shadow: 0 0 4px rgba(20, 140, 250, 0.2), 0 0 4px rgba(20, 140, 250, 0.2) inset

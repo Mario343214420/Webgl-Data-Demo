@@ -29,7 +29,7 @@
                 <div class="type-wrapper" flex="main:justify">
                   <div class="type-item">
                     <div class="total" flex="cross:center">
-                      <span class="icon-person"><i class="iconfont icon-faren"></i></span>
+                      <span style="margin-right: 20px;"><img src="~@/assets/images/union/icon_zrr.png" alt=""></span>
                       <!--                    <span><i class="iconfont icon-ren"></i></span>-->
                       <span flex-box="1">
                         <i class="simple-i">自然人</i><br>
@@ -42,8 +42,7 @@
                   </div>
                   <div class="type-item">
                     <div class="total" flex="cross:center">
-                    <span class="icon-person" style="background-color: #124ec6;"><i
-                      class="iconfont icon-ren"></i></span>
+                    <span style="margin-right: 20px;"><img src="~@/assets/images/union/icon_fr.png" alt=""></span>
                       <!--                    <span><i class="iconfont icon-ren"></i></span>-->
                       <span flex-box="1">
                       <i class="simple-i">自然人</i><br>
@@ -246,7 +245,7 @@
               </div>
             </template>
             <template slot="content">
-              <div class="execute-status">
+              <div class="execute-status" @mouseenter="on_swiper_enter" @mouseleave="on_swiper_leave">
                 <div class="table">
                   <div class="row" style="background-color: #001739" flex="space:around">
                     <div class="col">被拦截人</div>
@@ -255,14 +254,16 @@
                     <div class="col">执行时间</div>
                   </div>
                 </div>
-                <div class="table">
-                  <div class="row" flex="space:around" :key="index"
-                       v-for="(item,index) in punishRewardList">
-                    <div class="col">{{item.name}}</div>
-                    <div class="col">{{item.info}}</div>
-                    <div class="col">{{item.dept}}</div>
-                    <div class="col">{{item.time}}</div>
-                  </div>
+                <div class="table" style="height: 200px;">
+                  <swiper ref="mySwiper" style="height: 100%;" :options="swiperOptions">
+                    <swiper-slide class="row" flex="space:around" :key="index"
+                                  v-for="(item,index) in punishRewardList">
+                        <div class="col">{{item.name}}</div>
+                        <div class="col">{{item.info}}</div>
+                        <div class="col">{{item.dept}}</div>
+                        <div class="col">{{item.time}}</div>
+                    </swiper-slide>
+                  </swiper>
                 </div>
               </div>
             </template>
@@ -302,8 +303,8 @@
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
-  // import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
-  // import 'swiper/css/swiper.css'
+  import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+  import 'swiper/css/swiper.css'
   // 统一变量
   const xyLineColor = '#535e83'
   const splitLineColor = '#212343'
@@ -311,7 +312,12 @@
     name: 'Union',
     components: {
       Panel,
-      Card
+      Card,
+      Swiper,
+      SwiperSlide
+    },
+    directives:{
+      swiper:directive
     },
     data() {
       return {
@@ -603,18 +609,51 @@
           ]
         },
         punishRewardList: [
+          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
           { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
           { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
           { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
           { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' }
+          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' }
         ],
         memoStatusList: [
           { name: '房产交易', count: 8848, time: 9527 },
           { name: '规划设计方案', count: 8848, time: 9527 },
           { name: '股票交易', count: 8848, time: 9527 },
           { name: '不动产转移', count: 8848, time: 9527 }
-        ]
+        ],
+        swiperOptions: {
+          direction: 'vertical',
+          slidesPerView: 6,
+          loop: true,
+          autoplay: {
+            delay: 3000,
+            stopOnLastSlide: false,
+            disableOnInteraction: true,
+          }
+          // pagination: {
+          //   el: '.swiper-pagination'
+          // },
+          // Some Swiper option/callback...
+        }
+      }
+    },
+    computed: {
+      mySwiper() {
+        // mySwiper 是要绑定到标签中的ref属性
+        return this.$refs.mySwiper.swiper
+      }
+    },
+    methods: {
+      on_swiper_enter() {
+        this.$refs.mySwiper.$swiper.autoplay.stop()
+      },
+      on_swiper_leave() {
+        this.$refs.mySwiper.$swiper.autoplay.start()
       }
     }
   }
