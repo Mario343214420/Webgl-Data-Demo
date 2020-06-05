@@ -316,8 +316,8 @@
       Swiper,
       SwiperSlide
     },
-    directives:{
-      swiper:directive
+    directives: {
+      swiper: directive
     },
     data() {
       return {
@@ -633,7 +633,7 @@
           autoplay: {
             delay: 3000,
             stopOnLastSlide: false,
-            disableOnInteraction: true,
+            disableOnInteraction: true
           }
           // pagination: {
           //   el: '.swiper-pagination'

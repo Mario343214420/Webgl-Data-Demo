@@ -8,8 +8,8 @@
       <div class="light">
         <div class="rotate">
           <img src="../../../assets/images/home-example/earth2.png" alt="">
-          <div class="star" v-for="(item,index) in starList"
-               :style="{top:item.y+'px',left:item.x+'px',animationDelay:parseInt(index%8) + 's'}"></div>
+          <!--<div class="star" v-for="(item,index) in starList"
+               :style="{top:item.y+'px',left:item.x+'px',animationDelay:parseInt(index%8) + 's'}"></div>-->
         </div>
       </div>
     </div>
@@ -205,14 +205,14 @@
         img
           width: 1000px
           height: auto
-        .star
+        /*.star
           background-image: radial-gradient(#fff 5%, rgba(10,80,150,0.8) 50%, transparent 60%);
           width: 10px
           height: 10px
           z-index 200
           opacity 0
           position absolute
-          animation star-shine infinite linear 10s
+          animation star-shine infinite linear 10s*/
     .center-wrapper
       position absolute
       top: 50%
@@ -283,11 +283,11 @@
       opacity: 0.9
     }
   }
-  @keyframes star-shine{
+  /*@keyframes star-shine{
     0% {opacity:0}
     25% {opacity:0.1}
     50% {opacity:0.6}
     75% {opacity:0.1}
     100% {opacity:0}
-  }
+  }*/
 </style>

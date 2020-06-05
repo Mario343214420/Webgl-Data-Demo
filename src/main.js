@@ -10,12 +10,11 @@ import 'echarts/lib/chart/pie'
 import 'echarts/lib/chart/bar'
 import { Calendar } from 'element-ui'
 import './assets/styles/calendar.styl'
-import Subarea from './views/layout/subarea/Subarea'
 // mock
-import './mock'
+// import './mock'
 
 Vue.use(BinAdmin)
-Vue.component(Subarea)
+// Vue.component(Subarea)
 Vue.component('chart', ECharts)
 Vue.use(Calendar)
 
