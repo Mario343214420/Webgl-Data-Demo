@@ -7,18 +7,18 @@
           <div class="count-wrapper">
             <span class="square-bg">
               <i class="count-title">备忘录数量</i><br>
-              <i class="num">3566</i><i>（个）</i>
+              <i class="num">{{ union.memoCount }}</i><i>（个）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">措施数量</i><br>
-              <i class="num">3566</i><i>（个）</i>
+              <i class="num">{{ union.measureCount }}</i><i>（个）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">实施部门数量</i><br>
-              <i class="num">3566</i><i>（个）</i>
+              <i class="num">{{ union.deptCount }}</i><i>（个）</i>
             </span>
           </div>
-          <chart ref="chart1" :options="pie" style="width: 100%; height: 220px;display:block;"></chart>
+          <chart ref="chart1" :options="returnPie(union.pieData)" style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title" flex="main:justify">
             <span> 数据交换流向分析</span>
             <span class="handle-btn" flex>
@@ -43,33 +43,33 @@
             <span class="square-bg data-change">
               <img src="~@/assets/images/overview/icon_data.png" alt=""><br>
               <i>交换数据总量</i><br>
-              <i class="num">8800</i><i>（个）</i>
+              <i class="num">{{ dataExchange.getIn + dataExchange.getOut }}</i><i>（个）</i>
             </span>
             <span class="square-bg data-change" flex>
               <span>
-                <i class="num">8800</i><i>（个）</i><br>
+                <i class="num">{{ dataExchange.getIn }}</i><i>（个）</i><br>
                 <i>归集数据量</i><br>
-                <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">80%</i><br>
+                <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">&nbsp;{{ dataExchange.getInCorrect }}</i><br>
               </span>
               <span>
-                <i class="num">8800</i><i>（个）</i><br>
+                <i class="num">{{ dataExchange.getOut }}</i><i>（个）</i><br>
                 <i>输出数据量</i><br>
-                <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">80%</i><br>
+                <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">&nbsp;{{ dataExchange.getOutCorrect }}</i><br>
               </span>
             </span>
             <span class="square-bg data-change mt-5" style="padding-top: 12px;">
               <i>已对接部门数</i><br>
-              <i class="num">88</i><i>（个）</i>
+              <i class="num">{{ dataExchange.dockedNormal + dataExchange.dockedAbnormal }}</i><i>（个）</i>
             </span>
             <span class="square-bg data-change mt-5">
               <span style="padding-bottom: 0; padding-top: 0;">
                 <i>任务监控</i><br>
-                <i style="line-height: 40px;">正常任务</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="num">80</i>&nbsp;&nbsp;&nbsp;&nbsp;<i
-                style="line-height: 40px;">异常</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="num">80</i>
+                <i style="line-height: 40px;">正常任务</i>&nbsp;<i class="num">{{ dataExchange.dockedNormal }}</i>&nbsp;<i
+                style="line-height: 40px;">异常</i>&nbsp;<i class="num">{{ dataExchange.dockedAbnormal }}</i>
               </span>
             </span>
           </div>
-          <chart ref="chart2" :options="bar" style="width: 100%; height: 300px;display:block;"></chart>
+          <chart ref="chart2" :options="returnBar(dataExchange.barData)" style="width: 100%; height: 300px;display:block;"></chart>
         </div>
       </template>
     </Panel>
@@ -96,28 +96,28 @@
             <div class="rotate-inner">
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[0].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[1].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[2].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[3].value}}}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
@@ -304,136 +304,6 @@
       return {
         countNumList: [3, 9, 6, 3, 6, 0, 5, 8],
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
-        pie: {
-          color: ['#34aec5', '#4065f1', '#fc9530', '#f93b3b'],
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              selectedMode: 'single',
-              radius: [0, '50%'],
-              label: {
-                position: 'inner'
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                { value: 1000, name: '惩戒' },
-                { value: 2000, name: '激励' }
-              ]
-            },
-            {
-              name: '访问来源',
-              type: 'pie',
-              selectedMode: 'single',
-              radius: ['60%', '75%'],
-              label: {
-                formatter: '  {a|{a}}  \n    {d}%   ',
-                rich: {
-                  a: {
-                    color: '#fff',
-                    lineHeight: 22,
-                    align: 'center'
-                  },
-                  hr: {
-                    borderColor: '#aaa',
-                    width: '100%',
-                    borderWidth: 0.5,
-                    height: 0
-                  },
-                  b: {
-                    fontSize: 16,
-                    lineHeight: 33
-                  },
-                  per: {
-                    color: '#eee',
-                    backgroundColor: '#334455',
-                    padding: [2, 4],
-                    borderRadius: 2
-                  }
-                }
-              },
-              data: [
-                { value: 400, name: '法人惩戒' },
-                { value: 600, name: '自然人惩戒' },
-                { value: 1400, name: '法人激励' },
-                { value: 600, name: '自然人激励' }
-              ]
-            }
-          ]
-        },
-        bar: {
-          grid: {
-            top: 20,
-            left: 50,
-            right: 10
-          },
-          legend: {
-            bottom: '2%',
-            textStyle: { color: '#fff' }
-          },
-          tooltip: {},
-          dataset: {
-            dimensions: ['product', 'collection', 'output'],
-            source: [
-              { product: '1月', 'collection': 1000, 'output': 1000 },
-              { product: '2月', 'collection': 83.1, 'output': 73.4 },
-              { product: '3月', 'collection': 86.4, 'output': 65.2 },
-              { product: '4月', 'collection': 72.4, 'output': 53.9 },
-              { product: '5月', 'collection': 72.4, 'output': 53.9 },
-              { product: '6月', 'collection': 72.4, 'output': 53.9 },
-              { product: '7月', 'collection': 72.4, 'output': 53.9 },
-              { product: '8月', 'collection': 72.4, 'output': 53.9 },
-              { product: '9月', 'collection': 72.4, 'output': 53.9 },
-              { product: '10月', 'collection': 72.4, 'output': 53.9 },
-              { product: '11月', 'collection': 72.4, 'output': 53.9 },
-              { product: '12月', 'collection': 72.4, 'output': 53.9 }
-            ]
-          },
-          xAxis: {
-            type: 'category',
-            axisLine: { lineStyle: { color: xyLineColor } },
-            boundaryGap: ['20%', '20%']
-          },
-          yAxis: {
-            axisLine: { lineStyle: { color: xyLineColor } },
-            splitLine: { lineStyle: { color: splitLineColor } }
-          },
-          series: [
-            {
-              type: 'bar',
-              barWidth: 8,
-              barGap: 0,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    { offset: 0, color: '#00befc' },
-                    { offset: 1, color: '#00befc33' }
-                  ]
-                )
-              }
-            },
-            {
-              type: 'bar',
-              barWidth: 8,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    { offset: 0, color: '#294bd5' },
-                    { offset: 1, color: '#294bd533' }
-                  ]
-                )
-              }
-            }
-          ]
-        },
         classify: {
           color: '#00abfb',
           tooltip: {
@@ -552,7 +422,50 @@
         date1: '',
         date2: '',
         dateOpen1: false,
-        dateOpen2: false
+        dateOpen2: false,
+
+        // 动态数据
+        union:{
+          memoCount:8848,
+          measureCount:9527,
+          deptCount:996,
+          pieData: {
+            inner: [
+              { value: 1000, name: '惩戒' },
+              { value: 2000, name: '激励' }
+            ],
+            outer: [
+              { value: 400, name: '法人惩戒' },
+              { value: 600, name: '自然人惩戒' },
+              { value: 1400, name: '法人激励' },
+              { value: 600, name: '自然人激励' }
+            ]
+          }
+        },
+        dataExchange: {
+          // total: 8848,
+          getIn: 4480,
+          getInCorrect: '60%',
+          getOut: 4480,
+          getOutCorrect: '40%',
+          dockedNormal: 120,
+          dockedAbnormal: 80,
+          barData: [
+            { product: '1月', 'collection': 1000, 'output': 1000 },
+            { product: '2月', 'collection': 83.1, 'output': 73.4 },
+            { product: '3月', 'collection': 86.4, 'output': 65.2 },
+            { product: '4月', 'collection': 72.4, 'output': 53.9 },
+            { product: '5月', 'collection': 72.4, 'output': 53.9 },
+            { product: '6月', 'collection': 72.4, 'output': 53.9 },
+            { product: '7月', 'collection': 72.4, 'output': 53.9 },
+            { product: '8月', 'collection': 72.4, 'output': 53.9 },
+            { product: '9月', 'collection': 72.4, 'output': 53.9 },
+            { product: '10月', 'collection': 72.4, 'output': 53.9 },
+            { product: '11月', 'collection': 72.4, 'output': 53.9 },
+            { product: '12月', 'collection': 72.4, 'output': 53.9 }
+          ]
+        },
+
       }
     },
     components: {
@@ -599,6 +512,130 @@
       handleOk() {
         this.dateOpen1 = false
         this.dateOpen2 = false
+      },
+      // 渲染pie图
+      returnPie(data){
+        return {
+          color: ['#34aec5', '#4065f1', '#fc9530', '#f93b3b'],
+            tooltip: {
+            trigger: 'item',
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              selectedMode: 'single',
+              radius: [0, '50%'],
+              label: {
+                position: 'inner'
+              },
+              labelLine: {
+                show: false
+              },
+              /*data: [
+                { value: 1000, name: '惩戒' },
+                { value: 2000, name: '激励' }
+              ]*/
+              data: data.inner
+            },
+            {
+              name: '访问来源',
+              type: 'pie',
+              selectedMode: 'single',
+              radius: ['60%', '75%'],
+              label: {
+                formatter: '  {a|{a}}  \n    {d}%   ',
+                rich: {
+                  a: {
+                    color: '#fff',
+                    lineHeight: 22,
+                    align: 'center'
+                  },
+                  hr: {
+                    borderColor: '#aaa',
+                    width: '100%',
+                    borderWidth: 0.5,
+                    height: 0
+                  },
+                  b: {
+                    fontSize: 16,
+                    lineHeight: 33
+                  },
+                  per: {
+                    color: '#eee',
+                    backgroundColor: '#334455',
+                    padding: [2, 4],
+                    borderRadius: 2
+                  }
+                }
+              },
+              /*data: [
+                { value: 400, name: '法人惩戒' },
+                { value: 600, name: '自然人惩戒' },
+                { value: 1400, name: '法人激励' },
+                { value: 600, name: '自然人激励' }
+              ],*/
+              data: data.outer
+            }
+          ]
+        }
+      },
+      returnBar(data){
+        return {
+          grid: {
+            top: 20,
+              left: 50,
+              right: 10
+          },
+          legend: {
+            bottom: '2%',
+              textStyle: { color: '#fff' }
+          },
+          tooltip: {},
+          dataset: {
+            dimensions: ['product', 'collection', 'output'],
+              source: data
+          },
+          xAxis: {
+            type: 'category',
+              axisLine: { lineStyle: { color: xyLineColor } },
+            boundaryGap: ['20%', '20%']
+          },
+          yAxis: {
+            axisLine: { lineStyle: { color: xyLineColor } },
+            splitLine: { lineStyle: { color: splitLineColor } }
+          },
+          series: [
+            {
+              type: 'bar',
+              barWidth: 8,
+              barGap: 0,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 0, 1,
+                  [
+                    { offset: 0, color: '#00befc' },
+                    { offset: 1, color: '#00befc33' }
+                  ]
+                )
+              }
+            },
+            {
+              type: 'bar',
+              barWidth: 8,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 0, 1,
+                  [
+                    { offset: 0, color: '#294bd5' },
+                    { offset: 1, color: '#294bd533' }
+                  ]
+                )
+              }
+            }
+          ]
+        }
       }
     }
   }

@@ -144,6 +144,11 @@
         }, 100)
       },
       renderMap(paramObj) {
+        var effect='#06eaed'
+        var flyLine='#ffffff'
+        var border='#105689'
+        var bg='rgba(2,10,34,0.8)'
+        var bg1='#040c22'
         var chinaGeoCoordMap = {
           '黑龙江': [126.642464, 47.756967],
           '内蒙古': [110.3467, 41.4899],
@@ -307,7 +312,7 @@
                 symbolSize: [5, 10] // 图标大小
               },
               lineStyle: {
-                color: 'rgba(0,239,227,0.4)',
+                color: flyLine,
                 width: 1, // 尾迹线条宽度
                 opacity: 0.1, // 尾迹线条透明度
                 curveness: 0.8 // 尾迹线条曲直度
@@ -345,7 +350,7 @@
               itemStyle: {
                 normal: {
                   show: false,
-                  color: '#f4e925'
+                  color: effect
                 }
               },
               data: item[1].map(function (dataItem) {
@@ -423,9 +428,9 @@
               normal: {
                 color: 'rgba(51, 69, 89, 0.2)', // 地图背景色
                 // color:'#0f1d37',
-                borderColor: '#029fd4', // 省市边界线00fcff 516a89
+                borderColor: border, // 省市边界线00fcff 516a89
                 borderWidth: 1,
-                shadowColor: 'rgba(10, 50, 100, 0.5)',
+                shadowColor: bg,
                 shadowBlur: 4
               },
               emphasis: {

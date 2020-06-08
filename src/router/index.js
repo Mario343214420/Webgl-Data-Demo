@@ -7,6 +7,7 @@ const Home = () => import('../pages/data/home/Home')
 // const Overview2 = () => import('../pages/data/overview/Overview2')
 const Overview = () => import('../pages/data/overview/Overview')
 const Summary = () => import('../pages/data/summary/Summary')
+const SummaryMap = () => import('../pages/data/summary/SummaryCopy')
 const Public = () => import('../pages/data/public/Public')
 const Union = () => import('../pages/data/union/Union')
 const Map = () => import('../pages/data/map/Map')
@@ -47,7 +48,7 @@ const router = new VueRouter({
     },
     {
       path: '/map',
-      component: Map
+      component: SummaryMap
     },
     {
       path: '/',
