@@ -117,21 +117,21 @@
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">{{ rotateData[3].value}}}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[3].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[4].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>自然人基础信息</i></p>
-                <p><i class="num">266666</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[5].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
@@ -465,7 +465,32 @@
             { product: '12月', 'collection': 72.4, 'output': 53.9 }
           ]
         },
-
+        rotateData: [
+          {
+            name:'label first',
+            value:'8848'
+          },
+          {
+            name:'',
+            value:'8848'
+          },
+          {
+            name:'',
+            value:'8848'
+          },
+          {
+            name:'',
+            value:'8848'
+          },
+          {
+            name:'',
+            value:'8848'
+          },
+          {
+            name:'',
+            value:'8848'
+          },
+        ]
       }
     },
     components: {
