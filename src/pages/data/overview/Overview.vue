@@ -95,42 +95,42 @@
           <div class="rotate">
             <div class="rotate-inner">
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[0].name }}</i></p>
                 <p><i class="num">{{ rotateData[0].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[1].name }}</i></p>
                 <p><i class="num">{{ rotateData[1].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[2].name }}</i></p>
                 <p><i class="num">{{ rotateData[2].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[3].name }}</i></p>
                 <p><i class="num">{{ rotateData[3].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[4].name }}</i></p>
                 <p><i class="num">{{ rotateData[4].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
-                <p><i>自然人基础信息</i></p>
+                <p><i>{{ rotateData[5].name }}</i></p>
                 <p><i class="num">{{ rotateData[5].value }}</i><i>(个)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
@@ -155,7 +155,7 @@
                 <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                 <span>
                   <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ signCom }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
@@ -302,7 +302,6 @@
     name: 'Overview1',
     data() {
       return {
-        countNumList: [3, 9, 6, 3, 6, 0, 5, 8],
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
         classify: {
           color: '#00abfb',
@@ -365,16 +364,20 @@
         },
         area: {
           dataset: {
-            source: [{ product: '1月', count: 1006 }, { product: '2月', count: 1006 }, {
-              product: '3月',
-              count: 1007
-            }, { product: '4月', count: 1002 }, { product: '5月', count: 1010 }, {
-              product: '6月',
-              count: 1007
-            }, { product: '7月', count: 1008 }, { product: '8月', count: 1010 }, {
-              product: '9月',
-              count: 1006
-            }, { product: '10月', count: 1011 }, { product: '11月', count: 1006 }, { product: '12月', count: 1003 }]
+            source: [
+              { product: '1月', count: 1006 },
+              { product: '2月', count: 1006 },
+              { product: '3月', count: 1007 },
+              { product: '4月', count: 1002 },
+              { product: '5月', count: 1010 },
+              { product: '6月', count: 1007 },
+              { product: '7月', count: 1008 },
+              { product: '8月', count: 1010 },
+              { product: '9月', count: 1006 },
+              { product: '10月', count: 1011 },
+              { product: '11月', count: 1006 },
+              { product: '12月', count: 1003 }
+            ]
           },
           grid: {
             left: '3%',
@@ -425,6 +428,7 @@
         dateOpen2: false,
 
         // 动态数据
+        countNumList: [3, 9, 6, 3, 6, 0, 5, 8],
         union:{
           memoCount:8848,
           measureCount:9527,
@@ -451,7 +455,7 @@
           dockedNormal: 120,
           dockedAbnormal: 80,
           barData: [
-            { product: '1月', 'collection': 1000, 'output': 1000 },
+            { product: '1月', 'collection': 100, 'output': 100 },
             { product: '2月', 'collection': 83.1, 'output': 73.4 },
             { product: '3月', 'collection': 86.4, 'output': 65.2 },
             { product: '4月', 'collection': 72.4, 'output': 53.9 },
@@ -467,27 +471,27 @@
         },
         rotateData: [
           {
-            name:'label first',
+            name:'label 1st',
             value:'8848'
           },
           {
-            name:'',
+            name:'label 2ed',
             value:'8848'
           },
           {
-            name:'',
+            name:'label 3rd',
             value:'8848'
           },
           {
-            name:'',
+            name:'label 4th',
             value:'8848'
           },
           {
-            name:'',
+            name:'label 5th',
             value:'8848'
           },
           {
-            name:'',
+            name:'label 6th',
             value:'8848'
           },
         ]
@@ -624,10 +628,11 @@
           },
           xAxis: {
             type: 'category',
-              axisLine: { lineStyle: { color: xyLineColor } },
+            axisLine: { lineStyle: { color: xyLineColor } },
             boundaryGap: ['20%', '20%']
           },
           yAxis: {
+            boundaryGap: ['20%', '20%'],
             axisLine: { lineStyle: { color: xyLineColor } },
             splitLine: { lineStyle: { color: splitLineColor } }
           },
