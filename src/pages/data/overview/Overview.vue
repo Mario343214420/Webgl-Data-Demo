@@ -155,28 +155,28 @@
                 <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                 <span>
                   <p class="white-font">有关认证企业</p>
-                  <p><i class="num">{{ signCom }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redList.signCom }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">A级纳税人</p>
+                  <p><i class="num">{{ redList.taxpayer  }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">社会法人诚实守信</p>
+                  <p><i class="num">{{ redList.corp }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">优秀青年志愿者</p>
+                  <p><i class="num">{{ redList.volunteer }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
             </div>
@@ -192,29 +192,29 @@
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">失信被执行人</p>
+                  <p><i class="num">{{ blackList.performed }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">重大税收违法案件</p>
+                  <p><i class="num">{{ blackList.case }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">拖欠农民工工资</p>
+                  <p><i class="num">{{ blackList.unpaid }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">严重失信债务人</p>
+                  <p><i class="num">{{ blackList.lose }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
             </div>
@@ -231,22 +231,22 @@
           <div class="count-wrapper">
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">一级分类</i><br>
-              <i class="num">7</i><i>（个）</i>
+              <i class="num">{{ classify.lv1 }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">二级分类</i><br>
-              <i class="num">7</i><i>（个）</i>
+              <i class="num">{{ classify.lv2 }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">资源数</i>
-              <i class="num">7</i><i>（个）</i>
+              <i class="num">{{ classify.lv3 }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">部门数</i>
-              <i class="num">7</i><i>（个）</i>
+              <i class="num">{{ classify.lv4 }}</i><i>（个）</i>
             </div>
           </div>
-          <chart ref="chart2" :options="classify" style="width: 100%; height: 220px;display:block;"></chart>
+          <chart ref="chart2" :options="classifyChart" style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title" style="margin-top: 10px;" flex="main:justify">
             <span>信用报告查询趋势分析</span>
             <span class="handle-btn" flex>
@@ -303,7 +303,8 @@
     data() {
       return {
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
-        classify: {
+        // chart
+        classifyChart: {
           color: '#00abfb',
           tooltip: {
             trigger: 'axis',
@@ -320,15 +321,15 @@
           },
           dataset: {
             source: [
-              ['product', '辅助', '生活费'],
-              ['基础信息', 0, 100],
-              ['业务信息', 100, 100],
-              ['司法信息', 200, 100],
-              ['行政执法信息', 300, 100],
-              ['公共事业信息', 400, 100],
-              ['信用评级信息', 500, 100],
-              ['其他信息', 600, 100],
-              ['累计', 0, 700]
+              ['product', '信息量'],
+              ['基础信息', 80],
+              ['业务信息', 100],
+              ['司法信息', 20],
+              ['行政执法信息', 300],
+              ['公共事业信息', 400],
+              ['信用评级信息', 500],
+              ['其他信息', 600],
+              ['累计', 700]
             ]
           },
           xAxis: {
@@ -343,7 +344,6 @@
           },
           yAxis: {
             type: 'category',
-            data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
             axisLine: {
               lineStyle: {
                 color: xyLineColor
@@ -471,30 +471,32 @@
         },
         rotateData: [
           {
-            name:'label 1st',
-            value:'8848'
+            name:'自然人基础信息',
+            value:'264531'
           },
           {
-            name:'label 2ed',
-            value:'8848'
+            name:'自然人人均数量',
+            value:'14'
           },
           {
-            name:'label 3rd',
-            value:'8848'
+            name:'法人人均数量',
+            value:'16'
           },
           {
-            name:'label 4th',
-            value:'8848'
+            name:'法人信用信息',
+            value:'23655'
           },
           {
-            name:'label 5th',
-            value:'8848'
+            name:'自然人信用信息',
+            value:'36542'
           },
           {
-            name:'label 6th',
-            value:'8848'
+            name:'法人基础信息',
+            value:'32456'
           },
-        ]
+        ],
+        redList:{ signCom: 4456, taxpayer: 7413, corp:1142, volunteer:5541 },
+        blackList:{ performed: 236, case: 713, unpaid:112, lose:141 }
       }
     },
     components: {
@@ -516,6 +518,11 @@
       setTimeout(() => {
         window.clearInterval(change)
       }, 1000)
+    },
+    computed: {
+      classify (){
+        return { lv1:10, lv2: 15, lv3: 18, lv4:13 }
+      }
     },
     methods: {
       reSum(arr, key) {
@@ -940,6 +947,7 @@
             padding 10px
 
         .msg-list
+          padding-top: 20px
           .msg-list-item
             width: 50%
 
@@ -948,6 +956,8 @@
               margin-right: 10px
               width: 52px
               height: 52px
+            span
+              width: 112px
 
   .rotate
     position absolute
@@ -989,7 +999,7 @@
         p
           text-align center
           transform rotateX(-60deg)
-
+          height: 32px;
         div
           position absolute
           left: 50%

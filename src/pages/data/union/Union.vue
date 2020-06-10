@@ -66,7 +66,7 @@
               </div>
             </template>
             <template slot="content">
-              <div class="red-black-wrapper" flex="dir:top">
+              <div class="red-black-wrapper" style="padding-top: 30px;" flex="dir:top">
                 <div class="container">
                   <div class="red-list">
                     <img src="~@/assets/images/overview/icon_hong.png" alt="">
@@ -78,7 +78,7 @@
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
+                  <p class="white-font">有关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
@@ -277,7 +277,7 @@
             </template>
             <template slot="content">
               <chart ref="chart5" :options="measure"
-                     style="width: 100%; height: 260px;"></chart>
+                     style="width: 100%; height: 260px;margin-top: 10px;"></chart>
             </template>
           </Card>
           <Card style="height: 270px;">
@@ -567,7 +567,7 @@
             left: 10,
             right: 10,
             bottom: 0,
-            top: '8%'
+            top: '10%'
           },
           xAxis: {
             show: false,
@@ -782,7 +782,9 @@
 
       .container
         width 100%
-
+        padding-top: 10px
+        .white-font
+          color #fff
         .red-list
           padding-bottom: 10px
           text-align center
@@ -799,9 +801,8 @@
         .msg-list
           .msg-list-item
             width: 50%
-
+            padding-top: 15px
             .rb-icon
-              margin-top: 15px
               margin-right: 10px
               width: 52px
               height: 52px

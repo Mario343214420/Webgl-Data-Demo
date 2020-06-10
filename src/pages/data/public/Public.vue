@@ -158,14 +158,14 @@
                   <div class="new-item" flex="space:around cross:center">
                     <img src="~@/assets/images/public/xuke.png" alt="">
                     <span>
-                      <i>行政许可数量</i><br>
+                      <i class="white-font">行政许可数量</i><br>
                       <i class="num">3566</i><i>个</i>
                     </span>
                   </div>
                   <div class="new-item" flex="space:around cross:center">
                     <img src="~@/assets/images/public/chufa.png" alt="">
                     <span>
-                      <i>行政许可数量</i><br>
+                      <i class="white-font">行政许可数量</i><br>
                       <i class="num">3566</i><i>个</i>
                     </span>
                   </div>

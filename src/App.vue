@@ -27,7 +27,7 @@
           case '/union':
             return '联合奖惩专题'
           case '/map':
-            return '数据归集专题方案二'
+            return '区域数据归集'
         }
       }
     }
@@ -92,4 +92,6 @@
     line-height: 40px
     padding 10px 0
     letter-spacing 10px
+  .white-font
+    color #fff
 </style>

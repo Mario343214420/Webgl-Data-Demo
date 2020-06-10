@@ -22,7 +22,7 @@
         <router-link to="/summary">数据归集专题</router-link>
         <router-link to="/public">双公示专题</router-link>
         <router-link to="/union">联合奖惩专题</router-link>
-        <router-link to="/map">地图专栏</router-link>
+        <router-link to="/map">区域数据归集</router-link>
         <!--<a href="javascript:;">信用评级专题</a>-->
       </div>
     </div>
