@@ -7,15 +7,15 @@
           <div class="count-wrapper">
             <span class="square-bg">
               <i class="count-title">备忘录数量</i><br>
-              <i class="num">{{ union.memoCount }}</i><i>（个）</i>
+              <i class="num">{{ union.memoCount }}</i><i class="white-font">（个）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">措施数量</i><br>
-              <i class="num">{{ union.measureCount }}</i><i>（个）</i>
+              <i class="num">{{ union.measureCount }}</i><i class="white-font">（个）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">实施部门数量</i><br>
-              <i class="num">{{ union.deptCount }}</i><i>（个）</i>
+              <i class="num">{{ union.deptCount }}</i><i class="white-font">（个）</i>
             </span>
           </div>
           <chart ref="chart1" :options="returnPie(union.pieData)" style="width: 100%; height: 220px;display:block;"></chart>
@@ -967,7 +967,7 @@
     width ($rotateW) px
     height: ($rotateH) px
     transform-style preserve-3d
-    transform perspective(1000) rotateX(-10deg)
+    // transform rotateX(-10deg)
     // background-color: #fff
     animation rotate3d linear 30s infinite
     z-index 20
@@ -989,8 +989,8 @@
 
       .inner-item
         animation rotate3dOpposite linear infinite 30s
-        transform-style preserve-3d
-        transform perspective(1000)
+        // transform-style preserve-3d
+        // transform perspective(1000)
         text-align center
         width: ($itemW) px
         height: ($itemH) px
@@ -998,7 +998,7 @@
 
         p
           text-align center
-          transform rotateX(-60deg)
+          transform rotateX(10deg) scaleY(2)
           height: 32px;
         div
           position absolute
@@ -1007,7 +1007,7 @@
           width: 120px
           height: 105px
           text-align center
-          transform translateX(-50%) rotateX(-60deg)
+          transform translateX(-50%) rotateX(10deg) scaleY(2)
           background-image: url('~@/assets/images/overview/pan.png')
           background-position: center bottom
           -webkit-background-size: contain
