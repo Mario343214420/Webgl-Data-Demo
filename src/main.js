@@ -1,5 +1,6 @@
 import '@babel/polyfill'
 import Vue from 'vue'
+// import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -11,7 +12,7 @@ import 'echarts/lib/chart/bar'
 import { Calendar } from 'element-ui'
 import './assets/styles/calendar.styl'
 // mock
-import './mock'
+import './mock/mockServer'
 
 Vue.use(BinAdmin)
 // Vue.component(Subarea)

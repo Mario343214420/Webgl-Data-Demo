@@ -295,11 +295,12 @@
 <script>
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
+  import {mapState} from 'vuex'
   // 统一变量
   const xyLineColor = '#535e83'
   const splitLineColor = '#283353'
   export default {
-    name: 'Overview1',
+    name: 'Overview',
     data() {
       return {
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
@@ -506,25 +507,39 @@
       for (let i = 0; i < 5; i++) {
         this.deptList.push(this.deptList[0])
       }
-    },
-    mounted() {
-      let change = setInterval(() => {
-        let arr = []
-        this.countNumList.forEach(item => {
-          arr.push(parseInt(Math.random() * 10))
-        })
-        this.countNumList = arr
-      }, 20)
-      setTimeout(() => {
-        window.clearInterval(change)
-      }, 1000)
+      this.$store.dispatch('getOverview').then(()=>{
+        // console.log(this.overview)
+        this.initData()
+      })
     },
     computed: {
       classify (){
         return { lv1:10, lv2: 15, lv3: 18, lv4:13 }
+      },
+      ...mapState(['overview'])
+    },
+    watch: {
+      date1: (n,o) => {
+        console.log(n)
+        if(n !== ''){
+          this.handleBtnTab = 2
+        }
+      },
+      handleBtnTab: () => {
+
       }
     },
     methods: {
+      initData(){
+        this.countNumList = this.overview.countNumList
+        this.union = this.overview.union
+        this.dataExchange = this.overview.dataExchange
+        this.rotateData = this.overview.rotateData
+        this.redList = this.overview.redList
+        this.blackList = this.overview.blackList
+
+        this.numChange()
+      },
       reSum(arr, key) {
         let sum = 0
         arr.forEach((item) => {
@@ -673,6 +688,20 @@
             }
           ]
         }
+      },
+      numChange(){
+        let copy = JSON.parse(JSON.stringify(this.countNumList))
+        let change = setInterval(() => {
+          let arr = []
+          this.countNumList.forEach(item => {
+            arr.push(parseInt(Math.random() * 10))
+          })
+          this.countNumList = arr
+        }, 20)
+        setTimeout(() => {
+          window.clearInterval(change)
+          this.countNumList = copy
+        }, 1000)
       }
     }
   }
@@ -950,9 +979,8 @@
           padding-top: 20px
           .msg-list-item
             width: 50%
-
+            margin-top: 15px
             .rb-icon
-              margin-top: 15px
               margin-right: 10px
               width: 52px
               height: 52px

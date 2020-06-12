@@ -11,15 +11,15 @@ module.exports = {
     ? './'
     : '/',
   // dev跨域问题
-  // devServer: {
-  //   proxy: {
-  //     '/auth': { target: 'http://localhost:8082/' },
-  //     '/user': { target: 'http://localhost:8082/' },
-  //     '/management': { target: 'http://localhost:8082/' },
-  //     '/api': { target: 'http://localhost:8082/' },
-  //     '/da': { target: 'http://localhost:8082/' }
-  //   }
-  // },
+  devServer: {
+    proxy: {
+      '/overview': { target: 'http://localhost:8082/' },
+      '/public': { target: 'http://localhost:8082/' },
+      '/union': { target: 'http://localhost:8082/' },
+      '/map': { target: 'http://localhost:8082/' },
+      '/summary': { target: 'http://localhost:8082/' }
+    }
+  },
   productionSourceMap: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
   assetsDir: 'static',
