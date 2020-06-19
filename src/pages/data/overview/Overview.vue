@@ -323,9 +323,6 @@
       })
     },
     computed: {
-      classify() {
-        return { lv1: 10, lv2: 15, lv3: 18, lv4: 13 }
-      },
       ...mapState({
         union: state => state.overview.union,
         dataExchange: state => state.overview.dataExchange,
