@@ -18,7 +18,8 @@
               <i class="num">{{ union.deptCount }}</i><i class="white-font">（个）</i>
             </span>
           </div>
-          <chart ref="chart1" :options="returnPie(union.pieData)" style="width: 100%; height: 220px;display:block;"></chart>
+          <chart ref="chart1" :options="returnPie(union.chartData)"
+                 style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title" flex="main:justify">
             <span> 数据交换流向分析</span>
             <span class="handle-btn" flex>
@@ -69,7 +70,8 @@
               </span>
             </span>
           </div>
-          <chart ref="chart2" :options="returnBar(dataExchange.barData)" style="width: 100%; height: 300px;display:block;"></chart>
+          <chart ref="chart2" :options="returnBar(dataExchange.chartData)"
+                 style="width: 100%; height: 300px;display:block;"></chart>
         </div>
       </template>
     </Panel>
@@ -78,7 +80,7 @@
         <div class="inner" style="overflow: hidden; width: 800px">
           <div class="total-count">
             <i>数据归集总量</i>
-            <i v-for="(item, index) in countNumList" :key="index" class="total-num" :class="'num' + item"></i>
+            <i v-for="(item, index) in total" :key="index" class="total-num" :class="'num' + item"></i>
           </div>
           <div class="cube">
             <div class="inner-float"></div>
@@ -147,36 +149,36 @@
             <div class="red-list">
               <img src="~@/assets/images/overview/icon_hong.png" alt="">
               <i class="white-font">红名单</i>
-              <i class="num">12566</i>
+              <i class="num">{{ getKeysTotal(redBlackList.redList) }}</i>
               <i class="white-font">（个）</i>
             </div>
             <div class="msg-list" flex="wrap:wrap">
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                 <span>
-                  <p class="white-font">有关认证企业</p>
-                  <p><i class="num">{{ redList.signCom }}</i><i class="white-font">（个）</i></p>
+                  <p class="white-font">海关认证企业</p>
+                  <p><i class="num">{{ redBlackList.redList.signCom }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                 <span>
                   <p class="white-font">A级纳税人</p>
-                  <p><i class="num">{{ redList.taxpayer  }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.redList.taxpayer  }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                 <span>
                   <p class="white-font">社会法人诚实守信</p>
-                  <p><i class="num">{{ redList.corp }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.redList.corp }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                 <span>
                   <p class="white-font">优秀青年志愿者</p>
-                  <p><i class="num">{{ redList.volunteer }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.redList.volunteer }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
             </div>
@@ -185,7 +187,7 @@
             <div class="red-list">
               <img src="~@/assets/images/overview/icon_hei.png" alt="">
               <i class="white-font">黑名单</i>
-              <i class="num">12566</i>
+              <i class="num">{{ getKeysTotal(redBlackList.blackList) }}</i>
               <i class="white-font">（个）</i>
             </div>
             <div class="msg-list" flex="wrap:wrap">
@@ -193,28 +195,28 @@
                 <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                 <span>
                   <p class="white-font">失信被执行人</p>
-                  <p><i class="num">{{ blackList.performed }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.blackList.performed }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                 <span>
                   <p class="white-font">重大税收违法案件</p>
-                  <p><i class="num">{{ blackList.case }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.blackList.case }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                 <span>
                   <p class="white-font">拖欠农民工工资</p>
-                  <p><i class="num">{{ blackList.unpaid }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.blackList.unpaid }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
               <div class="msg-list-item" flex="main:center">
                 <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                 <span>
                   <p class="white-font">严重失信债务人</p>
-                  <p><i class="num">{{ blackList.lose }}</i><i class="white-font">（个）</i></p>
+                  <p><i class="num">{{ redBlackList.blackList.lose }}</i><i class="white-font">（个）</i></p>
                 </span>
               </div>
             </div>
@@ -226,27 +228,27 @@
       <template slot="inner">
         <div style="height: 100%" flex="main:justify dir:top">
           <div class="title">
-            资源信息分类统计
+            部门数据归集统计分析
           </div>
           <div class="count-wrapper">
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">一级分类</i><br>
-              <i class="num">{{ classify.lv1 }}</i><i>（个）</i>
+              <i class="num">{{ collection.lv1 }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">二级分类</i><br>
-              <i class="num">{{ classify.lv2 }}</i><i>（个）</i>
+              <i class="num">{{ collection.lv2 }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">资源数</i>
-              <i class="num">{{ classify.lv3 }}</i><i>（个）</i>
+              <i class="num">{{ collection.resourceCount }}</i><i>（个）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">部门数</i>
-              <i class="num">{{ classify.lv4 }}</i><i>（个）</i>
+              <i class="num">{{ collection.deptCount }}</i><i>（个）</i>
             </div>
           </div>
-          <chart ref="chart2" :options="classifyChart" style="width: 100%; height: 220px;display:block;"></chart>
+          <chart ref="chart2" :options="returnCollection(collection.chartData)" style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title" style="margin-top: 10px;" flex="main:justify">
             <span>信用报告查询趋势分析</span>
             <span class="handle-btn" flex>
@@ -269,8 +271,8 @@
               </b-date-picker>
             </span>
           </div>
-          <div class="chart-msg-bar">信用报告查询总次数：{{ reSum(area.dataset.source, 'count') }}（次）</div>
-          <chart ref="chart2" :options="area" style="width: 100%; height: 220px;display:block;"></chart>
+          <div class="chart-msg-bar">信用报告查询总次数：{{ reSum(report.chartData, 'count') }}（次）</div>
+          <chart ref="chart2" :options="returnArea(report.chartData)" style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title">
             数据提报部门
           </div>
@@ -280,7 +282,7 @@
               <span class="list-header" flex-box="1">数量</span>
               <span class="list-header" flex-box="1">入库率</span>
             </div>
-            <div class="body-wrapper" flex="main:justify" v-for="(item, index) in deptList" :key="index">
+            <div class="body-wrapper" flex="main:justify" v-for="(item, index) in submission" :key="index">
               <span flex-box="1">{{item.name}}</span>
               <span flex-box="1">{{item.count}}</span>
               <span flex-box="1">{{item.percent}}</span>
@@ -295,7 +297,7 @@
 <script>
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
   // 统一变量
   const xyLineColor = '#535e83'
   const splitLineColor = '#283353'
@@ -305,223 +307,40 @@
       return {
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
         // chart
-        classifyChart: {
-          color: '#00abfb',
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: { // 坐标轴指示器，坐标轴触发有效
-              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: 0,
-            top: '12%',
-            containLabel: true
-          },
-          dataset: {
-            source: [
-              ['product', '信息量'],
-              ['基础信息', 80],
-              ['业务信息', 100],
-              ['司法信息', 20],
-              ['行政执法信息', 300],
-              ['公共事业信息', 400],
-              ['信用评级信息', 500],
-              ['其他信息', 600],
-              ['累计', 700]
-            ]
-          },
-          xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            splitLine: { lineStyle: { color: splitLineColor } }
-          },
-          yAxis: {
-            type: 'category',
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            inverse: true
-          },
-          series: [
-            {
-              type: 'bar',
-              barWidth: 10,
-              itemStyle: {
-                barBorderRadius: 8
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
-            }
-          ]
-        },
-        area: {
-          dataset: {
-            source: [
-              { product: '1月', count: 1006 },
-              { product: '2月', count: 1006 },
-              { product: '3月', count: 1007 },
-              { product: '4月', count: 1002 },
-              { product: '5月', count: 1010 },
-              { product: '6月', count: 1007 },
-              { product: '7月', count: 1008 },
-              { product: '8月', count: 1010 },
-              { product: '9月', count: 1006 },
-              { product: '10月', count: 1011 },
-              { product: '11月', count: 1006 },
-              { product: '12月', count: 1003 }
-            ]
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top: '6%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            axisLine: { lineStyle: { color: xyLineColor } }
-          },
-          yAxis: {
-            type: 'value',
-            axisLine: { lineStyle: { color: xyLineColor } },
-            splitLine: { lineStyle: { color: splitLineColor } },
-            max: function (value) {
-              return value.min - 1
-            },
-            min: function (value) {
-              return value.max + 1
-            }
-          },
-          series: [{
-            type: 'line',
-            itemStyle: {
-              color: 'rgba(2,203,255,1)'
-            },
-            areaStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: 'rgba(2,203,255,0.8)'
-              }, {
-                offset: 1,
-                color: 'rgba(2,203,255,0.2)'
-              }])
-            }
-          }]
-        },
-        deptList: [
-          { name: '部门名称', count: 56987, percent: '95%' }
-        ],
         handleBtnTab: 0,
         date1: '',
         date2: '',
         dateOpen1: false,
         dateOpen2: false,
-
-        // 动态数据
-        countNumList: [3, 9, 6, 3, 6, 0, 5, 8],
-        union:{
-          memoCount:8848,
-          measureCount:9527,
-          deptCount:996,
-          pieData: {
-            inner: [
-              { value: 1000, name: '惩戒' },
-              { value: 2000, name: '激励' }
-            ],
-            outer: [
-              { value: 400, name: '法人惩戒' },
-              { value: 600, name: '自然人惩戒' },
-              { value: 1400, name: '法人激励' },
-              { value: 600, name: '自然人激励' }
-            ]
-          }
-        },
-        dataExchange: {
-          // total: 8848,
-          getIn: 4480,
-          getInCorrect: '60%',
-          getOut: 4480,
-          getOutCorrect: '40%',
-          dockedNormal: 120,
-          dockedAbnormal: 80,
-          barData: [
-            { product: '1月', 'collection': 100, 'output': 100 },
-            { product: '2月', 'collection': 83.1, 'output': 73.4 },
-            { product: '3月', 'collection': 86.4, 'output': 65.2 },
-            { product: '4月', 'collection': 72.4, 'output': 53.9 },
-            { product: '5月', 'collection': 72.4, 'output': 53.9 },
-            { product: '6月', 'collection': 72.4, 'output': 53.9 },
-            { product: '7月', 'collection': 72.4, 'output': 53.9 },
-            { product: '8月', 'collection': 72.4, 'output': 53.9 },
-            { product: '9月', 'collection': 72.4, 'output': 53.9 },
-            { product: '10月', 'collection': 72.4, 'output': 53.9 },
-            { product: '11月', 'collection': 72.4, 'output': 53.9 },
-            { product: '12月', 'collection': 72.4, 'output': 53.9 }
-          ]
-        },
-        rotateData: [
-          {
-            name:'自然人基础信息',
-            value:'264531'
-          },
-          {
-            name:'自然人人均数量',
-            value:'14'
-          },
-          {
-            name:'法人人均数量',
-            value:'16'
-          },
-          {
-            name:'法人信用信息',
-            value:'23655'
-          },
-          {
-            name:'自然人信用信息',
-            value:'36542'
-          },
-          {
-            name:'法人基础信息',
-            value:'32456'
-          },
-        ],
-        redList:{ signCom: 4456, taxpayer: 7413, corp:1142, volunteer:5541 },
-        blackList:{ performed: 236, case: 713, unpaid:112, lose:141 }
       }
     },
     components: {
       Panel
     },
     created() {
-      for (let i = 0; i < 5; i++) {
-        this.deptList.push(this.deptList[0])
-      }
-      this.$store.dispatch('getOverview').then(()=>{
-        // console.log(this.overview)
+      this.$store.dispatch('getOverview').then(() => {
         this.initData()
       })
     },
     computed: {
-      classify (){
-        return { lv1:10, lv2: 15, lv3: 18, lv4:13 }
+      classify() {
+        return { lv1: 10, lv2: 15, lv3: 18, lv4: 13 }
       },
-      ...mapState(['overview'])
+      ...mapState({
+        union: state => state.overview.union,
+        dataExchange: state => state.overview.dataExchange,
+        total: state => state.overview.total,
+        rotateData: state => state.overview.rotateData,
+        redBlackList: state => state.overview.redBlackList,
+        collection: state => state.overview.collection,
+        report: state => state.overview.report,
+        submission: state => state.overview.submission
+      })
     },
     watch: {
-      date1: (n,o) => {
+      date1: (n, o) => {
         console.log(n)
-        if(n !== ''){
+        if (n !== '') {
           this.handleBtnTab = 2
         }
       },
@@ -530,15 +349,15 @@
       }
     },
     methods: {
-      initData(){
-        this.countNumList = this.overview.countNumList
-        this.union = this.overview.union
-        this.dataExchange = this.overview.dataExchange
-        this.rotateData = this.overview.rotateData
-        this.redList = this.overview.redList
-        this.blackList = this.overview.blackList
-
-        this.numChange()
+      getKeysTotal(data) {
+        const keyList = Object.keys(data)
+        let sum = keyList.reduce((total, item) => {
+          return total + data[item]
+        }, 0)
+        return sum
+      },
+      initData() {
+        this.numChange(this.$store.overview.total)
       },
       reSum(arr, key) {
         let sum = 0
@@ -565,12 +384,12 @@
         this.dateOpen2 = false
       },
       // 渲染pie图
-      returnPie(data){
+      returnPie(data) {
         return {
           color: ['#34aec5', '#4065f1', '#fc9530', '#f93b3b'],
-            tooltip: {
+          tooltip: {
             trigger: 'item',
-              formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           series: [
             {
@@ -584,10 +403,10 @@
               labelLine: {
                 show: false
               },
-              /*data: [
+              /* data: [
                 { value: 1000, name: '惩戒' },
                 { value: 2000, name: '激励' }
-              ]*/
+              ] */
               data: data.inner
             },
             {
@@ -621,32 +440,32 @@
                   }
                 }
               },
-              /*data: [
+              /* data: [
                 { value: 400, name: '法人惩戒' },
                 { value: 600, name: '自然人惩戒' },
                 { value: 1400, name: '法人激励' },
                 { value: 600, name: '自然人激励' }
-              ],*/
+              ], */
               data: data.outer
             }
           ]
         }
       },
-      returnBar(data){
+      returnBar(data) {
         return {
           grid: {
             top: 20,
-              left: 50,
-              right: 10
+            left: 50,
+            right: 10
           },
           legend: {
             bottom: '2%',
-              textStyle: { color: '#fff' }
+            textStyle: { color: '#fff' }
           },
           tooltip: {},
           dataset: {
             dimensions: ['product', 'collection', 'output'],
-              source: data
+            source: data
           },
           xAxis: {
             type: 'category',
@@ -689,18 +508,113 @@
           ]
         }
       },
-      numChange(){
-        let copy = JSON.parse(JSON.stringify(this.countNumList))
+      returnCollection(data){
+        return {
+          color: '#00abfb',
+            tooltip: {
+          trigger: 'axis',
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+          grid: {
+            left: '3%',
+              right: '4%',
+              bottom: 0,
+              top: '12%',
+              containLabel: true
+          },
+          dataset: {
+            source: data
+          },
+          xAxis: {
+            type: 'value',
+              boundaryGap: [0, 0.01],
+              axisLine: {
+              lineStyle: {
+                color: xyLineColor
+              }
+            },
+            splitLine: { lineStyle: { color: splitLineColor } }
+          },
+          yAxis: {
+            type: 'category',
+              axisLine: {
+              lineStyle: {
+                color: xyLineColor
+              }
+            },
+            inverse: true
+          },
+          series: [
+            {
+              type: 'bar',
+              barWidth: 10,
+              itemStyle: {
+                barBorderRadius: 8
+              },
+              data: [1100, 800, 550, 350, 200, 100, 80]
+            }
+          ]
+        }
+      },
+      returnArea(data){
+        return {
+          dataset: {
+            source: data
+          },
+          grid: {
+            left: '3%',
+              right: '4%',
+              bottom: '3%',
+              top: '6%',
+              containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+              boundaryGap: false,
+              axisLine: { lineStyle: { color: xyLineColor } }
+          },
+          yAxis: {
+            type: 'value',
+              axisLine: { lineStyle: { color: xyLineColor } },
+            splitLine: { lineStyle: { color: splitLineColor } },
+            max: function (value) {
+              return value.min - 1
+            },
+            min: function (value) {
+              return value.max + 1
+            }
+          },
+          series: [{
+            type: 'line',
+            itemStyle: {
+              color: 'rgba(2,203,255,1)'
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: 'rgba(2,203,255,0.8)'
+              }, {
+                offset: 1,
+                color: 'rgba(2,203,255,0.2)'
+              }])
+            }
+          }]
+        }
+      },
+      numChange(num) {
+        let copy = JSON.parse(JSON.stringify(num))
         let change = setInterval(() => {
           let arr = []
-          this.countNumList.forEach(item => {
+          num.forEach(item => {
             arr.push(parseInt(Math.random() * 10))
           })
-          this.countNumList = arr
+          num = arr
         }, 20)
         setTimeout(() => {
           window.clearInterval(change)
-          this.countNumList = copy
+          num = copy
         }, 1000)
       }
     }
@@ -822,7 +736,7 @@
     .inner
       position relative
       width ($rotateW) px
-      height: 640 px
+      height: 640px
       margin 0 auto
 
       .total-count
@@ -977,13 +891,16 @@
 
         .msg-list
           padding-top: 20px
+
           .msg-list-item
             width: 50%
             margin-top: 15px
+
             .rb-icon
               margin-right: 10px
               width: 52px
               height: 52px
+
             span
               width: 112px
 
@@ -1028,6 +945,7 @@
           text-align center
           transform rotateX(10deg) scaleY(2)
           height: 32px;
+
         div
           position absolute
           left: 50%

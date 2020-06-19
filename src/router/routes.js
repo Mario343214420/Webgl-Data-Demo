@@ -3,7 +3,7 @@ import Home from '../pages/data/home/Home'
 // import Overview2 from '../pages/data/overview/Overview2'
 import Overview from '../pages/data/overview/Overview'
 import Summary from '../pages/data/summary/Summary.vue'
-import SummaryMap from '../pages/data/summary/SummaryCopy.vue'
+// import SummaryMap from '../pages/data/summary/SummaryCopy.vue'
 import Public from '../pages/data/public/Public.vue'
 import Union from '../pages/data/union/Union.vue'
 import Map from '../pages/data/map/Map.vue'
@@ -46,8 +46,8 @@ export const constantRouterMap = [
   },
   {
     path: '/map',
-    component: SummaryMap,
-    redirect: { name: 'SummaryMap' }
+    component: Map,
+    redirect: { name: 'Map' }
   },
   // 登录
   // {

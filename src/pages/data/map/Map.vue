@@ -144,17 +144,16 @@
         }, 100)
       },
       renderMap(paramObj) {
-        var effect='#06eaed'
-        var flyLine='#ffffff'
-        var border='#105689'
-        var bg='rgba(2,10,34,0.8)'
-        var bg1='#040c22'
+        var effect = '#06eaed'
+        var flyLine = '#ffffff'
+        var border = '#105689'
+        var bg = 'rgba(2,10,34,0.8)'
+        var bg1 = '#040c22'
         var chinaGeoCoordMap = {
           '黑龙江': [126.642464, 47.756967],
           '内蒙古': [110.3467, 41.4899],
           '吉林': [125.8154, 44.2584],
           '北京市': [116.4551, 40.2539],
-          '徐州市': [117.192941, 34.269397],
           '辽宁': [123.1238, 42.1216],
           '河北': [115.4995, 38.1006],
           '天津': [117.4219, 39.4189],
@@ -282,7 +281,7 @@
             var dataItem = data[i]
             var fromCoord = chinaGeoCoordMap[dataItem[0].name]
             // 中心点坐标
-            var toCoord = [117.192941, 34.269397]
+            var toCoord = [116.4551, 40.2539]
             if (fromCoord && toCoord) {
               res.push([
                 {
@@ -298,7 +297,7 @@
           return res
         }
         var series = [];
-        [['徐州市', chinaDatas]].forEach(function (item, i) {
+        [['北京市', chinaDatas]].forEach(function (item, i) {
           series.push(
             {
               type: 'lines',
@@ -472,6 +471,7 @@
     position relative
     padding: 20px 0
     box-sizing border-box
+
     #map
       position absolute
       z-index 30

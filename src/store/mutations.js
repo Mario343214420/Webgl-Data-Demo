@@ -1,5 +1,4 @@
 import {
-  Overview,
   Map,
   Union,
   Summary,
@@ -7,10 +6,6 @@ import {
 } from './mutation-types'
 
 export default {
-  [Overview](state, { result }) {
-    const {data} = result
-    state.overview = data
-  },
   [Map](state, { result }) {
     const {map} = result
     state.map = map

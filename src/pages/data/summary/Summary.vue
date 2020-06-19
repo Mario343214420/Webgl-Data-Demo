@@ -196,7 +196,7 @@
           <Card>
             <template slot="title">
               <div flex="main:justify">
-                <span>数据归集来源对比</span>
+                <span>{{dateTab===0? '自然人': '法人'}}资源数据分类数据分析</span>
                 <span class="handle-date" flex="main:justify">
                   <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
@@ -211,7 +211,7 @@
           </Card>
           <Card>
             <template slot="title">
-              <span>最新填报部门</span>
+              <span>{{  }}</span>
             </template>
             <template slot="content">
               <div class="table">

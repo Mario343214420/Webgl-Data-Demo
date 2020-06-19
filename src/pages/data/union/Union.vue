@@ -78,7 +78,7 @@
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                       <span>
-                  <p class="white-font">有关认证企业</p>
+                  <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
@@ -116,28 +116,28 @@
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                       <span>
-                  <p class="white-font">有关认证企业</p>
+                  <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                       <span>
-                  <p class="white-font">有关认证企业</p>
+                  <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                       <span>
-                  <p class="white-font">有关认证企业</p>
+                  <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                       <span>
-                  <p class="white-font">有关认证企业</p>
+                  <p class="white-font">海关认证企业</p>
                   <p><i class="num">1501</i><i class="white-font">（个）</i></p>
                 </span>
                     </div>
