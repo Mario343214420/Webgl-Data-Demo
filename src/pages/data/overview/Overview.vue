@@ -21,17 +21,17 @@
           <chart ref="chart1" :options="returnPie(union.chartData)"
                  style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title" flex="main:justify">
-            <span> 数据交换流向分析</span>
+            <span>数据交换流向分析</span>
             <span class="handle-btn" flex>
-              <i class="btn" :class="handleBtnTab === 0 ? 'active' : ''" @click="handleBtnTab = 0">本月</i>
-              <i class="btn" :class="handleBtnTab === 1 ? 'active' : ''" @click="handleBtnTab = 1">本年</i>
+              <i class="btn" :class="handleBtnTab1 === 0 ? 'active' : ''" @click="changeExchangeDataMonth">本月</i>
+              <i class="btn" :class="handleBtnTab1 === 1 ? 'active' : ''" @click="changeExchangeDataYear">本年</i>
               <b-date-picker type="date"
                              :open="dateOpen1"
                              :value="date1"
                              confirm
                              @on-change="handleChange1"
-                             @on-clear="handleClear"
-                             @on-ok="handleOk"
+                             @on-clear="handleClear1"
+                             @on-ok="handleOk1"
                              placeholder="Select date">
                 <a style="display: block;width: 76px;" href="javascript:void(0)" @click="handleClick('dateOpen1')">
                   <template v-if="date1 === ''">选择日期</template>
@@ -252,15 +252,15 @@
           <div class="title" style="margin-top: 10px;" flex="main:justify">
             <span>信用报告查询趋势分析</span>
             <span class="handle-btn" flex>
-              <i class="btn" :class="handleBtnTab === 0 ? 'active' : ''" @click="handleBtnTab = 0">本月</i>
-              <i class="btn" :class="handleBtnTab === 1 ? 'active' : ''" @click="handleBtnTab = 1">本年</i>
+              <i class="btn" :class="handleBtnTab2 === 0 ? 'active' : ''" @click="changeReportDataMonth">本月</i>
+              <i class="btn" :class="handleBtnTab2 === 1 ? 'active' : ''" @click="changeReportDataYear">本年</i>
               <b-date-picker type="date"
                              :open="dateOpen2"
                              :value="date2"
                              confirm
                              @on-change="handleChange2"
-                             @on-clear="handleClear"
-                             @on-ok="handleOk"
+                             @on-clear="handleClear2"
+                             @on-ok="handleOk2"
                              placeholder="Select date">
                 <a style="display: block;width: 76px;"
                    href="javascript:void(0)"
@@ -307,7 +307,8 @@
       return {
         color: ['#1167e2', '#4dcea7', '#fc9530', '#ff3b3c', '#563cff', '#0fbce0', '#0c31e2'],
         // chart
-        handleBtnTab: 0,
+        handleBtnTab1: 0,
+        handleBtnTab2: 0,
         date1: '',
         date2: '',
         dateOpen1: false,
@@ -318,9 +319,10 @@
       Panel
     },
     created() {
-      this.$store.dispatch('getOverview').then(() => {
-        this.initData()
-      })
+      this.$store.dispatch('getOverview')
+    },
+    mounted(){
+      this.numChange(this.$store.state.overview.total)
     },
     computed: {
       ...mapState({
@@ -335,15 +337,19 @@
       })
     },
     watch: {
-      date1: (n, o) => {
-        console.log(n)
+      /* date1: function(n){
         if (n !== '') {
-          this.handleBtnTab = 2
+          this.handleBtnTab1 = 2
         }
       },
-      handleBtnTab: () => {
+      date2: function(n){
+        if (n !== '') {
+          this.handleBtnTab2 = 2
+        }
+      },
+      handleBtnTab: function(){
 
-      }
+      } */
     },
     methods: {
       getKeysTotal(data) {
@@ -352,9 +358,6 @@
           return total + data[item]
         }, 0)
         return sum
-      },
-      initData() {
-        this.numChange(this.$store.overview.total)
       },
       reSum(arr, key) {
         let sum = 0
@@ -372,13 +375,21 @@
       handleChange2(date) {
         this.date2 = date
       },
-      handleClear() {
+      handleClear1() {
         this.dateOpen1 = false
+      },
+      handleOk1() {
+        this.dateOpen1 = false
+        this.handleBtnTab1 = 2
+        this.$store.dispatch('getOverviewDataExchange',this.date1)
+      },
+      handleClear2() {
         this.dateOpen2 = false
       },
-      handleOk() {
-        this.dateOpen1 = false
+      handleOk2() {
         this.dateOpen2 = false
+        this.handleBtnTab2 = 2
+        this.$store.dispatch('getOverviewReport')
       },
       // 渲染pie图
       returnPie(data) {
@@ -461,7 +472,7 @@
           },
           tooltip: {},
           dataset: {
-            dimensions: ['product', 'collection', 'output'],
+            // dimensions: ['product', 'collection', 'output'],
             source: data
           },
           xAxis: {
@@ -613,6 +624,23 @@
           window.clearInterval(change)
           num = copy
         }, 1000)
+      },
+      changeReportDataMonth(){
+        this.handleBtnTab2 = 0
+        this.date2 = ''
+      },
+      changeReportDataYear(){
+        this.handleBtnTab2 = 1
+        this.date2 = ''
+      },
+      changeExchangeDataMonth(){
+        this.handleBtnTab1 = 0
+        this.date1 = ''
+      },
+      changeExchangeDataYear(){
+        this.handleBtnTab1 = 1
+        this.date1 = ''
+
       }
     }
   }

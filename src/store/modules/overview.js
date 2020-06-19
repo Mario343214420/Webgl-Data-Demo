@@ -28,18 +28,19 @@ export default {
       dockedAbnormal: 0,
       dockedNormal: 0,
       chartData: [
-        { product: '1月', 'collection': 100, 'output': 100 },
-        { product: '2月', 'collection': 83.1, 'output': 73.4 },
-        { product: '3月', 'collection': 86.4, 'output': 65.2 },
-        { product: '4月', 'collection': 72.4, 'output': 53.9 },
-        { product: '5月', 'collection': 72.4, 'output': 53.9 },
-        { product: '6月', 'collection': 72.4, 'output': 53.9 },
-        { product: '7月', 'collection': 72.4, 'output': 53.9 },
-        { product: '8月', 'collection': 72.4, 'output': 53.9 },
-        { product: '9月', 'collection': 72.4, 'output': 53.9 },
-        { product: '10月', 'collection': 72.4, 'output': 53.9 },
-        { product: '11月', 'collection': 72.4, 'output': 53.9 },
-        { product: '12月', 'collection': 72.4, 'output': 53.9 }
+        ['product', '归集', '输出'],
+        [ '1月', 100, 100 ],
+        ['2月', 83.1, 73.4 ],
+        [ '3月', 86.4, 65.2 ],
+        [ '4月', 72.4, 53.9 ],
+        [ '5月', 72.4, 53.9 ],
+        [ '6月', 72.4, 53.9 ],
+        [ '7月', 72.4, 53.9 ],
+        [ '8月', 72.4, 53.9 ],
+        [ '9月', 72.4, 53.9 ],
+        [ '10月', 72.4, 53.9 ],
+        [ '11月', 72.4, 53.9 ],
+        [ '12月', 72.4, 53.9 ]
       ]
     },
     total: [0,0,0,0,0,0,0,0],
@@ -84,18 +85,19 @@ export default {
     }, // 部门数据归集统计
     report:{
       chartData:[
-        { product: '1月', count: 1006 },
-        { product: '2月', count: 1006 },
-        { product: '3月', count: 1007 },
-        { product: '4月', count: 1002 },
-        { product: '5月', count: 1010 },
-        { product: '6月', count: 1007 },
-        { product: '7月', count: 1008 },
-        { product: '8月', count: 1010 },
-        { product: '9月', count: 1006 },
-        { product: '10月', count: 1011 },
-        { product: '11月', count: 1006 },
-        { product: '12月', count: 1003 }
+        ['product','数量'],
+        ['1月', 1006 ],
+        ['2月', 1006 ],
+        ['3月', 1007 ],
+        ['4月', 1002 ],
+        ['5月', 1010 ],
+        ['6月', 1007 ],
+        ['7月', 1008 ],
+        ['8月', 1010 ],
+        ['9月', 1006 ],
+        ['10月', 1011 ],
+        ['11月', 1006 ],
+        ['12月', 1003 ]
       ]
     },
     submission:[
@@ -111,12 +113,12 @@ export default {
 
   },
   actions:{
-    async getOverviewDataExchange({ commit }) {
-      const result = await reqOverviewDataExchange()
+    async getOverviewDataExchange({ commit }, params) {
+      const result = await reqOverviewDataExchange(params)
       commit(OverviewDataExchange, { result })
     },
-    async getOverviewReport({ commit }) {
-      const result = await reqOverviewReport()
+    async getOverviewReport({ commit }, params) {
+      const result = await reqOverviewReport(params)
       commit(OverviewReport, { result })
     },
     async getOverview({ commit }) {
@@ -129,6 +131,14 @@ export default {
       const {data} = result
       state.overview = data
     },
+    [OverviewReport](state, { result }) {
+      const {data} = result
+      state.overview.report = data
+    },
+    [OverviewDataExchange](state, { result }) {
+      const {data} = result
+      state.dataExchange = data
+    }
   }
 }
 

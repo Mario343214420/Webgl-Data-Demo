@@ -3,5 +3,8 @@ export default {
     a: {
 
     }
-  }
+  },
+  getters: {},
+  actions: {},
+  mutations: {}
 }

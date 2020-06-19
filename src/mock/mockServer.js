@@ -114,30 +114,32 @@ Mock.mock('/overviewData', {
     ]
   }
 })
-Mock.mock('/overviewDataExchange', {
-  code: 0, data: {
-    getIn: 0,
-    getOut: 0,
-    getInCorrect: '0%',
-    getOutCorrect: '0%',
-    dockedAbnormal: 0,
-    dockedNormal: 0,
-    chartData: [
-      { product: '1月', 'collection': 100, 'output': 100 },
-      { product: '2月', 'collection': 83.1, 'output': 73.4 },
-      { product: '3月', 'collection': 86.4, 'output': 65.2 },
-      { product: '4月', 'collection': 72.4, 'output': 53.9 },
-      { product: '5月', 'collection': 72.4, 'output': 53.9 },
-      { product: '6月', 'collection': 72.4, 'output': 53.9 },
-      { product: '7月', 'collection': 72.4, 'output': 53.9 },
-      { product: '8月', 'collection': 72.4, 'output': 53.9 },
-      { product: '9月', 'collection': 72.4, 'output': 53.9 },
-      { product: '10月', 'collection': 72.4, 'output': 53.9 },
-      { product: '11月', 'collection': 72.4, 'output': 53.9 },
-      { product: '12月', 'collection': 72.4, 'output': 53.9 }
-    ]
-  }
-})
+Mock.mock(
+  '/overviewDataExchange?2020-06-01',
+  {
+    code: 0, data: {
+      getIn: 10,
+      getOut: 10,
+      getInCorrect: '0%',
+      getOutCorrect: '0%',
+      dockedAbnormal: 0,
+      dockedNormal: 0,
+      chartData: [
+        { product: '1月', 'collection': 100, 'output': 100 },
+        { product: '2月', 'collection': 83.1, 'output': 73.4 },
+        { product: '3月', 'collection': 86.4, 'output': 65.2 },
+        { product: '4月', 'collection': 72.4, 'output': 53.9 },
+        { product: '5月', 'collection': 72.4, 'output': 53.9 },
+        { product: '6月', 'collection': 72.4, 'output': 53.9 },
+        { product: '7月', 'collection': 72.4, 'output': 53.9 },
+        { product: '8月', 'collection': 72.4, 'output': 53.9 },
+        { product: '9月', 'collection': 72.4, 'output': 53.9 },
+        { product: '10月', 'collection': 72.4, 'output': 53.9 },
+        { product: '11月', 'collection': 72.4, 'output': 53.9 },
+        { product: '12月', 'collection': 72.4, 'output': 53.9 }
+      ]
+    }
+  })
 Mock.mock('/overviewOverviewReport', {
   code: 0, data: {
     chartData: [
