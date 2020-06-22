@@ -29,31 +29,31 @@ export default {
       dockedNormal: 0,
       chartData: [
         ['product', '归集', '输出'],
-        [ '1月', 100, 100 ],
-        ['2月', 83.1, 73.4 ],
-        [ '3月', 86.4, 65.2 ],
-        [ '4月', 72.4, 53.9 ],
-        [ '5月', 72.4, 53.9 ],
-        [ '6月', 72.4, 53.9 ],
-        [ '7月', 72.4, 53.9 ],
-        [ '8月', 72.4, 53.9 ],
-        [ '9月', 72.4, 53.9 ],
-        [ '10月', 72.4, 53.9 ],
-        [ '11月', 72.4, 53.9 ],
-        [ '12月', 72.4, 53.9 ]
+        ['1月', 100, 100],
+        ['2月', 83.1, 73.4],
+        ['3月', 86.4, 65.2],
+        ['4月', 72.4, 53.9],
+        ['5月', 72.4, 53.9],
+        ['6月', 72.4, 53.9],
+        ['7月', 72.4, 53.9],
+        ['8月', 72.4, 53.9],
+        ['9月', 72.4, 53.9],
+        ['10月', 72.4, 53.9],
+        ['11月', 72.4, 53.9],
+        ['12月', 72.4, 53.9]
       ]
     },
-    total: [0,0,0,0,0,0,0,0],
+    total: [0, 0, 0, 0, 0, 0, 0, 0],
     rotateData: [
-      {name:'法人基础数量',value: 0},
-      {name:'自然人基础数量',value: 0},
-      {name:'法人信用信息',value: 0},
-      {name:'自然人信用信息',value: 0},
-      {name:'法人人均数量',value: 0},
-      {name:'自然人人均数量',value: 0}
+      { name: '法人基础数量', value: 0 },
+      { name: '自然人基础数量', value: 0 },
+      { name: '法人信用信息', value: 0 },
+      { name: '自然人信用信息', value: 0 },
+      { name: '法人人均数量', value: 0 },
+      { name: '自然人人均数量', value: 0 }
     ],
     redBlackList: {
-      redList:{
+      redList: {
         signCom: 0,
         taxpayer: 0,
         corp: 0,
@@ -83,24 +83,24 @@ export default {
         ['累计', 700]
       ]
     }, // 部门数据归集统计
-    report:{
-      chartData:[
-        ['product','数量'],
-        ['1月', 1006 ],
-        ['2月', 1006 ],
-        ['3月', 1007 ],
-        ['4月', 1002 ],
-        ['5月', 1010 ],
-        ['6月', 1007 ],
-        ['7月', 1008 ],
-        ['8月', 1010 ],
-        ['9月', 1006 ],
-        ['10月', 1011 ],
-        ['11月', 1006 ],
-        ['12月', 1003 ]
+    report: {
+      chartData: [
+        ['product', '数量'],
+        ['1月', 1006],
+        ['2月', 1006],
+        ['3月', 1007],
+        ['4月', 1002],
+        ['5月', 1010],
+        ['6月', 1007],
+        ['7月', 1008],
+        ['8月', 1010],
+        ['9月', 1006],
+        ['10月', 1011],
+        ['11月', 1006],
+        ['12月', 1003]
       ]
     },
-    submission:[
+    submission: [
       { name: '部门名称', count: 56987, percent: '95%' },
       { name: '部门名称', count: 56987, percent: '95%' },
       { name: '部门名称', count: 56987, percent: '95%' },
@@ -109,10 +109,9 @@ export default {
       { name: '部门名称', count: 56987, percent: '95%' }
     ]
   },
-  getters: {
-
-  },
-  actions:{
+  getters: {},
+  actions: {
+    // 交互
     async getOverviewDataExchange({ commit }, params) {
       const result = await reqOverviewDataExchange(params)
       commit(OverviewDataExchange, { result })
@@ -121,6 +120,7 @@ export default {
       const result = await reqOverviewReport(params)
       commit(OverviewReport, { result })
     },
+    // 初始
     async getOverview({ commit }) {
       const result = await reqOverviewData()
       commit(Overview, { result })
@@ -128,15 +128,17 @@ export default {
   },
   mutations: {
     [Overview](state, { result }) {
-      const {data} = result
-      state.overview = data
+      const { data } = result
+      for ( let key in data){
+        state[key] = data[key]
+      }
     },
     [OverviewReport](state, { result }) {
-      const {data} = result
-      state.overview.report = data
+      const { data } = result
+      state.report = data
     },
     [OverviewDataExchange](state, { result }) {
-      const {data} = result
+      const { data } = result
       state.dataExchange = data
     }
   }

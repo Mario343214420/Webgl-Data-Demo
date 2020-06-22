@@ -271,7 +271,7 @@
               </b-date-picker>
             </span>
           </div>
-          <div class="chart-msg-bar">信用报告查询总次数：{{ reSum(report.chartData, 'count') }}（次）</div>
+          <div class="chart-msg-bar">信用报告查询总次数：{{ reSum(report.chartData, 1) }}（次）</div>
           <chart ref="chart2" :options="returnArea(report.chartData)" style="width: 100%; height: 220px;display:block;"></chart>
           <div class="title">
             数据提报部门
@@ -295,9 +295,9 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
-  import { mapState } from 'vuex'
   // 统一变量
   const xyLineColor = '#535e83'
   const splitLineColor = '#283353'
@@ -319,6 +319,7 @@
       Panel
     },
     created() {
+      // 初始化页面数据
       this.$store.dispatch('getOverview')
     },
     mounted(){
@@ -326,7 +327,9 @@
     },
     computed: {
       ...mapState({
-        union: state => state.overview.union,
+        union: state => {
+          return state.overview.union;
+        },
         dataExchange: state => state.overview.dataExchange,
         total: state => state.overview.total,
         rotateData: state => state.overview.rotateData,
@@ -360,11 +363,10 @@
         return sum
       },
       reSum(arr, key) {
-        let sum = 0
-        arr.forEach((item) => {
-          sum += item[key]
-        })
-        return sum
+        let copy = []
+        arr.forEach((item,index)=>{if(index>0){copy.push(item[key])}})
+        let sum = (total, value)=>total + value
+        return copy.reduce(sum,0)
       },
       handleClick(param) {
         this[param] = !this[param]
@@ -389,7 +391,7 @@
       handleOk2() {
         this.dateOpen2 = false
         this.handleBtnTab2 = 2
-        this.$store.dispatch('getOverviewReport')
+        this.$store.dispatch('getOverviewReport', this.date2)
       },
       // 渲染pie图
       returnPie(data) {
@@ -628,19 +630,22 @@
       changeReportDataMonth(){
         this.handleBtnTab2 = 0
         this.date2 = ''
+        this.$store.dispatch('getOverviewReport','thisMonth')
       },
       changeReportDataYear(){
         this.handleBtnTab2 = 1
         this.date2 = ''
+        this.$store.dispatch('getOverviewReport','thisYear')
       },
       changeExchangeDataMonth(){
         this.handleBtnTab1 = 0
         this.date1 = ''
+        this.$store.dispatch('getOverviewDataExchange','thisMonth')
       },
       changeExchangeDataYear(){
         this.handleBtnTab1 = 1
         this.date1 = ''
-
+        this.$store.dispatch('getOverviewDataExchange','thisYear')
       }
     }
   }

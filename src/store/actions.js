@@ -1,12 +1,12 @@
 import {
-  reqOverviewData,
+  // reqOverviewData,
   reqUnionData,
   reqSummaryData,
   reqMapData,
   reqPublicData
 } from '../api'
 import {
-  Overview,
+  // Overview,
   Summary,
   Union,
   Public,
@@ -14,29 +14,24 @@ import {
 } from './mutation-types'
 
 export default {
-  async getOverview({ commit }, cb) {
+  /* async getOverview({ commit }) {
     const result = await reqOverviewData()
     commit(Overview, { result })
-    typeof cb === 'function' && cb()
-  },
-  async getSummary({ commit }, cb) {
+  }, */
+  async getSummary({ commit }) {
     const result = await reqSummaryData()
     commit(Summary, { result })
-    typeof cb === 'function' && cb()
   },
-  async getUnion({ commit }, cb) {
+  async getUnion({ commit }) {
     const result = await reqUnionData()
     commit(Union, { result })
-    typeof cb === 'function' && cb()
   },
-  async getPublic({ commit }, cb) {
-    const result = await reqPublicData()
-    commit(Public, { result })
-    typeof cb === 'function' && cb()
-  },
-  async getMap({ commit }, cb) {
+  // async getPublic({ commit }) {
+  //   const result = await reqPublicData()
+  //   commit(Public, { result })
+  // },
+  async getMap({ commit }) {
     const result = await reqMapData()
     commit(Map, { result })
-    typeof cb === 'function' && cb()
   }
 }

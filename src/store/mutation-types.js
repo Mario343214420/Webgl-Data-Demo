@@ -3,6 +3,10 @@ export const OverviewReport = 'overviewReport'
 export const OverviewDataExchange = 'overviewDataExchange'
 
 export const Union = 'union'
+
 export const Public = 'publicState'
+
 export const Summary = 'summary'
+export const SummaryStatistic = 'summaryStatistic'
+
 export const Map = 'map'

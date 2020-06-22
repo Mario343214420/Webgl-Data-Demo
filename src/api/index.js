@@ -7,6 +7,9 @@ export const reqOverviewDataExchange = (params) => ajax('/overviewDataExchange'+
 export const reqOverviewReport = (params) => ajax('/overviewOverviewReport'+ '?' + params)
 
 export const reqUnionData = () => ajax('/unionData')
+
 export const reqMapData = () => ajax('/mapData')
+
 export const reqPublicData = () => ajax('/publicData')
+
 export const reqSummaryData = () => ajax('/summaryData')

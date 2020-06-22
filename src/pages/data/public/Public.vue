@@ -44,7 +44,7 @@
               <span>双公示数据7天提报率</span>
             </template>
             <template slot="content">
-              <chart ref="chart1" :options="classify" style="width: 100%; height: 326px;"></chart>
+              <chart ref="chart1" :options="returnBar(weekSubmit)" style="width: 100%; height: 326px;"></chart>
             </template>
           </Card>
         </div>
@@ -55,7 +55,7 @@
         <div class="center">
           <div class="cloud">
             <i>双公示信息总数</i><br>
-            <i class="num">88480</i><i>（个）</i>
+            <i class="num">{{rePublicCountsSum}}</i><i>（个）</i>
           </div>
           <img src="~@/assets/images/public/guangshu.png" alt="" class="light">
           <img src="~@/assets/images/public/huan1.png" alt="" class="cir cir-1">
@@ -70,7 +70,7 @@
                   <img src="~@/assets/images/public/icon01.png" alt="">
                   <span>
                     <i>自然人行政许可</i><br>
-                    <i class="num">88480</i><i>（个）</i>
+                    <i class="num">{{publicCounts.naturalPersonPermit}}</i><i>（个）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -85,8 +85,8 @@
                 <div class="inner" flex="space:around cross:center">
                   <img src="~@/assets/images/public/icon02.png" alt="">
                   <span>
-                    <i>自然人行政许可</i><br>
-                    <i class="num">88480</i><i>（个）</i>
+                    <i>法人行政许可</i><br>
+                    <i class="num">{{publicCounts.legalPersonPermit}}</i><i>（个）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -101,8 +101,8 @@
                 <div class="inner" flex="space:around cross:center">
                   <img src="~@/assets/images/public/icon03.png" alt="">
                   <span>
-                    <i>自然人行政许可</i><br>
-                    <i class="num">88480</i><i>（个）</i>
+                    <i>自然人行政处罚</i><br>
+                    <i class="num">{{publicCounts.naturalPersonPunish}}</i><i>（个）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -117,8 +117,8 @@
                 <div class="inner" flex="space:around cross:center">
                   <img src="~@/assets/images/public/icon04.png" alt="">
                   <span>
-                    <i>自然人行政许可</i><br>
-                    <i class="num">88480</i><i>（个）</i>
+                    <i>法人行政处罚</i><br>
+                    <i class="num">{{publicCounts.legalPersonPunish}}</i><i>（个）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -140,7 +140,7 @@
             <span>双公示采集情况</span>
           </template>
           <template slot="content">
-            <chart ref="chart2" :options="trend" style="width: 100%; height: 320px;"></chart>
+            <chart ref="chart2" :options="returnTrend(gather)" style="width: 100%; height: 320px;"></chart>
           </template>
         </Card>
       </template>
@@ -159,14 +159,14 @@
                     <img src="~@/assets/images/public/xuke.png" alt="">
                     <span>
                       <i class="white-font">行政许可数量</i><br>
-                      <i class="num">3566</i><i>个</i>
+                      <i class="num">{{weekCase.permit}}</i><i>个</i>
                     </span>
                   </div>
                   <div class="new-item" flex="space:around cross:center">
                     <img src="~@/assets/images/public/chufa.png" alt="">
                     <span>
                       <i class="white-font">行政许可数量</i><br>
-                      <i class="num">3566</i><i>个</i>
+                      <i class="num">{{weekCase.punish}}</i><i>个</i>
                     </span>
                   </div>
                 </div>
@@ -178,7 +178,7 @@
               <span>处罚修复数据统计</span>
             </template>
             <template slot="content">
-              <chart ref="chart3" :options="punishRepair" style="width: 100%; height: 320px;"></chart>
+              <chart ref="chart3" :options="returnRepairBar(punishRepair)" style="width: 100%; height: 320px;"></chart>
             </template>
           </Card>
           <Card>
@@ -187,7 +187,7 @@
               <span></span>
             </template>
             <template slot="content">
-              <chart ref="chart4" :options="pie" style="width: 100%; height: 350px;"></chart>
+              <chart ref="chart4" :options="returnPie(permitDistribute)" style="width: 100%; height: 350px;"></chart>
             </template>
           </Card>
         </div>
@@ -197,6 +197,7 @@
 </template>
 
 <script>
+  import {mapState, mapActions} from 'vuex'
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
@@ -213,52 +214,172 @@
       return {
         dateTab: 0,
         open: false,
-        date: '',
-        newClassifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 }
-        ],
-        trend: {
+        date: ''
+      }
+    },
+    created(){
+      this.$store.dispatch('getPublic')
+    },
+    mounted() {
+      window.onresize = () => {
+        this.$refs.chart2.resize()
+      }
+    },
+    computed: {
+      ...mapState({
+        newClassifyList: state=> state.publicModule.newClassifyList,
+        weekSubmit: state=> state.publicModule.weekSubmit,
+        gather: state=> state.publicModule.gather,
+        publicCounts: state=> state.publicModule.publicCounts,
+        weekCase: state=> state.publicModule.weekCase,
+        punishRepair: state=> state.publicModule.punishRepair,
+        permitDistribute: state=> state.publicModule.permitDistribute,
+      }),
+      rePublicCountsSum(){
+        let sum = 0
+        for(let key in this.publicCounts){
+          sum += this.publicCounts[key]
+        }
+        return sum
+      }
+    },
+    methods: {
+      handleClick() {
+        this.open = !this.open
+      },
+      handleChange(date) {
+        this.date = date
+      },
+      handleClear() {
+        this.open = false
+      },
+      handleOk() {
+        this.open = false
+      },
+      returnBar(data) {
+        return {
+            color: '#00abfb',
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              }
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '6%',
+              containLabel: true
+            },
+            dataset: {
+              source: data
+            },
+            yAxis: {
+              name: '（%）',
+              type: 'value',
+              boundaryGap: [0, 0.01],
+              axisLine: {
+                lineStyle: {
+                  color: xyLineColor
+                }
+              },
+              splitLine: { lineStyle: { color: splitLineColor } }
+            },
+            xAxis: {
+              type: 'category',
+              axisLine: {
+                lineStyle: {
+                  color: xyLineColor
+                }
+              },
+              inverse: true,
+              axisLabel: {
+                interval: 0,
+                formatter: function(params){
+                  var newParamsName = "";// 最终拼接成的字符串
+                  var paramsNameNumber = params.length;// 实际标签的个数
+                  var provideNumber = 3;// 每行能显示的字的个数
+                  var rowNumber = Math.ceil(paramsNameNumber / provideNumber);// 换行的话，需要显示几行，向上取整
+                  if (paramsNameNumber > provideNumber) {
+                    /** 循环每一行,p表示行 */
+                    for (var p = 0; p < rowNumber; p++) {
+                      var tempStr = "";// 表示每一次截取的字符串
+                      var start = p * provideNumber;// 开始截取的位置
+                      var end = start + provideNumber;// 结束截取的位置
+                      // 此处特殊处理最后一行的索引值
+                      if (p === rowNumber - 1) {
+                        // 最后一次不换行
+                        tempStr = params.substring(start, paramsNameNumber);
+                      } else {
+                        // 每一次拼接字符串并换行
+                        tempStr = params.substring(start, end) + "\n";
+                      }
+                      newParamsName += tempStr;// 最终拼成的字符串
+                    }
+
+                  } else {
+                    // 将旧标签的值赋给新标签
+                    newParamsName = params;
+                  }
+                  //将最终的字符串返回
+                  return newParamsName
+                }
+              }
+            },
+            series: [
+              {
+                type: 'bar',
+                showBackground: true,
+                barWidth: 10,
+                itemStyle: {
+                  color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                      { offset: 0, color: '#39BBF3' },
+                      { offset: 1, color: '#070c32' }
+                    ]
+                  )
+                }
+              }
+            ]
+          }
+      },
+      returnTrend(data){
+        return {
           color: ['#02b7f4', '#2646c5'],
           tooltip: {
             trigger: 'axis',
-            axisPointer: {
+              axisPointer: {
               type: 'cross',
-              label: {
+                label: {
                 backgroundColor: '#6a7985'
               }
             }
           },
+          dataset: {
+            source: data
+          },
           grid: {
             left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
           },
           xAxis: [
             {
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'category',
-              boundaryGap: false,
-              data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+              boundaryGap: false
             }
           ],
-          yAxis: [
+            yAxis: [
             {
               position: 'left',
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
               name: '（个）',
-              max: 500
+              max: 2500
             },
             {
               position: 'right',
@@ -266,59 +387,49 @@
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
               name: '（个）',
-              max: 500
+              max: 2500
             }
           ],
-          series: [
+            series: [
             {
               smooth: true,
               name: '奖',
               type: 'line',
               areaStyle: {},
-              yAxisIndex: 1,
-              data: [120, 132, 101, 134, 90, 230, 210]
+              yAxisIndex: 1
             },
             {
               smooth: true,
               name: '惩',
               type: 'line',
-              areaStyle: {},
-              data: [220, 182, 191, 234, 290, 330, 310]
+              areaStyle: {}
             }
           ]
-        },
-        classify: {
+        }
+      },
+      returnRepairBar(data){
+        return {
           color: '#00abfb',
-          tooltip: {
+            tooltip: {
             trigger: 'axis',
-            axisPointer: {
+              axisPointer: {
               type: 'shadow'
             }
           },
           grid: {
             left: '3%',
-            right: '4%',
-            bottom: '6%',
-            containLabel: true
+              right: '4%',
+              bottom: '6%',
+              containLabel: true
           },
           dataset: {
-            source: [
-              ['product', '辅助', '生活费'],
-              ['基础信息', 0, 100],
-              ['业务信息', 100, 100],
-              ['司法信息', 200, 100],
-              ['行政执法信息', 300, 100],
-              ['公共事业信息', 400, 100],
-              ['信用评级信息', 500, 100],
-              ['其他信息', 600, 100],
-              ['累计', 0, 700]
-            ]
+            source: data
           },
           yAxis: {
             name: '（个）',
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            axisLine: {
+              type: 'value',
+              boundaryGap: [0, 0.01],
+              axisLine: {
               lineStyle: {
                 color: xyLineColor
               }
@@ -327,79 +438,11 @@
           },
           xAxis: {
             type: 'category',
-            data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
-            axisLine: {
+              axisLine: {
               lineStyle: {
                 color: xyLineColor
               }
-            },
-            inverse: true
-          },
-          series: [
-            {
-              type: 'bar',
-              showBackground: true,
-              barWidth: 10,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    { offset: 0, color: '#39BBF3' },
-                    { offset: 1, color: '#070c32' }
-                  ]
-                )
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
             }
-          ]
-        },
-        punishRepair: {
-          color: '#00abfb',
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '6%',
-            containLabel: true
-          },
-          dataset: {
-            source: [
-              ['product', '辅助', '生活费'],
-              ['基础信息', 0, 100],
-              ['业务信息', 100, 100],
-              ['司法信息', 200, 100],
-              ['行政执法信息', 300, 100],
-              ['公共事业信息', 400, 100],
-              ['信用评级信息', 500, 100],
-              ['其他信息', 600, 100],
-              ['累计', 0, 700]
-            ]
-          },
-          yAxis: {
-            name: '（个）',
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            splitLine: { lineStyle: { color: splitLineColor } }
-          },
-          xAxis: {
-            type: 'category',
-            data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            inverse: true
           },
           series: [
             {
@@ -414,16 +457,17 @@
                     { offset: 1, color: '#070c32' }
                   ]
                 )
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
+              }
             }
           ]
-        },
-        pie: {
+        }
+      },
+      returnPie(data){
+        return {
           color: ['#553cff', '#fe3b3c', '#fb952f', '#4dcea7', '#00ccff', '#0e31e3', '#1167e2'],
-          tooltip: {
+            tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           series: [
             {
@@ -441,15 +485,7 @@
               labelLine: {
                 show: false
               },
-              data: [
-                { value: 335, name: '业务信息' },
-                { value: 310, name: '司法信息' },
-                { value: 234, name: '行政执法信息' },
-                { value: 235, name: '信用评价信息' },
-                { value: 248, name: '公共事业信息' },
-                { value: 248, name: '其他信息' },
-                { value: 248, name: '基本信息' }
-              ]
+              data: data.outer
             },
             {
               name: '访问来源',
@@ -467,31 +503,10 @@
               labelLine: {
                 show: false
               },
-              data: [
-                { value: 335, name: '直接访问' }
-              ]
+              data: data.inner
             }
           ]
         }
-      }
-    },
-    mounted() {
-      window.onresize = () => {
-        this.$refs.chart2.resize()
-      }
-    },
-    methods: {
-      handleClick() {
-        this.open = !this.open
-      },
-      handleChange(date) {
-        this.date = date
-      },
-      handleClear() {
-        this.open = false
-      },
-      handleOk() {
-        this.open = false
       }
     }
   }

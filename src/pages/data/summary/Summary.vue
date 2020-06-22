@@ -12,17 +12,17 @@
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_01.png" alt="">
               <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <i class="num">{{monthAnalysis.collection}}</i>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_02.png" alt="">
-              <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <i class="font">上报数据总量</i>
+              <i class="num">{{monthAnalysis.appear}}</i>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_03.png" alt="">
-              <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <i class="font">回流数据量</i>
+              <i class="num">{{monthAnalysis.reflux}}</i>
             </span>
               </div>
             </template>
@@ -35,23 +35,23 @@
               <div flex="main:justify">
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">一级分类（个）</i>
-              <i class="num">560</i>
+              <i class="num">{{classifyStatistic.lv1}}</i>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">二级分类（个）</i>
-              <i class="num">560</i>
+              <i class="num">{{classifyStatistic.lv2}}</i>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">资源数（个）</i>
-              <i class="num">560</i>
+              <i class="num">{{classifyStatistic.resourceCount}}</i>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <i class="font">部门数（个）</i>
-              <i class="num">560</i>
+              <i class="num">{{classifyStatistic.deptCount}}</i>
             </span>
               </div>
               <div>
-                <chart ref="chart1" :options="classify" style="width: 100%; height: 220px;"></chart>
+                <chart ref="chart1" :options="returnBar(classifyStatistic.chartData)" style="width: 100%; height: 220px;"></chart>
               </div>
             </template>
           </Card>
@@ -74,8 +74,7 @@
                       <template v-if="date === ''">请选择日期</template>
                       <template v-else>{{ date }}</template>
                     </a>
-                  </b-date-picker
-                  >
+                  </b-date-picker>
               </span>
               </div>
             </template>
@@ -86,7 +85,7 @@
                   <span>轨迹数量（个）</span>
                   <span>占比</span>
                 </div>
-                <div class="table-row" v-for="(item, index) in classifyList" :key="index" flex="main:justify">
+                <div class="table-row" v-for="(item, index) in classifyStatistic.deptList" :key="index" flex="main:justify">
                   <span>{{ item.name }}</span>
                   <span>{{ item.count }}</span>
                   <span>{{ item.percent }}%</span>
@@ -106,7 +105,7 @@
                 <img src="~@/assets/images/summary/icon_zyxx.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i class="num">{{summaryCounts.resource}}</i><i>（个）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -118,8 +117,8 @@
               <div class="tip-item-inner" flex="space:around cross:center">
                 <img src="~@/assets/images/summary/icon_sjgj.png" alt="">
                 <span class="tip-item-font">
-                  <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i>数据归集数量</i><br>
+                  <i class="num">{{summaryCounts.collection}}</i><i>（个）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -133,7 +132,7 @@
                 <img src="~@/assets/images/summary/icon_bygj.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i class="num">{{summaryCounts.month}}</i><i>（个）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -146,25 +145,24 @@
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_zrr.png" alt=""><br>
               <span><i>自然人数据总量</i></span>
-              <span><i class="num">565，854</i><i>（个）</i></span>
+              <span><i class="num">{{summaryCounts.naturalPerson}}</i><i>（个）</i></span>
             </span>
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_fr.png" alt=""><br>
-              <span><i>自然人数据总量</i></span>
-              <span><i class="num">565，854</i><i>（个）</i></span>
+              <span><i>法人数据总量</i></span>
+              <span><i class="num">{{summaryCounts.legalPerson}}</i><i>（个）</i></span>
             </span>
           </div>
           <div class="float-tip-wrapper float-2" flex="main:justify">
-
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_zdrq.png" alt=""><br>
-              <span><i>自然人数据总量</i></span>
-              <span><i class="num">565，854</i><i>（个）</i></span>
+              <span><i>重点人群数据总量</i></span>
+              <span><i class="num">{{summaryCounts.focusPerson}}</i><i>（个）</i></span>
             </span>
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_yztg.png" alt=""><br>
-              <span><i>自然人数据总量</i></span>
-              <span><i class="num">565，854</i><i>（个）</i></span>
+              <span><i>严重通过率</i></span>
+              <span><i class="num">{{summaryCounts.passPercent}}%</i><i>（个）</i></span>
             </span>
           </div>
           <div id="cvsBg" style="margin-top: 12px;width: 100%; height: 500px;"></div>
@@ -179,7 +177,7 @@
         </div>
       </template>
       <template slot="inner">
-        <chart ref="chart2" :options="trend" style="width: 100%; height: 320px;"></chart>
+        <chart ref="chart2" :options="returnTrend(summaryCounts.chartList)" style="width: 100%; height: 320px;"></chart>
       </template>
     </Panel>
     <Panel>
@@ -190,28 +188,28 @@
               <span>数据归集来源对比</span>
             </template>
             <template slot="content">
-              <chart ref="chart3" :options="rose" style="width: 100%; height: 280px;"></chart>
+              <chart ref="chart3" :options="returnRose(source)" style="width: 100%; height: 280px;"></chart>
             </template>
           </Card>
           <Card>
             <template slot="title">
               <div flex="main:justify">
-                <span>{{dateTab===0? '自然人': '法人'}}资源数据分类数据分析</span>
+                <span>{{tab===0? '自然人': '法人'}}资源数据分类数据分析</span>
                 <span class="handle-date" flex="main:justify">
-                  <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
+                  <i class="tab active" v-show="tab === 0" @click="tab = 1"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
-                  <i class="tab active" v-show="dateTab === 1" @click="dateTab = 0"><i class="iconfont icon-ios-repeat"
+                  <i class="tab active" v-show="tab === 1" @click="tab = 0"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>自然人</i>
                 </span>
               </div>
             </template>
             <template slot="content">
-              <chart ref="chart4" :options="pie" style="width: 100%; height: 280px;"></chart>
+              <chart ref="chart4" :options="returnPie(naturalPersonAnalysis)" style="width: 100%; height: 280px;"></chart>
             </template>
           </Card>
           <Card>
             <template slot="title">
-              <span>{{  }}</span>
+              <span>最新填报部门</span>
             </template>
             <template slot="content">
               <div class="table">
@@ -219,7 +217,7 @@
                   <span>部门名称</span>
                   <span>资源信息</span>
                 </div>
-                <div class="table-row" v-for="(item, index) in newClassifyList" :key="index" flex="main:justify">
+                <div class="table-row" v-for="(item, index) in newestFillInDept" :key="index" flex="main:justify">
                   <span>{{ item.name }}</span>
                   <span>{{ item.count }}</span>
                 </div>
@@ -233,6 +231,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import echarts from 'echarts'
   import * as THREE from 'three'
   import Panel from '../../../components/Panel/Panel'
@@ -244,234 +243,27 @@
     name: 'Summary',
     data() {
       return {
-        classify: {
-          color: '#00abfb',
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '6%',
-            top: '3%',
-            containLabel: true
-          },
-          dataset: {
-            source: [
-              ['product', '辅助', '生活费'],
-              ['基础信息', 0, 100],
-              ['业务信息', 100, 100],
-              ['司法信息', 200, 100],
-              ['行政执法信息', 300, 100],
-              ['公共事业信息', 400, 100],
-              ['信用评级信息', 500, 100],
-              ['其他信息', 600, 100],
-              ['累计', 0, 700]
-            ]
-          },
-          xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            splitLine: { lineStyle: { color: splitLineColor } }
-          },
-          yAxis: {
-            type: 'category',
-            data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            inverse: true
-          },
-          series: [
-            {
-              type: 'bar',
-              showBackground: true,
-              barWidth: 10,
-              itemStyle: {
-                barBorderRadius: 8,
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 1, 0,
-                  [
-                    { offset: 0, color: '#2380f2' },
-                    { offset: 1, color: '#39BBF3' }
-                  ]
-                )
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
-            }
-          ]
-        },
         open: false,
         date: '',
         dateTab: 0,
-        classifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 }
-        ],
-        newClassifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 }
-        ],
-        trend: {
-          color: ['#02b7f4', '#2646c5'],
-          title: {
-            text: '资源信息归集趋势',
-            textStyle: { color: '#fff' }
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985'
-              }
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'category',
-              boundaryGap: false,
-              data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            }
-          ],
-          yAxis: [
-            {
-              position: 'left',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            },
-            {
-              position: 'right',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            }
-          ],
-          series: [
-            {
-              smooth: true,
-              name: '奖',
-              type: 'line',
-              areaStyle: {},
-              yAxisIndex: 1,
-              data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-              smooth: true,
-              name: '惩',
-              type: 'line',
-              areaStyle: {},
-              data: [220, 182, 191, 234, 290, 330, 310]
-            }
-          ]
-        },
-        rose: {
-          color: ['#fbd860', '#35afc6', '#1f74f1', '#00cbfe'],
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-          },
-          series: [
-            {
-              name: '面积模式',
-              type: 'pie',
-              radius: [30, 100],
-              center: ['50%', '50%'],
-              roseType: 'area',
-              data: [
-                { value: 10, name: '手工填报' },
-                { value: 5, name: 'et对接' },
-                { value: 15, name: '内部接口' },
-                { value: 25, name: '其他' }
-              ]
-            }
-          ]
-        },
-        pie: {
-          color: ['#553cff', '#fe3b3c', '#fb952f', '#4dcea7', '#00ccff', '#0e31e3', '#1167e2'],
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '65%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: true,
-                color: '#fff',
-                lineHeight: 20,
-                align: 'center',
-                formatter: p => p.name + '\n' + p.value + '（个）'
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                { value: 335, name: '业务信息' },
-                { value: 310, name: '司法信息' },
-                { value: 234, name: '行政执法信息' },
-                { value: 235, name: '信用评价信息' },
-                { value: 248, name: '公共事业信息' },
-                { value: 248, name: '其他信息' },
-                { value: 248, name: '基本信息' }
-              ]
-            },
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['0', '40%'],
-              avoidLabelOverlap: false,
-              label: {
-                align: 'center',
-                show: true,
-                position: 'center',
-                color: '#fff',
-                lineHeight: 20,
-                formatter: p => p.name + '\n  ' + p.value + '（个）'
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                { value: 335, name: '直接访问' }
-              ]
-            }
-          ]
-        }
+        tab: 0
       }
+    },
+    created(){
+      this.$store.dispatch('getSummary')
+    },
+    mounted() {
+      // this.renderBall()
+    },
+    computed: {
+      ...mapState({
+        monthAnalysis: state=>state.summary.monthAnalysis,
+        classifyStatistic: state=>state.summary.classifyStatistic,
+        summaryCounts: state=> state.summary.summaryCounts,
+        source: state=>state.summary.source,
+        naturalPersonAnalysis: state=>state.summary.naturalPersonAnalysis,
+        newestFillInDept: state=>state.summary.newestFillInDept,
+      })
     },
     methods: {
       handleClick() {
@@ -564,10 +356,204 @@
         }
         init()
         window.onresize = init
+      },
+      returnTrend(data){
+        return {
+          dataset:{
+            source: data
+          },
+          color: ['#02b7f4', '#2646c5'],
+            title: {
+            text: '资源信息归集趋势',
+              textStyle: { color: '#fff' }
+          },
+          tooltip: {
+            trigger: 'axis',
+              axisPointer: {
+              type: 'cross',
+                label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          grid: {
+            left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+          },
+          xAxis: [
+            {
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'category',
+              boundaryGap: false
+            }
+          ],
+            yAxis: [
+            {
+              position: 'left',
+              boundaryGap: [0.2, 0.2],
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'value',
+              name: '(个)',
+              interval: 500,
+              max:2500
+            },
+            {
+              position: 'right',
+              boundaryGap: [0.2, 0.2],
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'value',
+              name: '(个)',
+              interval: 500,
+              max:2500
+            }
+          ],
+            series: [
+            {
+              smooth: true,
+              name: '奖',
+              type: 'line',
+              areaStyle: {},
+              yAxisIndex: 1
+            },
+            {
+              smooth: true,
+              name: '惩',
+              type: 'line',
+              areaStyle: {}
+            }
+          ]
+        }
+      },
+      returnRose(data){
+        return {
+          color: ['#fbd860', '#35afc6', '#1f74f1', '#00cbfe'],
+            tooltip: {
+            trigger: 'item',
+              formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          dataset:{
+            source: data
+          },
+          series: [
+            {
+              name: '面积模式',
+              type: 'pie',
+              radius: [30, 100],
+              center: ['50%', '50%'],
+              roseType: 'area'
+            }
+          ]
+        }
+      },
+      returnPie(data){
+        return {
+          color: ['#553cff', '#fe3b3c', '#fb952f', '#4dcea7', '#00ccff', '#0e31e3', '#1167e2'],
+            tooltip: {
+            trigger: 'item',
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['50%', '65%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: true,
+                color: '#fff',
+                lineHeight: 20,
+                align: 'center',
+                formatter: p => p.name + '\n' + p.value + '（个）'
+              },
+              labelLine: {
+                show: false
+              },
+              data: this.tab===0?data[0].outer:data[1].outer
+            },
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['0', '40%'],
+              avoidLabelOverlap: false,
+              label: {
+                align: 'center',
+                show: true,
+                position: 'center',
+                color: '#fff',
+                lineHeight: 20,
+                formatter: p => p.name + '\n  ' + p.value + '（个）'
+              },
+              labelLine: {
+                show: false
+              },
+              data: this.tab===0?data[0].inner:data[1].inner
+            }
+          ]
+        }
+      },
+      returnBar(data){
+        return  {
+            color: '#00abfb',
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              }
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '6%',
+              top: '3%',
+              containLabel: true
+            },
+            dataset: {
+              source: data
+            },
+            xAxis: {
+              type: 'value',
+              boundaryGap: [0, 0.01],
+              axisLine: {
+                lineStyle: {
+                  color: xyLineColor
+                }
+              },
+              splitLine: { lineStyle: { color: splitLineColor } }
+            },
+            yAxis: {
+              type: 'category',
+              data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
+              axisLine: {
+                lineStyle: {
+                  color: xyLineColor
+                }
+              },
+              inverse: true
+            },
+            series: [
+              {
+                type: 'bar',
+                showBackground: true,
+                barWidth: 10,
+                itemStyle: {
+                  barBorderRadius: 8,
+                  color: new echarts.graphic.LinearGradient(
+                    0, 0, 1, 0,
+                    [
+                      { offset: 0, color: '#2380f2' },
+                      { offset: 1, color: '#39BBF3' }
+                    ]
+                  )
+                },
+                data: [1100, 800, 550, 350, 200, 100, 80]
+              }
+            ]
+          }
       }
-    },
-    mounted() {
-      // this.renderBall()
     },
     components: {
       Panel,
