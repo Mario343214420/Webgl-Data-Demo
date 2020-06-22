@@ -40,6 +40,7 @@
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
   import 'echarts/map/js/china'
+  // 更换地方地图 例：import 'common/utils/zhenjiang.js'
   // import Bmap from 'bmap'
   export default {
     name: 'Map',

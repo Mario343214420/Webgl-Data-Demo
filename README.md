@@ -1,17 +1,13 @@
-# ncloud-data
+# 大数据展示项目
 
-[文档](https://wangbin3162.github.io/docs/bin-admin/)
+[预览](https://www.github.io/***)
 
-[预览](https://wangbin3162.github.io/preview/bin-admin/)
-
-本项目是基于 Vue2.6，配合使用 [bin-ui](https://github.com/wangbin3162/bin-ui/) 作为组件库来进行搭建大数据展示系统，在基于[vue-admin1.0](https://github.com/wangbin3162/vue-admin/)
-版本基础上进行二次重构，后续会进行持续更新。
+基于vue-cli编写开发
 
 ## 目录结构
 
 整个项目的目录结构如下，具体包含内容后续会进行详细介绍和解释
 
-    ├── docs                       // 文档目录
     ├── public                     // 公共资源，第三方,不打包资源
     ├── src                        // 源代码
     │   ├── api                    // 所有请求相关资源
