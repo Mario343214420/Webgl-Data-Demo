@@ -15,10 +15,10 @@ export default {
     const {map} = result
     state.map = map
   },
-  [Union](state, { result }) {
-    const {union} = result
-    state.union = union
-  },
+  // [Union](state, { result }) {
+  //   const {union} = result
+  //   state.union = union
+  // },
   [Summary](state, { result }) {
     const {summary} = result
     state.summary = summary

@@ -162,7 +162,7 @@
             </template>
             <template slot="content">
               <div>
-                <chart ref="chart1" :options="trend" style="height: 240px;width: 100%;"></chart>
+                <chart ref="chart1" :options="returnTrend(trend)" style="height: 290px;width: 100%;"></chart>
               </div>
             </template>
           </Card>
@@ -175,7 +175,7 @@
                 </div>
               </template>
               <template slot="content">
-                <chart ref="chart2" :options="classify"
+                <chart ref="chart2" :options="returnBar(query)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
             </Card>
@@ -188,7 +188,7 @@
                 </div>
               </template>
               <template slot="content">
-                <chart ref="chart3" :options="classify"
+                <chart ref="chart3" :options="returnBar(feedback)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
             </Card>
@@ -203,7 +203,7 @@
             </template>
             <template slot="content">
               <div flex>
-                <chart ref="chart4" :options="memoTrend" style="height: 200px;width: 60%;"></chart>
+                <chart ref="chart4" :options="returnMemoTrend(memoTrend)" style="height: 200px;width: 60%;"></chart>
                 <div style="width: 40%;">
                   <div class="memo-status">
                     <div class="table">
@@ -299,7 +299,7 @@
 </template>
 
 <script>
-
+  import {mapState} from 'vuex'
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
@@ -321,85 +321,7 @@
     },
     data() {
       return {
-        trend: {
-          color: ['#02b7f4', '#2646c5'],
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985'
-              }
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: 0,
-            containLabel: true
-          },
-          xAxis: [
-            {
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'category',
-              boundaryGap: false,
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-            }
-          ],
-          yAxis: [
-            {
-              position: 'left',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            },
-            {
-              position: 'right',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            }
-          ],
-          series: [
-            {
-              smooth: true,
-              name: '奖',
-              type: 'line',
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(2,176,234,1)'
-                }, {
-                  offset: 1,
-                  color: 'rgba(2,176,234,0)'
-                }])
-              },
-              yAxisIndex: 1,
-              data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210],
-              symbol: 'none'
-            },
-            {
-              smooth: true,
-              name: '惩',
-              type: 'line',
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(45,82,233,1)'
-                }, {
-                  offset: 1,
-                  color: 'rgba(45,82,233,0)'
-                }])
-              },
-              data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 310],
-              symbol: 'none'
-            }
-          ]
-        },
+        /*
         quitTrend: {
           color: ['#02b7f4', '#2646c5'],
           tooltip: {
@@ -506,31 +428,182 @@
             }
           ]
         },
-        classify: {
-          color: '#00abfb',
+        punishRewardList: [
+          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
+          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' }
+        ],
+        memoStatusList: [
+          { name: '房产交易', count: 8848, time: 9527 },
+          { name: '规划设计方案', count: 8848, time: 9527 },
+          { name: '股票交易', count: 8848, time: 9527 },
+          { name: '不动产转移', count: 8848, time: 9527 }
+        ],
+         */
+        swiperOptions: {
+          direction: 'vertical',
+          slidesPerView: 6,
+          loop: true,
+          autoplay: {
+            delay: 3000,
+            stopOnLastSlide: false,
+            disableOnInteraction: true
+          }
+          // pagination: {
+          //   el: '.swiper-pagination'
+          // },
+          // Some Swiper option/callback...
+        }
+      }
+    },
+    computed: {
+      ...mapState({
+        unionRewardPunish: state => state.union.unionRewardPunish,
+        redBlackStatistics: state => state.union.redBlackStatistics,
+        trend: state => state.union.trend,
+        query: state => state.union.query,
+        feedback: state => state.union.feedback,
+        memoTrend: state => state.union.memoTrend,
+        memoStatusList: state => state.union.memoStatusList,
+        punishRewardList: state => state.union.punishRewardList,
+        measure: state => state.union.measure,
+        quitTrend: state => state.union.quitTrend
+      })
+    },
+    methods: {
+      mySwiper() {
+        // mySwiper 是要绑定到标签中的ref属性
+        return this.$refs.mySwiper.swiper
+      },
+      on_swiper_enter() {
+        this.$refs.mySwiper.$swiper.autoplay.stop()
+      },
+      on_swiper_leave() {
+        this.$refs.mySwiper.$swiper.autoplay.start()
+      },
+      returnTrend(data) {
+        return {
+          color: ['#02b7f4', '#2646c5'],
           tooltip: {
             trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
+              axisPointer: {
+              type: 'cross',
+                label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            bottom: 0,
+            textStyle: {
+              color: '#fff'
             }
           },
           grid: {
+            top: '16%',
+            left: '3%',
+            right: '4%',
+            bottom: '12%',
+            containLabel: true
+          },
+          dataset: {
+            source: data
+          },
+          xAxis: [
+            {
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'category',
+              boundaryGap: false,
+            }
+          ],
+          yAxis: [
+            {
+              position: 'left',
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'value',
+              name: '(次)',
+              max: 2500
+            },
+            {
+              position: 'right',
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'value',
+              name: '(次)',
+              max: 2500
+            }
+          ],
+          series: [
+            {
+              smooth: true,
+              name: '奖励',
+              type: 'line',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: 'rgba(2,176,234,1)'
+                }, {
+                  offset: 1,
+                  color: 'rgba(2,176,234,0)'
+                }])
+              },
+              yAxisIndex: 1,
+              symbol: 'none'
+            },
+            {
+              smooth: true,
+              name: '惩戒',
+              type: 'line',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: 'rgba(45,82,233,1)'
+                }, {
+                  offset: 1,
+                  color: 'rgba(45,82,233,0)'
+                }])
+              },
+              symbol: 'none'
+            }
+          ]
+        }
+      },
+      returnBar(data) {
+        return {
+          color: '#00abfb',
+            tooltip: {
+            trigger: 'axis',
+              axisPointer: {
+              type: 'shadow'
+            }
+          },
+          dataset: {
+            source: data
+          },
+          grid: {
             left: '10%',
-            right: '10%',
-            bottom: 0,
-            top: '10%'
+              right: '10%',
+              bottom: 0,
+              top: '10%'
           },
           xAxis: {
             show: false,
-            type: 'value',
-            boundaryGap: [0, 0.01]
+              type: 'value',
+              boundaryGap: [0, 0.01]
           },
           yAxis: {
             type: 'category',
-            data: ['部门1', '部门2', '部门3', '部门4', '部门5', '部门6', '部门7', '部门8'],
-            axisLine: {
+              axisLine: {
               show: false,
-              lineStyle: {
+                lineStyle: {
                 color: xyLineColor
               }
             },
@@ -553,107 +626,13 @@
                     { offset: 1, color: '#39BBF3' }
                   ]
                 )
-              },
-              data: [1100, 800, 550, 350, 350, 200, 100, 80]
+              }
             }
           ]
-        },
-        measure: {
-          color: '#00abfb',
-          tooltip: {
-            axisPointer: {}
-          },
-          grid: {
-            left: 10,
-            right: 10,
-            bottom: 0,
-            top: '10%'
-          },
-          xAxis: {
-            show: false,
-            type: 'value',
-            boundaryGap: [0, 0.01]
-          },
-          yAxis: {
-            type: 'category',
-            data: ['部门1', '部门2', '部门3', '部门4', '部门5', '部门6', '部门7', '部门8'],
-            show: false,
-            inverse: true
-          },
-          series: [
-            {
-              type: 'bar',
-              showBackground: true,
-              barWidth: 10,
-              label: {
-                show: true,
-                color: xyLineColor,
-                offset: [0, -12],
-                position: 'topLeft',
-                formatter: (p) => {
-                  return p.name
-                }
-              },
-              itemStyle: {
-                barBorderRadius: 8,
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 1, 0,
-                  [
-                    { offset: 0, color: '#2f54ee' },
-                    { offset: 1, color: '#288cf1' }
-                  ]
-                )
-              },
-              data: [1100, 800, 550, 350, 350, 200, 100, 80]
-            }
-          ]
-        },
-        punishRewardList: [
-          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' }
-        ],
-        memoStatusList: [
-          { name: '房产交易', count: 8848, time: 9527 },
-          { name: '规划设计方案', count: 8848, time: 9527 },
-          { name: '股票交易', count: 8848, time: 9527 },
-          { name: '不动产转移', count: 8848, time: 9527 }
-        ],
-        swiperOptions: {
-          direction: 'vertical',
-          slidesPerView: 6,
-          loop: true,
-          autoplay: {
-            delay: 3000,
-            stopOnLastSlide: false,
-            disableOnInteraction: true
-          }
-          // pagination: {
-          //   el: '.swiper-pagination'
-          // },
-          // Some Swiper option/callback...
         }
-      }
-    },
-    computed: {
-      mySwiper() {
-        // mySwiper 是要绑定到标签中的ref属性
-        return this.$refs.mySwiper.swiper
-      }
-    },
-    methods: {
-      on_swiper_enter() {
-        this.$refs.mySwiper.$swiper.autoplay.stop()
       },
-      on_swiper_leave() {
-        this.$refs.mySwiper.$swiper.autoplay.start()
+      returnMemoTrend(data){
+
       }
     }
   }

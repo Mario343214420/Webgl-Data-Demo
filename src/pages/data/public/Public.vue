@@ -295,13 +295,14 @@
               inverse: true,
               axisLabel: {
                 interval: 0,
+                /*
                 formatter: function(params){
                   var newParamsName = "";// 最终拼接成的字符串
                   var paramsNameNumber = params.length;// 实际标签的个数
                   var provideNumber = 3;// 每行能显示的字的个数
                   var rowNumber = Math.ceil(paramsNameNumber / provideNumber);// 换行的话，需要显示几行，向上取整
                   if (paramsNameNumber > provideNumber) {
-                    /** 循环每一行,p表示行 */
+                    // 循环每一行,p表示行
                     for (var p = 0; p < rowNumber; p++) {
                       var tempStr = "";// 表示每一次截取的字符串
                       var start = p * provideNumber;// 开始截取的位置
@@ -324,6 +325,7 @@
                   //将最终的字符串返回
                   return newParamsName
                 }
+                */
               }
             },
             series: [
