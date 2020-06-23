@@ -7,11 +7,11 @@
           <div class="count-wrapper">
             <span class="square-bg">
               <i class="count-title">备忘录数量</i><br>
-              <i class="num">{{ union.memoCount }}</i><i class="white-font">（个）</i>
+              <i class="num">{{ union.memoCount }}</i><i class="white-font">（条）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">措施数量</i><br>
-              <i class="num">{{ union.measureCount }}</i><i class="white-font">（个）</i>
+              <i class="num">{{ union.measureCount }}</i><i class="white-font">（条）</i>
             </span>
             <span class="square-bg">
               <i class="count-title">实施部门数量</i><br>
@@ -25,7 +25,7 @@
             <span class="handle-btn" flex>
               <i class="btn" :class="handleBtnTab1 === 0 ? 'active' : ''" @click="changeExchangeDataMonth">本月</i>
               <i class="btn" :class="handleBtnTab1 === 1 ? 'active' : ''" @click="changeExchangeDataYear">本年</i>
-              <b-date-picker type="date"
+              <b-date-picker type="daterange"
                              :open="dateOpen1"
                              :value="date1"
                              confirm
@@ -34,8 +34,9 @@
                              @on-ok="handleOk1"
                              placeholder="Select date">
                 <a style="display: block;width: 76px;" href="javascript:void(0)" @click="handleClick('dateOpen1')">
-                  <template v-if="date1 === ''">选择日期</template>
-                  <template v-else>{{ date1 }}</template>
+                  <!--<template v-if="date1 === ''">选择日期</template>
+                  <template v-else>{{ date1 }}</template>-->
+                  <template>选择日期</template>
                 </a>
               </b-date-picker>
             </span>
@@ -44,16 +45,16 @@
             <span class="square-bg data-change">
               <img src="~@/assets/images/overview/icon_data.png" alt=""><br>
               <i>交换数据总量</i><br>
-              <i class="num">{{ dataExchange.getIn + dataExchange.getOut }}</i><i>（个）</i>
+              <i class="num">{{ dataExchange.getIn + dataExchange.getOut }}</i><i>（条）</i>
             </span>
             <span class="square-bg data-change" flex>
               <span>
-                <i class="num">{{ dataExchange.getIn }}</i><i>（个）</i><br>
+                <i class="num">{{ dataExchange.getIn }}</i><i>（条）</i><br>
                 <i>归集数据量</i><br>
                 <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">&nbsp;{{ dataExchange.getInCorrect }}</i><br>
               </span>
               <span>
-                <i class="num">{{ dataExchange.getOut }}</i><i>（个）</i><br>
+                <i class="num">{{ dataExchange.getOut }}</i><i>（条）</i><br>
                 <i>输出数据量</i><br>
                 <i style="line-height: 40px;">正确率</i><i style="color: #00ccff; line-height: 40px;">&nbsp;{{ dataExchange.getOutCorrect }}</i><br>
               </span>
@@ -81,6 +82,7 @@
           <div class="total-count">
             <i>数据归集总量</i>
             <i v-for="(item, index) in total" :key="index" class="total-num" :class="'num' + item"></i>
+            <i style="padding-left: 20px;">条</i>
           </div>
           <div class="cube">
             <div class="inner-float"></div>
@@ -98,42 +100,42 @@
             <div class="rotate-inner">
               <div class="inner-item">
                 <p><i>{{ rotateData[0].name }}</i></p>
-                <p><i class="num">{{ rotateData[0].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[0].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>{{ rotateData[1].name }}</i></p>
-                <p><i class="num">{{ rotateData[1].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[1].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>{{ rotateData[2].name }}</i></p>
-                <p><i class="num">{{ rotateData[2].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[2].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>{{ rotateData[3].name }}</i></p>
-                <p><i class="num">{{ rotateData[3].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[3].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>{{ rotateData[4].name }}</i></p>
-                <p><i class="num">{{ rotateData[4].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[4].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
               </div>
               <div class="inner-item">
                 <p><i>{{ rotateData[5].name }}</i></p>
-                <p><i class="num">{{ rotateData[5].value }}</i><i>(个)</i></p>
+                <p><i class="num">{{ rotateData[5].value }}</i><i>(条)</i></p>
                 <div>
                   <img src="~@/assets/images/overview/data.png" alt="">
                 </div>
@@ -228,20 +230,20 @@
       <template slot="inner">
         <div style="height: 100%" flex="main:justify dir:top">
           <div class="title">
-            部门数据归集统计分析
+            资源信息分类统计
           </div>
           <div class="count-wrapper">
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">一级分类</i><br>
-              <i class="num">{{ collection.lv1 }}</i><i>（个）</i>
+              <i class="num">{{ collection.lv1 }}</i><i>（条）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">二级分类</i><br>
-              <i class="num">{{ collection.lv2 }}</i><i>（个）</i>
+              <i class="num">{{ collection.lv2 }}</i><i>（条）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">资源数</i>
-              <i class="num">{{ collection.resourceCount }}</i><i>（个）</i>
+              <i class="num">{{ collection.resourceCount }}</i><i>（条）</i>
             </div>
             <div class="count-item square-bg">
               <i class="white-font" style="line-height: 40px;">部门数</i>
@@ -254,7 +256,7 @@
             <span class="handle-btn" flex>
               <i class="btn" :class="handleBtnTab2 === 0 ? 'active' : ''" @click="changeReportDataMonth">本月</i>
               <i class="btn" :class="handleBtnTab2 === 1 ? 'active' : ''" @click="changeReportDataYear">本年</i>
-              <b-date-picker type="date"
+              <b-date-picker type="daterange"
                              :open="dateOpen2"
                              :value="date2"
                              confirm
@@ -265,8 +267,9 @@
                 <a style="display: block;width: 76px;"
                    href="javascript:void(0)"
                    @click="handleClick('dateOpen2')">
-                  <template v-if="date2 === ''">选择日期</template>
-                  <template v-else>{{ date2 }}</template>
+                  <!--<template v-if="date2 === ''">选择日期</template>
+                  <template v-else>{{ date2 }}</template>-->
+                  <template>选择日期</template>
                 </a>
               </b-date-picker>
             </span>
@@ -278,14 +281,14 @@
           </div>
           <div class="dept-list" style="margin-bottom: 10px;">
             <div class="header-wrapper" flex="main:justify">
-              <span class="list-header" flex-box="1">部门名称</span>
-              <span class="list-header" flex-box="1">数量</span>
-              <span class="list-header" flex-box="1">入库率</span>
+              <span class="list-header" style="flex: 1;">部门名称</span>
+              <span class="list-header" style="flex: 1;">数量（条）</span>
+              <span class="list-header" style="flex: 1;">入库率</span>
             </div>
             <div class="body-wrapper" flex="main:justify" v-for="(item, index) in submission" :key="index">
-              <span flex-box="1">{{item.name}}</span>
-              <span flex-box="1">{{item.count}}</span>
-              <span flex-box="1">{{item.percent}}</span>
+              <span style="flex: 1;">{{item.name}}</span>
+              <span style="flex: 1;">{{item.count}}</span>
+              <span style="flex: 1;">{{item.percent}}</span>
             </div>
           </div>
         </div>
@@ -327,9 +330,7 @@
     },
     computed: {
       ...mapState({
-        union: state => {
-          return state.overview.union;
-        },
+        union: state => state.overview.union,
         dataExchange: state => state.overview.dataExchange,
         total: state => state.overview.total,
         rotateData: state => state.overview.rotateData,
@@ -464,7 +465,7 @@
       returnBar(data) {
         return {
           grid: {
-            top: 20,
+            top: 30,
             left: 50,
             right: 10
           },
@@ -485,7 +486,9 @@
           yAxis: {
             boundaryGap: ['20%', '20%'],
             axisLine: { lineStyle: { color: xyLineColor } },
-            splitLine: { lineStyle: { color: splitLineColor } }
+            splitLine: { lineStyle: { color: splitLineColor } },
+            name: '（条）',
+            nameGap: 10
           },
           series: [
             {
@@ -528,24 +531,26 @@
           }
         },
           grid: {
-            left: '3%',
-              right: '4%',
-              bottom: 0,
-              top: '12%',
-              containLabel: true
+            left: '2%',
+            right: '10%',
+            bottom: 0,
+            top: '12%',
+            containLabel: true
           },
           dataset: {
             source: data
           },
           xAxis: {
             type: 'value',
-              boundaryGap: [0, 0.01],
-              axisLine: {
+            boundaryGap: [0, 0.01],
+            axisLine: {
               lineStyle: {
                 color: xyLineColor
               }
             },
-            splitLine: { lineStyle: { color: splitLineColor } }
+            splitLine: { lineStyle: { color: splitLineColor } },
+            name: '（条）',
+            nameGap: 8
           },
           yAxis: {
             type: 'category',
@@ -553,8 +558,7 @@
               lineStyle: {
                 color: xyLineColor
               }
-            },
-            inverse: true
+            }
           },
           series: [
             {
@@ -562,8 +566,7 @@
               barWidth: 10,
               itemStyle: {
                 barBorderRadius: 8
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
+              }
             }
           ]
         }
@@ -575,26 +578,30 @@
           },
           grid: {
             left: '3%',
-              right: '4%',
-              bottom: '3%',
-              top: '6%',
-              containLabel: true
+            right: '4%',
+            bottom: '3%',
+            top: '15%',
+            containLabel: true
           },
           xAxis: {
             type: 'category',
-              boundaryGap: false,
-              axisLine: { lineStyle: { color: xyLineColor } }
+            boundaryGap: false,
+            axisLine: {
+              lineStyle: { color: xyLineColor }
+            }
           },
           yAxis: {
             type: 'value',
-              axisLine: { lineStyle: { color: xyLineColor } },
+            axisLine: { lineStyle: { color: xyLineColor } },
             splitLine: { lineStyle: { color: splitLineColor } },
             max: function (value) {
               return value.min - 1
             },
             min: function (value) {
               return value.max + 1
-            }
+            },
+            name: '（次）',
+            nameGap: 10
           },
           series: [{
             type: 'line',
@@ -723,7 +730,8 @@
       display flex
       justify-content space-between
       width: 100%
-
+      .square-bg
+        width 115px
       .count-item
         width 23%
         padding-bottom 8px
@@ -891,7 +899,31 @@
             width 450px
             height: auto
             transform translate(-50%, -50%) rotateX(60deg)
-
+          &::before
+            content ''
+            width: 160%
+            height: 160%
+            border: 2px solid rgba(15,100,230,0.5)
+            display block
+            position absolute
+            top: 0
+            transform: translate(-50%, -50%) rotateX(60deg);
+            -webkit-border-radius: 50%
+            -moz-border-radius: 50%
+            border-radius: 50%
+            box-shadow 0 0 10px rgba(20,140,250,0.4)
+          &::after
+            content ''
+            width: 130%
+            height: 130%
+            top: 0
+            border: 2px dashed rgba(15,100,230,0.8)
+            display block
+            position absolute
+            transform: translate(-50%, -50%) rotateX(60deg);
+            -webkit-border-radius: 50%
+            -moz-border-radius: 50%
+            border-radius: 50%
         .cir2
           position absolute
           top: calc(50% + 100px)

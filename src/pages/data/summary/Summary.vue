@@ -12,17 +12,17 @@
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_01.png" alt="">
               <i class="font">归集数量</i>
-              <i class="num">{{monthAnalysis.collection}}</i>
+              <p><i class="num">{{monthAnalysis.collection}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_02.png" alt="">
               <i class="font">上报数据总量</i>
-              <i class="num">{{monthAnalysis.appear}}</i>
+              <p><i class="num">{{monthAnalysis.appear}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_03.png" alt="">
               <i class="font">回流数据量</i>
-              <i class="num">{{monthAnalysis.reflux}}</i>
+              <p><i class="num">{{monthAnalysis.reflux}}</i><i class="white-font">（条）</i></p>
             </span>
               </div>
             </template>
@@ -34,20 +34,20 @@
             <template slot="content">
               <div flex="main:justify">
               <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">一级分类（个）</i>
-              <i class="num">{{classifyStatistic.lv1}}</i>
+              <i class="font">一级分类</i>
+              <p><i class="num">{{classifyStatistic.lv1}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">二级分类（个）</i>
-              <i class="num">{{classifyStatistic.lv2}}</i>
+              <i class="font">二级分类</i>
+              <p><i class="num">{{classifyStatistic.lv2}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">资源数（个）</i>
-              <i class="num">{{classifyStatistic.resourceCount}}</i>
+              <i class="font">资源数</i>
+              <p><i class="num">{{classifyStatistic.resourceCount}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">部门数（个）</i>
-              <i class="num">{{classifyStatistic.deptCount}}</i>
+              <i class="font">部门数</i>
+              <p><i class="num">{{classifyStatistic.deptCount}}</i><i class="white-font">（个）</i></p>
             </span>
               </div>
               <div>
@@ -58,7 +58,7 @@
           <Card>
             <template slot="title">
               <div flex="main:justify">
-                <span>资源信息分类统计</span>
+                <span>部门数据归集统计分析</span>
                 <span class="handle-date" flex="main:justify">
                 <i class="tab" :class="dateTab === 0 ? 'active' : ''" @click="dateTab = 0">本月</i>
                 <i class="tab" :class="dateTab === 1 ? 'active' : ''" @click="dateTab = 1">本年</i>
@@ -82,7 +82,7 @@
               <div class="table">
                 <div class="table-row" flex="main:justify">
                   <span>部门名称</span>
-                  <span>轨迹数量（个）</span>
+                  <span>归集数量（条）</span>
                   <span>占比</span>
                 </div>
                 <div class="table-row" v-for="(item, index) in classifyStatistic.deptList" :key="index" flex="main:justify">
@@ -105,7 +105,7 @@
                 <img src="~@/assets/images/summary/icon_zyxx.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
-                  <i class="num">{{summaryCounts.resource}}</i><i>（个）</i>
+                  <i class="num">{{summaryCounts.resource}}</i><i>（条）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -118,7 +118,7 @@
                 <img src="~@/assets/images/summary/icon_sjgj.png" alt="">
                 <span class="tip-item-font">
                   <i>数据归集数量</i><br>
-                  <i class="num">{{summaryCounts.collection}}</i><i>（个）</i>
+                  <i class="num">{{summaryCounts.collection}}</i><i>（条）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -132,7 +132,7 @@
                 <img src="~@/assets/images/summary/icon_bygj.png" alt="">
                 <span class="tip-item-font">
                   <i>资源信息数量</i><br>
-                  <i class="num">{{summaryCounts.month}}</i><i>（个）</i>
+                  <i class="num">{{summaryCounts.month}}</i><i>（条）</i>
                 </span>
               </div>
               <span class="light-corner"></span>
@@ -145,24 +145,24 @@
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_zrr.png" alt=""><br>
               <span><i>自然人数据总量</i></span>
-              <span><i class="num">{{summaryCounts.naturalPerson}}</i><i>（个）</i></span>
+              <span><i class="num">{{summaryCounts.naturalPerson}}</i><i>（条）</i></span>
             </span>
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_fr.png" alt=""><br>
               <span><i>法人数据总量</i></span>
-              <span><i class="num">{{summaryCounts.legalPerson}}</i><i>（个）</i></span>
+              <span><i class="num">{{summaryCounts.legalPerson}}</i><i>（条）</i></span>
             </span>
           </div>
           <div class="float-tip-wrapper float-2" flex="main:justify">
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_zdrq.png" alt=""><br>
               <span><i>重点人群数据总量</i></span>
-              <span><i class="num">{{summaryCounts.focusPerson}}</i><i>（个）</i></span>
+              <span><i class="num">{{summaryCounts.focusPerson}}</i><i>（条）</i></span>
             </span>
             <span class="float-tip-wrapper-item" flex="dir:top cross:center">
               <img src="~@/assets/images/summary/icon_yztg.png" alt=""><br>
               <span><i>严重通过率</i></span>
-              <span><i class="num">{{summaryCounts.passPercent}}%</i><i>（个）</i></span>
+              <span><i class="num">{{summaryCounts.passPercent}}%</i><i>（条）</i></span>
             </span>
           </div>
           <div id="cvsBg" style="margin-top: 12px;width: 100%; height: 500px;"></div>
@@ -194,7 +194,7 @@
           <Card>
             <template slot="title">
               <div flex="main:justify">
-                <span>{{tab===0? '自然人': '法人'}}资源数据分类数据分析</span>
+                <span>{{tab===0? '自然人': '法人'}}资源数据分类统计</span>
                 <span class="handle-date" flex="main:justify">
                   <i class="tab active" v-show="tab === 0" @click="tab = 1"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
@@ -215,7 +215,7 @@
               <div class="table">
                 <div class="table-row" flex="main:justify">
                   <span>部门名称</span>
-                  <span>资源信息</span>
+                  <span>资源信息（条）</span>
                 </div>
                 <div class="table-row" v-for="(item, index) in newestFillInDept" :key="index" flex="main:justify">
                   <span>{{ item.name }}</span>
@@ -379,8 +379,12 @@
           grid: {
             left: '3%',
               right: '4%',
-              bottom: '3%',
+              bottom: '10%',
               containLabel: true
+          },
+          legend: {
+            textStyle:{color: '#fff'},
+            bottom:0
           },
           xAxis: [
             {
@@ -396,7 +400,7 @@
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
-              name: '(个)',
+              name: '(条)',
               interval: 500,
               max:2500
             },
@@ -406,7 +410,7 @@
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
-              name: '(个)',
+              name: '(条)',
               interval: 500,
               max:2500
             }
@@ -414,14 +418,14 @@
             series: [
             {
               smooth: true,
-              name: '奖',
+              name: '自然人',
               type: 'line',
               areaStyle: {},
               yAxisIndex: 1
             },
             {
               smooth: true,
-              name: '惩',
+              name: '法人及其他组织',
               type: 'line',
               areaStyle: {}
             }
@@ -467,7 +471,7 @@
                 color: '#fff',
                 lineHeight: 20,
                 align: 'center',
-                formatter: p => p.name + '\n' + p.value + '（个）'
+                formatter: p => p.name + '\n' + p.value + '（条）'
               },
               labelLine: {
                 show: false
@@ -485,7 +489,7 @@
                 position: 'center',
                 color: '#fff',
                 lineHeight: 20,
-                formatter: p => p.name + '\n  ' + p.value + '（个）'
+                formatter: p => p.name + '\n  ' + p.value + '（条）'
               },
               labelLine: {
                 show: false
@@ -749,14 +753,17 @@
       padding-bottom: 14px
       .table-row
         line-height: 32px
-
+        flex 1
         &:nth-child(odd)
           background-color: #001739
 
         span
           color #ffffff
           padding 0 10px
-
+          &:last-child
+            text-align center
+            width: 120px
+            display block
         &:nth-child(n+2)
           span:nth-child(2)
             color #00ccfe

@@ -12,17 +12,17 @@
               <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_01.png" alt="">
               <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <p><i class="num">{{month.collection}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_02.png" alt="">
-              <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <i class="font">上报数据量</i>
+              <p><i class="num">{{month.submit}}</i><i class="white-font">（条）</i></p>
             </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
               <img src="~@/assets/images/summary/icon_03.png" alt="">
-              <i class="font">归集数量</i>
-              <i class="num">560</i>
+              <i class="font">回流数据量</i>
+              <p><i class="num">{{month.reflux}}</i><i class="white-font">（条）</i></p>
             </span>
               </div>
             </template>
@@ -33,25 +33,25 @@
             </template>
             <template slot="content">
               <div flex="main:justify">
-              <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">一级分类（个）</i>
-              <i class="num">560</i>
-            </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">二级分类（个）</i>
-              <i class="num">560</i>
-            </span>
+                  <i class="font">一级分类</i>
+                  <p><i class="num">{{classify.lv1}}</i><i class="white-font">（条）</i></p>
+                </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">资源数（个）</i>
-              <i class="num">560</i>
-            </span>
+                  <i class="font">二级分类</i>
+                  <p><i class="num">{{classify.lv2}}</i><i class="white-font">（条）</i></p>
+                </span>
                 <span class="count-wrapper-item" flex="main:justify dir:top">
-              <i class="font">部门数（个）</i>
-              <i class="num">560</i>
-            </span>
+                  <i class="font">资源数</i>
+                  <p><i class="num">{{classify.resourceCount}}</i><i class="white-font">（条）</i></p>
+                </span>
+                <span class="count-wrapper-item" flex="main:justify dir:top">
+                  <i class="font">部门数</i>
+                  <p><i class="num">{{classify.deptCount}}</i><i class="white-font">（个）</i></p>
+                </span>
               </div>
               <div>
-                <chart ref="chart1" :options="classify" style="width: 100%; height: 220px;"></chart>
+                <chart ref="chart1" :options="returnBar(classify.chartData)" style="width: 100%; height: 220px;"></chart>
               </div>
             </template>
           </Card>
@@ -83,7 +83,7 @@
               <div class="table">
                 <div class="table-row" flex="main:justify">
                   <span>部门名称</span>
-                  <span>轨迹数量（个）</span>
+                  <span>归集数量（条）</span>
                   <span>占比</span>
                 </div>
                 <div class="table-row" v-for="(item, index) in classifyList" :key="index" flex="main:justify">
@@ -107,7 +107,7 @@
                   <img src="~@/assets/images/summary/icon_zyxx.png" alt="">
                   <span class="tip-item-font">
                   <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i class="num">{{resource.resourceCount}}</i><i>（条）</i>
                 </span>
                 </div>
                 <span class="light-corner"></span>
@@ -119,8 +119,8 @@
                 <div class="tip-item-inner" flex="space:around cross:center">
                   <img src="~@/assets/images/summary/icon_sjgj.png" alt="">
                   <span class="tip-item-font">
-                  <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i>数据归集数量</i><br>
+                  <i class="num">{{resource.dataCount}}</i><i>（条）</i>
                 </span>
                 </div>
                 <span class="light-corner"></span>
@@ -133,8 +133,8 @@
                 <div class="tip-item-inner" flex="space:around cross:center">
                   <img src="~@/assets/images/summary/icon_bygj.png" alt="">
                   <span class="tip-item-font">
-                  <i>资源信息数量</i><br>
-                  <i class="num">16,589</i><i>（个）</i>
+                  <i>本月归集数量</i><br>
+                  <i class="num">{{resource.monthCount}}</i><i>（条）</i>
                 </span>
                 </div>
                 <span class="light-corner"></span>
@@ -164,23 +164,23 @@
               <span>数据归集来源对比</span>
             </template>
             <template slot="content">
-              <chart ref="chart3" :options="rose" style="width: 100%; height: 280px;"></chart>
+              <chart ref="chart3" :options="returnRose(sourceData)" style="width: 100%; height: 280px;"></chart>
             </template>
           </Card>
           <Card>
             <template slot="title">
               <div flex="main:justify">
-                <span>数据归集来源对比</span>
+                <span>{{chartTab===0? '自然人':'法人'}}资源数据分类统计</span>
                 <span class="handle-date" flex="main:justify">
-                  <i class="tab active" v-show="dateTab === 0" @click="dateTab = 1"><i class="iconfont icon-ios-repeat"
+                  <i class="tab active" v-show="chartTab === 0" @click="chartTab = 1"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>法人</i>
-                  <i class="tab active" v-show="dateTab === 1" @click="dateTab = 0"><i class="iconfont icon-ios-repeat"
+                  <i class="tab active" v-show="chartTab === 1" @click="chartTab = 0"><i class="iconfont icon-ios-repeat"
                                                                                        style="color: #00cbfe; font-size: 18px; vertical-align: top"></i>自然人</i>
                 </span>
               </div>
             </template>
             <template slot="content">
-              <chart ref="chart4" :options="pie" style="width: 100%; height: 280px;"></chart>
+              <chart ref="chart4" :options="returnPie(naturalPersonData)" style="width: 100%; height: 280px;"></chart>
             </template>
           </Card>
           <Card>
@@ -191,9 +191,9 @@
               <div class="table">
                 <div class="table-row" flex="main:justify">
                   <span>部门名称</span>
-                  <span>资源信息</span>
+                  <span>资源信息（条）</span>
                 </div>
-                <div class="table-row" v-for="(item, index) in newClassifyList" :key="index" flex="main:justify">
+                <div class="table-row" v-for="(item, index) in newestList" :key="index" flex="main:justify">
                   <span>{{ item.name }}</span>
                   <span>{{ item.count }}</span>
                 </div>
@@ -207,6 +207,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
@@ -218,234 +219,32 @@
     name: 'SummaryMap',
     data() {
       return {
-        classify: {
-          color: '#00abfb',
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '6%',
-            top: '3%',
-            containLabel: true
-          },
-          dataset: {
-            source: [
-              ['product', '辅助', '生活费'],
-              ['基础信息', 0, 100],
-              ['业务信息', 100, 100],
-              ['司法信息', 200, 100],
-              ['行政执法信息', 300, 100],
-              ['公共事业信息', 400, 100],
-              ['信用评级信息', 500, 100],
-              ['其他信息', 600, 100],
-              ['累计', 0, 700]
-            ]
-          },
-          xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            splitLine: { lineStyle: { color: splitLineColor } }
-          },
-          yAxis: {
-            type: 'category',
-            data: ['基础信息', '业务信息', '司法信息', '行政执法信息', '公共事业信息', '信用评级信息', '其他信息'],
-            axisLine: {
-              lineStyle: {
-                color: xyLineColor
-              }
-            },
-            inverse: true
-          },
-          series: [
-            {
-              type: 'bar',
-              showBackground: true,
-              barWidth: 10,
-              itemStyle: {
-                barBorderRadius: 8,
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 1, 0,
-                  [
-                    { offset: 0, color: '#2380f2' },
-                    { offset: 1, color: '#39BBF3' }
-                  ]
-                )
-              },
-              data: [1100, 800, 550, 350, 200, 100, 80]
-            }
-          ]
-        },
         open: false,
         date: '',
         dateTab: 0,
-        classifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 }
-        ],
-        newClassifyList: [
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 },
-          { name: '部门名称一', count: 8848, percent: 10 }
-        ],
-        trend: {
-          color: ['#02b7f4', '#2646c5'],
-          title: {
-            text: '资源信息归集趋势',
-            textStyle: { color: '#fff' }
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985'
-              }
-            }
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'category',
-              boundaryGap: false,
-              data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            }
-          ],
-          yAxis: [
-            {
-              position: 'left',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            },
-            {
-              position: 'right',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)',
-              max: 500
-            }
-          ],
-          series: [
-            {
-              smooth: true,
-              name: '奖',
-              type: 'line',
-              areaStyle: {},
-              yAxisIndex: 1,
-              data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-              smooth: true,
-              name: '惩',
-              type: 'line',
-              areaStyle: {},
-              data: [220, 182, 191, 234, 290, 330, 310]
-            }
-          ]
-        },
-        rose: {
-          color: ['#fbd860', '#35afc6', '#1f74f1', '#00cbfe'],
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-          },
-          series: [
-            {
-              name: '面积模式',
-              type: 'pie',
-              radius: [30, 100],
-              center: ['50%', '50%'],
-              roseType: 'area',
-              data: [
-                { value: 10, name: '手工填报' },
-                { value: 5, name: 'et对接' },
-                { value: 15, name: '内部接口' },
-                { value: 25, name: '其他' }
-              ]
-            }
-          ]
-        },
-        pie: {
-          color: ['#553cff', '#fe3b3c', '#fb952f', '#4dcea7', '#00ccff', '#0e31e3', '#1167e2'],
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '65%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: true,
-                color: '#fff',
-                lineHeight: 20,
-                align: 'center',
-                formatter: p => p.name + '\n' + p.value + '（个）'
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                { value: 335, name: '业务信息' },
-                { value: 310, name: '司法信息' },
-                { value: 234, name: '行政执法信息' },
-                { value: 235, name: '信用评价信息' },
-                { value: 248, name: '公共事业信息' },
-                { value: 248, name: '其他信息' },
-                { value: 248, name: '基本信息' }
-              ]
-            },
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['0', '40%'],
-              avoidLabelOverlap: false,
-              label: {
-                align: 'center',
-                show: true,
-                position: 'center',
-                color: '#fff',
-                lineHeight: 20,
-                formatter: p => p.name + '\n  ' + p.value + '（个）'
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                { value: 335, name: '直接访问' }
-              ]
-            }
-          ]
-        }
+        chartTab: 0
       }
+    },
+    mounted() {
+      // this.renderBall()
+      this.renderMap({ id: 'map',mapData: this.mapData})
+      this.$store.dispatch('getMap')
+    },
+    computed: {
+      ...mapState({
+        month: state => state.map.month,
+        classify: state => state.map.classify,
+        classifyList: state => state.map.classifyList,
+        resource: state => state.map.resource,
+        mapData: state => state.map.mapData,
+        sourceData: state => state.map.sourceData,
+        naturalPersonData: state => state.map.naturalPersonData,
+        newestList: state => state.map.newestList,
+      })
+    },
+    components: {
+      Panel,
+      Card
     },
     methods: {
       handleClick() {
@@ -539,6 +338,130 @@
         init()
         window.onresize = init
       },
+      returnBar(data){
+        return {
+          color: '#00abfb',
+            tooltip: {
+            trigger: 'axis',
+              axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '3%',
+              right: '12%',
+              bottom: '6%',
+              top: '3%',
+              containLabel: true
+          },
+          dataset: {
+            source: data
+          },
+          xAxis: {
+            type: 'value',
+              boundaryGap: [0, 0.01],
+              axisLine: {
+              lineStyle: {
+                color: xyLineColor
+              }
+            },
+            splitLine: { lineStyle: { color: splitLineColor } },
+            name: '(条)'
+          },
+          yAxis: {
+            type: 'category',
+              axisLine: {
+              lineStyle: {
+                color: xyLineColor
+              }
+            }
+          },
+          series: [
+            {
+              type: 'bar',
+              showBackground: true,
+              barWidth: 10,
+              itemStyle: {
+                barBorderRadius: 8,
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 1, 0,
+                  [
+                    { offset: 0, color: '#2380f2' },
+                    { offset: 1, color: '#39BBF3' }
+                  ]
+                )
+              }
+            }
+          ]
+        }
+      },
+      returnRose(data){
+        return {
+          color: ['#fbd860', '#35afc6', '#1f74f1', '#00cbfe'],
+            tooltip: {
+            trigger: 'item',
+              formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          series: [
+            {
+              name: '面积模式',
+              type: 'pie',
+              radius: [30, 100],
+              center: ['50%', '50%'],
+              roseType: 'area',
+              data: data
+            }
+          ]
+        }
+      },
+      returnPie(data){
+        let chartData
+        this.chartTab === 0 ? chartData = data.legalPerson :  chartData = data.naturalPerson
+        return {
+          color: ['#553cff', '#fe3b3c', '#fb952f', '#4dcea7', '#00ccff', '#0e31e3', '#1167e2'],
+            tooltip: {
+            trigger: 'item',
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['50%', '65%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: true,
+                color: '#fff',
+                lineHeight: 20,
+                align: 'center',
+                formatter: p => p.name + '\n' + p.value + '（条）'
+              },
+              labelLine: {
+                show: false
+              },
+              data: chartData.inner
+            },
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['0', '40%'],
+              avoidLabelOverlap: false,
+              label: {
+                align: 'center',
+                show: true,
+                position: 'center',
+                color: '#fff',
+                lineHeight: 20,
+                formatter: p => p.name + '\n  ' + p.value + '（条）'
+              },
+              labelLine: {
+                show: false
+              },
+              data: chartData.outer
+            }
+          ]
+        }
+      },
       renderMap(paramObj) {
         var effect = '#06eaed'
         var flyLine = '#ffffff'
@@ -579,99 +502,7 @@
           '上海': [121.4648, 31.2891],
           '云南': [102.712251, 25.040609]
         }
-        var chinaDatas = [
-          [{
-            name: '黑龙江',
-            value: 1
-          }], [{
-            name: '北京市',
-            value: 3
-          }], [{
-            name: '内蒙古',
-            value: 1
-          }], [{
-            name: '吉林',
-            value: 1
-          }], [{
-            name: '辽宁',
-            value: 1
-          }], [{
-            name: '河北',
-            value: 2
-          }], [{
-            name: '天津',
-            value: 2
-          }], [{
-            name: '山西',
-            value: 1
-          }], [{
-            name: '陕西',
-            value: 1
-          }], [{
-            name: '甘肃',
-            value: 1
-          }], [{
-            name: '宁夏',
-            value: 1
-          }], [{
-            name: '青海',
-            value: 1
-          }], [{
-            name: '新疆',
-            value: 1
-          }], [{
-            name: '西藏',
-            value: 1
-          }], [{
-            name: '四川',
-            value: 2
-          }], [{
-            name: '重庆',
-            value: 2
-          }], [{
-            name: '山东',
-            value: 1
-          }], [{
-            name: '河南',
-            value: 1
-          }], [{
-            name: '江苏',
-            value: 2
-          }], [{
-            name: '安徽',
-            value: 1
-          }], [{
-            name: '湖北',
-            value: 2
-          }], [{
-            name: '浙江',
-            value: 2
-          }], [{
-            name: '福建',
-            value: 2
-          }], [{
-            name: '江西',
-            value: 1
-          }], [{
-            name: '湖南',
-            value: 2
-          }], [{
-            name: '贵州',
-            value: 1
-          }], [{
-            name: '广西',
-            value: 1
-          }], [{
-            name: '海南',
-            value: 2
-          }], [{
-            name: '上海',
-            value: 3
-          }], [{
-            name: '云南',
-            value: 1
-          }]
-        ]
+        var chinaDatas = paramObj.mapData
         var convertData = function (data) {
           var res = []
           for (var i = 0; i < data.length; i++) {
@@ -839,14 +670,6 @@
         var chart = echarts.init(document.getElementById(paramObj.id))
         chart.setOption(option)
       }
-    },
-    mounted() {
-      // this.renderBall()
-      this.renderMap({ id: 'map' })
-    },
-    components: {
-      Panel,
-      Card
     }
   }
 </script>
@@ -1140,9 +963,14 @@
           background-color: #001739
 
         span
+          flex: 1
+          text-align center
           color #ffffff
           padding 0 10px
-
+          &:last-child
+            display block
+            width 120px
+            text-align center
         &:nth-child(n+2)
           span:nth-child(2)
             color #00ccfe

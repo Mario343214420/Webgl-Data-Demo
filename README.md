@@ -134,3 +134,14 @@ export { default as Sidebar } from './Sidebar'
 **style样式文件：**
 1. 统一使用kebab-case风格命名
 2. 内部类也统一用-连字符
+
+## 数据结构
+系统概况 数据格式：
+```json
+{
+    "code": 0, 
+    "data": {
+        "label": "this is mock value"
+    } 
+}
+```

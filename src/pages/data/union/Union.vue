@@ -19,7 +19,7 @@
                   </div>
                   <div class="status-item">
                     <p class="title">备忘录总数</p>
-                    <p><i class="num">{{unionRewardPunish.memo}}</i><i>（个）</i></p>
+                    <p><i class="num">{{unionRewardPunish.memo}}</i><i>（条）</i></p>
                   </div>
                   <div class="status-item">
                     <p class="title">实施部门数量</p>
@@ -34,14 +34,14 @@
                       <span flex-box="1">
                         <i class="simple-i">自然人</i><br>
                         <i class="num">{{unionRewardPunish.naturalPerson.total}}</i>
-                        <i class="simple-i">（个）</i>
+                        <i class="simple-i">（次）</i>
                       </span>
                     </div>
                     <div class="reward">
-                      <i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.reward}}</i><i>（个）</i>
+                      <i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.reward}}</i><i>（次）</i>
                     </div>
                     <div class="punish">
-                      <i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.punish}}</i><i>（个）</i>
+                      <i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.punish}}</i><i>（次）</i>
                     </div>
                   </div>
                   <div class="type-item">
@@ -49,14 +49,14 @@
                       <span style="margin-right: 20px;"><img src="~@/assets/images/union/icon_fr.png" alt=""></span>
                       <!--                    <span><i class="iconfont icon-ren"></i></span>-->
                       <span flex-box="1">
-                        <i class="simple-i">自然人</i><br>
+                        <i class="simple-i">法人</i><br>
                         <i class="num">{{unionRewardPunish.legalPerson.total}}</i>
-                        <i class="simple-i">（个）</i>
+                        <i class="simple-i">（次）</i>
                       </span>
                     </div>
-                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.reward}}</i><i>（个）</i>
+                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.reward}}</i><i>（次）</i>
                     </div>
-                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.punish}}</i><i>（个）</i>
+                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.punish}}</i><i>（次）</i>
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
                 </div>
               </template>
               <template slot="content">
-                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（个）</i></p>
+                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（次）</i></p>
                 <chart ref="chart2" :options="returnBar(query)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
@@ -195,7 +195,7 @@
                 </div>
               </template>
               <template slot="content">
-                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（个）</i></p>
+                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（次）</i></p>
                 <chart ref="chart3" :options="returnBar(feedback)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
@@ -552,7 +552,8 @@
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               boundaryGap: ['20%', '20%'],
-              type: 'value'
+              type: 'value',
+              name: '（次）'
             }
           ],
           legend: {

@@ -30,7 +30,7 @@
               <div class="table scroll-list-486" style="padding-top: 20px;">
                 <div class="table-row" flex="main:justify">
                   <span>部门名称</span>
-                  <span>资源信息</span>
+                  <span>资源信息（条）</span>
                 </div>
                 <div class="table-row" v-for="(item, index) in newClassifyList" :key="index" flex="main:justify">
                   <span>{{ item.name }}</span>
@@ -55,7 +55,7 @@
         <div class="center">
           <div class="cloud">
             <i>双公示信息总数</i><br>
-            <i class="num">{{rePublicCountsSum}}</i><i>（个）</i>
+            <i class="num">{{rePublicCountsSum}}</i><i>（条）</i>
           </div>
           <img src="~@/assets/images/public/guangshu.png" alt="" class="light">
           <img src="~@/assets/images/public/huan1.png" alt="" class="cir cir-1">
@@ -70,7 +70,7 @@
                   <img src="~@/assets/images/public/icon01.png" alt="">
                   <span>
                     <i>自然人行政许可</i><br>
-                    <i class="num">{{publicCounts.naturalPersonPermit}}</i><i>（个）</i>
+                    <i class="num">{{publicCounts.naturalPersonPermit}}</i><i>（条）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -86,7 +86,7 @@
                   <img src="~@/assets/images/public/icon02.png" alt="">
                   <span>
                     <i>法人行政许可</i><br>
-                    <i class="num">{{publicCounts.legalPersonPermit}}</i><i>（个）</i>
+                    <i class="num">{{publicCounts.legalPersonPermit}}</i><i>（条）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -102,7 +102,7 @@
                   <img src="~@/assets/images/public/icon03.png" alt="">
                   <span>
                     <i>自然人行政处罚</i><br>
-                    <i class="num">{{publicCounts.naturalPersonPunish}}</i><i>（个）</i>
+                    <i class="num">{{publicCounts.naturalPersonPunish}}</i><i>（条）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -118,7 +118,7 @@
                   <img src="~@/assets/images/public/icon04.png" alt="">
                   <span>
                     <i>法人行政处罚</i><br>
-                    <i class="num">{{publicCounts.legalPersonPunish}}</i><i>（个）</i>
+                    <i class="num">{{publicCounts.legalPersonPunish}}</i><i>（条）</i>
                   </span>
                 </div>
                 <span class="light-corner"></span>
@@ -159,14 +159,14 @@
                     <img src="~@/assets/images/public/xuke.png" alt="">
                     <span>
                       <i class="white-font">行政许可数量</i><br>
-                      <i class="num">{{weekCase.permit}}</i><i>个</i>
+                      <i class="num">{{weekCase.permit}}</i><i class="white-font">（条）</i>
                     </span>
                   </div>
                   <div class="new-item" flex="space:around cross:center">
                     <img src="~@/assets/images/public/chufa.png" alt="">
                     <span>
                       <i class="white-font">行政许可数量</i><br>
-                      <i class="num">{{weekCase.punish}}</i><i>个</i>
+                      <i class="num">{{weekCase.punish}}</i><i class="white-font">（条）</i>
                     </span>
                   </div>
                 </div>
@@ -275,7 +275,7 @@
               source: data
             },
             yAxis: {
-              name: '（%）',
+              name: '（条）',
               type: 'value',
               boundaryGap: [0, 0.01],
               axisLine: {
@@ -358,13 +358,17 @@
               }
             }
           },
+          legend: {
+            bottom: 0,
+            textStyle: { color: '#fff' }
+          },
           dataset: {
             source: data
           },
           grid: {
             left: '3%',
               right: '4%',
-              bottom: '3%',
+              bottom: '10%',
               containLabel: true
           },
           xAxis: [
@@ -380,7 +384,7 @@
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
-              name: '（个）',
+              name: '（条）',
               max: 2500
             },
             {
@@ -388,21 +392,19 @@
               splitLine: { lineStyle: { color: splitLineColor } },
               axisLine: { lineStyle: { color: xyLineColor } },
               type: 'value',
-              name: '（个）',
+              name: '（条）',
               max: 2500
             }
           ],
             series: [
             {
               smooth: true,
-              name: '奖',
               type: 'line',
               areaStyle: {},
               yAxisIndex: 1
             },
             {
               smooth: true,
-              name: '惩',
               type: 'line',
               areaStyle: {}
             }
@@ -482,7 +484,7 @@
                 color: '#fff',
                 lineHeight: 20,
                 align: 'center',
-                formatter: p => p.name + '\n' + p.value + '（个）'
+                formatter: p => p.name + '\n' + p.value + '（条）'
               },
               labelLine: {
                 show: false
@@ -500,7 +502,7 @@
                 position: 'center',
                 color: '#fff',
                 lineHeight: 20,
-                formatter: p => p.name + '\n  ' + p.value + '（个）'
+                formatter: p => p.name + '\n  ' + p.value + '（条）'
               },
               labelLine: {
                 show: false
@@ -575,7 +577,10 @@
         span
           color #ffffff
           padding 0 10px
-
+          &:last-child
+            display: block;
+            width 120px
+            text-align center
         &:nth-child(n+2)
           span:nth-child(2)
             color #00ccfe

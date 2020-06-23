@@ -94,4 +94,7 @@
     letter-spacing 10px
   .white-font
     color #fff
+  .bin-date-picker-cells-cell-range:before{
+    background-color: #0f366e !important
+  }
 </style>

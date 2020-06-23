@@ -9,6 +9,7 @@ import overview from './modules/overview'
 import summary from './modules/summary'
 import publicModule from './modules/public'
 import union from './modules/union'
+import map from './modules/map'
 // import home from './module/home'
 // import user from './module/user'
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     overview,
     summary,
     publicModule,
-    union
+    union,
+    map
   },
 })
