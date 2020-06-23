@@ -32,7 +32,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/wangbin3162/bin-admin.git
+git clone https://github.com/***.git
 
 # 安装依赖
 yarn install

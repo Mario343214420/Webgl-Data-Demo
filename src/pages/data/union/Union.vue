@@ -15,15 +15,15 @@
                 <div class="status-wrapper" flex>
                   <div class="status-item">
                     <p class="title">总计奖惩</p>
-                    <p><i class="num">8848</i><i>（次）</i></p>
+                    <p><i class="num">{{unionRewardPunish.total}}</i><i>（次）</i></p>
                   </div>
                   <div class="status-item">
                     <p class="title">备忘录总数</p>
-                    <p><i class="num">8848</i><i>（个）</i></p>
+                    <p><i class="num">{{unionRewardPunish.memo}}</i><i>（个）</i></p>
                   </div>
                   <div class="status-item">
                     <p class="title">实施部门数量</p>
-                    <p><i class="num">8848</i><i>（个）</i></p>
+                    <p><i class="num">{{unionRewardPunish.dept}}</i><i>（个）</i></p>
                   </div>
                 </div>
                 <div class="type-wrapper" flex="main:justify">
@@ -33,25 +33,31 @@
                       <!--                    <span><i class="iconfont icon-ren"></i></span>-->
                       <span flex-box="1">
                         <i class="simple-i">自然人</i><br>
-                        <i class="num">9527</i>
+                        <i class="num">{{unionRewardPunish.naturalPerson.total}}</i>
                         <i class="simple-i">（个）</i>
                       </span>
                     </div>
-                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
-                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                    <div class="reward">
+                      <i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.reward}}</i><i>（个）</i>
+                    </div>
+                    <div class="punish">
+                      <i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.naturalPerson.punish}}</i><i>（个）</i>
+                    </div>
                   </div>
                   <div class="type-item">
                     <div class="total" flex="cross:center">
-                    <span style="margin-right: 20px;"><img src="~@/assets/images/union/icon_fr.png" alt=""></span>
+                      <span style="margin-right: 20px;"><img src="~@/assets/images/union/icon_fr.png" alt=""></span>
                       <!--                    <span><i class="iconfont icon-ren"></i></span>-->
                       <span flex-box="1">
-                      <i class="simple-i">自然人</i><br>
-                      <i class="num">9527</i>
-                      <i class="simple-i">（个）</i>
-                    </span>
+                        <i class="simple-i">自然人</i><br>
+                        <i class="num">{{unionRewardPunish.legalPerson.total}}</i>
+                        <i class="simple-i">（个）</i>
+                      </span>
                     </div>
-                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
-                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">8848</i><i>（个）</i></div>
+                    <div class="reward"><i>激励</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.reward}}</i><i>（个）</i>
+                    </div>
+                    <div class="punish"><i>惩戒</i>&nbsp;&nbsp;&nbsp;<i class="scale-num">{{unionRewardPunish.legalPerson.punish}}</i><i>（个）</i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -71,37 +77,37 @@
                   <div class="red-list">
                     <img src="~@/assets/images/overview/icon_hong.png" alt="">
                     <i class="white-font">红名单</i>
-                    <i class="num">12566</i>
+                    <i class="num">{{redBlackStatistics.red.total}}</i>
                     <i class="white-font">（个）</i>
                   </div>
                   <div class="msg-list" flex="wrap:wrap">
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">海关认证企业</p>
+                        <p><i class="num">{{redBlackStatistics.red.approve}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                       <span>
-                  <p class="white-font">A级纳税人</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">A级纳税人</p>
+                        <p><i class="num">{{redBlackStatistics.red.taxpayer}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                       <span>
-                  <p class="white-font">守信社会法人</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">守信社会法人</p>
+                        <p><i class="num">{{redBlackStatistics.red.honor}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                       <span>
-                  <p class="white-font">优秀青年志愿者</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">优秀青年志愿者</p>
+                        <p><i class="num">{{redBlackStatistics.red.excellent}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -109,37 +115,37 @@
                   <div class="red-list">
                     <img src="~@/assets/images/overview/icon_hei.png" alt="">
                     <i class="white-font">黑名单</i>
-                    <i class="num">12566</i>
+                    <i class="num">{{redBlackStatistics.black.total}}</i>
                     <i class="white-font">（个）</i>
                   </div>
                   <div class="msg-list" flex="wrap:wrap">
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_hgrz.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">失信被执行人</p>
+                        <p><i class="num">{{redBlackStatistics.black.approve}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_ajnsr.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">重大税收违法案件</p>
+                        <p><i class="num">{{redBlackStatistics.black.taxpayer}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_shfr.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">拖欠农民工工资</p>
+                        <p><i class="num">{{redBlackStatistics.black.honor}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                     <div class="msg-list-item" flex="main:center">
                       <img class="rb-icon" src="~@/assets/images/overview/icon_zyz.png" alt="">
                       <span>
-                  <p class="white-font">海关认证企业</p>
-                  <p><i class="num">1501</i><i class="white-font">（个）</i></p>
-                </span>
+                        <p class="white-font">严重失信债务人</p>
+                        <p><i class="num">{{redBlackStatistics.black.excellent}}</i><i class="white-font">（个）</i></p>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -175,6 +181,7 @@
                 </div>
               </template>
               <template slot="content">
+                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（个）</i></p>
                 <chart ref="chart2" :options="returnBar(query)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
@@ -188,6 +195,7 @@
                 </div>
               </template>
               <template slot="content">
+                <p class="chart-label" flex="main:justify"><i>（部门名称）</i><i>（个）</i></p>
                 <chart ref="chart3" :options="returnBar(feedback)"
                        style="width: 100%; height: 240px;"></chart>
               </template>
@@ -203,7 +211,7 @@
             </template>
             <template slot="content">
               <div flex>
-                <chart ref="chart4" :options="returnMemoTrend(memoTrend)" style="height: 200px;width: 60%;"></chart>
+                <chart ref="chart2" :options="returnMemoTrend(memoTrend)" style="height: 200px;width: 60%;"></chart>
                 <div style="width: 40%;">
                   <div class="memo-status">
                     <div class="table">
@@ -258,10 +266,10 @@
                   <swiper ref="mySwiper" style="height: 100%;" :options="swiperOptions">
                     <swiper-slide class="row" flex="space:around" :key="index"
                                   v-for="(item,index) in punishRewardList">
-                        <div class="col">{{item.name}}</div>
-                        <div class="col">{{item.info}}</div>
-                        <div class="col">{{item.dept}}</div>
-                        <div class="col">{{item.time}}</div>
+                      <div class="col">{{item.name}}</div>
+                      <div class="col">{{item.info}}</div>
+                      <div class="col">{{item.dept}}</div>
+                      <div class="col">{{item.time}}</div>
                     </swiper-slide>
                   </swiper>
                 </div>
@@ -276,7 +284,7 @@
               </div>
             </template>
             <template slot="content">
-              <chart ref="chart5" :options="measure"
+              <chart ref="chart5" :options="returnMeasureBar(measure)"
                      style="width: 100%; height: 260px;margin-top: 10px;"></chart>
             </template>
           </Card>
@@ -289,7 +297,7 @@
               </div>
             </template>
             <template slot="content">
-              <chart ref="chart6" :options="quitTrend" style="height: 200px;width: 100%;"></chart>
+              <chart ref="chart6" :options="returnQuitTrend(quitTrend)" style="height: 200px;width: 100%;"></chart>
             </template>
           </Card>
         </div>
@@ -299,7 +307,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
   import echarts from 'echarts'
   import Panel from '../../../components/Panel/Panel'
   import Card from '../../../components/Card/Card'
@@ -321,132 +329,6 @@
     },
     data() {
       return {
-        /*
-        quitTrend: {
-          color: ['#02b7f4', '#2646c5'],
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985'
-              }
-            }
-          },
-          grid: {
-            left: '10%',
-            right: '4%',
-            bottom: '10%'
-          },
-          xAxis: [
-            {
-              boundaryGap: ['20%', '20%'],
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'category',
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-            }
-          ],
-          yAxis: [
-            {
-              position: 'left',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value',
-              name: '(个)'
-            }
-          ],
-          series: [
-            {
-              name: '奖',
-              type: 'line',
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(2,176,234,1)'
-                }, {
-                  offset: 1,
-                  color: 'rgba(2,176,234,0)'
-                }])
-              },
-              data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210],
-              symbol: 'none'
-            }
-          ]
-        },
-        memoTrend: {
-          color: ['#e43d6d', '#ee8e30'],
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: xyLineColor
-              }
-            }
-          },
-          grid: {
-            left: '10%',
-            right: '10%',
-            bottom: '10%',
-            top: '20%'
-          },
-          xAxis: [
-            {
-              axisLine: { lineStyle: { color: xyLineColor } },
-              splitLine: { show: true, lineStyle: { color: splitLineColor } },
-              type: 'category',
-              boundaryGap: false,
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-            }
-          ],
-          yAxis: [
-            {
-              position: 'left',
-              splitLine: { lineStyle: { color: splitLineColor } },
-              axisLine: { lineStyle: { color: xyLineColor } },
-              type: 'value'
-            }
-          ],
-          legend: {
-            top: 10,
-            textStyle: {
-              color: '#fff'
-            }
-          },
-          series: [
-            {
-              name: '奖',
-              type: 'line',
-              data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210],
-              symbol: 'none'
-            },
-            {
-              name: '惩',
-              type: 'line',
-              data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 310],
-              symbol: 'none'
-            }
-          ]
-        },
-        punishRewardList: [
-          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周树人', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周星星', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周迅', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周一围', info: '产权交易', dept: '广电总局', time: '2020-06-02' },
-          { name: '周海媚', info: '产权交易', dept: '广电总局', time: '2020-06-02' }
-        ],
-        memoStatusList: [
-          { name: '房产交易', count: 8848, time: 9527 },
-          { name: '规划设计方案', count: 8848, time: 9527 },
-          { name: '股票交易', count: 8848, time: 9527 },
-          { name: '不动产转移', count: 8848, time: 9527 }
-        ],
-         */
         swiperOptions: {
           direction: 'vertical',
           slidesPerView: 6,
@@ -456,12 +338,11 @@
             stopOnLastSlide: false,
             disableOnInteraction: true
           }
-          // pagination: {
-          //   el: '.swiper-pagination'
-          // },
-          // Some Swiper option/callback...
         }
       }
+    },
+    created(){
+      this.$store.dispatch('getUnion')
     },
     computed: {
       ...mapState({
@@ -493,9 +374,9 @@
           color: ['#02b7f4', '#2646c5'],
           tooltip: {
             trigger: 'axis',
-              axisPointer: {
+            axisPointer: {
               type: 'cross',
-                label: {
+              label: {
                 backgroundColor: '#6a7985'
               }
             }
@@ -579,9 +460,9 @@
       returnBar(data) {
         return {
           color: '#00abfb',
-            tooltip: {
+          tooltip: {
             trigger: 'axis',
-              axisPointer: {
+            axisPointer: {
               type: 'shadow'
             }
           },
@@ -590,20 +471,20 @@
           },
           grid: {
             left: '10%',
-              right: '10%',
-              bottom: 0,
-              top: '10%'
+            right: '10%',
+            bottom: 0,
+            top: '2%'
           },
           xAxis: {
             show: false,
-              type: 'value',
-              boundaryGap: [0, 0.01]
+            type: 'value',
+            boundaryGap: [0, 0.01]
           },
           yAxis: {
             type: 'category',
-              axisLine: {
+            axisLine: {
               show: false,
-                lineStyle: {
+              lineStyle: {
                 color: xyLineColor
               }
             },
@@ -626,13 +507,178 @@
                     { offset: 1, color: '#39BBF3' }
                   ]
                 )
+              },
+              label:{
+                show:true,
+                position: 'right',
+                color: xyLineColor
               }
             }
           ]
         }
       },
-      returnMemoTrend(data){
-
+      returnMemoTrend(data) {
+        return {
+          color: ['#0486ef', '#e43d6d', '#ee8e30'],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: xyLineColor
+              }
+            }
+          },
+          dataset: {
+            source: data
+          },
+          grid: {
+            left: '10%',
+            right: '10%',
+            bottom: '10%',
+            top: '20%'
+          },
+          xAxis: [
+            {
+              axisLine: { lineStyle: { color: xyLineColor } },
+              splitLine: { show: true, lineStyle: { color: splitLineColor } },
+              type: 'category',
+              boundaryGap: false
+            }
+          ],
+          yAxis: [
+            {
+              position: 'left',
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              boundaryGap: ['20%', '20%'],
+              type: 'value'
+            }
+          ],
+          legend: {
+            top: 10,
+            textStyle: {
+              color: '#fff'
+            }
+          },
+          series: [
+            {
+              name: '趋势',
+              type: 'line',
+              // areaStyle: {},
+              symbol: 'none'
+            }
+          ]
+        }
+      },
+      returnMeasureBar(data) {
+        return {
+          color: '#00abfb',
+          tooltip: {
+            axisPointer: {}
+          },
+          dataset: {
+            source: data
+          },
+          grid: {
+            left: 10,
+            right: 10,
+            bottom: 0,
+            top: '10%'
+          },
+          xAxis: {
+            show: false,
+            type: 'value',
+            boundaryGap: [0, 0.01]
+          },
+          yAxis: {
+            type: 'category',
+            show: false,
+            inverse: true
+          },
+          series: [
+            {
+              type: 'bar',
+              showBackground: true,
+              barWidth: 10,
+              label: {
+                show: true,
+                color: xyLineColor,
+                offset: [0, -12],
+                position: 'topLeft',
+                formatter: (p) => {
+                  return p.name
+                }
+              },
+              itemStyle: {
+                barBorderRadius: 8,
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 1, 0,
+                  [
+                    { offset: 0, color: '#2f54ee' },
+                    { offset: 1, color: '#288cf1' }
+                  ]
+                )
+              }
+            }
+          ]
+        }
+      },
+      returnQuitTrend(data) {
+        return {
+          color: ['#02b7f4', '#2646c5'],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          grid: {
+            left: '10%',
+            right: '8%',
+            bottom: '10%'
+          },
+          dataset: {
+            source: data
+          },
+          xAxis: [
+            {
+              boundaryGap: ['20%', '20%'],
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'category',
+              nameGap: 2,
+              name: '（月）'
+            }
+          ],
+          yAxis: [
+            {
+              position: 'left',
+              splitLine: { lineStyle: { color: splitLineColor } },
+              axisLine: { lineStyle: { color: xyLineColor } },
+              type: 'value',
+              name: '(个)'
+            }
+          ],
+          series: [
+            {
+              name: '奖',
+              type: 'line',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: 'rgba(2,176,234,1)'
+                }, {
+                  offset: 1,
+                  color: 'rgba(2,176,234,0)'
+                }])
+              },
+              symbol: 'none'
+            }
+          ]
+        }
       }
     }
   }
@@ -696,7 +742,10 @@
         width: 32%
         background-color: #031b41
         padding-left: 10px
-
+        height: 80px
+        display flex
+        flex-direction column
+        justify-content space-around
     .type-wrapper
       margin-top: 10px
 
@@ -705,6 +754,7 @@
 
         .total
           margin-bottom: 10px
+
           .icon-person
             width: 50px
             height: 50px
@@ -761,9 +811,12 @@
 
       .container
         width 100%
+        height: 230px
         padding-top: 10px
+
         .white-font
           color #fff
+
         .red-list
           padding-bottom: 10px
           text-align center
@@ -781,11 +834,13 @@
           .msg-list-item
             width: 50%
             padding-top: 15px
+
             .rb-icon
               margin-right: 10px
               width: 52px
               height: 52px
-
+            span
+              flex: 1
     .execute-status
       margin-top: 10px
 
@@ -820,7 +875,10 @@
 
   #trendChart
     height: 240px
-
+  .chart-label i
+    padding-top: 20px
+    padding-right: 50px
+    color #535e83
   [flex~='space:around']
     justify-content space-around
 </style>
