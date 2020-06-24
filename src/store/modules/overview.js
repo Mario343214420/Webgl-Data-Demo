@@ -43,7 +43,7 @@ export default {
         ['12月', 72.4, 53.9]
       ]
     },
-    total: [0, 0, 0, 0, 0, 0, 0, 0],
+    total: [0, 1, 0, 1, 0, 1, 0, 0],
     rotateData: [
       { name: '法人基础数量', value: 0 },
       { name: '自然人基础数量', value: 0 },

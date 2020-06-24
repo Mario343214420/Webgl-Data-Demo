@@ -315,7 +315,7 @@
         date1: '',
         date2: '',
         dateOpen1: false,
-        dateOpen2: false,
+        dateOpen2: false
       }
     },
     components: {
@@ -323,10 +323,12 @@
     },
     created() {
       // 初始化页面数据
-      this.$store.dispatch('getOverview')
+      this.$store.dispatch('getOverview').then(()=>{
+        this.numChange(this.$store.state.overview.total)
+      })
     },
     mounted(){
-      this.numChange(this.$store.state.overview.total)
+      // this.numChange(this.$store.state.overview.total)
     },
     computed: {
       ...mapState({
@@ -622,16 +624,17 @@
       },
       numChange(num) {
         let copy = JSON.parse(JSON.stringify(num))
-        let change = setInterval(() => {
+        let change = setInterval(()=>{
           let arr = []
-          num.forEach(item => {
-            arr.push(parseInt(Math.random() * 10))
+          num.forEach(()=>{
+            arr.push(parseInt(Math.random()*10))
           })
-          num = arr
-        }, 20)
+          num.splice(0,8)
+          num.push(...arr)
+        },20)
         setTimeout(() => {
           window.clearInterval(change)
-          num = copy
+          this.$store.state.overview.total = copy
         }, 1000)
       },
       changeReportDataMonth(){
