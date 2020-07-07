@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    Home
+    Home<br>
+    <router-link to="/overview">to overview</router-link><br>
+    <router-link to="/summary">to summary</router-link><br>
+    <router-link to="/public">to public</router-link><br>
+    <router-link to="/union">to union</router-link><br>
+    <router-link to="/map">to map</router-link><br>
   </div>
 </template>
 <script>
