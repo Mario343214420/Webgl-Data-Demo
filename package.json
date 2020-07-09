@@ -34,7 +34,7 @@
     "particles.js": "^2.0.0",
     "qs": "^6.7.0",
     "swiper": "^5.4.2",
-    "three": "^0.115.0",
+    "three": "^0.118.3",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^4.1.1",
     "vue-echarts": "^5.0.0-beta.0",
@@ -56,6 +56,9 @@
     "lint-staged": "^8.1.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "three-orbitcontrols": "^2.110.3",
+    "three-stats": "^1.0.1",
+    "three-trackballcontrols": "^0.0.8",
     "vue-template-compiler": "^2.6.10",
     "vuepress": "^1.0.2"
   },

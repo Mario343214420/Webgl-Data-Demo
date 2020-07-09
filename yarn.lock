@@ -10543,10 +10543,25 @@ thread-loader@^2.1.2:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
-three@^0.115.0:
-  version "0.115.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.115.0.tgz#540d800c381b9da2334c024f0fbe4d23f84eb05e"
-  integrity sha512-mAV2Ky3RdcbdSbR9capI+tKLvRldWYxd4151PZTT/o7+U2jh9Is3a4KmnYwzyUAhB2ZA3pXSgCd2DOY4Tj5kow==
+three-orbitcontrols@^2.110.3:
+  version "2.110.3"
+  resolved "https://registry.npm.taobao.org/three-orbitcontrols/download/three-orbitcontrols-2.110.3.tgz#ca9c91d5ec2f4731a1140acf2ff0281e15988edf"
+  integrity sha1-ypyR1ewvRzGhFArPL/AoHhWYjt8=
+
+three-stats@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/three-stats/download/three-stats-1.0.1.tgz#44ebdcf87d31760196d174e18366364fae172a63"
+  integrity sha1-ROvc+H0xdgGW0XThg2Y2T64XKmM=
+
+three-trackballcontrols@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.npm.taobao.org/three-trackballcontrols/download/three-trackballcontrols-0.0.8.tgz#4af85312d211387e451023f9bef576094993a118"
+  integrity sha1-SvhTEtIROH5FECP5vvV2CUmToRg=
+
+three@^0.118.3:
+  version "0.118.3"
+  resolved "https://registry.npm.taobao.org/three/download/three-0.118.3.tgz#c0bf8c10a68155478f12f4ccac2ff979526a4a0a"
+  integrity sha1-wL+MEKaBVUePEvTMrC/5eVJqSgo=
 
 throttle-debounce@^1.0.1:
   version "1.1.0"
