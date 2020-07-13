@@ -1,5 +1,5 @@
 <template>
-  <div class="public" flex>
+  <div class="public view" flex>
     public
   </div>
 </template>
@@ -11,5 +11,4 @@
 </script>
 
 <style lang="stylus" scoped>
-
 </style>

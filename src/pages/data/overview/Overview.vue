@@ -1,41 +1,27 @@
 <template>
-  <div class="overview" flex>
-    Overview
+  <div class="overview view">
+
   </div>
 </template>
 
 <script>
+  import 'echarts/lib/chart/line'
+  import 'echarts/lib/chart/bar'
   import { mapState } from 'vuex'
+  import TimeBar from '../../../components/TimeBar/TimeBar'
+  import EarthBackground from '../../../components/EarthBackground/EarthBackground'
   export default {
     name: 'Overview',
     data() {
       return {
+
       }
-    },
-    components: {
-      // Panel
-    },
-    created() {
-      // 初始化页面数据
-      // this.$store.dispatch('getOverview').then(()=>{
-      //   this.numChange(this.$store.state.overview.total)
-      // })
-    },
-    mounted(){
-      // this.numChange(this.$store.state.overview.total)
-    },
-    computed: {
-      ...mapState({
-        a: state => state.overview.a
-      })
-    },
-    watch: {
-    },
-    methods: {
     }
+
   }
 </script>
 
 <style lang="stylus" scoped>
-
+.main-wrapper
+  margin: 0 auto
 </style>

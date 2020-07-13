@@ -1,5 +1,5 @@
 <template>
-  <div class="summary" flex>
+  <div class="summary view" flex>
     summary
   </div>
 </template>
@@ -11,5 +11,4 @@
 </script>
 
 <style lang="stylus" scoped>
-
 </style>

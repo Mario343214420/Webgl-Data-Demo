@@ -17,26 +17,32 @@ const router = new VueRouter({
   routes: [
     {
       path: '/home',
+      title: '首页',
       component: Home
     },
     {
       path: '/overview',
+      title: '系统概况专题',
       component: Overview
     },
     {
       path: '/summary',
+      title: '数据归集专题',
       component: Summary
     },
     {
       path: '/public',
+      title: '双公示专题',
       component: Public
     },
     {
       path: '/union',
+      title: '联合奖惩专题',
       component: Union
     },
     {
       path: '/map',
+      title: '区域数据归集',
       component: Map
     },
     {

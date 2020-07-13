@@ -1,5 +1,5 @@
 <template>
-  <div class="union" flex>
+  <div class="union view" flex>
     Union
   </div>
 </template>
@@ -11,5 +11,4 @@
 </script>
 
 <style lang="stylus" scoped>
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="map" flex>Map</div>
+  <div class="map view" flex>Map</div>
 </template>
 
 <script>
@@ -9,5 +9,4 @@
 </script>
 
 <style lang="stylus" scoped>
-
 </style>
