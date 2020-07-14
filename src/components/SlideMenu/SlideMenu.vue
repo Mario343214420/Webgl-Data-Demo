@@ -62,11 +62,17 @@
 </script>
 
 <style lang="stylus" scoped>
-  $mainGray = #929ba5
+  .slide-menu
+    animation ease-in init-hover 1s
+  @keyframes init-hover{
+    0%{opacity: 0}
+    100%{opacity: 1}
+  }
+  $mainColor = #ffffff
   .slide-menu
     position absolute
     left: 50px
-    top: 50px
+    top: 150px
     z-index 100
     .slide-item-tip-active
       -webkit-border-radius: 50%
@@ -75,12 +81,13 @@
       display block
       width: 20px
       height: 20px
-      background-color: $mainGray
+      background-color: #008eff
       position absolute
       transition ease-in-out 0.5s
       margin-top: 10px
       border: 4px solid #fff
       z-index 10
+      box-shadow 2px 2px 8px rgba(50,50,50,0.8)
     .slide-wrapper
       .slide-inner
         position relative
@@ -92,14 +99,16 @@
           top: 0
           height: 100%
           width 4px
-          background-color: $mainGray
+          background-color: $mainColor
+          box-shadow 2px 2px 8px rgba(50,50,50,0.8)
         .slide-item
           line-height: 50px
           height: 50px
           padding-left: 20px
           cursor pointer
           .slide-item-title
-            color: $mainGray;
-            font-weight: 700
-            padding-left: 14px
+            color: $mainColor;
+            font-size: 18px
+            padding-left: 20px
+            text-shadow 0 0 8px rgba(50,50,50,0.8)
 </style>

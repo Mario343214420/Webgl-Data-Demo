@@ -7,6 +7,12 @@ import store from './store'
 import './mock/mockServer'
 
 import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/lines'
+import 'echarts/lib/chart/effectScatter'
+import 'echarts/lib/chart/scatter'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/pie'
+import 'echarts/map/js/china'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 import 'swiper/css/swiper.min.css' // （css需要单独引用）

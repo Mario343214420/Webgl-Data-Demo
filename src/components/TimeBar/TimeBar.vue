@@ -158,9 +158,9 @@
 
         let digit = this.digit
         const grd = context.createLinearGradient(0,0,0,240);
-        grd.addColorStop(0,"#01cdff");
-        grd.addColorStop(0.5,"#0d85ff");
-        grd.addColorStop(1,"#64c3ff");
+        grd.addColorStop(0,"#64f8ff");
+        grd.addColorStop(0.6,"#6dc4ff");
+        grd.addColorStop(1,"#64f8ff");
 
         let RADIUS = 6,//定义圆半径
           MarginTop = 60,//距离上面的位置

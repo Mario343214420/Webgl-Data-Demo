@@ -32,7 +32,7 @@
         //var sphereMaterial = new THREE.MeshBasicMaterial(earth_png);
         var sphereMaterial = new THREE.MeshLambertMaterial({
           map: earth_png,
-          opacity: 0.5
+          opacity: 0.6
         })
         var sphere = new THREE.Mesh(
           new THREE.SphereGeometry(radius, segemnt, rings),
@@ -47,7 +47,7 @@
         sphere.geometry.normalsNeedUpdate = true
         scene.add(sphere)
 
-        var pointLight = new THREE.PointLight('#f7beff')
+        var pointLight = new THREE.PointLight('#7ca5ff')
 
         pointLight.position.x = 10
         pointLight.position.y = 50
@@ -72,9 +72,8 @@
   #cvsBg
     height: 400px;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.6
+    top: 100px;
+    right: 100px
+    opacity: 0.4
     z-index: 0;
 </style>

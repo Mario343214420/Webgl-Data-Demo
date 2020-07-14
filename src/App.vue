@@ -74,15 +74,27 @@
     justify-content center
   [flex~="space:between"]
     justify-content center
+  [flex~="wrap:wrap"]
+    flex-wrap wrap
   [flex~="wrap:nowrap"]
     flex-wrap nowrap
   [flex~="item:center"]
     align-items center
+  html, body, #app
+    padding: 0
+    margin: 0
+    width: 100%
+    height: 100%
   #app
-    background-color: #fbfbff
+    background-image: url("./assets/images/home-example/bg.png")
+    -webkit-background-size: auto 100%
+    background-size: auto 100%
+    background-repeat: no-repeat
   .view
-    animation ease-in init-hover 1s
-  @keyframes init-hover{
+    animation ease-in init-view 1s
+    width: 100%
+    height: 100%
+  @keyframes init-view{
     0%{opacity: 0}
     100%{opacity: 1}
   }

@@ -13,10 +13,10 @@ export default {
     "textStyle": {},
     "title": {
       "textStyle": {
-        "color": "#666666"
+        "color": "#ffffff"
       },
       "subtextStyle": {
-        "color": "#999999"
+        "color": "#ffffff"
       }
     },
     "line": {
@@ -256,7 +256,7 @@ export default {
       "axisLabel": {
         "show": true,
         "textStyle": {
-          "color": "#999999"
+          "color": "#ffffff"
         }
       },
       "splitLine": {
@@ -293,7 +293,7 @@ export default {
       "axisLabel": {
         "show": true,
         "textStyle": {
-          "color": "#999999"
+          "color": "#ffffff"
         }
       },
       "splitLine": {
@@ -400,7 +400,8 @@ export default {
     },
     "legend": {
       "textStyle": {
-        "color": "#999999"
+        "color": "#ffffff",
+        fontSize: 20
       }
     },
     "tooltip": {
