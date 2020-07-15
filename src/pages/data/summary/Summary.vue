@@ -12,8 +12,8 @@
 <script>
   export default {
     name: 'Summary',
-    data(){
-      return{
+    data() {
+      return {
         option: {
           title: {
             text: '南丁格尔玫瑰图',
@@ -45,14 +45,14 @@
                 }
               },
               data: [
-                {value: 10, name: 'rose1'},
-                {value: 5, name: 'rose2'},
-                {value: 15, name: 'rose3'},
-                {value: 25, name: 'rose4'},
-                {value: 20, name: 'rose5'},
-                {value: 35, name: 'rose6'},
-                {value: 30, name: 'rose7'},
-                {value: 40, name: 'rose8'}
+                { value: 10, name: 'rose1' },
+                { value: 5, name: 'rose2' },
+                { value: 15, name: 'rose3' },
+                { value: 25, name: 'rose4' },
+                { value: 20, name: 'rose5' },
+                { value: 35, name: 'rose6' },
+                { value: 30, name: 'rose7' },
+                { value: 40, name: 'rose8' }
               ]
             },
             {
@@ -62,14 +62,14 @@
               center: ['75%', '50%'],
               roseType: 'area',
               data: [
-                {value: 10, name: 'rose1'},
-                {value: 5, name: 'rose2'},
-                {value: 15, name: 'rose3'},
-                {value: 25, name: 'rose4'},
-                {value: 20, name: 'rose5'},
-                {value: 35, name: 'rose6'},
-                {value: 30, name: 'rose7'},
-                {value: 40, name: 'rose8'}
+                { value: 10, name: 'rose1' },
+                { value: 5, name: 'rose2' },
+                { value: 15, name: 'rose3' },
+                { value: 25, name: 'rose4' },
+                { value: 20, name: 'rose5' },
+                { value: 35, name: 'rose6' },
+                { value: 30, name: 'rose7' },
+                { value: 40, name: 'rose8' }
               ]
             }
           ]
@@ -83,11 +83,13 @@
   .summary
     height: 100%
     width: 100%
+
     .main-wrapper
       height: 100%
       width: 100%
       box-sizing border-box
       padding 100px
+
       .echarts
         width: 50%
 </style>

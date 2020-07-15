@@ -12,7 +12,10 @@ import 'echarts/lib/chart/effectScatter'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/pie'
+import {graphic} from 'echarts'
+const {LinearGradient} = graphic
 import 'echarts/map/js/china'
+Vue.prototype.$LinearGradient = LinearGradient
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 import 'swiper/css/swiper.min.css' // （css需要单独引用）
