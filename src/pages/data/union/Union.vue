@@ -168,7 +168,7 @@
             yAxis: [
               {
                 type: 'value',
-                name: '自然人（亿元）'
+                name: ''
               }
             ],
             series: [
@@ -185,7 +185,7 @@
           },
           options: [
             {
-              title: { text: '2006全国宏观经济指标' },
+              title: { text: '联合奖惩' },
               series: [
                 { data: dataMap.dataPI['2006'] },
                 { data: dataMap.dataSI['2006'] },

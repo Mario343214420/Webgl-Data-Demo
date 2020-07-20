@@ -26,6 +26,19 @@
         activeMenuFlag: 0
       }
     },
+    mounted(){
+      /*document.addEventListener('mousewheel',(event)=>{
+        let flag
+        setTimeout(()=>{
+          if(event.deltaY===-100){
+            flag = (this.activeMenuFlag - 1) < 0?0:this.activeMenuFlag - 1
+          }else if(event.deltaY===100){
+            flag = (this.activeMenuFlag + 1)>this.menuList.length-1?this.menuList.length-1: this.activeMenuFlag + 1
+          }
+          this.changeActiveMenu(flag)
+        },200)
+      })*/
+    },
     props: {
       menuList: {
         type: Array,

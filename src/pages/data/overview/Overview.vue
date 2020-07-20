@@ -5,13 +5,13 @@
     </div>
     <div class="swiper-wrapper">
       <swiper ref="mySwiper" :options="swiperOptions">
-        <swiper-slide class="pd50px">
+        <swiper-slide class="pd50px swiper-no-swiping">
           <v-chart autoresize :theme="theme" width="100%" :options="lineOption"></v-chart>
         </swiper-slide>
-        <swiper-slide class="pd50px">
+        <swiper-slide class="pd50px swiper-no-swiping">
           <v-chart autoresize :theme="theme" :options="option"></v-chart>
         </swiper-slide>
-        <swiper-slide class="pd50px">
+        <swiper-slide class="pd50px swiper-no-swiping">
           <v-chart autoresize :theme="theme" :options="option"></v-chart>
         </swiper-slide>
       </swiper>
