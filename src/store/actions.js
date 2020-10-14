@@ -5,8 +5,8 @@ import {
   Overview
 } from './mutation-types'
 
-export default {async getOverview({ commit }) {
+export default { async getOverview({ commit }) {
     const result = await reqOverviewData()
     commit(Overview, { result })
-  },
+  }
 }

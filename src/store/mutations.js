@@ -4,7 +4,7 @@ import {
 
 export default {
   [Overview](state, { result }) {
-    const {overview} = result
+    const { overview } = result
     state.overview = overview
   }
 }

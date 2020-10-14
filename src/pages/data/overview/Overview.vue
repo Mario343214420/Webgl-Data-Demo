@@ -21,7 +21,7 @@
       //   this.numChange(this.$store.state.overview.total)
       // })
     },
-    mounted(){
+    mounted() {
       // this.numChange(this.$store.state.overview.total)
     },
     computed: {
