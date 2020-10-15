@@ -1,6 +1,6 @@
 # 大数据展示项目
 
-[预览](https://www.github.io/***)
+[预览](https://mario343214420.github.io/big-data-demo-dist/index.html)
 
 基于vue-cli编写开发
 
