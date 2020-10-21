@@ -1,7 +1,7 @@
 # 大数据展示项目
 
 [预览 v1.0.0版本（暂未打包）](https://mario343214420.github.io/big-data-demo-dist/index.html)
-[预览 v1.0.1版本（可预览）]( http://mario_20.gitee.io/big-data-demo-dist)
+[预览 v1.0.1版本（可预览）]( http://mario4420.gitee.io/big-data-demo-dist)
 
 基于vue-cli编写开发
 
