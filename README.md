@@ -2,7 +2,7 @@
 
 [预览](https://www.github.io/***)
 
-基于vue-cli编写开发
+基于vue-cli编写开发，添加粒子等风格动效的数据展示系统，不断优化数据切换及显示效果，提高友好度与美观度。
 
 ## 目录结构
 
@@ -32,7 +32,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/***.git
+git clone https://github.com/Mario343214420/big-data-demo.git
 
 # 安装依赖
 yarn install
