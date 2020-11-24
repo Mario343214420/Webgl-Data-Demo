@@ -1,6 +1,6 @@
 # 大数据展示项目
 
-[预览 v1.0.0 版本](https://mario4420.gitee.io/big-data-demo-dist-master)
+[预览 v1.0.0 版本（可预览）](https://mario4420.gitee.io/big-data-demo-dist-master)
 
 [~~预览 v1.0.1 版本（暂未打包）~~](https://mario343214420.github.io/big-data-demo-dist/index.html)
 
