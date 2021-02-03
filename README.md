@@ -4,11 +4,11 @@
 
 [预览 v1.0.0 版本（可预览）](https://mario4420.gitee.io/big-data-demo-dist-master)
 
-[~~预览 v1.0.1 版本（暂未打包）~~](https://mario343214420.github.io/big-data-demo-dist/index.html)
+[预览 v1.0.1 版本（暂未打包）](http://mario4420.gitee.io/big-data-demo-dist/dist_v1.0.1/#/home)
 
-[~~预览 v1.0.2 版本（暂未打包）~~](https://mario343214420.github.io/big-data-demo-dist/index.html)
+[预览 v1.0.2 版本（暂未打包）](http://mario4420.gitee.io/big-data-demo-dist/dist_v1.0.2/#/home)
 
-[预览 v1.0.3 版本（可预览）](http://mario4420.gitee.io/big-data-demo-dist)
+[预览 v1.0.3 版本（可预览）](http://mario4420.gitee.io/big-data-demo-dist/dist_v1.0.3/#/home)
 
 基于vue-cli编写开发
 
