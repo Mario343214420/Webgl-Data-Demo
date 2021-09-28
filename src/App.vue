@@ -1,40 +1,28 @@
 <template>
-  <div id="app" v-cloak>
-    <div v-if="this.$route.path !== '/home' && this.$route.path !== '/home2'" class="page-title-wrapper">
-      <span class="page-title">
-        {{ returnRouteName() }}
-      </span>
-      <span class="to-home">
-          <router-link to="/home">返回</router-link>
-      </span>
-    </div>
-    <router-view/>
-  </div>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <router-view></router-view>
+  <router-link to="home">Home</router-link>
+  <router-link to="area">area</router-link>
+  <router-link to="camera">camera</router-link>
+  <router-link to="model">model</router-link>
+  <router-link to="warn">warn</router-link>
 </template>
-<script>
-  export default {
-    name: 'app',
-    methods: {
-      returnRouteName() {
-        let route = this.$route.path
-        switch (route) {
-          case '/overview':
-            return '系统概况专题'
-          case '/summary':
-            return '数据归集专题'
-          case '/public':
-            return '双公示专题'
-          case '/union':
-            return '联合奖惩专题'
-          case '/map':
-            return '区域数据归集'
-        }
-      }
-    }
-  }
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'App'
+})
 </script>
-<style lang="stylus">
-  [v-cloak] {
-    display: none;
-  }
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>

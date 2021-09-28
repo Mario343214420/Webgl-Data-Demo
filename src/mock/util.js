@@ -2,16 +2,16 @@ const responseBody = {
   message: '',
   timestamp: 0,
   data: null,
-  code: 0
+  code: '00',
 }
 
 // 返回装配器，data为结果data，message为返回消息
-export const builder = (data, message, code = 0, headers = {}) => {
+export const builder = (data, message, code = '00', headers = {}) => {
   responseBody.data = data
   if (message !== undefined && message !== null) {
     responseBody.message = message
   }
-  if (code !== 0) {
+  if (code !== '00') {
     responseBody.code = code
     responseBody._status = code
   }
