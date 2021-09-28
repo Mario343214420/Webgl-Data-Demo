@@ -1,6 +1,13 @@
 # 大数据展示项目
 
-<font size=18 color=#333>如果对您有用，烦请点个star，万分感谢。</font>
+<font size=18 color=#333></font>
+
+
+```
+如果对您有用，烦请点个star，万分感谢。
+```
+
+
 
 [预览 v1.0.0 版本（可预览）](https://mario4420.gitee.io/big-data-demo-dist-master)
 
