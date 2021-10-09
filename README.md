@@ -25,3 +25,7 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 3. Open `src/main.ts` in VSCode
 4. Open the VSCode command palette
 5. Search and run "Select TypeScript version" -> "Use workspace version"
+
+### Question
+
+1.在ts中编写相关watch与this指向问题，建议使用常规vue写法，经讨论发现vue3源码中也定义了大量any类参数，此写法仍不严谨，且不符合原写法习惯。
