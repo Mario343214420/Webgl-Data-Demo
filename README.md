@@ -7,7 +7,9 @@
 如果对您有用，烦请点个star，万分感谢。
 ```
 
+修改：在vue3基础上，进行改写，应用vite在ts_version_base分支上，开发基础套用框架。
 
+新方向：webgl应用组件开发，引入shader贴图渲染。
 
 [预览 v1.0.0 版本（可预览）](https://mario4420.gitee.io/big-data-demo-dist-master)
 
