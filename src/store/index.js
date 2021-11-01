@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 // import mutations from './mutations'
 // import actions from './actions'
 // import getters from './getters'
-import overview from './modules/overview'
+import threeTool from './modules/threeTool'
 
 Vue.use(Vuex)
 
@@ -15,6 +15,6 @@ export default new Vuex.Store({
   // actions,
   // getters,
   modules: {
-    overview
+    threeTool
   }
 })
