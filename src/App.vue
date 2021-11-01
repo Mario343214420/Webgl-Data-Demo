@@ -1,6 +1,6 @@
 <template>
   <div id="app" v-cloak>
-    <div v-if="this.$route.path !== '/home' && this.$route.path !== '/home2'" class="page-title-wrapper">
+    <div v-if="this.$route.path !== '/home'" class="page-title-wrapper">
       <span class="page-title">
         {{ returnRouteName() }}
       </span>
@@ -18,16 +18,12 @@
       returnRouteName() {
         let route = this.$route.path
         switch (route) {
-          case '/overview':
-            return '系统概况专题'
-          case '/summary':
-            return '数据归集专题'
-          case '/public':
-            return '双公示专题'
-          case '/union':
-            return '联合奖惩专题'
-          case '/map':
-            return '区域数据归集'
+          case '/channel1':
+            return '孔道模型1'
+          case '/channel2':
+            return '孔道模型2'
+          case '/channel3':
+            return '孔道模型3'
         }
       }
     }
