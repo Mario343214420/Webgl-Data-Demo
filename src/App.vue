@@ -21,7 +21,7 @@
           case '/channel1':
             return '孔道模型1'
           case '/channel2':
-            return '孔道模型2'
+            return ''
           case '/channel3':
             return '孔道模型3'
         }
