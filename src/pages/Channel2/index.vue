@@ -38,8 +38,15 @@ export default {
       // this.scene.add(sphere).
       const loader = new GLTFLoader()
       loader.load('./models/conveyor/scene.gltf', (obj) => {
-        console.log(obj)
+
+        obj.scene.traverse( function ( child ) {
+          if ( child.isMesh ) {
+            child.material.emissive =  child.material.color;
+            child.material.emissiveMap = child.material.map ;
+          }
+        });
         this.scene.add(obj.scene)
+        this.scene.add(new THREE.AmbientLight(0x666666));
       })
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(1000, 700)
