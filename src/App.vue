@@ -23,14 +23,26 @@
           case '/channel2':
             return ''
           case '/channel3':
-            return '孔道模型3'
+            return ''
         }
       }
     }
   }
 </script>
 <style lang="stylus">
-  [v-cloak] {
-    display: none;
+[v-cloak] {
+  display: none;
+}
+html, body, div {
+  margin: 0;
+  padding: 0
+}
+.page-title-wrapper{
+  position absolute
+  top: 0
+  left: 0
+  a{
+    color: #fff
   }
+}
 </style>

@@ -20,6 +20,9 @@ module.exports = {
       '/summary': { target: 'http://localhost:8082/' }
     }
   },
+  devServer: {
+    disableHostCheck: true
+  },
   productionSourceMap: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
   assetsDir: 'static',
