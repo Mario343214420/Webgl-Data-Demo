@@ -15,7 +15,8 @@ export default {
       scene: null,
       camera: null,
       renderer: null,
-      controls: null
+      controls: null,
+      deg: 0
     }
   },
   mounted() {
@@ -46,6 +47,8 @@ export default {
           }
         });
         this.scene.add(obj.scene)
+        // 镜头旋转（未生效）
+        // this.camera.lookAt(this.scene.position)
         this.scene.add(new THREE.AmbientLight(0x666666));
       })
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
@@ -53,6 +56,9 @@ export default {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     },
     animate() {
+      // 镜头旋转（未生效）
+      // this.deg++
+      // this.camera.rotateX = (10 * this.deg/3)
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)

@@ -5,7 +5,7 @@ import Channel3 from '../pages/Channel3/index.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     component: Home
   },
   {
