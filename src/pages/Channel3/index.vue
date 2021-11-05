@@ -39,7 +39,7 @@ export default {
       const aspect = this.w/this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 1000)
-      this.camera.position.z = 300
+      this.camera.position.z = 20
 
       // const geometry = new THREE.BoxGeometry(100, 100, 100)
       // const material = new THREE.MeshBasicMaterial({
@@ -50,18 +50,17 @@ export default {
       // const sphere = new THREE.Mesh(geometry, material)
       // this.scene.add(sphere).
       const loader = new GLTFLoader()
-      loader.load('./models/dragoner/scene.gltf', (obj) => {
-
+      loader.load('./models/earth/scene.gltf', (obj) => {
         obj.scene.traverse( function ( child ) {
           if ( child.isMesh ) {
             child.material.emissive =  child.material.color;
             child.material.emissiveMap = child.material.map ;
           }
         });
-        obj.scene.position.y = -100
-        obj.scene.position.x = -200
+        console.log(obj)
+        // obj.scene.position.y = -100
+        // obj.scene.position.x = -200
         obj.scene.castShadow = true
-        console.log(obj.scene)
         this.scene.add(obj.scene)
         // 镜头旋转（未生效）
         this.camera.lookAt(this.scene.position)
@@ -74,17 +73,19 @@ export default {
         _spotLight.castShadow = true;
         _spotLight.position.set(100,100,100);
         //设置阴影贴图精度
-        _spotLight.shadowMapWidth = _spotLight.shadowMapHeight = 1024*4;
+        // _spotLight.shadowMapWidth = _spotLight.shadowMapHeight = 1024*4;
         this.scene.add(_spotLight);
       })
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, })
       this.renderer.setSize(1000, 700)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+
+      this.controls.autoRotate = true;
     },
     animate() {
       // 镜头旋转（未生效）
-      // this.deg++
-      // this.camera.rotateX = (10 * this.deg/3)
+      this.deg++
+      this.camera.rotateY(this.deg/30000)
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
@@ -95,6 +96,7 @@ export default {
 
 <style lang="stylus" scoped>
 .channel {
+  display block
   width: 100%
   height: 100%
 }
