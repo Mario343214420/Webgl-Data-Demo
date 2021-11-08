@@ -49,7 +49,7 @@ export default {
       // })
       // const sphere = new THREE.Mesh(geometry, material)
       // this.scene.add(sphere).
-      const loader = new GLTFLoader()
+      /*const loader = new GLTFLoader()
       loader.load('./models/dragoner/scene.gltf', (obj) => {
 
         obj.scene.traverse( function ( child ) {
@@ -58,7 +58,6 @@ export default {
             child.material.emissiveMap = child.material.map ;
           }
         });
-        console.log(obj)
         obj.scene.position.y = -100
         obj.scene.position.x = -200
         obj.scene.castShadow = true
@@ -76,9 +75,28 @@ export default {
         //设置阴影贴图精度
         _spotLight.shadowMapWidth = _spotLight.shadowMapHeight = 1024*4;
         this.scene.add(_spotLight);
+      })*/
+      const loader = new GLTFLoader()
+      loader.load('./models/dragoner/scene.gltf', gltf => {
+        console.log(gltf)
+        gltf.scene.position.y = -100
+        gltf.scene.position.x = -200
+        gltf.scene.castShadow = true
+        this.scene.add(gltf.scene)
+        // 镜头旋转（未生效）
+        this.camera.lookAt(this.scene.position)
+        // this.scene.add(new THREE.AmbientLight(0xffffff));
+        //添加环境光
+        const _ambient = new THREE.AmbientLight(0xffffff);
+        this.scene.add(_ambient);
+        //灯光属性
+        const _spotLight = new THREE.SpotLight(0xffffff);
+        _spotLight.castShadow = true;
+        _spotLight.position.set(100,100,100);
+        this.scene.add(_spotLight);
       })
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, })
-      this.renderer.setSize(1000, 700)
+      this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 
       this.controls.autoRotate = true;
