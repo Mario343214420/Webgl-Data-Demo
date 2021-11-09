@@ -39,7 +39,6 @@ export default {
       // this.scene.add(sphere).
       const loader = new GLTFLoader()
       loader.load('./models/conveyor/scene.gltf', (obj) => {
-
         obj.scene.traverse( function ( child ) {
           if ( child.isMesh ) {
             child.material.emissive =  child.material.color;

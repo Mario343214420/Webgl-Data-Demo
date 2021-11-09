@@ -77,8 +77,8 @@ export default {
         this.scene.add(_spotLight);
       })*/
       const loader = new GLTFLoader()
+      console.log(loader)
       loader.load('./models/dragoner/scene.gltf', gltf => {
-        console.log(gltf)
         gltf.scene.position.y = -100
         gltf.scene.position.x = -200
         gltf.scene.castShadow = true
