@@ -21,9 +21,13 @@
           case '/channel1':
             return '孔道模型1'
           case '/channel2':
-            return ''
+            return 'channel2'
           case '/channel3':
-            return ''
+            return 'channel3'
+          case '/channel4':
+            return 'channel4'
+          case '/channel5':
+            return 'channel5'
         }
       }
     }
