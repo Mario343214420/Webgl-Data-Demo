@@ -38,7 +38,8 @@ export default {
       const aspect = this.w/this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 1000)
-      this.camera.position.z = 200
+      this.camera.position.z = 300
+      this.camera.position.y = 400
       const objLoader = new OBJLoader()
       /*objLoader.load('./models/complete_model/c4d/钻杆模型.obj', obj => {
         // obj.children.forEach(c => this.scene.add(c))
@@ -80,7 +81,7 @@ export default {
       })*/
 
       const glbLoader = new GLTFLoader()
-      glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型2.glb', glb=>{
+      glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型.glb', glb=>{
         this.scene.add(glb.scenes[0])
         console.log(glb)
       })
@@ -91,14 +92,14 @@ export default {
       //灯光属性
       const _spotLight = new THREE.SpotLight(0xf6f6f6);
       _spotLight.castShadow = true;
-      _spotLight.position.set(100,100,100);
+      _spotLight.position.set(1000,1000,1000);
       //设置阴影贴图精度
       _spotLight.shadowMapWidth = _spotLight.shadowMapHeight = 1024*4;
       this.scene.add(_spotLight);
 
       const axesHelper = new THREE.AxesHelper( 20 );
       this.scene.add(axesHelper)
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
       this.controls.autoRotate = true
