@@ -6,6 +6,7 @@
 
 <script>
 import * as THREE from 'three'
+import axios from 'axios'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
@@ -20,7 +21,10 @@ export default {
       controls: null,
       deg: 0,
       w: 0,
-      h: 0
+      h: 0,
+      pipe: null,
+      pipeList: [],
+      copyPipe: null
     }
   },
   mounted() {
@@ -82,8 +86,26 @@ export default {
 
       const glbLoader = new GLTFLoader()
       glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型.glb', glb=>{
-        this.scene.add(glb.scenes[0])
+        console.log(1, glb)
+        this.scene.add(glb.scene)
+      })
+      // axios.get('http://localhost:8080/jsonModels/equip.json').then(res => {
+      //   console.log(2,res.data)
+      // })
+      glbLoader.load('./models/complete_model/keyshot/GLB/钻杆1.glb', glb=>{
         console.log(glb)
+        // glb.scene.scale = new THREE.Vector3(0.5, 0.5, 0.5)
+        // let zangan = glb.scene.children[0].children[0].children
+        // // zangan[0].scale = new THREE.Vector3(0.5, 0.5, 0.5)
+        // // zangan[1].scale = new THREE.Vector3(0.5, 0.5, 0.5)
+        // zangan[0].children[0].geometry.scale(0.25, 0.25, 0.25)
+        // zangan[1].children[0].geometry.scale(0.25, 0.25, 0.25)
+        // console.log(zangan[0].children)
+        // zangan[0].children[1].geometry.scale(0.5, 0.5, 0.5)
+        glb.scenes[0].rotateZ(Math.PI/2)
+        glb.scenes[0].position.y = 90
+        this.pipe = glb.scenes[0]
+        this.scene.add(this.pipe)
       })
 
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -102,12 +124,23 @@ export default {
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      this.controls.autoRotate = true
+      // this.controls.autoRotate = true
     },
     animate() {
       // 镜头旋转（未生效）
       // this.deg++
       // this.camera.rotateY(this.deg/3000)
+      if(this.pipe) {
+        /*if(this.pipe.position.x <= 50 && this.pipe.position.x > -100) {
+          this.pipe.position.x -= 1
+        } else {
+          this.pipe.position.x = 50
+        }*/
+        this.pipe.position.x -= 0.5
+        if (this.pipe.position.x % 120 === 0){
+          this.pipe.position.x = 90
+        }
+      }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
