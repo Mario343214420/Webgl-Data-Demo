@@ -4,6 +4,7 @@ import Channel2 from '../pages/Channel2/index.vue'
 import Channel3 from '../pages/Channel3/index.vue'
 import Channel4 from '../pages/Channel4/index.vue'
 import Channel5 from '../pages/Channel5/index.vue'
+import Channel6 from '../pages/Channel6/index.vue'
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
   {
     path: '/channel5',
     component: Channel5
+  },
+  {
+    path: '/channel6',
+    component: Channel6
   },
   {
     path: '/',

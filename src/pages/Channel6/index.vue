@@ -12,7 +12,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 export default {
-  name: 'Channel5',
+  name: 'Channel6',
   data() {
     return {
       scene: null,
@@ -35,6 +35,7 @@ export default {
       this.init();
       this.animate()
     })
+    console.log(tt)
   },
   methods: {
     init() {
@@ -85,15 +86,18 @@ export default {
       })*/
 
       const glbLoader = new GLTFLoader()
-      glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型.glb', glb=>{
-        // console.log(1, glb)
+      // glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型.glb', glb=>{
+      //   console.log(1, glb)
+      //   this.scene.add(glb.scene)
+      // })
+      glbLoader.load('./models/complete_model/keyshot/GLB/本安型摄像仪.glb', glb=>{
         this.scene.add(glb.scene)
       })
       // axios.get('http://localhost:8080/jsonModels/equip.json').then(res => {
       //   console.log(2,res.data)
       // })
       glbLoader.load('./models/complete_model/keyshot/GLB/钻杆1.glb', glb=>{
-        // console.log(glb)
+        console.log(glb)
         // glb.scene.scale = new THREE.Vector3(0.5, 0.5, 0.5)
         // let zangan = glb.scene.children[0].children[0].children
         // // zangan[0].scale = new THREE.Vector3(0.5, 0.5, 0.5)
@@ -121,7 +125,7 @@ export default {
 
       const axesHelper = new THREE.AxesHelper( 20 );
       this.scene.add(axesHelper)
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
       // this.controls.autoRotate = true
@@ -136,11 +140,10 @@ export default {
         } else {
           this.pipe.position.x = 50
         }*/
-        // this.pipe.position.x -= 0.5
-        /*if (this.pipe.position.x % 120 === 0){
-          this.pipe.position.x = 90
-        }*/
-        this.pipe.position.x = 100 - this.deg % 180
+        this.pipe.position.x = this.deg % 150
+        // if (this.pipe.position.x % 120 === 0){
+        //   this.pipe.position.x = 90
+        // }
       }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
