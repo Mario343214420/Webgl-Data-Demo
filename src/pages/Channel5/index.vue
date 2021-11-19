@@ -138,13 +138,9 @@ export default {
           this.pipe.position.x = 90
         }*/
         this.pipe.position.x = 100 - this.deg % 180
-        if(this.deg % 180 === 0) {
-          this.pipeList.push(this.pipe)
-        }
-        for (let i =0; i < this.pipeList.length; i++) {
-          this.scene.add(this.pipeList[i])
-          console.log(this.scene)
-        }
+        // if(this.deg % 180 === 0) {
+        //   this.pipeList.push(this.pipe)
+        // }
       }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
