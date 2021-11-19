@@ -53,13 +53,11 @@ export default {
         // obj.children.forEach(c => this.scene.add(c))
         this.scene.add(obj)
       })*/
-
       /*const gltfLoader = new GLTFLoader()
       // gltfLoader.load('./models/complete_model/keyshot/GLTF/钻杆模型.gltf', gltf => {
       gltfLoader.load('./models/complete_model/keyshot/GLTF/1.gltf', gltf => {
         console.log(gltf)
       })*/
-
       const fbxLoader = new FBXLoader()
       /*// fbxLoader.load('./models/complete_model/c4d/钻杆模型.fbx', fbx => {
       fbxLoader.load('./models/complete_model/keyshot/FBX/钻杆模型.fbx', fbx => {
@@ -83,7 +81,6 @@ export default {
         })
         this.scene.add(fbx)
       })*/
-
       const glbLoader = new GLTFLoader()
       glbLoader.load('./models/complete_model/keyshot/GLB/钻杆模型.glb', glb=>{
         // console.log(1, glb)
