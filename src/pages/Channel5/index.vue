@@ -113,7 +113,7 @@ export default {
       _spotLight.castShadow = true;
       _spotLight.position.set(1000,1000,1000);
       //设置阴影贴图精度
-      _spotLight.shadowMapWidth = _spotLight.shadowMapHeight = 1024*4;
+      _spotLight.shadow.mapSize.height = _spotLight.shadow.mapSize.width = 1024*4;
       this.scene.add(_spotLight);
 
       const axesHelper = new THREE.AxesHelper( 20 );
@@ -138,6 +138,13 @@ export default {
           this.pipe.position.x = 90
         }*/
         this.pipe.position.x = 100 - this.deg % 180
+        if(this.deg % 180 === 0) {
+          this.pipeList.push(this.pipe)
+        }
+        for (let i =0; i < this.pipeList.length; i++) {
+          this.scene.add(this.pipeList[i])
+          console.log(this.scene)
+        }
       }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
