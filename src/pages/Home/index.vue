@@ -7,6 +7,8 @@
     <router-link to="/channel4">to channel4</router-link><br>
     <router-link to="/channel5">to channel5</router-link><br>
     <router-link to="/channel6">to channel6</router-link><br>
+    <router-link to="/channel7">to channel7</router-link><br>
+    <router-link to="/channel8">to channel8</router-link><br>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
     </div>
