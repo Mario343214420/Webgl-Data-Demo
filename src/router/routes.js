@@ -7,6 +7,8 @@ import Channel5 from '../pages/Channel5/index.vue'
 import Channel6 from '../pages/Channel6/index.vue'
 import Channel7 from '../pages/Channel7/index.vue'
 import Channel8 from '../pages/Channel8/index.vue'
+import Channel9 from '../pages/Channel9/index.vue'
+import Channel10 from '../pages/Channel10/index.vue'
 
 const routes = [
   {
@@ -43,7 +45,24 @@ const routes = [
   },
   {
     path: '/channel8',
-    component: Channel8
+    component: Channel8,
+    meta: {
+      title: '航拍景场监控'
+    }
+  },
+  {
+    path: '/channel9',
+    component: Channel9,
+    meta: {
+      title: '航拍景场监控'
+    }
+  },
+  {
+    path: '/channel10',
+    component: Channel10,
+    meta: {
+      title: '航拍景场监控'
+    }
   },
   {
     path: '/',
