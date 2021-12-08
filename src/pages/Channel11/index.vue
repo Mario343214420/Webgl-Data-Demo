@@ -56,6 +56,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 export default {
   name: 'Channel11',
   data() {
@@ -76,6 +77,7 @@ export default {
       mX: null,
       mY: null,
       flag: false,
+      windmill: null,
       info: {
         name: '',
         safe: '安全',
@@ -237,15 +239,54 @@ export default {
       this.group1 = new THREE.Group()
       // const objLoader = new OBJLoader()
       const fbxLoader = new FBXLoader()
-      // const textureLoader = new THREE.TextureLoader()
+      const gltfLoader = new GLTFLoader()
+      const textureLoader = new THREE.TextureLoader()
       // const mtlLoader = new MTLLoader();
+      gltfLoader.load(`http://localhost:8000/windmill/scene.gltf`, gltf => {
+        /*let loadPic1 = textureLoader.load('http://localhost:8000/Mat_Base_Color.tga.png', texture => {
+          fbx.children[1].material.map = texture
+          fbx.children[1].geometry.computeBoundingBox();
+          fbx.children[1].geometry.center()
+          fbx.children[2].material.map = texture
+          fbx.children[2].geometry.computeBoundingBox();
+          fbx.children[2].geometry.center()
+          fbx.children[3].material.map = texture
+          fbx.children[3].geometry.computeBoundingBox();
+          fbx.children[3].geometry.center()
+          fbx.position.y = 0;
+          this.group.add(fbx.children[1])
+          this.group.add(fbx.children[2])
+          this.group.add(fbx.children[3])
+        })
+        let loadPic2 = textureLoader.load('http://localhost:8000/_Mat_Base_Color.tga.png', texture => {
+
+        })*/
+        console.log(gltf)
+        gltf.scene.scale.x = 0.002
+        gltf.scene.scale.y = 0.002
+        gltf.scene.scale.z = 0.002
+        this.windmill = gltf.scene
+      })
       this.list.forEach(item => {
         fbxLoader.load(`http://localhost:8000/${item}/${item}.fbx`, fbx => {
+          // let map = fbx.children[0].material.map
+          // let geo = fbx.children[0].geometry
+          // geo.rotation.x = -Math.PI / 2
+          // geo.rotation.z = -Math.PI / 6
+          // geo.position.y = -30
+          // geo.position.z = 120
           fbx.rotation.x = -Math.PI / 2
           fbx.rotation.z = -Math.PI / 6
           fbx.position.y = -30
           fbx.position.z = 120
-          this.scene.add(fbx)
+          this.group.add(fbx)
+          // let points = new THREE.Points(geo, new THREE.PointsMaterial({size: 1}))
+          // points.rotation.x = -Math.PI / 2
+          // points.rotation.z = -Math.PI / 6
+          // points.position.y = -30
+          // points.position.z = 120
+          // this.group.add(points)
+          // console.log(points)
         })
       })
       /**
@@ -312,20 +353,21 @@ export default {
     },
     addBox() {
       const boxGeo = new THREE.BoxGeometry(10, 10, 10);
-      const boxMaterial = new THREE.MeshLambertMaterial({
-        color: 0x0000ff,
-        opacity: 0.4
+      const boxMaterial = new THREE.MeshBasicMaterial({
+        opacity: 0, transparent: true
       }); //材质对象Material
       const box = new THREE.Mesh(boxGeo, boxMaterial);
+      const windmill = this.windmill.clone()
       this.boxesList.push(this.addData)
-      box.position.x = this.addData.x
-      box.position.y = this.addData.y
-      box.position.z = this.addData.z
+      box.position.x = windmill.position.x = this.addData.x
+      box.position.y = windmill.position.y = this.addData.y
+      box.position.z = windmill.position.z = this.addData.z
       box.name = this.addData.name
       box.type = this.addData.type
       box.v = this.addData.v
       box.a = this.addData.a
       this.boxes.add(box)
+      this.boxes.add(windmill)
     },
     delBox() {
       this.boxes = new THREE.Group()
