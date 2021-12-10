@@ -265,7 +265,7 @@ export default {
         gltf.scene.scale.x = 0.002
         gltf.scene.scale.y = 0.002
         gltf.scene.scale.z = 0.002
-        this.windmill = gltf.scene
+        this.windmill = gltf
       })
       this.list.forEach(item => {
         fbxLoader.load(`http://localhost:8000/${item}/${item}.fbx`, fbx => {
@@ -358,6 +358,10 @@ export default {
       }); //材质对象Material
       const box = new THREE.Mesh(boxGeo, boxMaterial);
       const windmill = this.windmill.clone()
+      console.log(windmill)
+      let mixer = new THREE.AnimationMixer(windmill)
+      let aa = mixer.clipAction(windmill.animations[0])
+      aa.play()
       this.boxesList.push(this.addData)
       box.position.x = windmill.position.x = this.addData.x
       box.position.y = windmill.position.y = this.addData.y
