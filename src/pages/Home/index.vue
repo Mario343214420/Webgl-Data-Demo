@@ -13,6 +13,8 @@
     <router-link to="/channel10">to channel10</router-link><br>
     <router-link to="/channel11">to channel11</router-link><br>
     <router-link to="/channel12">to channel12</router-link><br>
+    <router-link to="/channel13">to channel13</router-link><br>
+    <router-link to="/channel14">to channel14</router-link><br>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
     </div>
