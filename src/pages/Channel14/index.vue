@@ -1,6 +1,6 @@
 <template>
   <div class="channel" ref="channel">
-    <canvas ref="cvs" width="w" height="h" @click="cvsClick"></canvas>
+    <canvas ref="cvs" width="w" height="h" @mousedown.left="cvsClick"></canvas>
   </div>
 </template>
 
@@ -56,8 +56,46 @@ export default {
       mixer: null,
       clock: null,
       raycaster: null,
-      target: null
+      target: {
+        x1: 0,
+        y1: 0,
+        z1: 0,
+        x2: 0,
+        y2: 0,
+        z2: 0
+      },
+      tween: null
     }
+  },
+  watch: {
+    /*target: {
+      handler(n, o) {
+        // 切换动画
+        this.tween = new TWEEN.Tween(o)
+        this.tween.onComplete(() => {
+          console.log('完成动画')
+        })
+        this.tween.to(n, 2000)
+        this.tween.onUpdate(() => {
+          this.camera.position.x = n.x1
+          this.camera.position.y = n.y1
+          this.camera.position.z = n.z1
+          this.controls.target.x = n.x2
+          this.controls.target.y = n.y2
+          this.controls.target.z = n.z2
+        })
+        this.tween.easing(TWEEN.Easing.Quadratic.Out)
+        this.tween.start()
+      },
+      deep: true
+    }*/
+    target: {
+      handler(n, o) {
+        console.log(n)
+      },
+      deep: true
+    }
+
   },
   mounted() {
     const baseDom = this.$refs.channel
@@ -75,6 +113,10 @@ export default {
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 1000)
       this.camera.position.z = 200
+      this.camera.position.y = 200
+      this.camera.lookAt(new THREE.Vector3(this.target.x, this.target.y, this.target.z))
+      const helper = new THREE.CameraHelper( this.camera );
+      this.scene.add( helper );
 
       // 日照光添加
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -107,11 +149,15 @@ export default {
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      this.controls.enableDamping = true
     },
     animate() {
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
+      if(this.tween) {
+        TWEEN.update()
+      }
     },
     cvsClick(e) {
       e.preventDefault();
@@ -126,67 +172,59 @@ export default {
         this.flag = true
         this.info.name = intersects[0].object.name
         this.info.count = parseInt(Math.random() * 30)
-        this.animateCamera(
-          {
-            x: this.camera.position.x,
-            y: this.camera.position.y,
-            z: this.camera.position.z,
-          },
-          {
-            x: this.target ? this.target.x : 0,
-            y: this.target ? this.target.y : 0,
-            z: this.target ? this.target.z : 0
-          },
-          {
-            x: intersects[0].object.position.x,
-            y: intersects[0].object.position.y + 200,
-            z: intersects[0].object.position.z + 200
-          },
-          {
-            x: intersects[0].object.position.x,
-            y: intersects[0].object.position.y,
-            z: intersects[0].object.position.z
+        // this.camera.position.set(
+        //   intersects[0].object.position.x,
+        //   intersects[0].object.position.y + 200,
+        //   intersects[0].object.position.z + 200
+        // )
+        // this.controls.target.x = intersects[0].object.position.x
+        // this.controls.target.y = intersects[0].object.position.y
+        // this.controls.target.z = intersects[0].object.position.z
+        // 更换当前焦点
+        // this.target.x1 = intersects[0].object.position.x
+        // this.target.y1 = intersects[0].object.position.y + 200
+        // this.target.z1 = intersects[0].object.position.z + 200
+        // this.target.x2 = intersects[0].object.position.x
+        // this.target.y2 = intersects[0].object.position.y
+        // this.target.z2 = intersects[0].object.position.z
+
+        this.tween = new TWEEN.Tween(this.target).to({
+          x1: intersects[0].object.position.x,
+          y1: intersects[0].object.position.y + 200,
+          z1: intersects[0].object.position.z + 200,
+          x2: intersects[0].object.position.x,
+          y2: intersects[0].object.position.y,
+          z2: intersects[0].object.position.z,
+        }, 1000)
+        this.tween.onComplete(() => {
+          console.log('完成动画')
+        })
+        /*this.tween.to({
+          x1: intersects[0].object.position.x,
+          y1: intersects[0].object.position.y + 200,
+          z1: intersects[0].object.position.z + 200,
+          x2: intersects[0].object.position.x,
+          y2: intersects[0].object.position.y,
+          z2: intersects[0].object.position.z,
+        }, 1000)*/
+        this.tween.onUpdate(() => {
+          this.camera.position.x = this.target.x1
+          this.camera.position.y = this.target.y1 + 200
+          this.camera.position.z = this.target.z1 + 200
+          this.controls.target.x = this.target.x2
+          this.controls.target.y = this.target.y2
+          this.controls.target.z = this.target.z2
+        })
+        this.tween.easing(TWEEN.Easing.Quadratic.Out)
+        this.tween.start()
+        if(this.tween) {
+          try {　// 放在 TWEEN.js未加载完成导致报错
+            TWEEN.update();
+          } catch (error) {
+            console.log(error)
           }
-        )
-        this.target = {
-          x: intersects[0].object.position.x,
-          y: intersects[0].object.position.y,
-          z: intersects[0].object.position.z
         }
       }
-    },
-    animateCamera(oldP, oldT, newP, newT, callBack){
-      var tween = new TWEEN.Tween({
-        x1: oldP.x, // 相机x
-        y1: oldP.y, // 相机y
-        z1: oldP.z, // 相机z
-        x2: oldT.x, // 控制点的中心点x
-        y2: oldT.y, // 控制点的中心点y
-        z2: oldT.z  // 控制点的中心点z
-      });
-      tween.to({
-        x1: newP.x,
-        y1: newP.y,
-        z1: newP.z,
-        x2: newT.x,
-        y2: newT.y,
-        z2: newT.z
-      },1000);
-      tween.onUpdate(object => {
-        this.camera.position.x = object.x1;
-        this.camera.position.y = object.y1;
-        this.camera.position.z = object.z1;
-        this.controls.target.x = object.x2;
-        this.controls.target.y = object.y2;
-        this.controls.target.z = object.z2;
-        this.controls.update();
-      })
-      tween.onComplete(() => {
-        this.controls.enabled = true;
-        callBack&&callBack()
-      })
-      tween.easing(TWEEN.Easing.Cubic.InOut);
-      tween.start();
     }
   }
 }
