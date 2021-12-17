@@ -13,6 +13,8 @@ import Channel11 from '../pages/Channel11/index.vue'
 import Channel12 from '../pages/Channel12/index.vue'
 import Channel13 from '../pages/Channel13/index.vue'
 import Channel14 from '../pages/Channel14/index.vue'
+import Channel15 from '../pages/Channel15/index.vue'
+import Channel16 from '../pages/Channel16/index.vue'
 
 const routes = [
   {
@@ -94,6 +96,20 @@ const routes = [
     component: Channel14,
     meta: {
       title: '航拍景场监控'
+    }
+  },
+  {
+    path: '/channel15',
+    component: Channel15,
+    meta: {
+      title: '数字建筑'
+    }
+  },
+  {
+    path: '/channel16',
+    component: Channel16,
+    meta: {
+      title: '数字建筑叠加shader'
     }
   },
   {

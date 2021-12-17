@@ -13,7 +13,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import TWEEN from 'tween.js'
 export default {
-  name: 'Channel14',
+  name: 'Channel15',
   data() {
     return {
       scene: null,
@@ -58,8 +58,8 @@ export default {
       raycaster: null,
       target: {
         x1: 0,
-        y1: 200,
-        z1: 200,
+        y1: 6000,
+        z1: 9000,
         x2: 0,
         y2: 0,
         z2: 0
@@ -104,9 +104,9 @@ export default {
       const canvas = this.$refs.cvs
       const aspect = this.w/this.h
       this.scene = new THREE.Scene()
-      this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 8000)
-      this.camera.position.z = 200
-      this.camera.position.y = 200
+      this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 14000)
+      this.camera.position.z = this.target.z1
+      this.camera.position.y = this.target.y1
       this.camera.lookAt(new THREE.Vector3(this.target.x, this.target.y, this.target.z))
       const helper = new THREE.CameraHelper( this.camera );
       this.scene.add( helper );
@@ -114,38 +114,32 @@ export default {
       // 日照光添加
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
-
+      const _pointLight = new THREE.PointLight(0xffffff)
+      _pointLight.position.set(-5000, 4000, 0)
+      this.scene.add(_pointLight)
       // 基准轴线添加
       const axesHelper = new THREE.AxesHelper( 20 );
       this.scene.add( axesHelper );
 
       // 盒子组
       this.boxes = new THREE.Group()
-      const geometry = new THREE.BoxGeometry( 40, 10, 40 );
-      const material = new THREE.MeshBasicMaterial( {color: 0x00a0af} );
-      const cube = new THREE.Mesh( geometry, material );
-      const box1 = cube.clone()
-      box1.position.x = 60
-      box1.name = 'box1'
-      const box2 = cube.clone()
-      box2.position.x = -30
-      box2.position.z = 60
-      box2.name = 'box2'
-      const box3 = cube.clone()
-      box3.name = 'box3'
-      const box4 = cube.clone()
-      box4.name = 'box4'
-      box4.position.y = 20
-      this.boxes.add(box1)
-      this.boxes.add(box2)
-      this.boxes.add(box3)
-      this.boxes.add(box4)
 
-      this.scene.add(this.boxes)
+      const fbxLoader = new FBXLoader()
+      fbxLoader.load('./models/build/floor.fbx', cube => {
+        for (let i = 0; i < 10; i++) {
+          const box = cube.clone()
+          box.position.y = 400 * i
+          box.name = `box${i}`
+          box.index = i
+          this.boxes.add(box)
+        }
+        this.scene.add(this.boxes)
+      })
 
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      this.controls.target.y = 2000
       this.controls.enableDamping = true
     },
     animate() {
@@ -156,6 +150,33 @@ export default {
         TWEEN.update()
       }
     },
+    moveSmooth() {
+      this.tween = new TWEEN.Tween(this.target).to({
+        x1: intersects[0].object.position.x,
+        y1: intersects[0].object.position.y + 200,
+        z1: intersects[0].object.position.z + 200,
+        x2: intersects[0].object.position.x,
+        y2: intersects[0].object.position.y,
+        z2: intersects[0].object.position.z,
+      }, 1000)
+      this.tween.onComplete(() => {
+        console.log('完成动画')
+      })
+      this.tween.onUpdate(() => {
+        this.controls.target.x = this.target.x2
+        this.controls.target.y = this.target.y2
+        this.controls.target.z = this.target.z2
+      })
+      this.tween.easing(TWEEN.Easing.Quadratic.Out)
+      this.tween.start()
+      if(this.tween) {
+        try {　// 放在 TWEEN.js未加载完成导致报错
+          TWEEN.update();
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
     cvsClick(e) {
       e.preventDefault();
       //将鼠标点击位置的屏幕坐标转成threejs中的标准坐标,具体解释见代码释义
@@ -164,40 +185,17 @@ export default {
       //在视点坐标系中形成射线,射线的起点向量是照相机， 射线的方向向量是照相机到点击的点，这个向量应该归一标准化。
       this.raycaster = new THREE.Raycaster();
       this.raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-      const intersects = this.raycaster.intersectObjects( this.boxes.children );
+      const intersects = this.raycaster.intersectObjects( this.boxes.children, true );
       if(intersects[0] && intersects[0].object.name){
-        this.flag = true
-        this.info.name = intersects[0].object.name
-        this.info.count = parseInt(Math.random() * 30)
-        this.tween = new TWEEN.Tween(this.target).to({
-          x1: intersects[0].object.position.x,
-          y1: intersects[0].object.position.y + 200,
-          z1: intersects[0].object.position.z + 200,
-          x2: intersects[0].object.position.x,
-          y2: intersects[0].object.position.y,
-          z2: intersects[0].object.position.z,
-        }, 1000)
-        this.tween.onComplete(() => {
-          console.log('完成动画')
-        })
-        this.tween.onUpdate(() => {
-          this.controls.target.x = this.target.x2
-          this.controls.target.y = this.target.y2
-          this.controls.target.z = this.target.z2
-        })
-        this.tween.easing(TWEEN.Easing.Quadratic.Out)
-        this.tween.start()
-        if(this.tween) {
-          try {　// 放在 TWEEN.js未加载完成导致报错
-            TWEEN.update();
-          } catch (error) {
-            console.log(error)
+        console.log(intersects[0].object.parent, this.boxes)
+        const idx = intersects[0].object.parent.index
+        this.boxes.children.forEach((item, index) => {
+          if(item.index === idx) {
+            item.position.y += 200
+          } else if(item.index > idx) {
+            item.position.y += 400
           }
-        }
-        if(intersects[0].object.name === 'box4') {
-          console.log(this.boxes)
-          this.boxes.children[3].position.y = 40
-        }
+        })
       }
     }
   }
