@@ -15,6 +15,8 @@ import Channel13 from '../pages/Channel13/index.vue'
 import Channel14 from '../pages/Channel14/index.vue'
 import Channel15 from '../pages/Channel15/index.vue'
 import Channel16 from '../pages/Channel16/index.vue'
+import Channel17 from '../pages/Channel17/index.vue'
+import Channel18 from '../pages/Channel18/index.vue'
 
 const routes = [
   {
@@ -110,6 +112,20 @@ const routes = [
     component: Channel16,
     meta: {
       title: '数字建筑叠加shader'
+    }
+  },
+  {
+    path: '/channel17',
+    component: Channel17,
+    meta: {
+      title: '测试模型对接'
+    }
+  },
+  {
+    path: '/channel18',
+    component: Channel18,
+    meta: {
+      title: '测试模型对接'
     }
   },
   {

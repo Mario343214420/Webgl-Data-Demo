@@ -140,7 +140,6 @@ export default {
       this.boxes.add(box2)
       this.boxes.add(box3)
       this.boxes.add(box4)
-
       this.scene.add(this.boxes)
 
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, })
