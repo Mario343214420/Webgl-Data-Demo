@@ -22,7 +22,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer'
 export default {
-  name: 'Channel18',
+  name: 'Channel19',
   data() {
     return {
       scene: null,
@@ -52,7 +52,10 @@ export default {
         x: 0,
         y: 0
       },
-      bloomComposer: null
+      bloomComposer: null,
+      mixer1: null,
+      mixer2: null,
+      clock: null
     }
   },
   watch: {
@@ -84,24 +87,30 @@ export default {
       this.group = new THREE.Group()
       this.group1 = new THREE.Group()
       const fbxLoader = new FBXLoader()
-      fbxLoader.load('./models/build/factory.fbx', fbx => {
+      fbxLoader.load('./models/tianma/gemeiji_opacity_0.8.FBX', fbx => {
         fbx.scale.set(.05,.05,.05)
+        this.scene.add(fbx)
+        this.clock = new THREE.Clock();
+        this.mixer1 = new THREE.AnimationMixer( fbx );
+        console.log(this.mixer1)
+        this.mixer1.clipAction( fbx.animations[0]).play();
+      })
+      fbxLoader.load('./models/tianma/yeyazhijia.FBX', fbx => {
+        console.log(fbx)
+        fbx.scale.set(.5,.5,.5)
         // fbx.position.x = 1120
         // fbx.position.z = 160
         // fbx.position.y = 160
         this.scene.add(fbx)
+        this.clock = new THREE.Clock();
+        this.mixer2 = new THREE.AnimationMixer( fbx );
+        this.mixer2.clipAction( fbx.animations[0]).play();
       })
-      const geometryFloor = new THREE.PlaneGeometry( 1000, 1000 );
-      const materialFloor = new THREE.MeshBasicMaterial( {color: 0x3f3e35, side: THREE.DoubleSide} );
-      const planeFloor = new THREE.Mesh( geometryFloor, materialFloor );
-      planeFloor.rotation.x = Math.PI/2
-      // this.group1.add( planeFloor );
-      const geometry1 = new THREE.BoxGeometry( 500, 100, 200 );
-      const geometry2 = new THREE.BoxGeometry( 200, 100, 500 );
-      const material = new THREE.MeshBasicMaterial( {color: 0x00ff00, transparent: true, opacity: 0} );
-      const cube = new THREE.Mesh( geometry1, material );
 
-      let list = [
+      const material = new THREE.MeshBasicMaterial( {color: 0x00ff00, transparent: true, opacity: 0} );
+
+
+      /*let list = [
         {
           name: '生产办公室A座',
           safe: true,
@@ -223,7 +232,7 @@ export default {
       this.group.position.y = -200
 
       this.scene.add(this.group)
-      this.scene.add(this.group1)
+      this.scene.add(this.group1)*/
 
       /**
 3dtile.exe -f b3dm -i E:\projects\suligejingchang\set\Data\Tile_+007_+000\Tile_+007_+000.b3dm -o E:\projects\suligejingchang\006\Tile_+007_+000.gltf
@@ -266,6 +275,12 @@ export default {
     animate() {
       if(this.bloomComposer) {
         this.bloomComposer.render()
+      }
+      console.log(this.clock)
+      if(this.clock && this.mixer1 && this.mixer2) {
+        let delta = this.clock.getDelta();
+        this.mixer1.update(delta)
+        this.mixer2.update(delta)
       }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)

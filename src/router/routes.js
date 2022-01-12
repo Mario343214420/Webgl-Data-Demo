@@ -17,6 +17,7 @@ import Channel15 from '../pages/Channel15/index.vue'
 import Channel16 from '../pages/Channel16/index.vue'
 import Channel17 from '../pages/Channel17/index.vue'
 import Channel18 from '../pages/Channel18/index.vue'
+import Channel19 from '../pages/Channel19/index.vue'
 
 const routes = [
   {
@@ -126,6 +127,13 @@ const routes = [
     component: Channel18,
     meta: {
       title: '测试模型对接'
+    }
+  },
+  {
+    path: '/channel19',
+    component: Channel19,
+    meta: {
+      title: '天玛'
     }
   },
   {

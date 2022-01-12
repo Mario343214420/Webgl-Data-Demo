@@ -11,11 +11,17 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 // import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
+import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import TWEEN from 'tween.js'
 export default {
   name: 'Channel17',
   data() {
     return {
+      bloomComposer: null,
       scene: null,
       camera: null,
       renderer: null,
@@ -27,6 +33,7 @@ export default {
       pipeList: [],
       copyPipe: null,
       group: null,
+      support: null,
       boxes: null,
       mX: null,
       mY: null,
@@ -67,7 +74,9 @@ export default {
       tween: null,
       track: null,
       stars: null,
-      timer: 1
+      timer: 1,
+      mixer1: null,
+      mixer2: null
     }
   },
   watch: {
@@ -119,7 +128,7 @@ export default {
       // this.scene.add( helper );
 
       // 日照光添加
-      const _ambient = new THREE.AmbientLight(0xfffff);
+      const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
       const _pointLight = new THREE.PointLight(0xffffff);
       _pointLight.position.set(100, 100, 100);
@@ -138,7 +147,7 @@ export default {
 
       // 盒子组
       this.boxes = new THREE.Group()
-      loader.load('http://192.168.1.188:8000/track.FBX', fbx => {
+      loader.load('http://192.168.1.91:8000/track.FBX', fbx => {
         fbx.scale.set(.01,.01,.01)
         fbx.rotation.y = Math.PI / 2
         fbx.position.x = 137
@@ -201,9 +210,8 @@ export default {
         // this.group.add(mesh);
       }*/
       this.scene.add(this.group)
-
-      const starMaterial1 = new THREE.SpriteMaterial({
-        map: new THREE.TextureLoader().load( "http://192.168.1.188:8000/star-blue.png" ),
+      /*const starMaterial1 = new THREE.SpriteMaterial({
+        map: new THREE.TextureLoader().load( "http://192.168.1.91:8000/star-blue.png" ),
         blending: THREE.AdditiveBlending,
         transparent: true,
         opacity: 0.4,
@@ -219,10 +227,10 @@ export default {
         depthWrite: false,
         depthTest: false,
         side: THREE.DoubleSide
-      });
+      });*/
       const planeGeometry = new THREE.PlaneGeometry(30, 1);
-      const pStarMtl1 = new THREE.MeshPhongMaterial( { transparent: true, map: new THREE.TextureLoader().load( "http://192.168.1.151:8000/star-green.png" )} );
-      const pStarMtl2 = new THREE.MeshPhongMaterial( { transparent: true, map: new THREE.TextureLoader().load( "http://192.168.1.151:8000/star-blue.png" )} );
+      const pStarMtl1 = new THREE.MeshPhongMaterial( { transparent: true, map: new THREE.TextureLoader().load( "http://192.168.1.91:8000/star-green.png" )} );
+      const pStarMtl2 = new THREE.MeshPhongMaterial( { transparent: true, map: new THREE.TextureLoader().load( "http://192.168.1.91:8000/star-blue.png" )} );
       const starParticle1 = new THREE.Mesh( planeGeometry, pStarMtl1 );
       const starParticle2 = new THREE.Mesh( planeGeometry, pStarMtl2 );
       starParticle1.renderOrder = 2
@@ -241,7 +249,7 @@ export default {
       this.stars.add(starParticle2)
       this.scene.add(this.stars)
 
-      loader.load('http://192.168.1.188:8000/_light50.FBX', fbx => {
+      loader.load('./models/tianma/caijuemian.FBX', fbx => {
         fbx.children[0].material.side = 2
         fbx.scale.set(.02, .02, .02)
         fbx.position.x = 230
@@ -261,10 +269,36 @@ export default {
       })
       this.scene.add(this.boxes)
 
+      this.support = new THREE.Group()
+
+      this.clock = new THREE.Clock();
+      loader.load('./models/tianma/yeyazhijia_opacity_0.8.FBX', fbx => {
+        fbx.scale.set(0.03, 0.03, 0.03)
+        for(let i = 0; i < 16; i++) {
+          let fbxClone = fbx.clone()
+          fbxClone.position.z = i * 10 - 70
+          fbxClone.position.x = 156
+          fbxClone.position.y = 10
+          this.support.add(fbxClone)
+        }
+      })
+      loader.load('./models/tianma/gemeiji_opacity_0.8.FBX', fbx => {
+        fbx.scale.set(0.003, 0.003, 0.003)
+        fbx.position.x = 164
+        this.track = fbx
+        this.scene.add(this.track)
+        this.mixer2 = new THREE.AnimationMixer( this.track );
+        this.mixer2.clipAction( this.track.animations[0]).play();
+      })
+
+      this.scene.add(this.support)
+
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false})
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
       this.controls.enableDamping = true
+
+      // this.addBloomPass()
     },
     generateSprite(flag) {
       let canvas = document.createElement('canvas');
@@ -329,6 +363,9 @@ export default {
     },
     animate() {
       this.timer += 0.4
+      // if(this.bloomComposer) {
+      //   this.bloomComposer.render()
+      // }
       this.group.children.forEach(item => {
         if(item.position.y < 200) {
           item.position.y += 0.1
@@ -346,14 +383,16 @@ export default {
       })
       if (this.track) {
         let speed = Math.sin(this.timer/40) * 74
-        if(speed > 72) {
-          this.track.rotation.y = -Math.PI/2
-          this.track.position.x = 135
-        } else if (speed < -72) {
-          this.track.rotation.y = Math.PI/2
-          this.track.position.x = 137
-        }
         this.track.position.z = speed
+        this.track.position.y = 14
+      }
+      if(this.clock && this.mixer2) {
+        console.log(this.support)
+        // this.mixer2 = new THREE.AnimationMixer( this.track );
+        // this.mixer2.clipAction( this.track.animations[0]).play();
+        let delta = this.clock.getDelta();
+        // this.mixer1.forEach(item => item.update(delta))
+        this.mixer2.update(delta)
       }
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
@@ -406,6 +445,25 @@ export default {
           this.boxes.children[3].position.y = 40
         }
       }
+    },
+    addBloomPass() {
+      // RenderPass这个通道会渲染场景，但不会将渲染结果输出到屏幕上
+      const renderScene = new RenderPass(this.scene, this.camera)
+      const effectCopy = new ShaderPass(CopyShader); //传入了CopyShader着色器，用于拷贝渲染结果
+      effectCopy.renderToScreen = true;
+      // THREE.BloomPass(strength, kernelSize, sigma, Resolution)
+      // strength 定义泛光效果的强度，值越高，明亮的区域越明亮，而且渗入较暗区域的也就越多
+      // kernelSize 控制泛光的偏移量
+      // sigma 控制泛光的锐利程度，值越高，泛光越模糊
+      // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
+      // const bloomPass = new BloomPass(3, 1.5, 0.4, 1024); //BloomPass通道效果
+      const bloomPass = new BloomPass(3, 30, 10.0, 256); //BloomPass通道效果
+      //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
+      this.bloomComposer = new EffectComposer(this.renderer)
+      this.bloomComposer.setSize(window.innerWidth, window.innerHeight);
+      this.bloomComposer.addPass(renderScene);
+      this.bloomComposer.addPass(bloomPass);
+      this.bloomComposer.addPass(effectCopy);
     }
   }
 }
