@@ -2,7 +2,11 @@
 
 <font size=18 color=#333></font>
 
+初版：
+
 ![image](https://wx2.sinaimg.cn/mw690/bc401c90gy1gxwuruiiecg21gw0ronpl.gif)
+
+升级版：
 
 ![image](https://wx4.sinaimg.cn/mw690/bc401c90gy1gyaxy8tm0qj21gq0oeqdw.jpg)
 
