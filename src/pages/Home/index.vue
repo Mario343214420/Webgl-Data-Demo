@@ -9,6 +9,7 @@
     <router-link to="/channel6">to channel6</router-link><br>
     <router-link to="/channel7">to channel7</router-link><br>
     <router-link to="/channel8">to channel8</router-link><br>
+    <router-link to="/channel8-weiyuan">to channel8-weiyuan</router-link><br>
     <router-link to="/channel9">to channel9</router-link><br>
     <router-link to="/channel10">to channel10</router-link><br>
     <router-link to="/channel11">to channel11</router-link><br>
@@ -20,6 +21,7 @@
     <router-link to="/channel17">to channel17</router-link><br>
     <router-link to="/channel18">to channel18</router-link><br>
     <router-link to="/channel19">to channel19</router-link><br>
+    <router-link to="/channel20">to channel20</router-link><br>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
     </div>

@@ -1,4 +1,5 @@
 import Home from '../pages/Home/index.vue'
+import Loading from '../pages/Loading/index.vue'
 import Channel1 from '../pages/Channel1/index.vue'
 import Channel2 from '../pages/Channel2/index.vue'
 import Channel3 from '../pages/Channel3/index.vue'
@@ -7,6 +8,7 @@ import Channel5 from '../pages/Channel5/index.vue'
 import Channel6 from '../pages/Channel6/index.vue'
 import Channel7 from '../pages/Channel7/index.vue'
 import Channel8 from '../pages/Channel8/index.vue'
+import Channel8WeiYuan from '../pages/Channel8WeiYuan/index.vue'
 import Channel9 from '../pages/Channel9/index.vue'
 import Channel10 from '../pages/Channel10/index.vue'
 import Channel11 from '../pages/Channel11/index.vue'
@@ -57,6 +59,13 @@ const routes = [
     component: Channel8,
     meta: {
       title: '航拍景场监控'
+    }
+  },
+  {
+    path: '/channel8-weiyuan',
+    component: Channel8WeiYuan,
+    meta: {
+      title: '威远井场'
     }
   },
   {
@@ -137,8 +146,15 @@ const routes = [
     }
   },
   {
+    path: '/loading',
+    component: Loading,
+    meta: {
+      title: '官网背景特效'
+    }
+  },
+  {
     path: '/',
-    redirect: '/home'
+    redirect: '/loading'
   }
 ]
 

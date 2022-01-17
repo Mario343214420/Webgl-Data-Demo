@@ -262,7 +262,6 @@ export default {
       this.scene.add(_spotLight);
 
       const axesHelper = new THREE.AxesHelper( 20 );
-      // this.scene.add(axesHelper)
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
       this.renderer.setSize(this.w, this.h)
       this.renderer.autoClear = false
@@ -276,7 +275,6 @@ export default {
       if(this.bloomComposer) {
         this.bloomComposer.render()
       }
-      console.log(this.clock)
       if(this.clock && this.mixer1 && this.mixer2) {
         let delta = this.clock.getDelta();
         this.mixer1.update(delta)
@@ -360,7 +358,7 @@ export default {
       // sigma 控制泛光的锐利程度，值越高，泛光越模糊
       // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
       // const bloomPass = new BloomPass(3, 1.5, 0.4, 1024); //BloomPass通道效果
-      const bloomPass = new BloomPass(1.2, 25, 4.0, 256); //BloomPass通道效果
+      const bloomPass = new BloomPass(1.2, 6, 4.0, 256); //BloomPass通道效果
       //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
       this.bloomComposer = new EffectComposer(this.renderer)
       this.bloomComposer.setSize(window.innerWidth, window.innerHeight);
