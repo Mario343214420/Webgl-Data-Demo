@@ -6,6 +6,30 @@
       <div>当地坐标： {{info.coordinate}}</div>
       <div>当地人数： {{info.count}}</div>
     </div>
+    <div class="add-float">
+      <div class="row">模型名称：<el-input style="width: 280px" size="mini" type="text" v-model="modelName" /></div>
+      <div class="row">模型路径：<el-input style="width: 280px" size="mini" type="text" v-model="modelPath" /></div>
+      <div class="row three-ipt">模型定位：
+        <el-input style="width: 60px; margin-right: 6px" size="mini" type="text" v-model="modelPosX" />
+        <el-input style="width: 60px; margin-right: 6px" size="mini" type="text" v-model="modelPosY" />
+        <el-input style="width: 60px;" size="mini" type="text" v-model="modelPosZ" />
+      </div>
+      <div class="row three-ipt">模型转角：
+        <el-input style="width: 60px; margin-right: 6px" size="mini"  type="text" v-model="modelRotX" />
+        <el-input style="width: 60px; margin-right: 6px" size="mini" type="text" v-model="modelRotY" />
+        <el-input style="width: 60px;" size="mini" type="text" v-model="modelRotZ" />
+        (PI=3.1416)
+      </div>
+      <div class="row three-ipt">模型缩放：
+        <el-input style="width: 60px; margin-right: 6px" size="mini" type="text" v-model="modelScaleX" />
+        <el-input style="width: 60px; margin-right: 6px" size="mini" type="text" v-model="modelScaleY" />
+        <el-input style="width: 60px;" size="mini" type="text" v-model="modelScaleZ" />
+      </div>
+      <div class="row"><Button @click="loadModel">导入模型</Button></div>
+      <div class="row"><Button @click="saveModel">模型调整（存储）</Button></div>
+      <div class="row"><Button @click="clearModel">清空缓存</Button></div>
+
+    </div>
     <canvas ref="cvs" width="w" height="h" @mousedown="onDocumentMouseDown" @mouseup="flag = false"></canvas>
   </div>
 </template>
@@ -14,6 +38,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 export default {
   name: 'Channel8',
   data() {
@@ -43,7 +68,29 @@ export default {
       floatPos: {
         x: 0,
         y: 0
-      }
+      },
+      modelGroup: null,
+      loadingList: [
+
+      ],
+      // modelCurrentMsg: {
+      //   modelName: '.FBX',
+      //   modelPath: 'http://192.168.1.33:8000/',
+      //   modelPos: [0,0,0],
+      //   modelRot: [0,0,0],
+      //   modelScale: [0.1,0.1,0.1]
+      // },
+      modelPath: './models/chuanqing/',
+      modelName: '.FBX',
+      modelPosX: '0',
+      modelPosY: '0',
+      modelPosZ: '0',
+      modelRotX: '0',
+      modelRotY: '0',
+      modelRotZ: '0',
+      modelScaleX: '0.1',
+      modelScaleY: '0.1',
+      modelScaleZ: '0.1'
     }
   },
   watch: {
@@ -69,11 +116,12 @@ export default {
       const aspect = this.w/this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-      this.camera.position.z = 2000
-      this.camera.position.x = 0
-      this.camera.position.y = 500
+      this.camera.position.z = 200
+      this.camera.position.x = -200
+      this.camera.position.y = 200
       this.group = new THREE.Group()
       this.group1 = new THREE.Group()
+      this.modelGroup = new THREE.Group()
       const glbLoader = new GLTFLoader()
       let list = [
         [2,3,4,5,6,7], // 0
@@ -107,6 +155,10 @@ export default {
               size: 16, //点渲染尺寸
             });
             this.group1.add(new THREE.Points(geo, m))
+          }, progress => {
+            // console.log(progress)
+          }, err => {
+            // console.log(err)
           })
         })
       })
@@ -149,7 +201,6 @@ export default {
       this.boxes.add(box)
       this.scene.add(this.boxes)
 
-
       //灯光属性
       /*const _spotLight = new THREE.SpotLight(0xf6f6f6);
       _spotLight.castShadow = true;
@@ -163,6 +214,9 @@ export default {
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(this.w, this.h)
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+
+      this.scene.add(this.modelGroup)
+      this.initMemoryModel()
     },
     animate() {
       this.controls.update()
@@ -201,6 +255,58 @@ export default {
         var intersected = intersects[0];
         console.log(intersects[0])
       }*/
+    },
+    initMemoryModel() {
+      let list = JSON.parse(localStorage.getItem('modelList'))
+      if(list) {
+        list.forEach(item => {
+          let loader = new FBXLoader()
+          loader.load(item.modelPath + item.modelName, fbx => {
+            fbx.scale.set(parseFloat(item.modelScale[0]),parseFloat(item.modelScale[1]),parseFloat(item.modelScale[2]))
+            fbx.position.set(parseFloat(item.modelPos[0]),parseFloat(item.modelPos[1]),parseFloat(item.modelPos[2]))
+            fbx.rotation.set(parseFloat(item.modelRot[0]),parseFloat(item.modelRot[1]),parseFloat(item.modelRot[2]))
+            this.modelGroup.add(fbx)
+          })
+        })
+      }
+      // if(this.list.length > 0) {
+      //   this.modelGroup = new THREE.Group()
+      //   list.forEach(item => {
+      //     const loader = new FBXLoader()
+      //     loader.load(item.modelPath + item.modelName, fbx => {
+      //       fbx.scale.set(parseInt(item.modelScale[0]),parseInt(item.modelScale[1]),parseInt(item.modelScale[2]))
+      //       fbx.position.set(parseInt(item.modelPos[0]),parseInt(item.modelPos[1]),parseInt(item.modelPos[2]))
+      //       fbx.rotation.set(parseInt(item.modelRot[0]),parseInt(item.modelRot[1]),parseInt(item.modelRot[2]))
+      //       this.modelGroup.add(fbx)
+      //       this.scene.add(this.modelGroup)
+      //     })
+      //   })
+      // }
+    },
+    loadModel() {
+      let path = this.modelPath + this.modelName
+      let loader = new FBXLoader()
+      loader.path = path
+      this.loadingList.push({
+        modelName: this.modelName,
+        modelPath: this.modelPath,
+        modelPos: [this.modelPosX,this.modelPosY,this.modelPosZ],
+        modelRot: [this.modelRotX,this.modelRotY,this.modelRotZ],
+        modelScale: [this.modelScaleX, this.modelScaleY, this.modelScaleZ],
+      })
+      loader.load('',fbx => {
+        fbx.scale.set(this.modelScaleX,this.modelScaleY,this.modelScaleZ)
+        fbx.position.set(this.modelPosX,this.modelPosY,this.modelPosZ)
+        fbx.rotation.set(this.modelRotX,this.modelRotY,this.modelRotZ)
+        this.modelGroup.add(fbx)
+      })
+    },
+    saveModel() {
+      localStorage.setItem('modelList', JSON.stringify(this.loadingList))
+      this.initMemoryModel()
+    },
+    clearModel() {
+      localStorage.clear()
     }
   }
 }
@@ -222,6 +328,33 @@ export default {
     -moz-border-radius: 6px
     border-radius: 6px
     padding: 20px
+  }
+  .add-float {
+    background-color: rgba(0,0,0,0.7)
+    width: 400px
+    height: 400px
+    position: absolute
+    top: 10px
+    left: 10px
+    display: flex
+    flex-direction: column
+    justify-content space-around
+    box-sizing: border-box
+    padding: 10px 20px
+    color: #fff
+    .row {
+      input {
+        display: inline-block;
+        width: 260px
+      }
+      &.three-ipt {
+        input {
+          width 40px
+          margin-right: 6px
+          display inline-block
+        }
+      }
+    }
   }
 }
 </style>

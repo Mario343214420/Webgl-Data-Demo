@@ -13,15 +13,11 @@ module.exports = {
   // dev跨域问题
   devServer: {
     proxy: {
-      '/overview': { target: 'http://localhost:8082/' },
       '/public': { target: 'http://localhost:8082/' },
       '/union': { target: 'http://localhost:8082/' },
       '/map': { target: 'http://localhost:8082/' },
       '/summary': { target: 'http://localhost:8082/' }
     }
-  },
-  devServer: {
-    disableHostCheck: true
   },
   productionSourceMap: false,
   lintOnSave: process.env.NODE_ENV !== 'production',

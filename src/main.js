@@ -3,9 +3,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Dialog } from 'element-ui'
+import { Button, Dialog, Input } from 'element-ui'
 Vue.use(Button)
 Vue.use(Dialog)
+Vue.use(Input)
 // mock
 // import './mock/mockServer'
 
