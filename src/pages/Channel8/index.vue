@@ -259,6 +259,7 @@ export default {
     initMemoryModel() {
       let list = JSON.parse(localStorage.getItem('modelList'))
       if(list) {
+        this.loadingList = list
         list.forEach(item => {
           let loader = new FBXLoader()
           loader.load(item.modelPath + item.modelName, fbx => {

@@ -58,7 +58,7 @@ const routes = [
     path: '/channel8',
     component: Channel8,
     meta: {
-      title: '航拍景场监控'
+      title: '精简网格加速景场+动态模型添加'
     }
   },
   {
