@@ -51,7 +51,7 @@ export default {
       mixer2: null,
       clock: null,
       roadPicMap: null,
-      road: null
+      roads: null
     }
   },
   mounted() {
@@ -62,9 +62,9 @@ export default {
       this.init();
       this.animate()
     })
-    setTimeout(() => {
-      this.$router.push('/home')
-    },100)
+    // setTimeout(() => {
+    //   this.$router.push('/home')
+    // },3000)
   },
   methods: {
     init() {
@@ -108,19 +108,22 @@ export default {
         })*/
         var meshMaterialBlue = new THREE.MeshBasicMaterial( { color: 0x04d9e9 } )
         var meshMaterialWhite = new THREE.MeshBasicMaterial( { color: 0xffffff } )
+        var meshMaterialBlack = new THREE.MeshBasicMaterial( { color: 0x000000 } )
 
         let fontMeshBlue = new THREE.Mesh(geometry, meshMaterialBlue)
         let fontMeshWhite = new THREE.Mesh(geometry, meshMaterialWhite)
-        fontMeshBlue.position.x = fontMeshWhite.position.x = 600
-        fontMeshBlue.position.y = fontMeshWhite.position.y = -500
-        fontMeshWhite.position.z = -14
+        let fontMeshBlack = new THREE.Mesh(geometry, meshMaterialBlack)
+        fontMeshBlue.position.x = fontMeshWhite.position.x = fontMeshBlack.position.x = 600
+        fontMeshBlue.position.y = fontMeshWhite.position.y = fontMeshBlack.position.y = -500
+        fontMeshWhite.position.z = -10
+        fontMeshBlack.position.z = -18
         this.scene.add(fontMeshBlue)
         this.scene.add(fontMeshWhite)
-        const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-        directionalLight.position.set(fontMeshBlue.position.x - 20, fontMeshBlue.position.y + 20, 20)
-        directionalLight.target = fontMeshBlue
-        directionalLight.castShadow = true
-        this.scene.add( directionalLight );
+        // const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+        // directionalLight.position.set(fontMeshBlue.position.x - 20, fontMeshBlue.position.y + 20, 20)
+        // directionalLight.target = fontMeshBlue
+        // directionalLight.castShadow = true
+        // this.scene.add( directionalLight );
       });
 
       // 光线路径
@@ -129,8 +132,13 @@ export default {
       this.roadPicMap.wrapS = this.roadPicMap.wrapT = THREE.RepeatWrapping; //每个都重复
       this.roadPicMap.repeat.set(1, 1)
       this.roadPicMap.needsUpdate = true
-      let material = new THREE.MeshBasicMaterial({
+      let materialBlue = new THREE.MeshBasicMaterial({
         map: this.roadPicMap,
+        side: THREE.BackSide,
+        transparent: true
+      })
+      let materialRed = new THREE.MeshBasicMaterial({
+        map: this.roadPicMapRed,
         side: THREE.BackSide,
         transparent: true
       })
@@ -180,8 +188,20 @@ export default {
       curve.tension = 2
       // 创建管道
       let tubeGeometry = new THREE.TubeGeometry(curve, 60, 8)
-      this.road = new THREE.Mesh(tubeGeometry, material);
-      this.group.add(this.road)
+      this.roads = new THREE.Group()
+      for(let i = 0; i < 10; i++) {
+        let blueRoad = new THREE.Mesh(tubeGeometry, materialBlue)
+        blueRoad.position.y += i*10 * Math.random()
+        blueRoad.position.x += i*10 * Math.random()
+        blueRoad.position.z += i*10 * Math.random()
+        this.roads.add(blueRoad)
+        let redRoad = new THREE.Mesh(tubeGeometry, materialRed)
+        redRoad.position.y -= i*10 * Math.random()
+        redRoad.position.x -= i*10 * Math.random()
+        redRoad.position.z -= i*10 * Math.random()
+        this.roads.add(redRoad)
+      }
+      this.group.add(this.roads)
 
       this.scene.add(this.group)
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -197,12 +217,12 @@ export default {
 
       const axesHelper = new THREE.AxesHelper( 20 );
       // this.scene.add(axesHelper)
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(this.w, this.h)
       this.renderer.autoClear = false
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
       this.controls.enableDamping = true
-      this.controls.enabled = false
+      this.controls.enabled = true
       // this.controls.autoRotate = true
 
       this.addBloomPass()
@@ -293,5 +313,6 @@ export default {
   width: 100%
   height: 100%
   position: relative
+  background-color: #06102a
 }
 </style>
