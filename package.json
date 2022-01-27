@@ -34,7 +34,7 @@
     "particles.js": "^2.0.0",
     "qs": "^6.7.0",
     "swiper": "^5.4.2",
-    "three": "^0.115.0",
+    "three": "^0.137.0",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^4.1.1",
     "vue-echarts": "^5.0.0-beta.0",
