@@ -21,6 +21,7 @@ import Channel17 from '../pages/Channel17/index.vue'
 import Channel18 from '../pages/Channel18/index.vue'
 import Channel19 from '../pages/Channel19/index.vue'
 import ChannelRepair from '../pages/Channel_repair_model/index.vue'
+import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 
 const routes = [
   {
@@ -144,6 +145,13 @@ const routes = [
     component: Channel19,
     meta: {
       title: '天玛'
+    }
+  },
+  {
+    path: '/channel_pipe_compare',
+    component: ChannelPipeCompare,
+    meta: {
+      title: '埋管覆土层对比'
     }
   },
   {

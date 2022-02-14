@@ -1,27 +1,9 @@
 <template>
   <div class="home">
     Home<br>
-    <router-link to="/channel1">to channel1</router-link><br>
-    <router-link to="/channel2">to channel2</router-link><br>
-    <router-link to="/channel3">to channel3</router-link><br>
-    <router-link to="/channel4">to channel4</router-link><br>
-    <router-link to="/channel5">to channel5</router-link><br>
-    <router-link to="/channel6">to channel6</router-link><br>
-    <router-link to="/channel7">to channel7</router-link><br>
-    <router-link to="/channel8">to channel8</router-link><br>
-    <router-link to="/channel8-weiyuan">to channel8-weiyuan</router-link><br>
-    <router-link to="/channel9">to channel9</router-link><br>
-    <router-link to="/channel10">to channel10</router-link><br>
-    <router-link to="/channel11">to channel11</router-link><br>
-    <router-link to="/channel12">to channel12</router-link><br>
-    <router-link to="/channel13">to channel13</router-link><br>
-    <router-link to="/channel14">to channel14</router-link><br>
-    <router-link to="/channel15">to channel15</router-link><br>
-    <router-link to="/channel16">to channel16</router-link><br>
-    <router-link to="/channel17">to channel17</router-link><br>
-    <router-link to="/channel18">to channel18</router-link><br>
-    <router-link to="/channel19">to channel19</router-link><br>
-    <router-link to="/channel_repair">to channel_repair</router-link><br>
+    <div v-for="(item, index) in $router.options.routes">
+      <router-link :to="item.path">{{item.path}}</router-link>
+    </div>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
     </div>
@@ -40,7 +22,8 @@ export default {
     }
   },
   mounted () {
-    this.init();
+    // this.init();
+    console.log(this.$router)
     let slope = 3/4
     console.log(Math.tan(Math.PI / 6))
     console.log(Math.sin(Math.PI / 6))

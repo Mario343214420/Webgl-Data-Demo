@@ -449,7 +449,7 @@ export default {
         "Tile_+009_+011"
       ] */
       list.forEach((item, index) => {
-        let url = `http://192.168.1.21:8000/${item}/${item}.FBX`
+        let url = `http://192.168.1.66:8000/${item}/${item}.FBX`
         fbxLoader.load(url, fbx => {
           this.group.add(fbx)
         })
