@@ -20,6 +20,7 @@ import Channel16 from '../pages/Channel16/index.vue'
 import Channel17 from '../pages/Channel17/index.vue'
 import Channel18 from '../pages/Channel18/index.vue'
 import Channel19 from '../pages/Channel19/index.vue'
+import ChannelRepair from '../pages/Channel_repair_model/index.vue'
 
 const routes = [
   {
@@ -146,6 +147,13 @@ const routes = [
     }
   },
   {
+    path: '/channel_repair',
+    component: ChannelRepair,
+    meta: {
+      title: '模型精修'
+    }
+  },
+  {
     path: '/loading',
     component: Loading,
     meta: {
@@ -154,7 +162,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/loading'
+    redirect: '/home'
   }
 ]
 

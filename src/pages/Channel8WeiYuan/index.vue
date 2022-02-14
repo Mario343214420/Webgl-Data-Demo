@@ -82,7 +82,7 @@ export default {
       this.group = new THREE.Group()
       this.groupController = new THREE.Group()
       const fbxLoader = new FBXLoader()
-      let list = [
+      /* let list = [
         // "Tile_+000_+000",
         // "Tile_+000_+001",
         // "Tile_+000_+002",
@@ -203,8 +203,130 @@ export default {
         // "Tile_+009_+009",
         // "Tile_+009_+010",
         // "Tile_+009_+011"
+      ] */
+      let list = [
+        // "Tile_+000_+000",
+        // "Tile_+000_+001",
+        // "Tile_+000_+002",
+        // "Tile_+000_+003",
+        // "Tile_+000_+004",
+        // "Tile_+000_+005",
+        // "Tile_+000_+006",
+        // "Tile_+000_+007",
+        // "Tile_+000_+008",
+        // "Tile_+000_+009",
+        // "Tile_+000_+010",
+        // "Tile_+000_+011",
+        // "Tile_+001_+000",
+        // "Tile_+001_+001",
+        // "Tile_+001_+002",
+        // "Tile_+001_+003",
+        // "Tile_+001_+004",
+        // "Tile_+001_+005",
+        // "Tile_+001_+006",
+        // "Tile_+001_+007",
+        // "Tile_+001_+008",
+        // "Tile_+001_+009",
+        // "Tile_+001_+010",
+        // "Tile_+001_+011",
+        // "Tile_+002_+000",
+        // "Tile_+002_+001",
+        "Tile_+002_+002",
+        "Tile_+002_+003",
+        "Tile_+002_+004",
+        "Tile_+002_+005",
+        "Tile_+002_+006",
+        "Tile_+002_+007",
+        "Tile_+002_+008",
+        "Tile_+002_+009",
+        // "Tile_+002_+010",
+        // "Tile_+002_+011",
+        // "Tile_+003_+000",
+        // "Tile_+003_+001",
+        "Tile_+003_+002",
+        "Tile_+003_+003",
+        "Tile_+003_+004",
+        "Tile_+003_+005",
+        "Tile_+003_+006",
+        "Tile_+003_+007",
+        "Tile_+003_+008",
+        "Tile_+003_+009",
+        // "Tile_+003_+010",
+        // "Tile_+003_+011",
+        // "Tile_+004_+000",
+        // "Tile_+004_+001",
+        "Tile_+004_+002",
+        "Tile_+004_+003",
+        "Tile_+004_+004",
+        "Tile_+004_+005",
+        "Tile_+004_+006",
+        "Tile_+004_+007",
+        "Tile_+004_+008",
+        "Tile_+004_+009",
+        // "Tile_+004_+010",
+        // "Tile_+004_+011",
+        // "Tile_+005_+000",
+        // "Tile_+005_+001",
+        "Tile_+005_+002",
+        "Tile_+005_+003",
+        "Tile_+005_+004",
+        "Tile_+005_+005",
+        "Tile_+005_+006",
+        "Tile_+005_+007",
+        "Tile_+005_+008",
+        "Tile_+005_+009",
+        // "Tile_+005_+010",
+        // "Tile_+005_+011",
+        // "Tile_+006_+000",
+        // "Tile_+006_+001",
+        "Tile_+006_+002",
+        "Tile_+006_+003",
+        "Tile_+006_+004",
+        "Tile_+006_+005",
+        "Tile_+006_+006",
+        "Tile_+006_+007",
+        "Tile_+006_+008",
+        "Tile_+006_+009",
+        // "Tile_+006_+010",
+        // "Tile_+006_+011",
+        // "Tile_+007_+000",
+        // "Tile_+007_+001",
+        "Tile_+007_+002",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+005",
+        "Tile_+007_+006",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        // "Tile_+007_+010",
+        // "Tile_+007_+011",
+        // "Tile_+008_+000",
+        // "Tile_+008_+001",
+        // "Tile_+008_+002",
+        // "Tile_+008_+003",
+        // "Tile_+008_+004",
+        // "Tile_+008_+005",
+        // "Tile_+008_+006",
+        // "Tile_+008_+007",
+        // "Tile_+008_+008",
+        // "Tile_+008_+009",
+        // "Tile_+008_+010",
+        // "Tile_+008_+011",
+        // "Tile_+009_+000",
+        // "Tile_+009_+001",
+        // "Tile_+009_+002",
+        // "Tile_+009_+003",
+        // "Tile_+009_+004",
+        // "Tile_+009_+005",
+        // "Tile_+009_+006",
+        // "Tile_+009_+007",
+        // "Tile_+009_+008",
+        // "Tile_+009_+009",
+        // "Tile_+009_+010",
+        // "Tile_+009_+011"
       ]
-      /*let list = [
+      /* let list = [
         "Tile_+000_+000",
         "Tile_+000_+001",
         "Tile_+000_+002",
@@ -325,19 +447,35 @@ export default {
         "Tile_+009_+009",
         "Tile_+009_+010",
         "Tile_+009_+011"
-      ]*/
+      ] */
       list.forEach((item, index) => {
-        let url = `http://192.168.1.33:8000/${item}/${item}.FBX`
+        let url = `http://192.168.1.21:8000/${item}/${item}.FBX`
         fbxLoader.load(url, fbx => {
           this.group.add(fbx)
         })
       })
-      fbxLoader.load('./models/chuanqing/zuantanshebei.FBX', fbx => {
+      // fbxLoader.load('./models/chuanqing/zuantanshebei.FBX', fbx => {
+      //   fbx.castShadow = fbx.receiveShadow = true
+      //   fbx.position.set(-5.2,-2.0,-41)
+      //   fbx.rotation.x = Math.PI / 2
+      //   fbx.rotation.y = Math.PI / 4.8
+      //   fbx.scale.set(0.15,0.16,0.15)
+      //   this.group.add(fbx)
+      // })
+      fbxLoader.load('./models/chuanqing/wy_zuanta_1.FBX', fbx => {
         fbx.castShadow = fbx.receiveShadow = true
-        fbx.position.set(-5.2,-2.0,-41)
+        fbx.position.set(-2.98,-5.3,-35.6)
         fbx.rotation.x = Math.PI / 2
         fbx.rotation.y = Math.PI / 4.8
-        fbx.scale.set(0.15,0.16,0.15)
+        fbx.scale.set(0.002,0.002,0.002)
+        this.group.add(fbx)
+      })
+      fbxLoader.load('./models/chuanqing/wy_zuanta_2.FBX', fbx => {
+        fbx.castShadow = fbx.receiveShadow = true
+        fbx.position.set(-6.4,-7.4,-35.6)
+        fbx.rotation.x = Math.PI / 2
+        fbx.rotation.y = Math.PI / 4.8
+        fbx.scale.set(0.002,0.002,0.002)
         this.group.add(fbx)
       })
       fbxLoader.load('./models/chuanqing/jizhuangxiang.FBX', fbx => {
@@ -360,6 +498,23 @@ export default {
       this.group.rotation.x = this.groupController.rotation.x = -Math.PI / 2
 
       // this.scene.add(this.group1)
+      const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+      const cube = new THREE.Mesh( geometry, material );
+      cube.visible = false
+      const niJiangChi = cube.clone()
+      const tianChe = cube.clone()
+      tianChe.position.set(-4.3,-2.6,-32)
+      tianChe.name = '天车'
+      niJiangChi.position.set(-2,-16,-41)
+      niJiangChi.name = '污水池'
+
+      this.renderLine([tianChe.name, '载荷：246KN', '电控箱温度：26℃', '井深：815mm'], tianChe.position)
+      this.renderLine([niJiangChi.name, '池深：6 m 容积：600 m³', '注入速度：2 m³/min', '排放速度：0 m³/min'], niJiangChi.position)
+
+      this.group.add(tianChe)
+      this.group.add(niJiangChi)
+
       this.scene.add(this.group)
       this.scene.add(this.groupController)
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -373,6 +528,7 @@ export default {
       this.renderer.autoClear = false
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
       this.controls.enableDamping = true
+      this.controls.autoRotate = true
       this.addBloomPass()
     },
     animate() {
@@ -425,7 +581,7 @@ export default {
 
       let lineGeometry = new THREE.Geometry();
       lineGeometry.vertices.push(
-        new THREE.Vector3( position.x + 1, position.y + 1, position.z + 1 ),
+        new THREE.Vector3( position.x + 1, position.y - 0.5, position.z + 1 ),
         new THREE.Vector3( position.x, position.y, position.z)
       );
 
@@ -439,7 +595,7 @@ export default {
       markCtx.fillStyle = "transparent";
       // markCtx.arc(50,50,50,0,2*Math.PI);
 
-      markCtx.rect(0,0,300,160)
+      markCtx.rect(0,0,300,180)
       markCtx.strokeStyle = "#fff"
       // markCtx.strokeRect(0,0,300,120)
       markCtx.fillStyle = "#023bb2"
@@ -451,7 +607,7 @@ export default {
       markCtx.fillStyle = "#ffffff";
       markCtx.textBaseline = "top";
       textList.forEach((item, index) => {
-        markCtx.fillText(item, markCanvas.width/2, 30 * index + 24);
+        markCtx.fillText(item, markCanvas.width/2, 34 * index + 24);
       })
       /*3、将canvas作为纹理，创建Sprite*/
       let markTexture = new THREE.Texture(markCanvas);
@@ -466,7 +622,7 @@ export default {
       });
       // 创建精灵模型对象，不需要几何体geometry参数
       var sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(position.x + 1, position.y + 1, position.z + 1)
+      sprite.position.set(position.x + 1, position.y - 0.52, position.z + 1)
       sprite.scale.set(2, 1, 2)
       sprite.renderOrder = 4
       this.group.add(line)

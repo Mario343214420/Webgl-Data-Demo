@@ -21,7 +21,7 @@
     <router-link to="/channel17">to channel17</router-link><br>
     <router-link to="/channel18">to channel18</router-link><br>
     <router-link to="/channel19">to channel19</router-link><br>
-    <router-link to="/channel20">to channel20</router-link><br>
+    <router-link to="/channel_repair">to channel_repair</router-link><br>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
     </div>
