@@ -23,12 +23,11 @@ export default {
   },
   mounted () {
     // this.init();
-    console.log(this.$router)
-    let slope = 3/4
-    console.log(Math.tan(Math.PI / 6))
-    console.log(Math.sin(Math.PI / 6))
-    let angle = Math.atan(3/4)
-    console.log(angle/Math.PI*180)
+    // let slope = 3/4
+    // console.log(Math.tan(Math.PI / 6))
+    // console.log(Math.sin(Math.PI / 6))
+    // let angle = Math.atan(3/4)
+    // console.log(angle/Math.PI*180)
   },
   methods: {
     init() {

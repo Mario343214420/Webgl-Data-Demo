@@ -9,6 +9,7 @@ import Channel6 from '../pages/Channel6/index.vue'
 import Channel7 from '../pages/Channel7/index.vue'
 import Channel8 from '../pages/Channel8/index.vue'
 import Channel8WeiYuan from '../pages/Channel8WeiYuan/index.vue'
+import Channel8SuLiGe from '../pages/Channel8SuLiGe/index.vue'
 import Channel9 from '../pages/Channel9/index.vue'
 import Channel10 from '../pages/Channel10/index.vue'
 import Channel11 from '../pages/Channel11/index.vue'
@@ -68,6 +69,13 @@ const routes = [
     component: Channel8WeiYuan,
     meta: {
       title: '威远井场'
+    }
+  },
+  {
+    path: '/channel8-sulige',
+    component: Channel8SuLiGe,
+    meta: {
+      title: '苏里格井场'
     }
   },
   {
