@@ -16,7 +16,15 @@ module.exports = {
       '/public': { target: 'http://localhost:8082/' },
       '/union': { target: 'http://localhost:8082/' },
       '/map': { target: 'http://localhost:8082/' },
-      '/summary': { target: 'http://localhost:8082/' }
+      '/summary': { target: 'http://localhost:8082/' },
+      '/s': {
+        target: 'http://192.168.1.222:90/'
+      }
+      // 'sockjs-node': {
+      //   target: 'http://192.168.1.222:90',
+      //   ws: false,
+      //   changeOrigin: true
+      // },
     }
   },
   productionSourceMap: false,

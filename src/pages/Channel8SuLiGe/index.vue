@@ -86,30 +86,30 @@ export default {
       const fbxLoader = new FBXLoader()
       const textureLoader = new THREE.TextureLoader()
       let list = [
-        "Tile_+000_+003",
-        "Tile_+000_+004",
-        "Tile_+000_+005",
-        "Tile_+000_+006",
-        "Tile_+000_+007",
-        "Tile_+001_+002",
-        "Tile_+001_+003",
+        // "Tile_+000_+003",
+        // "Tile_+000_+004",
+        // "Tile_+000_+005",
+        // "Tile_+000_+006",
+        // "Tile_+000_+007",
+        // "Tile_+001_+002",
+        // "Tile_+001_+003",
         "Tile_+001_+004",
         "Tile_+001_+005",
-        "Tile_+001_+006",
-        "Tile_+001_+007",
+        // "Tile_+001_+006",
+        // "Tile_+001_+007",
         "Tile_+002_+002",
         "Tile_+002_+003",
         "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+003_+007",
+        // "Tile_+002_+005",
+        // "Tile_+002_+006",
+        // "Tile_+002_+007",
+        // "Tile_+003_+001",
+        // "Tile_+003_+002",
+        // "Tile_+003_+003",
+        // "Tile_+003_+004",
+        // "Tile_+003_+005",
+        // "Tile_+003_+006",
+        // "Tile_+003_+007",
         // "Tile_+004_+001",
         // "Tile_+004_+002",
         // "Tile_+004_+003",
@@ -138,22 +138,22 @@ export default {
         // "Tile_+008_+002",
         // "Tile_+008_+003",
         // "Tile_+008_+004",
-        // "Tile_+009_+000",
-        // "Tile_+009_+001",
+        "Tile_+009_+000",
+        "Tile_+009_+001",
         // "Tile_+009_+002",
         // "Tile_+009_+003",
         // "Tile_+009_+004",
-        // "Tile_+010_+000",
-        // "Tile_+010_+001",
+        "Tile_+010_+000",
+        "Tile_+010_+001",
         // "Tile_+010_+002",
         // "Tile_+010_+003",
-        // "Tile_+011_+000",
-        // "Tile_+011_+001",
+        "Tile_+011_+000",
+        "Tile_+011_+001",
         // "Tile_+011_+002",
         // "Tile_+011_+003"
       ]
       list.forEach((item, index) => {
-        let url = `http://192.168.1.222:8000/${item}/${item}.FBX`
+        let url = `http://192.168.1.33:8000/${item}/${item}.FBX`
         fbxLoader.load(url, obj => {
           obj.position.z += 40
           this.group.add(obj)
@@ -174,7 +174,9 @@ export default {
       // 炫光特效关键代码 ***
       this.renderer.autoClear = false
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      this.controls.enableDamping = true
+      // 控制阻尼
+      // this.controls.enableDamping = true
+      // 自动观看旋转
       // this.controls.autoRotate = true
       this.addBloomPass()
     },

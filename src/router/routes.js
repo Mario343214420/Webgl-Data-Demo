@@ -23,6 +23,7 @@ import Channel18 from '../pages/Channel18/index.vue'
 import Channel19 from '../pages/Channel19/index.vue'
 import ChannelRepair from '../pages/Channel_repair_model/index.vue'
 import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
+import CoalCube from '../pages/Coal_cube/index.vue'
 
 const routes = [
   {
@@ -174,6 +175,13 @@ const routes = [
     component: Loading,
     meta: {
       title: '官网背景特效'
+    }
+  },
+  {
+    path: '/coal',
+    component: CoalCube,
+    meta: {
+      title: '动态煤层'
     }
   },
   {
