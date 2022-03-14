@@ -29,7 +29,8 @@ export default {
       bloomComposer: null,
       client: {},
       // pos: [],
-      cube: null
+      cube: null,
+      gbjCubeGroup: null
     }
   },
   methods: {
@@ -41,6 +42,7 @@ export default {
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 1000)
       this.camera.position.set(70,70,70)
       this.group = new THREE.Group()
+      this.gbjCubeGroup = new THREE.Group()
       // const geometry = new THREE.BoxGeometry( 10, 10, 10 );
       const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
       // const mesh = new THREE.Mesh( geometry, material );
@@ -49,6 +51,7 @@ export default {
       this.cube = new THREE.Mesh( geometry, material )
       this.group.add(this.cube)
       this.scene.add(this.group)
+      this.scene.add(this.gbjCubeGroup)
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
       const axesHelper = new THREE.AxesHelper( 20 );
@@ -97,7 +100,43 @@ export default {
     // })
     let socket = new SocketIO()
     socket.io.connect('http://localhost:90');
-    socket.on('news',  data => {
+    socket.on('gbj_news',  data => {
+      let positionIndex = data.indexOf('position')
+      let attitudeIndex = data.indexOf('Attitude')
+      if(positionIndex === -1) {
+        if(data.indexOf('datas') === -1) {
+          let dataIndex = data.indexOf('data')
+          let str = data.substring(dataIndex + 6, data.length - 2)
+          // console.log('data', str)
+        } else {
+          let datasIndex = data.indexOf('datas')
+          let attsIndex = data.indexOf('atts')
+          let str = data.substring(datasIndex + 8, attsIndex - 3)
+          // console.log('datas:', data)
+          let arr = JSON.parse(str)
+          if(this.scene){
+
+            const material = new THREE.MeshBasicMaterial( { color: 0xff00 } );
+            const mesh = new THREE.Mesh( geometry, material );
+            // this.group.add(mesh)
+            const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+            arr.forEach(item => {
+              // const mesh = new THREE.Mesh( geometry, material )
+              let copy = mesh.clone()
+              copy.position.set(parseFloat(item[0]), parseFloat(item[1]), parseFloat(item[2]))
+              this.gbjCubeGroup.add(copy)
+            })
+          }
+        }
+      } else {
+        let str = data.substring(positionIndex + 12 , attitudeIndex - 4)
+        // console.log(str)
+      }
+    })
+    socket.on('zj_news',  data => {
+      // console.log(data)
+    })
+    socket.on('cmj_news',  data => {
       // socket.emit('send', { my: 'data' });
       let positionIndex = data.indexOf('position')
       let attitudeIndex = data.indexOf('Attitude')
@@ -109,7 +148,7 @@ export default {
       let posArr = str.split(",")
       // let arr = [0,0,0]
       // arr.forEach((item, index) => item = parseFloat(posArr[index]))
-      if(this.cube) {
+      if(this.cube && posArr.length > 0) {
         this.cube.position.set(parseFloat(posArr[0]), parseFloat(posArr[1]), parseFloat(posArr[2]))
       }
     });

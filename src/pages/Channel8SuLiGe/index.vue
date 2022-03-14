@@ -6,6 +6,50 @@
       <div>当地坐标： {{info.coordinate}}</div>
       <div>当地人数： {{info.count}}</div>
     </div>
+    <div class="mark-group">
+      <div class="row">
+        <input v-model="plane1.x"></input>
+        <input v-model="plane1.y"></input>
+        <input v-model="plane1.z"></input>
+        <span @click="movePlane1">move 1</span>
+      </div>
+      <div class="row">
+        <input v-model="plane2.x"></input>
+        <input v-model="plane2.y"></input>
+        <input v-model="plane2.z"></input>
+        <span @click="movePlane2">move 2</span>
+      </div>
+      <div class="row">
+        <input v-model="plane3.x"></input>
+        <input v-model="plane3.y"></input>
+        <input v-model="plane3.z"></input>
+        <span @click="movePlane3">move 3</span>
+      </div>
+      <div class="row">
+        <input v-model="plane4.x"></input>
+        <input v-model="plane4.y"></input>
+        <input v-model="plane4.z"></input>
+        <span @click="movePlane4">move 4</span>
+      </div>
+      <div class="row">
+        <input v-model="basePosition.x"></input>
+        <input v-model="basePosition.y"></input>
+        <input v-model="basePosition.z"></input>
+        <span @click="moveBasePosition">move base</span>
+      </div>
+      <div class="row">
+        <input v-model="basePosition.rX">
+        <input v-model="basePosition.rY">
+        <input v-model="basePosition.rZ">
+        <span>/</span>
+      </div>
+      <div class="row">
+        <input v-model="basePosition.cX" >
+        <input v-model="basePosition.cY" disabled="disabled" readonly="true">
+        <input v-model="basePosition.cZ" disabled="disabled" readonly="true">
+        <span>/</span>
+      </div>
+    </div>
     <canvas ref="cvs" width="w" height="h" @mousedown="onDocumentMouseDown" @mouseup="flag = false"></canvas>
   </div>
 </template>
@@ -51,7 +95,40 @@ export default {
         x: 0,
         y: 0
       },
-      bloomComposer: null
+      bloomComposer: null,
+      cubeGroup: null,
+      baseGroup: null,
+      plane1: {
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      plane2: {
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      plane3: {
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      plane4: {
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      basePosition: {
+        x: 0,
+        y: 0,
+        z: 0,
+        rX: 0,
+        rY: 0,
+        rZ: 0,
+        cX: 0,
+        cY: 0,
+        cZ: 0
+      }
     }
   },
   watch: {
@@ -72,6 +149,25 @@ export default {
     })
   },
   methods: {
+    moveBasePosition() {
+      console.log(this.baseGroup)
+      this.baseGroup.position.set(this.basePosition.x, this.basePosition.y, this.basePosition.z)
+      this.baseGroup.rotation.set(this.basePosition.rX, this.basePosition.rY, this.basePosition.rZ)
+      this.baseGroup.scale.set(this.basePosition.cX, this.basePosition.cX, this.basePosition.cX)
+    },
+    movePlane1(){
+      // console.log(this.cubeGroup)
+      this.cubeGroup.children[0].position.set(this.plane1.x,this.plane1.y,this.plane1.z)
+    },
+    movePlane2(){
+      this.cubeGroup.children[1].position.set(this.plane2.x,this.plane2.y,this.plane2.z)
+    },
+    movePlane3(){
+      this.cubeGroup.children[2].position.set(this.plane3.x,this.plane3.y,this.plane3.z)
+    },
+    movePlane4(){
+      this.cubeGroup.children[3].position.set(this.plane4.x,this.plane4.y,this.plane4.z)
+    },
     init() {
       const canvas = this.$refs.cvs
       const aspect = this.w/this.h
@@ -81,7 +177,17 @@ export default {
       this.camera.position.x = 0
       this.camera.position.y = 70
       this.group = new THREE.Group()
+      this.baseGroup = new THREE.Group()
       this.groupController = new THREE.Group()
+      this.cubeGroup = new THREE.Group()
+      const material = new THREE.MeshBasicMaterial( { color: 0xff00 } );
+      const geometry = new THREE.BoxGeometry( 20, 1, 20 );
+      const mesh = new THREE.Mesh( geometry, material );
+      let arr = [0,1,2,3]
+      arr.forEach(() => {
+        this.cubeGroup.add(mesh.clone())
+      })
+      // this.group.add(mesh)
       // const fbxLoader = new FBXLoader()
       const fbxLoader = new FBXLoader()
       const textureLoader = new THREE.TextureLoader()
@@ -104,19 +210,19 @@ export default {
         // "Tile_+002_+006",
         // "Tile_+002_+007",
         // "Tile_+003_+001",
-        // "Tile_+003_+002",
-        // "Tile_+003_+003",
-        // "Tile_+003_+004",
+        "Tile_+003_+002",
+        "Tile_+003_+003",
+        "Tile_+003_+004",
         // "Tile_+003_+005",
         // "Tile_+003_+006",
         // "Tile_+003_+007",
         // "Tile_+004_+001",
-        // "Tile_+004_+002",
-        // "Tile_+004_+003",
-        // "Tile_+004_+004",
-        // "Tile_+004_+005",
-        // "Tile_+004_+006",
-        // "Tile_+005_+000",
+        "Tile_+004_+002",
+        "Tile_+004_+003",
+        "Tile_+004_+004",
+        "Tile_+004_+005",
+        "Tile_+004_+006",
+        "Tile_+005_+000",
         // "Tile_+005_+001",
         // "Tile_+005_+002",
         // "Tile_+005_+003",
@@ -152,18 +258,270 @@ export default {
         // "Tile_+011_+002",
         // "Tile_+011_+003"
       ]
-      list.forEach((item, index) => {
-        let url = `http://192.168.1.33:8000/${item}/${item}.FBX`
+      let list_0310_2 = [
+        "Tile_+000_+001",
+        "Tile_+000_+002",
+        "Tile_+000_+003",
+        "Tile_+000_+004",
+        "Tile_+001_+000",
+        "Tile_+001_+001",
+        "Tile_+001_+002",
+        "Tile_+001_+003",
+        "Tile_+001_+004",
+        "Tile_+001_+005",
+        "Tile_+002_+000",
+        "Tile_+002_+001",
+        "Tile_+002_+002",
+        "Tile_+002_+003",
+        "Tile_+002_+004",
+        "Tile_+002_+005",
+        "Tile_+003_+000",
+        "Tile_+003_+001",
+        "Tile_+003_+002",
+        "Tile_+003_+004",
+        "Tile_+003_+005",
+        "Tile_+003_+006",
+        "Tile_+004_+000",
+        "Tile_+004_+001",
+        "Tile_+004_+002",
+        "Tile_+004_+005",
+        "Tile_+004_+006",
+        "Tile_+005_+002",
+        "Tile_+005_+003",
+        "Tile_+005_+005",
+        "Tile_+005_+006",
+        "Tile_+005_+007",
+        "Tile_+006_+002",
+        "Tile_+006_+003",
+        "Tile_+006_+004",
+        "Tile_+006_+006",
+        "Tile_+006_+007",
+        "Tile_+006_+008",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        "Tile_+008_+003",
+        "Tile_+008_+004",
+        "Tile_+008_+005",
+        "Tile_+008_+006",
+        "Tile_+008_+008",
+        "Tile_+008_+009",
+        "Tile_+009_+004",
+        "Tile_+009_+005",
+        "Tile_+009_+006",
+        "Tile_+009_+007",
+        "Tile_+009_+008",
+        "Tile_+009_+009",
+        "Tile_+010_+005",
+        "Tile_+010_+006",
+        "Tile_+010_+007",
+        "Tile_+010_+008",
+        "Tile_+010_+009"
+      ]
+      let list_0304 = [
+        "Tile_+000_+003",
+        "Tile_+000_+004",
+        "Tile_+000_+005",
+        "Tile_+000_+006",
+        "Tile_+000_+007",
+        "Tile_+001_+002",
+        "Tile_+001_+003",
+        "Tile_+001_+004",
+        "Tile_+001_+005",
+        "Tile_+001_+006",
+        "Tile_+001_+007",
+        "Tile_+002_+002",
+        "Tile_+002_+003",
+        "Tile_+002_+004",
+        "Tile_+002_+005",
+        "Tile_+002_+006",
+        "Tile_+002_+007",
+        "Tile_+003_+001",
+        "Tile_+003_+002",
+        "Tile_+003_+003",
+        "Tile_+003_+004",
+        "Tile_+003_+005",
+        "Tile_+003_+006",
+        "Tile_+003_+007",
+        // "Tile_+004_+001",
+        // "Tile_+004_+002",
+        // "Tile_+004_+003",
+        // "Tile_+004_+004",
+        // "Tile_+004_+005",
+        // "Tile_+004_+006",
+        // "Tile_+005_+000",
+        // "Tile_+005_+001",
+        // "Tile_+005_+002",
+        // "Tile_+005_+003",
+        // "Tile_+005_+004",
+        // "Tile_+005_+005",
+        // "Tile_+006_+000",
+        // "Tile_+006_+001",
+        // "Tile_+006_+002",
+        // "Tile_+006_+003",
+        // "Tile_+006_+004",
+        // "Tile_+006_+005",
+        // "Tile_+007_+000",
+        // "Tile_+007_+001",
+        // "Tile_+007_+002",
+        // "Tile_+007_+003",
+        // "Tile_+007_+004",
+        // "Tile_+008_+000",
+        // "Tile_+008_+001",
+        // "Tile_+008_+002",
+        // "Tile_+008_+003",
+        // "Tile_+008_+004",
+        // "Tile_+009_+000",
+        // "Tile_+009_+001",
+        // "Tile_+009_+002",
+        // "Tile_+009_+003",
+        // "Tile_+009_+004",
+        // "Tile_+010_+000",
+        // "Tile_+010_+001",
+        // "Tile_+010_+002",
+        // "Tile_+010_+003",
+        // "Tile_+011_+000",
+        // "Tile_+011_+001",
+        // "Tile_+011_+002",
+        // "Tile_+011_+003"
+      ]
+      let list_0312 =[
+        "Tile_+000_+002",
+        "Tile_+000_+003",
+        "Tile_+000_+004",
+        "Tile_+000_+005",
+        "Tile_+001_+000",
+        "Tile_+001_+001",
+        "Tile_+001_+002",
+        "Tile_+001_+003",
+        "Tile_+001_+004",
+        "Tile_+001_+005",
+        "Tile_+002_+000",
+        "Tile_+002_+001",
+        "Tile_+002_+002",
+        "Tile_+002_+003",
+        "Tile_+002_+004",
+        "Tile_+002_+005",
+        "Tile_+002_+006",
+        "Tile_+003_+000",
+        "Tile_+003_+001",
+        "Tile_+003_+002",
+        "Tile_+003_+003",
+        "Tile_+003_+004",
+        "Tile_+003_+005",
+        "Tile_+003_+006",
+        "Tile_+003_+007",
+        "Tile_+004_+000",
+        "Tile_+004_+001",
+        "Tile_+004_+002",
+        "Tile_+004_+003",
+        "Tile_+004_+004",
+        "Tile_+004_+005",
+        "Tile_+004_+006",
+        "Tile_+004_+007",
+        "Tile_+005_+000",
+        "Tile_+005_+001",
+        "Tile_+005_+002",
+        "Tile_+005_+003",
+        "Tile_+005_+004",
+        "Tile_+005_+005",
+        "Tile_+005_+006",
+        "Tile_+005_+007",
+        "Tile_+005_+008",
+        "Tile_+006_+000",
+        "Tile_+006_+001",
+        "Tile_+006_+002",
+        "Tile_+006_+003",
+        "Tile_+006_+004",
+        "Tile_+006_+005",
+        "Tile_+006_+006",
+        "Tile_+006_+007",
+        "Tile_+006_+008",
+        "Tile_+007_+000",
+        "Tile_+007_+001",
+        "Tile_+007_+002",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+005",
+        "Tile_+007_+006",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        "Tile_+008_+000",
+        "Tile_+008_+001",
+        "Tile_+008_+002",
+        "Tile_+008_+003",
+        "Tile_+008_+004",
+        "Tile_+008_+005",
+        "Tile_+008_+006",
+        "Tile_+008_+007",
+        "Tile_+008_+008",
+        "Tile_+008_+009",
+        "Tile_+008_+010",
+        "Tile_+009_+001",
+        "Tile_+009_+002",
+        "Tile_+009_+003",
+        "Tile_+009_+004",
+        "Tile_+009_+005",
+        "Tile_+009_+006",
+        "Tile_+009_+007",
+        "Tile_+009_+008",
+        "Tile_+009_+009",
+        "Tile_+009_+010",
+        "Tile_+010_+002",
+        "Tile_+010_+003",
+        "Tile_+010_+004",
+        "Tile_+010_+005",
+        "Tile_+010_+006",
+        "Tile_+010_+007",
+        "Tile_+010_+008",
+        "Tile_+010_+009",
+        "Tile_+010_+010",
+        "Tile_+010_+011",
+        "Tile_+011_+002",
+        "Tile_+011_+003",
+        "Tile_+011_+004",
+        "Tile_+011_+005",
+        "Tile_+011_+006",
+        "Tile_+011_+007",
+        "Tile_+011_+008",
+        "Tile_+011_+009",
+        "Tile_+011_+010",
+        "Tile_+011_+011"
+      ]
+      // list_0810_1.forEach((item, index) => {
+      //   let url = `http://192.168.1.250:8000/${item}/${item}.FBX`
+      //   fbxLoader.load(url, obj => {
+      //     obj.position.z += 40
+      //     this.group.add(obj)
+      //   })
+      // })
+      // list_0304.forEach((item, index) => {
+      //   let url = `http://192.168.1.222:8000/${item}/${item}.FBX`
+      //   fbxLoader.load(url, obj => {
+      //     obj.position.z += 40
+      //     this.baseGroup.add(obj)
+      //   })
+      // })
+      list_0312.forEach((item, index) => {
+        let url = `http://192.168.1.250:8000/${item}/${item}.fbx`
         fbxLoader.load(url, obj => {
-          obj.position.z += 40
+          obj.position.z -= 40
           this.group.add(obj)
         })
       })
-      this.group.position.y = this.groupController.position.y = 45
-      this.group.rotation.x = this.groupController.rotation.x = -Math.PI / 2
+      // this.group.position.y = this.groupController.position.y = 45
+      this.group.rotation.x = this.groupController.rotation.x = this.baseGroup.rotation.x = -Math.PI / 2
+      this.group.position.y = this.groupController.position.y = -1200
 
       this.scene.add(this.group)
       this.scene.add(this.groupController)
+      // 添加标记方块
+      this.scene.add(this.cubeGroup)
+      // 对比组
+      this.scene.add(this.baseGroup)
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
 
@@ -317,6 +675,20 @@ export default {
     -moz-border-radius: 6px
     border-radius: 6px
     padding: 20px
+  }
+  .mark-group {
+    position: absolute
+    z-index 200
+    top: 20px
+    right: 20px
+    background-color: rgba(255,255,255,0.4)
+    .row {
+      span {
+        display: inline-block
+        width 100px
+        cursor pointer
+      }
+    }
   }
 }
 </style>
