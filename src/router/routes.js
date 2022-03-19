@@ -10,6 +10,8 @@ import Channel7 from '../pages/Channel7/index.vue'
 import Channel8 from '../pages/Channel8/index.vue'
 import Channel8WeiYuan from '../pages/Channel8WeiYuan/index.vue'
 import Channel8SuLiGe from '../pages/Channel8SuLiGe/index.vue'
+import Channel8_sulige_pipe from '../pages/Channel8_sulige_pipe/index.vue'
+import Channel8_sulige_part_control from '../pages/Channel8_sulige_part_control/index.vue'
 import Channel9 from '../pages/Channel9/index.vue'
 import Channel10 from '../pages/Channel10/index.vue'
 import Channel11 from '../pages/Channel11/index.vue'
@@ -24,6 +26,7 @@ import Channel19 from '../pages/Channel19/index.vue'
 import ChannelRepair from '../pages/Channel_repair_model/index.vue'
 import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 import CoalCube from '../pages/Coal_cube/index.vue'
+import ChannelZongcaimian from '../pages/Channel_zongcaimian/index.vue'
 
 const routes = [
   {
@@ -77,6 +80,20 @@ const routes = [
     component: Channel8SuLiGe,
     meta: {
       title: '苏里格井场'
+    }
+  },
+  {
+    path: '/channel8_sulige_pipe',
+    component: Channel8_sulige_pipe,
+    meta: {
+      title: '苏里格地下管路'
+    }
+  },
+  {
+    path: '/channel8-sulige_part_control',
+    component: Channel8_sulige_part_control,
+    meta: {
+      title: '苏里格瓦片万向控制'
     }
   },
   {
@@ -181,7 +198,14 @@ const routes = [
     path: '/coal',
     component: CoalCube,
     meta: {
-      title: '动态煤层'
+      title: '天玛动态数据接口'
+    }
+  },
+  {
+    path: '/zongcaimian',
+    component: ChannelZongcaimian,
+    meta: {
+      title: '综采面'
     }
   },
   {

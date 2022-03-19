@@ -1,11 +1,5 @@
 <template>
   <div class="channel" ref="channel">
-    <div class="float" :style="`top: ${floatPos.y - 140}px; left: ${floatPos.x }px; opacity: ${flag?'1': '0'}; display: ${flag?'block': 'none'}`">
-      <div>地名： {{info.name}}</div>
-      <div>安全状态： {{info.safe}}</div>
-      <div>当地坐标： {{info.coordinate}}</div>
-      <div>当地人数： {{info.count}}</div>
-    </div>
     <div class="mark-group">
       <div class="row">
         <input v-model="plane1.x"></input>
@@ -48,6 +42,13 @@
         <input v-model="basePosition.cY" disabled="disabled" readonly="true">
         <input v-model="basePosition.cZ" disabled="disabled" readonly="true">
         <span>/</span>
+      </div>
+      <div class="row">
+        <span @click="changeRotate">切换为万向锁</span>
+        <span @click="changePosition">切换为定位锁</span>
+        <span>
+          <input @change="changeTranslateStep">
+        </span>
       </div>
     </div>
     <canvas ref="cvs" width="w" height="h" @mousedown="onDocumentMouseDown" @mouseup="flag = false"></canvas>
@@ -153,6 +154,20 @@ export default {
     })
   },
   methods: {
+    // 改变万向锁步幅
+    changeTranslateStep() {
+      console.log(event.target.value)
+      console.log(this.transformControls)
+      this.transformControls.setRotationSnap(parseFloat(event.target.value))
+    },
+    // 切换万向锁模式
+    changeRotate() {
+      this.transformControls.setMode('rotate')
+    },
+    // 切换定位锁模式
+    changePosition() {
+      this.transformControls.setMode('translate')
+    },
     moveBasePosition() {
       console.log(this.baseGroup)
       this.baseGroup.position.set(this.basePosition.x, this.basePosition.y, this.basePosition.z)
@@ -177,9 +192,9 @@ export default {
       const aspect = this.w/this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-      this.camera.position.z = 70
-      this.camera.position.x = 0
-      this.camera.position.y = 70
+      this.camera.position.z = 500
+      this.camera.position.x = 200
+      this.camera.position.y = 0
       this.group = new THREE.Group()
       this.baseGroup = new THREE.Group()
       // this.groupController = new THREE.Group()
@@ -194,204 +209,8 @@ export default {
       // this.group.add(mesh)
       // const fbxLoader = new FBXLoader()
       const fbxLoader = new FBXLoader()
-      const textureLoader = new THREE.TextureLoader()
-      let list = [
-        // "Tile_+000_+003",
-        // "Tile_+000_+004",
-        // "Tile_+000_+005",
-        // "Tile_+000_+006",
-        // "Tile_+000_+007",
-        // "Tile_+001_+002",
-        // "Tile_+001_+003",
-        "Tile_+001_+004",
-        "Tile_+001_+005",
-        // "Tile_+001_+006",
-        // "Tile_+001_+007",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        // "Tile_+002_+005",
-        // "Tile_+002_+006",
-        // "Tile_+002_+007",
-        // "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        // "Tile_+003_+005",
-        // "Tile_+003_+006",
-        // "Tile_+003_+007",
-        // "Tile_+004_+001",
-        "Tile_+004_+002",
-        "Tile_+004_+003",
-        "Tile_+004_+004",
-        "Tile_+004_+005",
-        "Tile_+004_+006",
-        "Tile_+005_+000",
-        // "Tile_+005_+001",
-        // "Tile_+005_+002",
-        // "Tile_+005_+003",
-        // "Tile_+005_+004",
-        // "Tile_+005_+005",
-        // "Tile_+006_+000",
-        // "Tile_+006_+001",
-        // "Tile_+006_+002",
-        // "Tile_+006_+003",
-        // "Tile_+006_+004",
-        // "Tile_+006_+005",
-        // "Tile_+007_+000",
-        // "Tile_+007_+001",
-        // "Tile_+007_+002",
-        // "Tile_+007_+003",
-        // "Tile_+007_+004",
-        // "Tile_+008_+000",
-        // "Tile_+008_+001",
-        // "Tile_+008_+002",
-        // "Tile_+008_+003",
-        // "Tile_+008_+004",
-        "Tile_+009_+000",
-        "Tile_+009_+001",
-        // "Tile_+009_+002",
-        // "Tile_+009_+003",
-        // "Tile_+009_+004",
-        "Tile_+010_+000",
-        "Tile_+010_+001",
-        // "Tile_+010_+002",
-        // "Tile_+010_+003",
-        "Tile_+011_+000",
-        "Tile_+011_+001",
-        // "Tile_+011_+002",
-        // "Tile_+011_+003"
-      ]
-      let list_0310_2 = [
-        "Tile_+000_+001",
-        "Tile_+000_+002",
-        "Tile_+000_+003",
-        "Tile_+000_+004",
-        "Tile_+001_+000",
-        "Tile_+001_+001",
-        "Tile_+001_+002",
-        "Tile_+001_+003",
-        "Tile_+001_+004",
-        "Tile_+001_+005",
-        "Tile_+002_+000",
-        "Tile_+002_+001",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+003_+000",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+004_+000",
-        "Tile_+004_+001",
-        "Tile_+004_+002",
-        "Tile_+004_+005",
-        "Tile_+004_+006",
-        "Tile_+005_+002",
-        "Tile_+005_+003",
-        "Tile_+005_+005",
-        "Tile_+005_+006",
-        "Tile_+005_+007",
-        "Tile_+006_+002",
-        "Tile_+006_+003",
-        "Tile_+006_+004",
-        "Tile_+006_+006",
-        "Tile_+006_+007",
-        "Tile_+006_+008",
-        "Tile_+007_+003",
-        "Tile_+007_+004",
-        "Tile_+007_+007",
-        "Tile_+007_+008",
-        "Tile_+007_+009",
-        "Tile_+008_+003",
-        "Tile_+008_+004",
-        "Tile_+008_+005",
-        "Tile_+008_+006",
-        "Tile_+008_+008",
-        "Tile_+008_+009",
-        "Tile_+009_+004",
-        "Tile_+009_+005",
-        "Tile_+009_+006",
-        "Tile_+009_+007",
-        "Tile_+009_+008",
-        "Tile_+009_+009",
-        "Tile_+010_+005",
-        "Tile_+010_+006",
-        "Tile_+010_+007",
-        "Tile_+010_+008",
-        "Tile_+010_+009"
-      ]
-      let list_0304 = [
-        "Tile_+000_+003",
-        "Tile_+000_+004",
-        "Tile_+000_+005",
-        "Tile_+000_+006",
-        "Tile_+000_+007",
-        "Tile_+001_+002",
-        "Tile_+001_+003",
-        "Tile_+001_+004",
-        "Tile_+001_+005",
-        "Tile_+001_+006",
-        "Tile_+001_+007",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+003_+007",
-        // "Tile_+004_+001",
-        // "Tile_+004_+002",
-        // "Tile_+004_+003",
-        // "Tile_+004_+004",
-        // "Tile_+004_+005",
-        // "Tile_+004_+006",
-        // "Tile_+005_+000",
-        // "Tile_+005_+001",
-        // "Tile_+005_+002",
-        // "Tile_+005_+003",
-        // "Tile_+005_+004",
-        // "Tile_+005_+005",
-        // "Tile_+006_+000",
-        // "Tile_+006_+001",
-        // "Tile_+006_+002",
-        // "Tile_+006_+003",
-        // "Tile_+006_+004",
-        // "Tile_+006_+005",
-        // "Tile_+007_+000",
-        // "Tile_+007_+001",
-        // "Tile_+007_+002",
-        // "Tile_+007_+003",
-        // "Tile_+007_+004",
-        // "Tile_+008_+000",
-        // "Tile_+008_+001",
-        // "Tile_+008_+002",
-        // "Tile_+008_+003",
-        // "Tile_+008_+004",
-        // "Tile_+009_+000",
-        // "Tile_+009_+001",
-        // "Tile_+009_+002",
-        // "Tile_+009_+003",
-        // "Tile_+009_+004",
-        // "Tile_+010_+000",
-        // "Tile_+010_+001",
-        // "Tile_+010_+002",
-        // "Tile_+010_+003",
-        // "Tile_+011_+000",
-        // "Tile_+011_+001",
-        // "Tile_+011_+002",
-        // "Tile_+011_+003"
-      ]
-      let list_0312 = [
+      // const textureLoader = new THREE.TextureLoader()
+      /* let list_0312 = [
         "Tile_+000_+003",
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -557,7 +376,233 @@ export default {
         "Tile_+018_+009",
         "Tile_+018_+010",
         "Tile_+018_+011"
+      ] */
+      let list_0312 = [
+        "Tile_+007_+001",
+        "Tile_+007_+002",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+005",
+        "Tile_+007_+006",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        "Tile_+007_+010",
+        "Tile_+007_+011",
+        "Tile_+008_+002",
+        "Tile_+008_+003",
+        "Tile_+008_+004",
+        "Tile_+008_+005",
+        "Tile_+008_+006",
+        "Tile_+008_+007",
+        "Tile_+008_+008",
+        "Tile_+008_+009",
+        "Tile_+008_+010",
+        "Tile_+008_+011",
+        "Tile_+009_+003",
+        "Tile_+009_+004",
+        "Tile_+009_+005",
+        "Tile_+009_+006",
+        "Tile_+009_+007",
+        "Tile_+009_+008",
+        "Tile_+009_+009",
+        "Tile_+009_+010",
+        "Tile_+009_+011",
+        "Tile_+009_+012",
+        "Tile_+010_+003",
+        "Tile_+010_+004",
+        "Tile_+010_+005",
+        "Tile_+010_+006",
+        "Tile_+010_+007",
+        "Tile_+010_+008",
+        "Tile_+010_+009",
+        "Tile_+010_+010",
+        "Tile_+010_+011",
+        "Tile_+010_+012",
+        "Tile_+010_+013",
+        "Tile_+011_+004",
+        "Tile_+011_+005",
+        "Tile_+011_+006",
+        "Tile_+011_+007",
+        "Tile_+011_+008",
+        "Tile_+011_+009",
+        "Tile_+011_+010",
+        "Tile_+011_+011",
+        "Tile_+011_+012",
+        "Tile_+011_+013"
       ]
+      /* let list_0315 = [
+        "Tile_+000_+004",
+        "Tile_+000_+005",
+        "Tile_+000_+006",
+        "Tile_+000_+007",
+        "Tile_+001_+003",
+        "Tile_+001_+004",
+        "Tile_+001_+005",
+        "Tile_+001_+006",
+        "Tile_+001_+007",
+        "Tile_+001_+008",
+        "Tile_+002_+001",
+        "Tile_+002_+002",
+        "Tile_+002_+003",
+        "Tile_+002_+004",
+        "Tile_+002_+005",
+        "Tile_+002_+006",
+        "Tile_+002_+007",
+        "Tile_+002_+008",
+        "Tile_+002_+009",
+        "Tile_+003_+001",
+        "Tile_+003_+002",
+        "Tile_+003_+003",
+        "Tile_+003_+004",
+        "Tile_+003_+005",
+        "Tile_+003_+006",
+        "Tile_+003_+007",
+        "Tile_+003_+008",
+        "Tile_+003_+009",
+        "Tile_+004_+000",
+        "Tile_+004_+001",
+        "Tile_+004_+002",
+        "Tile_+004_+003",
+        "Tile_+004_+004",
+        "Tile_+004_+005",
+        "Tile_+004_+006",
+        "Tile_+004_+007",
+        "Tile_+004_+008",
+        "Tile_+004_+009",
+        "Tile_+004_+010",
+        "Tile_+005_+000",
+        "Tile_+005_+001",
+        "Tile_+005_+002",
+        "Tile_+005_+003",
+        "Tile_+005_+004",
+        "Tile_+005_+005",
+        "Tile_+005_+006",
+        "Tile_+005_+007",
+        "Tile_+005_+008",
+        "Tile_+005_+009",
+        "Tile_+005_+010",
+        "Tile_+006_+001",
+        "Tile_+006_+002",
+        "Tile_+006_+003",
+        "Tile_+006_+004",
+        "Tile_+006_+005",
+        "Tile_+006_+006",
+        "Tile_+006_+007",
+        "Tile_+006_+008",
+        "Tile_+006_+009",
+        "Tile_+006_+010",
+        "Tile_+006_+011",
+        "Tile_+007_+002",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+005",
+        "Tile_+007_+006",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        "Tile_+007_+010",
+        "Tile_+007_+011",
+        "Tile_+008_+002",
+        "Tile_+008_+003",
+        "Tile_+008_+004",
+        "Tile_+008_+005",
+        "Tile_+008_+006",
+        "Tile_+008_+007",
+        "Tile_+008_+008",
+        "Tile_+008_+009",
+        "Tile_+008_+010",
+        "Tile_+008_+011",
+        "Tile_+008_+012",
+        "Tile_+009_+003",
+        "Tile_+009_+004",
+        "Tile_+009_+005",
+        "Tile_+009_+006",
+        "Tile_+009_+007",
+        "Tile_+009_+008",
+        "Tile_+009_+009",
+        "Tile_+009_+010",
+        "Tile_+009_+011",
+        "Tile_+009_+012",
+        "Tile_+009_+013",
+        "Tile_+010_+004",
+        "Tile_+010_+005",
+        "Tile_+010_+006",
+        "Tile_+010_+007",
+        "Tile_+010_+008",
+        "Tile_+010_+009",
+        "Tile_+010_+010",
+        "Tile_+010_+011",
+        "Tile_+010_+012",
+        "Tile_+010_+013",
+        "Tile_+011_+004",
+        "Tile_+011_+005",
+        "Tile_+011_+006",
+        "Tile_+011_+007",
+        "Tile_+011_+008",
+        "Tile_+011_+009",
+        "Tile_+011_+010",
+        "Tile_+011_+011",
+        "Tile_+011_+012",
+        "Tile_+011_+013",
+        "Tile_+011_+014",
+        "Tile_+012_+005",
+        "Tile_+012_+006",
+        "Tile_+012_+007",
+        "Tile_+012_+008",
+        "Tile_+012_+009",
+        "Tile_+012_+010",
+        "Tile_+012_+011",
+        "Tile_+012_+012",
+        "Tile_+012_+013",
+        "Tile_+012_+014",
+        "Tile_+013_+006",
+        "Tile_+013_+007",
+        "Tile_+013_+008",
+        "Tile_+013_+009",
+        "Tile_+013_+010",
+        "Tile_+013_+011",
+        "Tile_+013_+012",
+        "Tile_+013_+013",
+        "Tile_+013_+014",
+        "Tile_+013_+015",
+        "Tile_+014_+006",
+        "Tile_+014_+007",
+        "Tile_+014_+008",
+        "Tile_+014_+009",
+        "Tile_+014_+010",
+        "Tile_+014_+011",
+        "Tile_+014_+012",
+        "Tile_+014_+013",
+        "Tile_+014_+014",
+        "Tile_+014_+015",
+        "Tile_+015_+007",
+        "Tile_+015_+008",
+        "Tile_+015_+009",
+        "Tile_+015_+010",
+        "Tile_+015_+011",
+        "Tile_+015_+012",
+        "Tile_+015_+013",
+        "Tile_+015_+014",
+        "Tile_+015_+015",
+        "Tile_+016_+008",
+        "Tile_+016_+009",
+        "Tile_+016_+010",
+        "Tile_+016_+011",
+        "Tile_+016_+012",
+        "Tile_+016_+013",
+        "Tile_+016_+014",
+        "Tile_+017_+008",
+        "Tile_+017_+009",
+        "Tile_+017_+010",
+        "Tile_+017_+011",
+        "Tile_+017_+012",
+        "Tile_+017_+013",
+        "Tile_+018_+009",
+        "Tile_+018_+010",
+        "Tile_+018_+011",
+        "Tile_+018_+012"
+      ] */
       let list_0315 = [
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -730,20 +775,22 @@ export default {
         "Tile_+018_+011",
         "Tile_+018_+012"
       ]
-      // list_0810_1.forEach((item, index) => {
-      //   let url = `http://192.168.1.250:8000/${item}/${item}.FBX`
-      //   fbxLoader.load(url, obj => {
-      //     obj.position.z += 40
-      //     this.group.add(obj)
-      //   })
-      // })
-      // list_0304.forEach((item, index) => {
-      //   let url = `http://192.168.1.222:8000/${item}/${item}.FBX`
-      //   fbxLoader.load(url, obj => {
-      //     obj.position.z += 40
-      //     this.baseGroup.add(obj)
-      //   })
-      // })
+      let pipeList = [
+        [108.59173039,38.22155125,0],
+        [108.59233119,38.22185487,0],
+        [108.59366150,38.22230192,0],
+        [108.59480932,38.22285845,0],
+        [108.59599998,38.22341492,0],
+        [108.59707257,38.22396289,0],
+        [108.59789842,38.22440123,0],
+        [108.59885293,38.22484796,0],
+        [108.59971086,38.22529466,0],
+        [108.60112636,38.22612899,0],
+        [108.60264893,38.22732566,0],
+        [108.60389263,38.22828627,0],
+        [108.60532922,38.22934789,0],
+        [108.60583307,38.22970173,0]
+      ]
       list_0312.forEach((item, index) => {
         // let url = `http://192.168.1.47:8000/sulige_0311_dajiang_model/Productions/Production_1%20(2)/Data/${item}/${item}.fbx`
         let url = `http://192.168.1.47:8000/Data_greened/${item}/${item}.fbx`
@@ -781,26 +828,23 @@ export default {
       // 炫光特效关键代码 ***
       this.renderer.autoClear = false
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      // 控制阻尼
-      // this.controls.enableDamping = true
-      // 自动观看旋转
-      // this.controls.autoRotate = true
 
       // 变换控件
       this.transformControls = new TransformControls(this.camera, this.renderer.domElement)
       // 拖动控制
-      this.dragControls = new DragControls( [this.baseGroup], this.camera, this.renderer.domElement );
-      console.log(this.dragControls)
-      this.dragControls.addEventListener('mouseenter', event => {
-        if(event) {
-          console.log(event)
-        }
-      })
-      this.dragControls.addEventListener('', event => {
-        this.controls.enabled = true
-      })
-      this.transformControls.setMode('translate');
-      this.transformControls.setMode('rotate');
+      // this.dragControls = new DragControls( [this.baseGroup], this.camera, this.renderer.domElement );
+      // this.dragControls.transformGroup = true
+      this.transformControls.transformGroup = true
+      this.transformControls.addEventListener( 'change', () => {
+        this.renderer.render(this.scene, this.camera)
+      } );
+      this.controls.addEventListener( 'change', () => {
+        this.renderer.render(this.scene, this.camera)
+      } );
+      this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
+        this.controls.enabled = ! event.value;
+      } );
+      this.transformControls.attach( this.group );
       // 变换控制
       this.scene.add(this.transformControls)
       this.addBloomPass()
@@ -809,7 +853,7 @@ export default {
       if(this.bloomComposer) {
         this.bloomComposer.render()
       }
-      this.controls.update()
+      // this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
     },
@@ -832,10 +876,10 @@ export default {
       //
       // const intersects = raycaster.intersectObjects( this.groupController.children );
       // if(intersects[0] && intersects[0].object.name){
-        // console.log(intersects[0].object.name)
-        // this.flag = true
-        // this.info.name = intersects[0].object.name
-        // this.info.count = parseInt(Math.random() * 30)
+      // console.log(intersects[0].object.name)
+      // this.flag = true
+      // this.info.name = intersects[0].object.name
+      // this.info.count = parseInt(Math.random() * 30)
       // }
       //射线和模型求交，选中一系列直线
       /*let intersects = raycaster.intersectObjects(objects);
@@ -931,18 +975,6 @@ export default {
   width: 100%
   height: 100%
   position: relative
-  .float {
-    position: absolute
-    opacity: 0
-    z-index 100
-    color #a6c1ff
-    background-color: #000
-    border: 1px solid #023bb2
-    -webkit-border-radius: 6px
-    -moz-border-radius: 6px
-    border-radius: 6px
-    padding: 20px
-  }
   .mark-group {
     position: absolute
     z-index 200
@@ -954,8 +986,12 @@ export default {
         display: inline-block
         width 100px
         cursor pointer
+        color #fff
       }
     }
+  }
+  canvas {
+    display: block
   }
 }
 </style>

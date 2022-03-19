@@ -2,7 +2,7 @@
   <div class="home">
     Home<br>
     <div v-for="(item, index) in $router.options.routes">
-      <router-link :to="item.path">{{item.path}}</router-link>
+      <router-link :to="item.path"><span class="path">{{item.path}}</span>--> {{item.meta?item.meta.title:''}}</router-link>
     </div>
     <div>
       <canvas ref="canvas" width="800" height="600"></canvas>
@@ -74,5 +74,8 @@ export default {
 </script>
 
 <style scoped>
-
+.path {
+  display: inline-block;
+  width: 300px;
+}
 </style>

@@ -1,11 +1,5 @@
 <template>
   <div class="channel" ref="channel">
-    <div class="float" :style="`top: ${floatPos.y - 140}px; left: ${floatPos.x }px; opacity: ${flag?'1': '0'}; display: ${flag?'block': 'none'}`">
-      <div>地名： {{info.name}}</div>
-      <div>安全状态： {{info.safe}}</div>
-      <div>当地坐标： {{info.coordinate}}</div>
-      <div>当地人数： {{info.count}}</div>
-    </div>
     <div class="mark-group">
       <div class="row">
         <input v-model="plane1.x"></input>
@@ -89,16 +83,6 @@ export default {
       mX: null,
       mY: null,
       flag: false,
-      info: {
-        name: '',
-        safe: '安全',
-        coordinate: '模拟坐标{x: 100, y: 200}',
-        count: 100
-      },
-      floatPos: {
-        x: 0,
-        y: 0
-      },
       bloomComposer: null,
       cubeGroup: null,
       baseGroup: null,
@@ -154,7 +138,6 @@ export default {
   },
   methods: {
     moveBasePosition() {
-      console.log(this.baseGroup)
       this.baseGroup.position.set(this.basePosition.x, this.basePosition.y, this.basePosition.z)
       this.baseGroup.rotation.set(this.basePosition.rX, this.basePosition.rY, this.basePosition.rZ)
       this.baseGroup.scale.set(this.basePosition.cX, this.basePosition.cX, this.basePosition.cX)
@@ -832,10 +815,10 @@ export default {
       //
       // const intersects = raycaster.intersectObjects( this.groupController.children );
       // if(intersects[0] && intersects[0].object.name){
-        // console.log(intersects[0].object.name)
-        // this.flag = true
-        // this.info.name = intersects[0].object.name
-        // this.info.count = parseInt(Math.random() * 30)
+      // console.log(intersects[0].object.name)
+      // this.flag = true
+      // this.info.name = intersects[0].object.name
+      // this.info.count = parseInt(Math.random() * 30)
       // }
       //射线和模型求交，选中一系列直线
       /*let intersects = raycaster.intersectObjects(objects);
