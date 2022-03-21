@@ -791,6 +791,19 @@ export default {
         [108.60532922,38.22934789,0],
         [108.60583307,38.22970173,0]
       ]
+
+      const points = []
+      pipeList.forEach(item => {
+        points.push(new THREE.Vector3((item[0]-108.59)*10000, (item[1]-38.22)*10000, 0))
+      })
+      const lineGeometry = new THREE.BufferGeometry().setFromPoints( points );
+      const lineMaterial = new THREE.LineBasicMaterial({
+        // vertexColors: true,
+        color: 0x0000ff
+      })
+      const line = new THREE.Line(lineGeometry, lineMaterial)
+      console.log(line)
+      this.scene.add(line)
       list_0312.forEach((item, index) => {
         // let url = `http://192.168.1.47:8000/sulige_0311_dajiang_model/Productions/Production_1%20(2)/Data/${item}/${item}.fbx`
         let url = `http://192.168.1.47:8000/Data_greened/${item}/${item}.fbx`

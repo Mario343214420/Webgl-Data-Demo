@@ -87,37 +87,35 @@ export default {
       this.camera.lookAt(new THREE.Vector3(0,1200,0))
       this.group = new THREE.Group()
       this.group1 = new THREE.Group()
-      // const objLoader = new OBJLoader()
       const fbxLoader = new FBXLoader()
-      const gltfLoader = new GLTFLoader()
-      const textureLoader = new THREE.TextureLoader()
-      // const mtlLoader = new MTLLoader();
-      fbxLoader.load("http://localhost:8000/windmill/Windmill_animated.fbx", fbx => {
-        fbx.children.shift()
+      fbxLoader.load("http://192.168.1.47:8000/gemeiji.FBX", fbx => {
+        // fbx.children.shift()
+        //   textureLoader.load('http://localhost:8000/windmill/Mat_Base_Color.tga.png', (texture) => {
+        //     fbx.children[2].material.map = texture
+        //     fbx.children[2].geometry.computeBoundingBox();
+        //     fbx.children[2].geometry.center()
+        //   })
         console.log(fbx)
-          textureLoader.load('http://localhost:8000/windmill/Mat_Base_Color.tga.png', (texture) => {
-            fbx.children[2].material.map = texture
-            fbx.children[2].geometry.computeBoundingBox();
-            fbx.children[2].geometry.center()
-          })
+        fbx.castShadow = true
         this.scene.add(fbx)
       });
-      gltfLoader.load(`http://localhost:8000/windmill/scene.gltf`, gltf => {
-        gltf.scene.scale.x = 0.05
-        gltf.scene.scale.y = 0.05
-        gltf.scene.scale.z = 0.05
+      fbxLoader.load("http://192.168.1.47:8000/guabanji.FBX", fbx => {
+        this.scene.add(fbx)
+        console.log(fbx)
+      });
+      fbxLoader.load("http://192.168.1.47:8000/yeyazhijia.FBX", fbx => {
+        console.log(fbx)
+        this.scene.add(fbx)
         this.clock = new THREE.Clock();
-        this.windmill = gltf
-        this.windmill.scene.children[0].children[0].children[0].children[0].children[0].children[0].children[0].material.transparent = true;
-        this.scene.add( gltf.scene );
-        this.mixer = new THREE.AnimationMixer( this.windmill.scene );
-        this.mixer.clipAction( this.windmill.animations[0]).play();
-      })
-
-      /**
-3dtile.exe -f b3dm -i E:\projects\suligejingchang\set\Data\Tile_+007_+000\Tile_+007_+000.b3dm -o E:\projects\suligejingchang\006\Tile_+007_+000.gltf
-3dtile.exe -f b3dm -i E:\projects\suligejingchang\set\Data\Tile_+008_+000\Tile_+008_+000.b3dm -o E:\projects\suligejingchang\008\Tile_+008_+000.gltf
-       */
+        this.mixer = new THREE.AnimationMixer(fbx)
+        let clipAction = this.mixer.clipAction(fbx.animations[0])
+        clipAction.play()
+        // fbx.castShadow = true
+        // this.clock = new THREE.Clock();
+        // this.mixer = new THREE.AnimationMixer(fbx)
+        // let clipAction = this.mixer.clipAction(fbx.animations[0])
+        // clipAction.play()
+      });
 
       this.scene.add(this.group)
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -132,7 +130,7 @@ export default {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     },
     animate() {
-      if(this.clock) {
+      if(this.mixer) {
         let delta = this.clock.getDelta();
         this.mixer.update(delta)
       }
