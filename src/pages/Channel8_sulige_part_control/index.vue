@@ -43,13 +43,16 @@
         <input v-model="basePosition.cZ" disabled="disabled" readonly="true">
         <span>/</span>
       </div>
-      <div class="row">
+      <div class="row current-model-control">
         <span @click="changeRotate">切换为万向锁</span>
         <span @click="changePosition">切换为定位锁</span>
         <span>
-          <input @change="changeTranslateStep">
+          操作精度：<input @change="changeTranslateStep">
         </span>
       </div>
+      <!--<div class="row current-model-control">
+        <span @click="toggleOrbit">切换展示视角</span>
+      </div>-->
     </div>
     <canvas ref="cvs" width="w" height="h" @mousedown="onDocumentMouseDown" @mouseup="flag = false"></canvas>
   </div>
@@ -103,6 +106,7 @@ export default {
       bloomComposer: null,
       cubeGroup: null,
       baseGroup: null,
+      currentGroup: null,
       plane1: {
         x: 0,
         y: 0,
@@ -154,6 +158,12 @@ export default {
     })
   },
   methods: {
+    // 切换自动旋转关上视角
+    /* toggleOrbit() {
+      if(this.controls) {
+        this.controls.autoRotate = !this.controls.autoRotate
+      }
+    }, */
     // 改变万向锁步幅
     changeTranslateStep() {
       console.log(event.target.value)
@@ -197,6 +207,7 @@ export default {
       this.camera.position.y = 0
       this.group = new THREE.Group()
       this.baseGroup = new THREE.Group()
+      this.currentGroup = new THREE.Group()
       // this.groupController = new THREE.Group()
       this.cubeGroup = new THREE.Group()
       const material = new THREE.MeshBasicMaterial( { color: 0xff00 } );
@@ -210,7 +221,7 @@ export default {
       // const fbxLoader = new FBXLoader()
       const fbxLoader = new FBXLoader()
       // const textureLoader = new THREE.TextureLoader()
-      /* let list_0312 = [
+      let list_0312 = [
         "Tile_+000_+003",
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -376,8 +387,8 @@ export default {
         "Tile_+018_+009",
         "Tile_+018_+010",
         "Tile_+018_+011"
-      ] */
-      let list_0312 = [
+      ]
+      /* let list_0312 = [
         "Tile_+007_+001",
         "Tile_+007_+002",
         "Tile_+007_+003",
@@ -430,7 +441,7 @@ export default {
         "Tile_+011_+011",
         "Tile_+011_+012",
         "Tile_+011_+013"
-      ]
+      ] */
       /* let list_0315 = [
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -792,6 +803,7 @@ export default {
         [108.60583307,38.22970173,0]
       ]
 
+      // 地下管路
       const points = []
       pipeList.forEach(item => {
         points.push(new THREE.Vector3((item[0]-108.59)*10000, (item[1]-38.22)*10000, 0))
@@ -802,8 +814,8 @@ export default {
         color: 0x0000ff
       })
       const line = new THREE.Line(lineGeometry, lineMaterial)
-      console.log(line)
-      this.scene.add(line)
+      // this.scene.add(line)
+
       list_0312.forEach((item, index) => {
         // let url = `http://192.168.1.47:8000/sulige_0311_dajiang_model/Productions/Production_1%20(2)/Data/${item}/${item}.fbx`
         let url = `http://192.168.1.47:8000/Data_greened/${item}/${item}.fbx`
@@ -811,32 +823,33 @@ export default {
           obj.position.z -= 1200
           // obj.rotation.y += Math.PI/6
           this.baseGroup.add(obj)
-          obj.children[0].material.color.set(0xdbdbdb)
         })
       })
       list_0315.forEach((item, index) => {
         let url = `http://192.168.1.47:8000/Data_0315_dajiang/${item}/${item}.fbx`
         fbxLoader.load(url, obj => {
           obj.position.z -= 1200
-          this.group.add(obj)
+          this.currentGroup.add(obj)
         })
       })
       // this.group.position.y = this.groupController.position.y = 45
       // this.group.rotation.x = this.baseGroup.rotation.x = -Math.PI / 2
       // this.group.position.y = this.baseGroup.position.y = -1200
 
-      this.scene.add(this.group)
+      this.group.add(this.currentGroup)
       // this.scene.add(this.groupController)
       // 添加标记方块
       this.scene.add(this.cubeGroup)
       // 对比组
-      this.scene.add(this.baseGroup)
+      this.group.add(this.baseGroup)
+      this.scene.add(this.group)
+      this.group.rotation.x = -Math.PI/2
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
 
       const axesHelper = new THREE.AxesHelper( 20 );
       this.scene.add(axesHelper)
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       this.renderer.setSize(this.w, this.h)
       // 炫光特效关键代码 ***
       this.renderer.autoClear = false
@@ -857,7 +870,7 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      this.transformControls.attach( this.group );
+      this.transformControls.attach( this.currentGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       this.addBloomPass()
@@ -988,18 +1001,31 @@ export default {
   width: 100%
   height: 100%
   position: relative
+  background-image: linear-gradient(-34deg, rgba(0, 0, 73, 0.9) 0%, #01328b 40%, #01328b 60%, rgba(0, 0, 73, 0.9) 100%);
   .mark-group {
     position: absolute
     z-index 200
     top: 20px
     right: 20px
+    -webkit-border-radius: 4px
+    -moz-border-radius: 4px
+    border-radius: 4px
     background-color: rgba(255,255,255,0.4)
     .row {
+      margin: 4px;
       span {
         display: inline-block
         width 100px
         cursor pointer
         color #fff
+      }
+    }
+    .current-model-control {
+      span {
+        color: #333;
+        &:nth-child(3) {
+          width: 260px
+        }
       }
     }
   }
