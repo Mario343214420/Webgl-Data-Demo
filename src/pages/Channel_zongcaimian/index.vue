@@ -100,7 +100,7 @@ export default {
         this.scene.add(fbx)
       });
       fbxLoader.load("http://192.168.1.47:8000/guabanji.FBX", fbx => {
-        this.scene.add(fbx)
+        // this.scene.add(fbx)
         console.log(fbx)
       });
       fbxLoader.load("http://192.168.1.47:8000/yeyazhijia.FBX", fbx => {
