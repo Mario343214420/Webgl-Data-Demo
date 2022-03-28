@@ -15,7 +15,7 @@
     </div>
     <div class="center-wrapper">
       <div class="title">
-        <img src="../../../assets/images/home-example/title.png" alt="">
+<!--        <img src="../../../assets/images/home-example/title.png" alt="">-->
       </div>
       <div class="links">
         <router-link to="/overview">系统概况专题</router-link>
