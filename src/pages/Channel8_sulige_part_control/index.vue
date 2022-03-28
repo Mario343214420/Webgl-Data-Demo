@@ -166,8 +166,6 @@ export default {
     }, */
     // 改变万向锁步幅
     changeTranslateStep() {
-      console.log(event.target.value)
-      console.log(this.transformControls)
       this.transformControls.setRotationSnap(parseFloat(event.target.value))
     },
     // 切换万向锁模式
@@ -179,7 +177,6 @@ export default {
       this.transformControls.setMode('translate')
     },
     moveBasePosition() {
-      console.log(this.baseGroup)
       this.baseGroup.position.set(this.basePosition.x, this.basePosition.y, this.basePosition.z)
       this.baseGroup.rotation.set(this.basePosition.rX, this.basePosition.rY, this.basePosition.rZ)
       this.baseGroup.scale.set(this.basePosition.cX, this.basePosition.cX, this.basePosition.cX)
@@ -221,7 +218,7 @@ export default {
       // const fbxLoader = new FBXLoader()
       const fbxLoader = new FBXLoader()
       // const textureLoader = new THREE.TextureLoader()
-      let list_0312 = [
+      /* let list_0312 = [
         "Tile_+000_+003",
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -387,8 +384,8 @@ export default {
         "Tile_+018_+009",
         "Tile_+018_+010",
         "Tile_+018_+011"
-      ]
-      /* let list_0312 = [
+      ] */
+      let list_0312 = [
         "Tile_+007_+001",
         "Tile_+007_+002",
         "Tile_+007_+003",
@@ -441,7 +438,73 @@ export default {
         "Tile_+011_+011",
         "Tile_+011_+012",
         "Tile_+011_+013"
-      ] */
+      ]
+      let list_0315 = [
+        "Tile_+006_+001",
+        "Tile_+006_+002",
+        "Tile_+006_+003",
+        "Tile_+006_+004",
+        "Tile_+006_+005",
+        "Tile_+006_+006",
+        "Tile_+006_+007",
+        "Tile_+006_+008",
+        "Tile_+006_+009",
+        "Tile_+006_+010",
+        "Tile_+006_+011",
+        "Tile_+007_+002",
+        "Tile_+007_+003",
+        "Tile_+007_+004",
+        "Tile_+007_+005",
+        "Tile_+007_+006",
+        "Tile_+007_+007",
+        "Tile_+007_+008",
+        "Tile_+007_+009",
+        "Tile_+007_+010",
+        "Tile_+007_+011",
+        "Tile_+008_+002",
+        "Tile_+008_+003",
+        "Tile_+008_+004",
+        "Tile_+008_+005",
+        "Tile_+008_+006",
+        "Tile_+008_+007",
+        "Tile_+008_+008",
+        "Tile_+008_+009",
+        "Tile_+008_+010",
+        "Tile_+008_+011",
+        "Tile_+008_+012",
+        "Tile_+009_+003",
+        "Tile_+009_+004",
+        "Tile_+009_+005",
+        "Tile_+009_+006",
+        "Tile_+009_+007",
+        "Tile_+009_+008",
+        "Tile_+009_+009",
+        "Tile_+009_+010",
+        "Tile_+009_+011",
+        "Tile_+009_+012",
+        "Tile_+009_+013",
+        "Tile_+010_+004",
+        "Tile_+010_+005",
+        "Tile_+010_+006",
+        "Tile_+010_+007",
+        "Tile_+010_+008",
+        "Tile_+010_+009",
+        "Tile_+010_+010",
+        "Tile_+010_+011",
+        "Tile_+010_+012",
+        "Tile_+010_+013",
+        "Tile_+011_+004",
+        "Tile_+011_+005",
+        "Tile_+011_+006",
+        "Tile_+011_+007",
+        "Tile_+011_+008",
+        "Tile_+011_+009",
+        "Tile_+011_+010",
+        "Tile_+011_+011",
+        "Tile_+011_+012",
+        "Tile_+011_+013",
+        "Tile_+011_+014"
+      ]
       /* let list_0315 = [
         "Tile_+000_+004",
         "Tile_+000_+005",
@@ -614,178 +677,6 @@ export default {
         "Tile_+018_+011",
         "Tile_+018_+012"
       ] */
-      let list_0315 = [
-        "Tile_+000_+004",
-        "Tile_+000_+005",
-        "Tile_+000_+006",
-        "Tile_+000_+007",
-        "Tile_+001_+003",
-        "Tile_+001_+004",
-        "Tile_+001_+005",
-        "Tile_+001_+006",
-        "Tile_+001_+007",
-        "Tile_+001_+008",
-        "Tile_+002_+001",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        "Tile_+002_+008",
-        "Tile_+002_+009",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+003_+007",
-        "Tile_+003_+008",
-        "Tile_+003_+009",
-        "Tile_+004_+000",
-        "Tile_+004_+001",
-        "Tile_+004_+002",
-        "Tile_+004_+003",
-        "Tile_+004_+004",
-        "Tile_+004_+005",
-        "Tile_+004_+006",
-        "Tile_+004_+007",
-        "Tile_+004_+008",
-        "Tile_+004_+009",
-        "Tile_+004_+010",
-        "Tile_+005_+000",
-        "Tile_+005_+001",
-        "Tile_+005_+002",
-        "Tile_+005_+003",
-        "Tile_+005_+004",
-        "Tile_+005_+005",
-        "Tile_+005_+006",
-        "Tile_+005_+007",
-        "Tile_+005_+008",
-        "Tile_+005_+009",
-        "Tile_+005_+010",
-        "Tile_+006_+001",
-        "Tile_+006_+002",
-        "Tile_+006_+003",
-        "Tile_+006_+004",
-        "Tile_+006_+005",
-        "Tile_+006_+006",
-        "Tile_+006_+007",
-        "Tile_+006_+008",
-        "Tile_+006_+009",
-        "Tile_+006_+010",
-        "Tile_+006_+011",
-        "Tile_+007_+002",
-        "Tile_+007_+003",
-        "Tile_+007_+004",
-        "Tile_+007_+005",
-        "Tile_+007_+006",
-        "Tile_+007_+007",
-        "Tile_+007_+008",
-        "Tile_+007_+009",
-        "Tile_+007_+010",
-        "Tile_+007_+011",
-        "Tile_+008_+002",
-        "Tile_+008_+003",
-        "Tile_+008_+004",
-        "Tile_+008_+005",
-        "Tile_+008_+006",
-        "Tile_+008_+007",
-        "Tile_+008_+008",
-        "Tile_+008_+009",
-        "Tile_+008_+010",
-        "Tile_+008_+011",
-        "Tile_+008_+012",
-        "Tile_+009_+003",
-        "Tile_+009_+004",
-        "Tile_+009_+005",
-        "Tile_+009_+006",
-        "Tile_+009_+007",
-        "Tile_+009_+008",
-        "Tile_+009_+009",
-        "Tile_+009_+010",
-        "Tile_+009_+011",
-        "Tile_+009_+012",
-        "Tile_+009_+013",
-        "Tile_+010_+004",
-        "Tile_+010_+005",
-        "Tile_+010_+006",
-        "Tile_+010_+007",
-        "Tile_+010_+008",
-        "Tile_+010_+009",
-        "Tile_+010_+010",
-        "Tile_+010_+011",
-        "Tile_+010_+012",
-        "Tile_+010_+013",
-        "Tile_+011_+004",
-        "Tile_+011_+005",
-        "Tile_+011_+006",
-        "Tile_+011_+007",
-        "Tile_+011_+008",
-        "Tile_+011_+009",
-        "Tile_+011_+010",
-        "Tile_+011_+011",
-        "Tile_+011_+012",
-        "Tile_+011_+013",
-        "Tile_+011_+014",
-        "Tile_+012_+005",
-        "Tile_+012_+006",
-        "Tile_+012_+007",
-        "Tile_+012_+008",
-        "Tile_+012_+009",
-        "Tile_+012_+010",
-        "Tile_+012_+011",
-        "Tile_+012_+012",
-        "Tile_+012_+013",
-        "Tile_+012_+014",
-        "Tile_+013_+006",
-        "Tile_+013_+007",
-        "Tile_+013_+008",
-        "Tile_+013_+009",
-        "Tile_+013_+010",
-        "Tile_+013_+011",
-        "Tile_+013_+012",
-        "Tile_+013_+013",
-        "Tile_+013_+014",
-        "Tile_+013_+015",
-        "Tile_+014_+006",
-        "Tile_+014_+007",
-        "Tile_+014_+008",
-        "Tile_+014_+009",
-        "Tile_+014_+010",
-        "Tile_+014_+011",
-        "Tile_+014_+012",
-        "Tile_+014_+013",
-        "Tile_+014_+014",
-        "Tile_+014_+015",
-        "Tile_+015_+007",
-        "Tile_+015_+008",
-        "Tile_+015_+009",
-        "Tile_+015_+010",
-        "Tile_+015_+011",
-        "Tile_+015_+012",
-        "Tile_+015_+013",
-        "Tile_+015_+014",
-        "Tile_+015_+015",
-        "Tile_+016_+008",
-        "Tile_+016_+009",
-        "Tile_+016_+010",
-        "Tile_+016_+011",
-        "Tile_+016_+012",
-        "Tile_+016_+013",
-        "Tile_+016_+014",
-        "Tile_+017_+008",
-        "Tile_+017_+009",
-        "Tile_+017_+010",
-        "Tile_+017_+011",
-        "Tile_+017_+012",
-        "Tile_+017_+013",
-        "Tile_+018_+009",
-        "Tile_+018_+010",
-        "Tile_+018_+011",
-        "Tile_+018_+012"
-      ]
       let pipeList = [
         [108.59173039,38.22155125,0],
         [108.59233119,38.22185487,0],
@@ -819,17 +710,16 @@ export default {
       list_0312.forEach((item, index) => {
         // let url = `http://192.168.1.47:8000/sulige_0311_dajiang_model/Productions/Production_1%20(2)/Data/${item}/${item}.fbx`
         let url = `http://192.168.1.47:8000/Data_greened/${item}/${item}.fbx`
-        fbxLoader.load(url, obj => {
-          obj.position.z -= 1200
-          // obj.rotation.y += Math.PI/6
-          this.baseGroup.add(obj)
+        fbxLoader.load(url, fbx => {
+          fbx.children[0].position.z -= 1200
+          this.baseGroup.add(fbx)
         })
       })
       list_0315.forEach((item, index) => {
         let url = `http://192.168.1.47:8000/Data_0315_dajiang/${item}/${item}.fbx`
-        fbxLoader.load(url, obj => {
-          obj.position.z -= 1200
-          this.currentGroup.add(obj)
+        fbxLoader.load(url, fbx => {
+          fbx.children[0].position.z -= 1200
+          this.currentGroup.add(fbx.children[0])
         })
       })
       // this.group.position.y = this.groupController.position.y = 45
@@ -888,34 +778,26 @@ export default {
       //将鼠标点击位置的屏幕坐标转成threejs中的标准坐标,具体解释见代码释义
       this.mX = (e.clientX / window.innerWidth) * 2 - 1;
       this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
-      this.floatPos = {
-        x: e.offsetX,
-        y: e.offsetY
-      }
       //新建一个三维单位向量 假设z方向就是0.5
       //根据照相机，把这个向量转换到视点坐标系
-      let vector = new THREE.Vector3(this.mX, this.mY,0.5).unproject(this.camera);
+      // let vector = new THREE.Vector3(this.mX, this.mY,0.5).unproject(this.camera);
 
       //在视点坐标系中形成射线,射线的起点向量是照相机， 射线的方向向量是照相机到点击的点，这个向量应该归一标准化。
-      // let raycaster = new THREE.Raycaster();
-      // raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-      //
-      // const intersects = raycaster.intersectObjects( this.groupController.children );
-      // if(intersects[0] && intersects[0].object.name){
-      // console.log(intersects[0].object.name)
-      // this.flag = true
-      // this.info.name = intersects[0].object.name
-      // this.info.count = parseInt(Math.random() * 30)
-      // }
-      //射线和模型求交，选中一系列直线
-      /*let intersects = raycaster.intersectObjects(objects);
-      console.log('imtersrcts=' + intersects)
+      let raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
+      let intersects = raycaster.intersectObjects(this.currentGroup.children);
       if (intersects.length > 0) {
         //选中第一个射线相交的物体
-        let selected = intersects[0];
-        let intersected = intersects[0];
         console.log(intersects[0])
-      }*/
+        let sphereGeo = new THREE.SphereGeometry(3, 5, 4)
+        const material = new THREE.MeshBasicMaterial({
+          color: 0xffff00,
+          // wireframe: true
+        });
+        let sphere = new THREE.Mesh(sphereGeo, material)
+        sphere.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z)
+        this.group.add(sphere)
+      }
     },
     renderLine(textList, position) {
       // 添加标注连线
