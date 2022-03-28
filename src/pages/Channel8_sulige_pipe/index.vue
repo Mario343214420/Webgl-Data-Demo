@@ -260,10 +260,10 @@ export default {
         // "Tile_+002_+001",
         // "Tile_+002_+002",
         // "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
+        // "Tile_+002_+004",
+        // "Tile_+002_+005",
+        // "Tile_+002_+006",
+        // "Tile_+002_+007",
         // "Tile_+002_+008",
         // "Tile_+002_+009",
         // "Tile_+003_+001",
@@ -436,58 +436,58 @@ export default {
         // "Tile_+002_+001",
         // "Tile_+002_+002",
         // "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
+        // "Tile_+002_+004",
+        // "Tile_+002_+005",
+        // "Tile_+002_+006",
+        // "Tile_+002_+007",
         // "Tile_+002_+008",
         // "Tile_+003_+000",
         // "Tile_+003_+001",
         // "Tile_+003_+002",
-        // "Tile_+003_+003",
+        "Tile_+003_+003",
         "Tile_+003_+004",
         "Tile_+003_+005",
         "Tile_+003_+006",
-        "Tile_+003_+007",
+        // "Tile_+003_+007",
         // "Tile_+003_+008",
         // "Tile_+003_+009",
         // "Tile_+004_+000",
         // "Tile_+004_+001",
         // "Tile_+004_+002",
-        // "Tile_+004_+003",
+        "Tile_+004_+003",
         "Tile_+004_+004",
         "Tile_+004_+005",
         "Tile_+004_+006",
-        "Tile_+004_+007",
+        // "Tile_+004_+007",
         // "Tile_+004_+008",
         // "Tile_+004_+009",
         // "Tile_+005_+000",
         // "Tile_+005_+001",
         // "Tile_+005_+002",
         // "Tile_+005_+003",
-        // "Tile_+005_+004",
+        "Tile_+005_+004",
         "Tile_+005_+005",
         "Tile_+005_+006",
         "Tile_+005_+007",
-        "Tile_+005_+008",
+        // "Tile_+005_+008",
         // "Tile_+005_+009",
         // "Tile_+005_+010",
         // "Tile_+006_+001",
         // "Tile_+006_+002",
         // "Tile_+006_+003",
         // "Tile_+006_+004",
-        // "Tile_+006_+005",
-        // "Tile_+006_+006",
+        "Tile_+006_+005",
+        "Tile_+006_+006",
         "Tile_+006_+007",
         "Tile_+006_+008",
-        "Tile_+006_+009",
+        // "Tile_+006_+009",
         // "Tile_+006_+010",
         // "Tile_+007_+001",
         // "Tile_+007_+002",
         // "Tile_+007_+003",
         // "Tile_+007_+004",
         // "Tile_+007_+005",
-        // "Tile_+007_+006",
+        "Tile_+007_+006",
         "Tile_+007_+007",
         "Tile_+007_+008",
         "Tile_+007_+009",
@@ -722,7 +722,7 @@ export default {
 
       // ↓↓↓↓↓ 线结构体压缩方法 ↓↓↓↓↓ //
       stackList.forEach(item => {
-        let sphereGeo = new THREE.SphereGeometry(0.5, 6, 4)
+        let sphereGeo = new THREE.SphereGeometry(4, 6, 4)
         const material = new THREE.MeshBasicMaterial({
           color: 0xffff00,
           // wireframe: true
@@ -740,12 +740,27 @@ export default {
       this.pipeGroup.add(modelLine)
       this.pipeGroup.add(realLine)
       // this.pipeGroup.rotation.x = -Math.PI
-      this.pipeGroup.rotation.set(-3.0790598544793824, -0.07915742879928847, 0.04328322527072722)
-      this.pipeGroup.position.set(-444.40872882473667, 0, 255.55984414375814)
-      realLine.position.z -= 20
+      console.log(this.pipeGroup)
+      this.pipeGroup.rotation.set(-3.0758061320543315, -0.08776287841848504, 0.04576319080287536)
+      // this.pipeGroup.position.set(-444.40872882473667, 0, 255.55984414375814)
+      // this.scene.add(this.pipeGroup.clone())
+      this.pipeGroup.position.set(-440.6863627966253, 8.268668242910138, 276.1602719286896)
+      /*
+      // 管线定位
+      {
+        x: -440.6863627966253,
+        y: 8.268668242910138,
+        z: 276.1602719286896
+      }
+      {
+        _x: -3.0758061320543315,
+        _y: -0.08776287841848504,
+        _z: 0.04576319080287536
+      }
+      */
 
       list_0312.forEach((item, index) => {
-        let url = `http://192.168.1.59:8000/Data_greened/${item}/${item}.fbx`
+        let url = `http://192.168.1.23:8000/Data_greened/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           // obj.rotation.y += Math.PI/6
@@ -755,7 +770,7 @@ export default {
 
       // 瓦片模型导入
       list_0315.forEach((item, index) => {
-        let url = `http://192.168.1.59:8000/Data_0315_dajiang/${item}/${item}.fbx`
+        let url = `http://192.168.1.23:8000/Data_0315_dajiang/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           this.currentGroup.add(fbx.children[0])
@@ -764,6 +779,21 @@ export default {
       this.baseGroup.rotation.x = -Math.PI / 2
       this.currentGroup.rotation.x = -Math.PI / 2
       this.group.add(this.currentGroup)
+      /*
+      // 标准层定位数据
+      {
+        "x": 2.03820668600689,
+        "y": -15.014920846711025,
+        "z": -7.909819862511014
+      }
+      {
+        "_x": -1.522653104933331,
+        "_y": 0.012246043245188428,
+        "_z": 0.00003589158840260457
+      }
+      */
+      this.baseGroup.position.set(2.03820668600689, -15.014920846711025, -7.909819862511014)
+      this.baseGroup.rotation.set(-1.522653104933331, 0.01224604324518842, 0.00003589158840260457)
       this.group.add(this.baseGroup)
       // 添加标记方块
       this.scene.add(this.markGroup)
@@ -796,7 +826,7 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      this.transformControls.attach( this.baseGroup );
+      this.transformControls.attach( this.pipeGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       this.addBloomPass()
