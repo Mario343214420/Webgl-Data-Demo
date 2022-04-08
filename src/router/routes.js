@@ -27,6 +27,7 @@ import ChannelRepair from '../pages/Channel_repair_model/index.vue'
 import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 import CoalCube from '../pages/Coal_cube/index.vue'
 import ChannelZongcaimian from '../pages/Channel_zongcaimian/index.vue'
+import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
 
 const routes = [
   {
@@ -206,6 +207,13 @@ const routes = [
     component: ChannelZongcaimian,
     meta: {
       title: '综采面'
+    }
+  },
+  {
+    path: '/fangpenqi',
+    component: FangPenQi,
+    meta: {
+      title: '防喷器'
     }
   },
   {
