@@ -182,7 +182,7 @@ export default {
         let focus = intersects[0].point
 
         this.focusLines.children = []
-        this.focusLines.add(this.renderLine(['温度： 40℃'], [focus.x, focus.y, focus.z + 20], [focus.x, focus.y, focus.z]))
+        this.focusLines.add(this.renderLine([intersects[0].object.parent.name, '温度： 40℃'], [focus.x, focus.y, focus.z + 20], [focus.x, focus.y, focus.z]))
       }
       /* //射线和模型求交，选中一系列直线
       var intersects = raycaster.intersectObjects(objects);
