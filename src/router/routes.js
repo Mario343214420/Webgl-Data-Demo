@@ -28,6 +28,7 @@ import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 import CoalCube from '../pages/Coal_cube/index.vue'
 import ChannelZongcaimian from '../pages/Channel_zongcaimian/index.vue'
 import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
+import Spotlight from '../pages/Channel_spotlight_shadow/index.vue'
 
 const routes = [
   {
@@ -214,6 +215,13 @@ const routes = [
     component: FangPenQi,
     meta: {
       title: '防喷器'
+    }
+  },
+  {
+    path: '/spotlight',
+    component: Spotlight,
+    meta: {
+      title: '点光源'
     }
   },
   {

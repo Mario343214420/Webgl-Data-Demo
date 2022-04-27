@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Dialog, Input } from 'element-ui'
+import { Button, Dialog, Input, Row, Col, Checkbox, Slider, Select, Option } from 'element-ui'
 // import VueSocketIO from 'vue-socket.io'
 // import SocketIO from 'socket.io-client'
 
@@ -21,6 +21,12 @@ import { Button, Dialog, Input } from 'element-ui'
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Input)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Checkbox)
+Vue.use(Option)
+Vue.use(Slider)
+Vue.use(Select)
 // mock
 // import './mock/mockServer'
 
