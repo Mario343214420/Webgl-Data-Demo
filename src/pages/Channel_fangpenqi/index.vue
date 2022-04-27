@@ -98,26 +98,40 @@ export default {
       this.camera.position.y = 20
 
       const fbxLoader = new FBXLoader()
-      fbxLoader.load('./models/fangpenqi/FangPenQi.FBX', fbx=>{
+      fbxLoader.load('./models/fangpenqi/fangpenqi(7).FBX', fbx=>{
+      // fbxLoader.load('./models/fangpenqi/fangpenqi(5).FBX', fbx=>{
+      // fbxLoader.load('./models/fangpenqi/fangpenqi(4).FBX', fbx=>{
+      // fbxLoader.load('./models/fangpenqi/FangPenQi.FBX', fbx=>{
       // fbxLoader.load('./models/fangpenqi/fangpenqi_.FBX', fbx=>{
-      //   console.log(fbx)
+        console.log(fbx)
         fbx.castShadow = true
-        fbx.scale.set(0.001,0.001,0.001)
-        fbx.position.set(-30, -30, 10)
-        fbx.position.set(-30, -30, 7)
+        fbx.children.forEach(item => {
+          item.castShadow = true
+        })
+        // fbx.scale.set(0.001,0.001,0.001)
+        fbx.position.set(0, 0, 0)
         this.scene.add(fbx)
+
         this.renderLine(['单闸板防喷器'], [26, 10, 0], [0, 0, 0])
         this.renderLine(['双闸板防喷器'], [26, -10, 0], [0, -20, 0])
         this.renderLine(['环形防喷器'], [26, 30, 0], [0, 20, 0])
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
+        directionalLight.position.set(100, 100, 100) // 平行光相对物体投射的源头位置
+        directionalLight.castShadow = true // 开启平行光产生阴影的效果 默认是false
+        directionalLight.target = fbx // 光线投射的目标
+        this.scene.add(directionalLight)
+        const helper = new THREE.DirectionalLightHelper( directionalLight, 5 );
+        this.scene.add( helper );
       })
 
-      const _ambient = new THREE.AmbientLight(0xffffff);
-      this.scene.add(_ambient);
+      // const _ambient = new THREE.AmbientLight(0xffffff);
+      // this.scene.add(_ambient);
 
       //灯光属性
       const _spotLight = new THREE.SpotLight(0xf6f6f6);
       _spotLight.castShadow = true;
-      _spotLight.position.set(1000,1000,1000);
+      _spotLight.position.set(80,50,-50);
       //设置阴影贴图精度
       _spotLight.shadow.mapSize.width = _spotLight.shadow.mapSize.height = 1024*4;
       this.scene.add(_spotLight);
@@ -144,6 +158,7 @@ export default {
   display block
   width: 100%
   height: 100%
+  background-color: #000
 }
 canvas {
   display block

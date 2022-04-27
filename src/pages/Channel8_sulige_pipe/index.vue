@@ -760,7 +760,7 @@ export default {
       */
 
       list_0312.forEach((item, index) => {
-        let url = `http://192.168.3.33:8000/Data_greened/${item}/${item}.fbx`
+        let url = `http://192.168.1.14:8000/Data_greened/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           // obj.rotation.y += Math.PI/6
@@ -770,7 +770,7 @@ export default {
 
       // 瓦片模型导入
       list_0315.forEach((item, index) => {
-        let url = `http://192.168.3.33:8000/Data_0315_dajiang/${item}/${item}.fbx`
+        let url = `http://192.168.1.14:8000/Data_0315_dajiang/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           this.currentGroup.add(fbx.children[0])
