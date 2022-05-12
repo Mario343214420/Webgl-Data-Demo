@@ -13,12 +13,8 @@ module.exports = {
   // dev跨域问题
   devServer: {
     proxy: {
-      '/public': { target: 'http://localhost:8082/' },
-      '/union': { target: 'http://localhost:8082/' },
-      '/map': { target: 'http://localhost:8082/' },
-      '/summary': { target: 'http://localhost:8082/' },
-      '/s': {
-        target: 'http://192.168.1.222:90/'
+      '/sulige_0428': {
+        target: 'http://192.168.1.69:8080/'
       }
       // 'sockjs-node': {
       //   target: 'http://192.168.1.222:90',

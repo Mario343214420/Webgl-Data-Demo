@@ -740,7 +740,6 @@ export default {
       this.pipeGroup.add(modelLine)
       this.pipeGroup.add(realLine)
       // this.pipeGroup.rotation.x = -Math.PI
-      console.log(this.pipeGroup)
       this.pipeGroup.rotation.set(-3.0758061320543315, -0.08776287841848504, 0.04576319080287536)
       // this.pipeGroup.position.set(-444.40872882473667, 0, 255.55984414375814)
       // this.scene.add(this.pipeGroup.clone())
@@ -760,7 +759,7 @@ export default {
       */
 
       list_0312.forEach((item, index) => {
-        let url = `http://192.168.1.14:8000/Data_greened/${item}/${item}.fbx`
+        let url = `http://192.168.1.69:8000/Data_greened/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           // obj.rotation.y += Math.PI/6
@@ -770,7 +769,7 @@ export default {
 
       // 瓦片模型导入
       list_0315.forEach((item, index) => {
-        let url = `http://192.168.1.14:8000/Data_0315_dajiang/${item}/${item}.fbx`
+        let url = `http://192.168.1.69:8000/Data_0315_dajiang/${item}/${item}.fbx`
         fbxLoader.load(url, fbx => {
           fbx.children[0].position.z -= 1200
           this.currentGroup.add(fbx.children[0])

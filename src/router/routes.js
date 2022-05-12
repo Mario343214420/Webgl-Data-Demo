@@ -12,6 +12,7 @@ import Channel8WeiYuan from '../pages/Channel8WeiYuan/index.vue'
 import Channel8SuLiGe from '../pages/Channel8SuLiGe/index.vue'
 import Channel8_sulige_pipe from '../pages/Channel8_sulige_pipe/index.vue'
 import Channel8_sulige_part_control from '../pages/Channel8_sulige_part_control/index.vue'
+import Sulige_0428 from '../pages/Channel_SuLiGe_0428/index.vue'
 import Channel9 from '../pages/Channel9/index.vue'
 import Channel10 from '../pages/Channel10/index.vue'
 import Channel11 from '../pages/Channel11/index.vue'
@@ -27,6 +28,7 @@ import ChannelRepair from '../pages/Channel_repair_model/index.vue'
 import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 import CoalCube from '../pages/Coal_cube/index.vue'
 import ChannelZongcaimian from '../pages/Channel_zongcaimian/index.vue'
+import ChannelSuligeZongHeng from '../pages/Channel_SuLiGe_zongheng/index.vue'
 import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
 import Spotlight from '../pages/Channel_spotlight_shadow/index.vue'
 
@@ -222,6 +224,20 @@ const routes = [
     component: Spotlight,
     meta: {
       title: '点光源'
+    }
+  },
+  {
+    path: '/sulige_0428',
+    component: Sulige_0428,
+    meta: {
+      title: '4月28日苏里格'
+    }
+  },
+  {
+    path: '/sulige_zongheng',
+    component: ChannelSuligeZongHeng,
+    meta: {
+      title: '苏里格纵横'
     }
   },
   {
