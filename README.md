@@ -1,5 +1,9 @@
 # 大数据展示项目
 
+```
+如果对您有用，烦请点个star，万分感谢。
+```
+
 <font size=18 color=#333></font>
 
 最新版：
@@ -19,10 +23,6 @@
 升级版：
 
 ![image](https://wx4.sinaimg.cn/mw690/bc401c90gy1gyaxy8tm0qj21gq0oeqdw.jpg)
-
-```
-如果对您有用，烦请点个star，万分感谢。
-```
 
 修改：在vue3基础上，进行改写，应用vite在ts_version_base分支上，开发基础套用框架。
 
