@@ -62,6 +62,12 @@ export default {
       })*/
 
       const fbxLoader = new FBXLoader()
+      fbxLoader.load('./models/fangpenqi/huanxingfangpenqi(1).FBX', fbx => {
+        console.log(fbx)
+        fbx.scale.set(4,4,4)
+        fbx.position.set(0,200, 0)
+        this.scene.add(fbx)
+      })
       /*// fbxLoader.load('./models/complete_model/c4d/钻杆模型.fbx', fbx => {
       fbxLoader.load('./models/complete_model/keyshot/FBX/钻杆模型.fbx', fbx => {
         fbx.children.forEach((item, index) => {

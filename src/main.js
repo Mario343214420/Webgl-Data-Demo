@@ -18,6 +18,40 @@ import { Button, Dialog, Input, Row, Col, Checkbox, Slider, Select, Option } fro
 //     }
 //   })
 // );
+
+import ECharts from 'vue-echarts'
+import { use } from 'echarts/core'
+// 手动引入 ECharts 各模块来减小打包体积
+import VueCompositionAPI from '@vue/composition-api'
+
+Vue.use(VueCompositionAPI)
+import {
+  CanvasRenderer
+} from 'echarts/renderers'
+import {
+  BarChart,
+  GraphChart
+} from 'echarts/charts'
+import {
+  GridComponent,
+  TooltipComponent,
+  TitleComponent,
+  GraphicComponent
+} from 'echarts/components'
+
+use([
+  TitleComponent,
+  CanvasRenderer,
+  BarChart,
+  GridComponent,
+  TooltipComponent,
+  GraphicComponent,
+  GraphChart
+]);
+
+// 全局注册组件（也可以使用局部注册）
+Vue.component('e-chart', ECharts)
+
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Input)

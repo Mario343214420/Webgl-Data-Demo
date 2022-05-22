@@ -15,7 +15,7 @@
         <div class="btn" @click="group.visible = !group.visible">切换地形显隐</div>
         <div class="btn" @click="pipeGroup.visible = !pipeGroup.visible">切换管线显隐</div>
       </div>
-<!--      <div class="start-point">
+      <div class="start-point">
         起点定位：<br>
         <i class="x">{{measureDataStart.x}}</i><br>
         <i class="y">{{measureDataStart.y}}</i><br>
@@ -26,14 +26,14 @@
         <i class="x">{{measureDataEnd.x}}</i><br>
         <i class="y">{{measureDataEnd.y}}</i><br>
         <i class="z">{{measureDataEnd.z}}</i>
-      </div>-->
+      </div>
       <div class="length">
         测点距离：{{measureLength}} <br>
         测点实际计算值：{{parseInt(measureLength * realToModelParam)}}
         <br>
         <span class="clear-measure" @click="clearMeasureMark">清除标记记录</span>
       </div>
-      <div class="data-show-group">
+      <!--<div class="data-show-group">
         <div class="pipe" v-if="pipeGroup">
           管路组定位数据
           <div class="group">
@@ -55,7 +55,7 @@
             z: <i class="z">{{pipeGroup.scale.z}}</i>
           </div>
         </div>
-      </div>
+      </div>-->
       <div>
         <div>放位点</div>
         <div class="marks">
@@ -175,20 +175,13 @@ export default {
     calculateCoordinate(baseArr) {
       let resultArr = []
       baseArr.forEach(item => {
-        // resultArr.push([(item[0] - 108.59) * 89000, item[1], (item[2] - 38.22) * 89000])
-        resultArr.push([(item[0] - 4234927) , item[1]  , (item[2] - 289160)])
+        resultArr.push([(item[0] - 108.59) * 89000, item[1], (item[2] - 38.22) * 89000])
       })
       return resultArr
     },
     // 生成粗线体
     creatFatLine (points, color, lineWidth) {
-      const geometry = new THREE.SphereGeometry( 0.5, 8, 8 );
-      const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-      const sphere = new THREE.Mesh( geometry, material );
-      sphere.position.set(points[0][0], points[0][1], points[0][2])
-      this.scene.add( sphere );
       let positions = [].concat.apply([], points)
-      // console.log(positions)
       let fatLineGeo = new LineGeometry()
       fatLineGeo.setPositions(positions)
       let fatLineMaterial = new LineMaterial({
@@ -197,7 +190,6 @@ export default {
       })
       fatLineMaterial.resolution.set(window.innerWidth+100, window.innerHeight+100)
       let fatLine = new Line2(fatLineGeo,fatLineMaterial)
-      // console.log(fatLine)
       return fatLine
     },
     init() {
@@ -259,57 +251,23 @@ export default {
         [4235120, 0.8, 289501],
         [4235153, 2.2, 289550]
       ]
-      let modelStackList0518 = [
-        [-170.26793, -4.30611, -83.91616],
-        [-165.73341, -3.19091, -79.29904],
-        [-154.88394, -3.37124, -72.81463],
-        [-144.0797,	-3.38196,	-66.29829],
-        [-135.91064,-2.68779,	-61.69018],
-        [-126.58984	,-2.13637, -56.20627],
-        [-117.82139, -1.68822, -51.0878],
-        [-106.93823, -1.72159, -44.96991],
-        [-97.2435, -0.191, -39.142],
-        [-84.93733,	-0.75843,	-33.30413],
-        [-72.52429,	-0.19559,	-26.42734],
-        [-60.74367,	0.25865, -20.31503],
-        [-44.50827,	1.38538, -10.89269]
-      ]
       // let modelLine = this.creatFatLine(this.calculateCoordinate(pipeList), 0xff0000, 4)
       // modelLine.name = 'gps定位连线'
-      let middleLineList = realStackList0518.map((item, index) => {
-        let deep = item[1]
-        // item[1] = modelStackList0518[index][1] - deep / 2.907930598131183
-        item[1] = 0
-        return item
-      })
-      // console.log(1, middleLineList)
-      let lineList = this.calculateCoordinate(middleLineList)
-      let realLine = this.creatFatLine(lineList, 0x00ff00, 4)
+      let realLine = this.creatFatLine(realStackList, 0x00ff00, 4)
       let deepLineList = []
-      // let deepList = [0.9, 2.0, 1.3, 1.0, 1.6]
-      // realStackList.forEach((item, index) => {
-      //   let point = item
-      //   point[1] -= deepList[index] / this.realToModelParam
-      //   deepLineList.push(point)
-      // })
+      let deepList = [0.9, 2.0, 1.3, 1.0, 1.6]
+      realStackList.forEach((item, index) => {
+        let point = item
+        point[1] -= deepList[index] / this.realToModelParam
+        deepLineList.push(point)
+      })
       // this.pipeGroup.add(modelLine)
-      // let deepLine = this.creatFatLine(deepLineList, 0xff0000, 4)
-      // deepLine.name = '埋深线'
-      realLine.name = '站测连线'
+      let deepLine = this.creatFatLine(deepLineList, 0xff0000, 4)
+      deepLine.name = '埋深线'
+      realLine.name = '桩位连线'
       this.pipeGroup.name = '管线组'
       this.pipeGroup.add(realLine)
-      this.pipeGroup.scale.set(0.32211, 1, 0.32211)
-      let modelLine1 = this.creatFatLine(modelStackList0518, 0xff0000, 1)
-      let l2 = JSON.parse(JSON.stringify(modelStackList0518))
-      let dueL2 = l2.map((item, index) => [item[0], item[1] - (realStackList0518[index][1] / 2.90793), item[2]])
-      console.log(l2, dueL2)
-      let modelLine2 = this.creatFatLine(dueL2, 0xff00ff, 1)
-      modelLine1.name = '站测模型连线'
-      modelLine2.name = '埋深模型连线'
-      this.baseGroup.add(modelLine1)
-      this.baseGroup.add(modelLine2)
-      this.scene.add(this.baseGroup)
-      // this.pipeGroup.add(deepLine)
+      this.pipeGroup.add(deepLine)
       this.scene.add(this.pipeGroup)
 
       // this.group.add(mesh)
@@ -439,7 +397,7 @@ export default {
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
 
       // 对象可以被剪切
-      // this.renderer.localClippingEnabled = true
+      this.renderer.localClippingEnabled = true
       const PlaneArr = [
         // 创建一个垂直x轴的平面，方向沿着x轴负方向，沿着x轴正方向平移20,
         // new THREE.Plane(new THREE.Vector3(1, 0, 0), 20),
@@ -451,7 +409,7 @@ export default {
       ];
       // const helper = new THREE.PlaneHelper(PlaneArr[0], 300, 0xffff00);
       // this.scene.add(helper);
-      // this.renderer.clippingPlanes = PlaneArr
+      this.renderer.clippingPlanes = PlaneArr
 
       this.renderer.setSize(this.w, this.h)
       // 炫光特效关键代码 ***
@@ -480,7 +438,7 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      this.transformControls.attach( modelLine1 );
+      this.transformControls.attach( this.pipeGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -547,7 +505,7 @@ export default {
       } */
       let raycaster = new THREE.Raycaster();
       raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-      let intersects = raycaster.intersectObjects(this.baseGroup.children,true);
+      let intersects = raycaster.intersectObjects(this.scene.children,true);
       if (intersects.length > 0) {
         /* let list = intersects.filter(item => {
           console.log(item.object.parent)
@@ -752,7 +710,6 @@ export default {
   .marks {
     height: 300px;
     display: flex;
-    flex-direction column;
     overflow-y: scroll;
     .mark-item {
       flex: 1
