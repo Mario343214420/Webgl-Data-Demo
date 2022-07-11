@@ -12,8 +12,6 @@ fork的大佬们，顺手点个赞，谢谢。
 
 ![项目展示](https://s2.loli.net/2022/06/08/kIVcNEHuXS7QiAe.gif)
 
-![image](https://s1.ax1x.com/2022/05/09/OGw7GR.gif)
-
 <!-- [![OGdJXT.md.gif](https://s1.ax1x.com/2022/05/09/OGdJXT.md.gif)](https://imgtu.com/i/OGdJXT) -->
 
 ![image](https://s1.ax1x.com/2022/05/06/Ony6OJ.gif)
