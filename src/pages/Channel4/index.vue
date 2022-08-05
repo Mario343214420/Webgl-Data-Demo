@@ -14,7 +14,7 @@ import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 export default {
-  name: 'Channel3',
+  name: 'Channel4',
   data() {
     return {
       scene: null,
@@ -104,6 +104,8 @@ export default {
       const loader = new GLTFLoader()
       console.log(loader)
       loader.load('./models/dragoner/scene.gltf', gltf => {
+        console.log(gltf)
+        // const meshes =
         gltf.scene.position.y = -100
         gltf.scene.position.x = -200
         gltf.scene.castShadow = true
@@ -137,6 +139,9 @@ export default {
       this.controls.update()
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
+    },
+    recurveChildren(param) {
+
     }
   }
 }

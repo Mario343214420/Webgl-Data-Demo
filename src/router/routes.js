@@ -53,11 +53,17 @@ const routes = [
   },
   {
     path: '/channel3',
-    component: Channel3
+    component: Channel3,
+    meta: {
+      title: '星光地球'
+    }
   },
   {
     path: '/channel4',
-    component: Channel4
+    component: Channel4,
+    meta: {
+      title: '龙女模型'
+    }
   },
   {
     path: '/channel5',
