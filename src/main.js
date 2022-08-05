@@ -29,24 +29,30 @@ import {
   CanvasRenderer
 } from 'echarts/renderers'
 import {
+  LineChart,
   BarChart,
   GraphChart
 } from 'echarts/charts'
 import {
   GridComponent,
+  LegendComponent,
   TooltipComponent,
   TitleComponent,
-  GraphicComponent
+  GraphicComponent,
+  MarkAreaComponent
 } from 'echarts/components'
 
 use([
+  LineChart,
+  LegendComponent,
   TitleComponent,
   CanvasRenderer,
   BarChart,
   GridComponent,
   TooltipComponent,
   GraphicComponent,
-  GraphChart
+  GraphChart,
+  MarkAreaComponent
 ]);
 
 // 全局注册组件（也可以使用局部注册）

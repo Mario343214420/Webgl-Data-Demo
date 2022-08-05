@@ -37,7 +37,7 @@ export default {
       copyPipe: null,
       modelsGroup: null,
       option_column: {
-        title: { text: "Column Chart" },
+        title: { text: "Temperature-controlled Meter" },
         tooltip: {},
         xAxis: {
           data: ["温度 01", "温度 02", "温度 03", "温度 04", "温度 05", "温度 06"],
@@ -61,11 +61,14 @@ export default {
       },
       chartOption: {
         title: {
-          text: 'Life Expectancy and GDP by Country',
+          text: 'Machine State',
           left: '5%',
           top: '3%'
         },
         legend: {
+          textStyle: {
+            color: '#fff'
+          },
           right: '10%',
           top: '3%',
           data: ['1990', '2015']

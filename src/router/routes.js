@@ -29,8 +29,14 @@ import ChannelPipeCompare from '../pages/Channel_pipe_compare/index.vue'
 import CoalCube from '../pages/Coal_cube/index.vue'
 import ChannelZongcaimian from '../pages/Channel_zongcaimian/index.vue'
 import ChannelSuligeZongHeng from '../pages/Channel_SuLiGe_zongheng/index.vue'
+import ChannelSuligeZongHengOutPutGps from '../pages/Channel_SuLiGe_zongheng/index_output_gps.vue'
+import ChannelSuligeZongHeng0617 from '../pages/Channel_SuLiGe_zongheng/index_0617_2.vue'
+import ChannelSuligeZongHeng0531 from '../pages/Channel_SuLiGe_zongheng/index_0531.vue'
+import ChannelSuligeZongHengGpsCompare from '../pages/Channel_SuLiGe_zongheng/index_0607_gps_compare.vue'
 import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
 import Spotlight from '../pages/Channel_spotlight_shadow/index.vue'
+import EdgeGeometry from '../pages/Channel_EdgesGeometry/index.vue'
+import Channel_CanvasIsPointIn from '../pages/Channel_CanvasIsPointIn/index.vue'
 
 const routes = [
   {
@@ -238,6 +244,48 @@ const routes = [
     component: ChannelSuligeZongHeng,
     meta: {
       title: '苏里格纵横'
+    }
+  },
+  {
+    path: '/sulige_zongheng_output_gps',
+    component: ChannelSuligeZongHengOutPutGps,
+    meta: {
+      title: '苏里格纵横--直出GPS'
+    }
+  },
+  {
+    path: '/sulige_zongheng_0617',
+    component: ChannelSuligeZongHeng0617,
+    meta: {
+      title: '苏里格纵横--GPS偏离度'
+    }
+  },
+  {
+    path: '/sulige_zongheng0531',
+    component: ChannelSuligeZongHeng0531,
+    meta: {
+      title: '苏里格纵横5月31日存档'
+    }
+  },
+  {
+    path: '/sulige_zongheng0607',
+    component: ChannelSuligeZongHengGpsCompare,
+    meta: {
+      title: '苏里格纵横6月7日 点距测量'
+    }
+  },
+  {
+    path: '/edgeGeometry',
+    component: EdgeGeometry,
+    meta: {
+      title: '边缘几何体'
+    }
+  },
+  {
+    path: '/canvas_is_point_in',
+    component: Channel_CanvasIsPointIn,
+    meta: {
+      title: 'canvas判断是否在区域内（或路径内）'
     }
   },
   {

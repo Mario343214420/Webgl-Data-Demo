@@ -79,9 +79,9 @@ export default {
       this.clock.start()
 
       for(let i = 1; i < 23; i++) {
-        var max = 1;
-        var min = 0.6;
-        var random = Math.random()*(max-min)+min;
+        const max = 1;
+        const min = 0.6;
+        const random = Math.random()*(max-min)+min;
         const geometry = new THREE.RingGeometry( 10 * (20-i) * random, 15 * (30-i) * random, 64 );
         const texture = new THREE.TextureLoader().load( `./imgs/c${i}.png` );
         const material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide, transparent: true } );

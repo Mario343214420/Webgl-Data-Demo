@@ -8,6 +8,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
+import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 export default {
   name: 'Channel3',
   data() {
@@ -32,6 +37,26 @@ export default {
     })
   },
   methods: {
+    addBloomPass() {
+      // RenderPass这个通道会渲染场景，但不会将渲染结果输出到屏幕上
+      const renderScene = new RenderPass(this.scene, this.camera)
+      const effectCopy = new ShaderPass(CopyShader); //传入了CopyShader着色器，用于拷贝渲染结果
+      effectCopy.renderToScreen = true;
+      // THREE.BloomPass(strength, kernelSize, sigma, Resolution)
+      // strength 定义泛光效果的强度，值越高，明亮的区域越明亮，而且渗入较暗区域的也就越多
+      // kernelSize 控制泛光的偏移量
+      // sigma 控制泛光的锐利程度，值越高，泛光越模糊
+      // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
+      // const bloomPass = new BloomPass(3, 1.5, 0.4, 1024); //BloomPass通道效果
+      // const bloomPass = new BloomPass(1.1, 25, 4.0, 256); //BloomPass通道效果
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.w, this.h), 1, 0.8, 0);
+      //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
+      this.bloomComposer = new EffectComposer(this.renderer)
+      this.bloomComposer.setSize(this.w, this.h);
+      this.bloomComposer.addPass(renderScene);
+      this.bloomComposer.addPass(bloomPass);
+      this.bloomComposer.addPass(effectCopy);
+    },
     init() {
       const canvas = this.$refs.cvs
       // canvas.width = document.documentElement.clientWidth
@@ -97,11 +122,15 @@ export default {
       })
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, })
       this.renderer.setSize(this.w, this.h)
+      this.renderer.autoClear = false
+      this.addBloomPass()
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-
       this.controls.autoRotate = true;
     },
     animate() {
+      if(this.bloomComposer) {
+        this.bloomComposer.render()
+      }
       // 镜头旋转（未生效）
       this.deg++
       this.camera.rotateY(this.deg/30000)

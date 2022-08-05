@@ -12,6 +12,7 @@ module.exports = {
     : '/',
   // dev跨域问题
   devServer: {
+    disableHostCheck: true,
     proxy: {
       '/sulige_0428': {
         target: 'http://192.168.1.69:8080/'
