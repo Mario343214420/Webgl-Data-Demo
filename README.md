@@ -1,9 +1,5 @@
 # 大数据展示项目
 
-祝祖国早日统一，两岸人民迫切希望重聚
-
-[![vVyp2d.jpg](https://s1.ax1x.com/2022/08/03/vVyp2d.jpg)](https://imgtu.com/i/vVyp2d)
-
 ```
 如果对您有用，烦请点个star，万分感谢。
 
