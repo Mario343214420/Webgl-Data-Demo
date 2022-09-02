@@ -86,33 +86,33 @@
       <div>沿线1号 坑位</div>
       <div>
         <span>地形变化：</span>
-        <span>{{-(Math.sqrt(
+        <span>{{(Math.sqrt(
           Math.pow(-134.98041 + 135.00758, 2) +
           Math.pow(-2.55852 + 2.67598, 2) +
           Math.pow(-61.06051 +61.11322, 2)
         ) * 2.90793).toFixed(5)}}米</span>
       </div>
-      <!-- -134.33118, -2.41191, -62.44864
-      -134.33685, -2.68791, -62.44947 -->
+      <!-- -134.62639, -2.44019, -62.58613 -->
+      <!-- -134.62309, -2.63536, -62.58804 -->
       <div>
         <span>原管线埋深：</span>
         <span>{{(Math.sqrt(
-          Math.pow(-134.33118 + 134.33685, 2) +
-          Math.pow(-2.41191 + 2.68791, 2) +
-          Math.pow(-62.44864 + 62.44947, 2)
-        ) * 2.90793 + 0.3).toFixed(5)}}米</span>
+          Math.pow(-134.62639 + 134.62309, 2) +
+          Math.pow(-2.44019 + 2.63536, 2) +
+          Math.pow(-62.58613 + 62.58804, 2)
+        ) * 2.90793).toFixed(5)}}米</span>
       </div>
       <div>
         <span>变化后管线埋深：</span>
         <span>{{(Math.sqrt(
-          Math.pow(-134.33118 + 134.33685, 2) +
-          Math.pow(-2.41191 + 2.68791, 2) +
-          Math.pow(-62.44864 + 62.44947, 2)
-        ) * 2.90793 - Math.sqrt(
+          Math.pow(-134.62639 + 134.62309, 2) +
+          Math.pow(-2.44019 + 2.63536, 2) +
+          Math.pow(-62.58613 + 62.58804, 2)
+        ) * 2.90793).toFixed(5) - (Math.sqrt(
           Math.pow(-134.98041 + 135.00758, 2) +
           Math.pow(-2.55852 + 2.67598, 2) +
           Math.pow(-61.06051 +61.11322, 2)
-        ) * 2.90793 + 0.3).toFixed(5)}}米</span>
+        ) * 2.90793).toFixed(5) }}</span>
       </div>
     </div>
     <div class="calculate-card-2" v-show="calculateCardFlag2">
@@ -121,35 +121,35 @@
         <!---85.24467, -0.91612, -33.13839-->
         <!---85.23145, -0.83905, -33.08953-->
         <span>地形变化：</span>
-        <span>{{-(Math.sqrt(
+        <span>{{(Math.sqrt(
           Math.pow(-85.24467 + 85.23145, 2) +
           Math.pow(-0.91612 + 0.83905, 2) +
           Math.pow(-33.13839 + 33.08953, 2)
         ) * 2.90793).toFixed(5)}}米</span>
       </div>
       <div>
-        <!-- -84.22593, -0.20486, -34.73554
-        -84.22548, -0.58158, -34.73569 -->
+        <!-- -84.53355, -0.17773, -34.91875 -->
+        <!-- -84.57289, -0.54871, -34.94436 -->
         <span>原管线埋深：</span>
         <span>{{(Math.sqrt(
-          Math.pow(-84.22593 + 84.22548, 2) +
-          Math.pow(-0.20486 + 0.58158, 2) +
-          Math.pow(-34.73554 + 34.73569, 2)
-        ) * 2.90793 - 0.2).toFixed(5)}}米</span>
+          Math.pow(-84.53355 + 84.57289, 2) +
+          Math.pow(-0.17773 + 0.54871, 2) +
+          Math.pow(-34.91875 + 34.94436, 2)
+        ) * 2.90793).toFixed(5)}}米</span>
       </div>
       <div>
         <!-- -84.53355, -0.17773, -34.91875 -->
         <!-- -84.57289, -0.54871, -34.94436 -->
         <span>变化后管线埋深：</span>
         <span>{{(Math.sqrt(
-          Math.pow(-84.22593 + 84.22548, 2) +
-          Math.pow(-0.20486 + 0.58158, 2) +
-          Math.pow(-34.73554 + 34.73569, 2)
-        ) * 2.90793 - Math.sqrt(
+          Math.pow(-84.53355 + 84.57289, 2) +
+          Math.pow(-0.17773 + 0.54871, 2) +
+          Math.pow(-34.91875 + 34.94436, 2)
+        ) * 2.90793).toFixed(5) - (Math.sqrt(
           Math.pow(-85.24467 + 85.23145, 2) +
           Math.pow(-0.91612 + 0.83905, 2) +
           Math.pow(-33.13839 + 33.08953, 2)
-        ) * 2.90793 - 0.2).toFixed(5)}}米</span>
+        ) * 2.90793).toFixed(5)}}米</span>
       </div>
     </div>
   </div>
@@ -1569,8 +1569,8 @@ export default {
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
         // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
-        // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
-        let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
+        let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
+        // let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
         if (intersects.length > 0) {
           /* let list = intersects.filter(item => {
             console.log(item.object.parent)
@@ -1890,7 +1890,7 @@ export default {
   }
   .calculate-card-1 {
     position absolute
-    width: 220px
+    width: 200px
     height: 100px
     top: 140px
     left: 20px

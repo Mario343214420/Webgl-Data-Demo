@@ -18,7 +18,6 @@
         </div>
         <div class="visible-control-group">
           <div class="btn" @click="group.visible = !group.visible">切换地形显隐</div>
-          <div class="btn" @click="baseGroup.visible = !baseGroup.visible">切换基础显隐</div>
           <div class="btn" @click="gpsTransform0607.visible = !gpsTransform0607.visible">切换管线显隐</div>
         </div>
       </div>
@@ -47,25 +46,25 @@
           <span class="clear-measure" @click="clearMeasureMark">清除标记记录</span>
         </div>
         <div class="data-show-group">
-          <div class="pipe" v-if="baseGroup">
+          <div class="pipe" v-if="gpsGroup">
             管路组定位数据
             <div class="group">
               position: <br>
-              x: <i class="x">{{baseGroup.position.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.position.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.position.z}}</i>
+              x: <i class="x">{{gpsTransform0607.position.x}}</i>,<br>
+              y: <i class="y">{{gpsTransform0607.position.y}}</i>,<br>
+              z: <i class="z">{{gpsTransform0607.position.z}}</i>
             </div>
             <div class="group">
               rotation: <br>
-              x: <i class="x">{{baseGroup.rotation.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.rotation.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.rotation.z}}</i>
+              x: <i class="x">{{gpsTransform0607.rotation.x}}</i>,<br>
+              y: <i class="y">{{gpsTransform0607.rotation.y}}</i>,<br>
+              z: <i class="z">{{gpsTransform0607.rotation.z}}</i>
             </div>
             <div class="group">
               scale: <br>
-              x: <i class="x">{{baseGroup.scale.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.scale.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.scale.z}}</i>
+              x: <i class="x">{{gpsTransform0607.scale.x}}</i>,<br>
+              y: <i class="y">{{gpsTransform0607.scale.y}}</i>,<br>
+              z: <i class="z">{{gpsTransform0607.scale.z}}</i>
             </div>
           </div>
         </div>
@@ -82,76 +81,6 @@
       </div>
     </div>
     <canvas ref="cvs" width="w" height="h" @click="onDocumentMouseDown"></canvas>
-    <div class="calculate-card-1" v-show="calculateCardFlag1">
-      <div>沿线1号 坑位</div>
-      <div>
-        <span>地形变化：</span>
-        <span>{{-(Math.sqrt(
-          Math.pow(-134.98041 + 135.00758, 2) +
-          Math.pow(-2.55852 + 2.67598, 2) +
-          Math.pow(-61.06051 +61.11322, 2)
-        ) * 2.90793).toFixed(5)}}米</span>
-      </div>
-      <!-- -134.33118, -2.41191, -62.44864
-      -134.33685, -2.68791, -62.44947 -->
-      <div>
-        <span>原管线埋深：</span>
-        <span>{{(Math.sqrt(
-          Math.pow(-134.33118 + 134.33685, 2) +
-          Math.pow(-2.41191 + 2.68791, 2) +
-          Math.pow(-62.44864 + 62.44947, 2)
-        ) * 2.90793 + 0.3).toFixed(5)}}米</span>
-      </div>
-      <div>
-        <span>变化后管线埋深：</span>
-        <span>{{(Math.sqrt(
-          Math.pow(-134.33118 + 134.33685, 2) +
-          Math.pow(-2.41191 + 2.68791, 2) +
-          Math.pow(-62.44864 + 62.44947, 2)
-        ) * 2.90793 - Math.sqrt(
-          Math.pow(-134.98041 + 135.00758, 2) +
-          Math.pow(-2.55852 + 2.67598, 2) +
-          Math.pow(-61.06051 +61.11322, 2)
-        ) * 2.90793 + 0.3).toFixed(5)}}米</span>
-      </div>
-    </div>
-    <div class="calculate-card-2" v-show="calculateCardFlag2">
-      <div>沿线2号 坑位</div>
-      <div>
-        <!---85.24467, -0.91612, -33.13839-->
-        <!---85.23145, -0.83905, -33.08953-->
-        <span>地形变化：</span>
-        <span>{{-(Math.sqrt(
-          Math.pow(-85.24467 + 85.23145, 2) +
-          Math.pow(-0.91612 + 0.83905, 2) +
-          Math.pow(-33.13839 + 33.08953, 2)
-        ) * 2.90793).toFixed(5)}}米</span>
-      </div>
-      <div>
-        <!-- -84.22593, -0.20486, -34.73554
-        -84.22548, -0.58158, -34.73569 -->
-        <span>原管线埋深：</span>
-        <span>{{(Math.sqrt(
-          Math.pow(-84.22593 + 84.22548, 2) +
-          Math.pow(-0.20486 + 0.58158, 2) +
-          Math.pow(-34.73554 + 34.73569, 2)
-        ) * 2.90793 - 0.2).toFixed(5)}}米</span>
-      </div>
-      <div>
-        <!-- -84.53355, -0.17773, -34.91875 -->
-        <!-- -84.57289, -0.54871, -34.94436 -->
-        <span>变化后管线埋深：</span>
-        <span>{{(Math.sqrt(
-          Math.pow(-84.22593 + 84.22548, 2) +
-          Math.pow(-0.20486 + 0.58158, 2) +
-          Math.pow(-34.73554 + 34.73569, 2)
-        ) * 2.90793 - Math.sqrt(
-          Math.pow(-85.24467 + 85.23145, 2) +
-          Math.pow(-0.91612 + 0.83905, 2) +
-          Math.pow(-33.13839 + 33.08953, 2)
-        ) * 2.90793 - 0.2).toFixed(5)}}米</span>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -191,7 +120,7 @@ export default {
       mX: null,
       mY: null,
       flag: false,
-      toolsFlag: true,
+      toolsFlag: false,
       bloomComposer: null,
       cubeGroup: null,
       baseGroup: null,
@@ -212,8 +141,6 @@ export default {
       },
       measuredFlag: false,
       clipFlag: false,
-      calculateCardFlag1: false,
-      calculateCardFlag2: false,
       markGroup: null,
       markList: [],
       options: {
@@ -631,7 +558,7 @@ export default {
       let realStack0613 = [
         [-169.76094, -4.17392, -82.99918],
         [-98.93944, -0.42110, -40.64441],
-        [-3.44321, 5.35573, 9.56562]
+        [-2.00138, 5.47786, 7.59669]
       ]
       /* 0607 位移至原点
        * @method 坐标换算
@@ -650,22 +577,12 @@ export default {
         return resList
       }
 
-      // 原起点至终点
-      /* let line0607_1 = this.creatFatLine(realStack0613.slice(0, 2), '#ffaa11', 1, true)
-      let line0607_2 = this.creatFatLine(realStack0613.slice(1), '#ffaa11', 1, true)
-      line0607_2.position.set(-realStack0613[1][0], -realStack0613[1][1], -realStack0613[1][2])
-      this.gpsLocation0607.add(line0607_2)
-      this.gpsLocation0607.add(line0607_2.joint) */
-      // 0616前调点位复核
-      let lineList0616 = [
-        [-98.93944, -0.42110, -40.64441],
-        [-32.18285, 2.34062, -6.23300]
-      ]
-      // let line0607_2 = this.creatFatLine(lineList0616, '#ffaa11', 1, true)
-      // line0607_2.position.set(-lineList0616[0][0], -lineList0616[0][1], -lineList0616[0][2])
-      // this.gpsLocation0607.add(line0607_2)
-      // this.gpsLocation0607.add(line0607_2.joint)
+      let line0607_1 = this.creatFatLine(realStack0607.slice(0, 2), '#ffaa11', 1, true)
+      let line0607_2 = this.creatFatLine(realStack0607.slice(1), '#ffaa11', 1, true)
+      line0607_2.position.set(-realStack0607[1][0], -realStack0607[1][1], -realStack0607[1][2])
 
+      this.gpsLocation0607.add(line0607_2)
+      this.gpsLocation0607.add(line0607_2.joint)
       // 5月27日 gps数据 xy反了（吴秉聪原因）
       let realStackList0527 = [
         [289162, 1.51, 4234921],
@@ -693,11 +610,7 @@ export default {
       ]
       // 5月27日 gps坐标转地形坐标 旋转处理后
       let realGpsToModel0527 = [
-        [
-          -169.76094,
-          -4.17392,
-          -82.99918
-        ],
+        [-169.76094, -4.17392, -82.99918],
         [
           -163.31508,
           -3.36202,
@@ -805,109 +718,19 @@ export default {
         ]
       ]
       let realGpsList1_0607 = due0607Gps(realGpsToModel0527.slice(0, 10))
-      let realGpsList2_0607 = due0607Gps(realGpsToModel0527.slice(-13))
-      // console.log(realGpsToModel0527, realGpsToModel0527.slice(-13))
-      let realGpsLine1_0607 = this.creatFatLine(realGpsList1_0607, '#ee4422', 1, true)
-      // let realGpsLine2_0607 = this.creatFatLine(realGpsList2_0607, '#ee4422', 1, true)
-      realGpsLine1_0607.position.set(realStack0613[0][0], realStack0613[0][1], realStack0613[0][2])
+      let realGpsList2_0607 = due0607Gps(realGpsToModel0527.slice(10))
+      let realGpsLine1_0607 = this.creatFatLine(realGpsList1_0607, '#ee4422')
+      let realGpsLine2_0607 = this.creatFatLine(realGpsList2_0607, '#ee4422')
+      realGpsLine1_0607.position.set(realStack0607[0][0], realStack0607[0][1], realStack0607[0][2])
       realGpsLine1_0607.rotation.set(-0.00879, -0.01173, -0.01500)
       realGpsLine1_0607.scale.set(0.98323, 0.98323, 0.98323)
-      realGpsLine1_0607.joint.position.set(realStack0613[0][0], realStack0613[0][1], realStack0613[0][2])
-      realGpsLine1_0607.joint.rotation.set(-0.00879, -0.01173, -0.01500)
-      realGpsLine1_0607.joint.scale.set(0.98323, 0.98323, 0.98323)
 
-      // realGpsLine2_0607.position.set(realStack0613[1][0], realStack0613[1][1], realStack0613[1][2])
-      // realGpsLine2_0607.rotation.set(-0.00509, -0.00551, -0.00372)
-      // realGpsLine2_0607.scale.set(1.10427, 1.10427, 1.10427)
-      // realGpsLine2_0607.joint.position.set(realStack0613[1][0], realStack0613[1][1], realStack0613[1][2])
-      // realGpsLine2_0607.joint.rotation.set(-0.00509, -0.00551, -0.00372)
-      // realGpsLine2_0607.joint.scale.set(1.10427, 1.10427, 1.10427)
-
-      // 0616
-      /*
-      *  rotation:
-      *  x: -0.014856675814851188,
-      *  y: -0.008121227360129064,
-      *  z: -0.010011989203361977
-      *  scale:
-      *  x: 1.14176850792939,
-      *  y: 1.14176850792939,
-      *  z: 1.14176850792939
-      *
-      */
-
-      // 6月16日 更新
-      let realGpsLine2_0616 = this.creatFatLine(realGpsList2_0607, '#ee4422', 1, true)
-      realGpsLine2_0616.position.set(realStack0613[1][0], realStack0613[1][1], realStack0613[1][2])
-      realGpsLine2_0616.rotation.set(-0.006516144289936138, -0.011208608141995405, 0.003192128654052888)
-      realGpsLine2_0616.scale.set(1.00819, 1.00819, 1.00819)
-      realGpsLine2_0616.joint.position.set(realStack0613[1][0], realStack0613[1][1], realStack0613[1][2])
-      realGpsLine2_0616.joint.rotation.set(-0.006516144289936138, -0.011208608141995405, 0.003192128654052888)
-      realGpsLine2_0616.joint.scale.set(1.00819, 1.00819, 1.00819)
+      realGpsLine2_0607.position.set(realStack0607[1][0], realStack0607[1][1], realStack0607[1][2])
+      realGpsLine2_0607.scale.set(1.10522, 1.10522, 1.10522)
+      realGpsLine2_0607.rotation.set(0.01583, 0.01795, 0.00781)
 
       this.gpsTransform0607.add(realGpsLine1_0607)
-      this.gpsTransform0607.add(realGpsLine2_0616)
-      this.gpsTransform0607.add(realGpsLine1_0607.joint)
-      this.gpsTransform0607.add(realGpsLine2_0616.joint)
-
-      // 6月17日校准后点位
-      let datumLinePointList = [
-        [-99.22460, -0.45596, -40.53833], // 9
-        [-3.56256, 5.31680, 9.51908] // 21
-      ]
-      let datumLine0617 = this.creatFatLine(datumLinePointList, '#fff', 1, true)
-      datumLine0617.position.set(-datumLinePointList[0][0], -datumLinePointList[0][1], -datumLinePointList[0][2])
-      // this.gpsLocation0607.add(datumLine0617)
-
-      // 吴标记地点
-      let pointList0616 = [
-        // [-164.27456, -3.19688, -78.86150],
-        // [-158.23810, -3.39702, -74.78544],
-        // [-151.09236, -2.83797, -70.16036],
-        // [-146.04315, -3.02319, -68.07493],
-        // [-136.18033, -2.72987, -61.94232],
-        // [-125.94048, -2.07066, -56.27821],
-        // [-118.39737, -1.70472, -52.25879],
-        // [-107.21383, -1.75338, -45.42253],
-        [-99.22460, -0.45596, -40.53833], // 9
-        [-90.10032, -0.15460, -36.07525], // 10
-        [-82.88856, -0.60405, -32.37479], // 11
-        [-76.75516, -0.31235, -29.32384], // 12
-        [-68.52892, 0.03582, -25.08290], // 13
-        [-61.44267, 0.19871, -20.87278], // 14
-        [-53.42508, 0.69733, -16.43010], // 15
-        [-44.43926, 1.29097, -12.25518], // 16
-        [-37.79011, 2.38801, -8.76094], // 17
-        [-32.18285, 2.34062, -6.23300], // 18
-        [-22.66932, 2.13835, -2.48044], // 19
-        [-17.03038, 2.90967, -0.37176], // 20
-        // [-2.02271, 5.49602, 7.62515] // 21
-        [-3.45632, 5.28298, 9.24784] // 21
-      ]
-      let distanceCalculation = [
-        [-99.02978, -0.43885, -40.67985],
-        [-90.24858, -0.07271, -37.05237],
-        [-82.85451, -0.59414, -32.55401],
-        [-76.63209, -0.32055, -29.42618],
-        [-68.34274, 0.12351, -25.16294],
-        [-61.25522, 0.20210, -21.29089],
-        [-52.99427, 0.72535, -16.40563],
-        [-44.41645, 1.28945, -12.32703],
-        [-36.91039, 2.38034, -9.71080],
-        [-31.56925, 2.39676, -6.63152],
-        [-24.20513, 2.26537, -2.88150],
-        [-17.02217, 3.03378, -0.06674],
-        [-3.42275, 5.26812, 9.20051],
-      ]
-      let lenList = []
-      pointList0616.forEach((item, index) => {
-        let param = Math.sqrt(Math.pow(item[0] - distanceCalculation[index][0],2) + Math.pow(item[1] - distanceCalculation[index][1],2) + Math.pow(item[2] - distanceCalculation[index][2],2))
-        lenList.push((param * 2.90793).toFixed(5))
-      })
-      console.log(lenList)
-      let pointList0616Line = this.creatFatLine(pointList0616, '#fff', 2, true)
-      this.gpsTransform0607.add(pointList0616Line)
-      this.gpsTransform0607.add(pointList0616Line.joint)
+      this.gpsTransform0607.add(realGpsLine2_0607)
       // 5月27日 各点埋深
       let deepList0527 = [
         1.51,
@@ -994,6 +817,59 @@ export default {
       )
       realLine.name = '站测GPS连线'
       this.gpsGroup.name = 'GPS定位组'
+
+      // ↓↓↓↓↓ 5月27日 地形结构图 （因吴秉聪提供横纵坐标问题，改写新结构）↓↓↓↓↓
+      // 0527测绘组
+      /* let line0527Len = {
+        model: Math.sqrt(Math.pow(realStack0527[0][0] - realStack0527[1][0], 2) +
+          Math.pow(realStack0527[0][2] - realStack0527[1][2], 2)),
+        gps: Math.sqrt(Math.pow(realStackList0527[0][0] - realStackList0527[realStackList0527.length - 1][0], 2) +
+          Math.pow(realStackList0527[0][2] - realStackList0527[realStackList0527.length - 1][2], 2))
+      }
+      let scale0527Param = line0527Len.model / line0527Len.gps
+      let resRealLineList = this.calculateCoordinate0527(realStackList0527, this.realToModelParam, scale0527Param)
+      let realLine0527 = this.creatFatLine(realStack0527, 0xaffffa, 1)
+      let realGps0527 = this.creatFatLine(resRealLineList, 0xff00fa, 1, true)
+      let gpsBaseLine = []
+      gpsBaseLine.push([resRealLineList[0][0], 0, resRealLineList[0][2]])
+      gpsBaseLine.push([resRealLineList[resRealLineList.length - 1][0], 0, resRealLineList[resRealLineList.length - 1][2]])
+      let gpsBase0527 = this.creatFatLine(gpsBaseLine, 0xf0a0fa, 1)
+      this.gps0527Group.add(gpsBase0527)
+      let port = {
+        model: [realStack0527[1][0] - realStack0527[0][0], realStack0527[1][1] - realStack0527[0][1], realStack0527[1][2] - realStack0527[0][2]],
+        gps: resRealLineList[resRealLineList.length - 1]
+      }
+      let v1 = new THREE.Vector3(...port.model)
+      let v2 = new THREE.Vector3(...port.gps)
+      let gpsToModelAngle0527 = {
+        x: Math.atan(
+            port.model[2] / port.model[1]
+          ) - Math.atan(
+            port.gps[2] / port.gps[1]
+          ),
+        y: Math.atan(
+            port.model[0] / port.model[2]
+          ) - Math.atan(
+            port.gps[0] / port.gps[2]
+          ),
+        z: Math.atan(
+            port.model[1] / port.model[0]
+          ) - Math.atan(
+            port.gps[1] / port.gps[0]
+          )
+      }
+      // 5月27日 gps放线转模型点位转角
+      let angList = [-0.03908, 0.55784, 0.07105]
+      realGps0527.rotation.set(angList[0], angList[1], angList[2])
+      realLine0527.position.set(-realStack0527[0][0], -realStack0527[0][1], -realStack0527[0][2])
+      realGps0527.position.set(realStack0527[0][0], realStack0527[0][1], realStack0527[0][2])
+      this.line0527Group.add(realLine0527)
+      this.gps0527Group.add(realGps0527)
+      realGps0527.joint.rotation.set(...angList)
+      // realLine0527.position.set(-realStack0527[0][0], -realStack0527[0][1], -realStack0527[0][2])
+      realGps0527.joint.position.set(realStack0527[0][0], realStack0527[0][1], realStack0527[0][2])
+      this.gps0527Group.add(realGps0527.joint) */
+      // ↑↑↑↑↑ 5月27日 地形结构图（因吴秉聪提供横纵坐标问题，改写新结构） ↑↑↑↑↑
 
       // ↓↓↓↓↓ 5月27日 地形结构图 ↓↓↓↓↓
       let line0527 = this.creatFatLine(realGpsToModel0527, 0x0055ff, 2, true)
@@ -1147,12 +1023,12 @@ export default {
       // this.baseGroup.add(modelLine2)
       // this.baseGroup.add(standardLine)
       // 地表分段后（400m）
-      this.scene.add(this.gpsLocation0607)
-      // this.gpsTransform0607.position.y += 1
+      // this.scene.add(this.gpsLocation0607)
+      this.gpsTransform0607.position.y += 1
       this.scene.add(this.gpsTransform0607)
-      // this.scene.add(this.baseGroup)
-      // this.scene.add(this.gpsGroup)
-      // this.scene.add(this.markGroup)
+      this.scene.add(this.baseGroup)
+      this.scene.add(this.gpsGroup)
+      this.scene.add(this.markGroup)
       // this.scene.add(this.cubeGroup)
       // this.scene.add(this.line0527Group)
       this.scene.add(this.gps0527Group)
@@ -1182,225 +1058,14 @@ export default {
         // 'Tile_+005_+002',
         // 'Tile_+005_+003'
       ]
-      let list0617 = [
-        // 'Tile_+000_+000',
-        // 'Tile_+000_+001',
-        // 'Tile_+000_+002',
-        // 'Tile_+000_+003',
-        'Tile_+001_+000',
-        'Tile_+001_+001',
-        'Tile_+001_+002',
-        // 'Tile_+001_+003',
-        'Tile_+002_+001',
-        'Tile_+002_+002',
-      ]
-      // 对比地形模型
-      list0617.forEach((item, index) => {
+      // 模型
+      list.forEach((item, index) => {
         // console.log(item)
         let url = `./models/sulige_0428/${item}/${item}.fbx`
         fbxLoader.load(url, obj => {
           obj.position.z -= 1220
           obj.name = item
           this.group.add(obj)
-        })
-      })
-
-      let daJiang = [
-        // "Tile_+000_+003",
-        // "Tile_+000_+004",
-        // "Tile_+000_+005",
-        // "Tile_+000_+006",
-        // "Tile_+000_+007",
-        // "Tile_+001_+002",
-        // "Tile_+001_+003",
-        // "Tile_+001_+004",
-        // "Tile_+001_+005",
-        // "Tile_+001_+006",
-        // "Tile_+001_+007",
-        "Tile_+002_+001",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        "Tile_+002_+008",
-        "Tile_+003_+000",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+003_+007",
-        "Tile_+003_+008",
-        "Tile_+003_+009",
-        "Tile_+004_+000",
-        "Tile_+004_+001",
-        "Tile_+004_+002",
-        "Tile_+004_+003",
-        "Tile_+004_+004",
-        "Tile_+004_+005",
-        "Tile_+004_+006",
-        "Tile_+004_+007",
-        "Tile_+004_+008",
-        "Tile_+004_+009",
-        "Tile_+005_+000",
-        "Tile_+005_+001",
-        "Tile_+005_+002",
-        "Tile_+005_+003",
-        "Tile_+005_+004",
-        "Tile_+005_+005",
-        "Tile_+005_+006",
-        "Tile_+005_+007",
-        "Tile_+005_+008",
-        "Tile_+005_+009",
-        "Tile_+005_+010",
-        "Tile_+006_+001",
-        "Tile_+006_+002",
-        "Tile_+006_+003",
-        "Tile_+006_+004",
-        "Tile_+006_+005",
-        "Tile_+006_+006",
-        "Tile_+006_+007",
-        "Tile_+006_+008",
-        "Tile_+006_+009",
-        "Tile_+006_+010",
-        "Tile_+007_+001",
-        "Tile_+007_+002",
-        "Tile_+007_+003",
-        "Tile_+007_+004",
-        "Tile_+007_+005",
-        "Tile_+007_+006",
-        "Tile_+007_+007",
-        "Tile_+007_+008",
-        "Tile_+007_+009",
-        "Tile_+007_+010",
-        "Tile_+007_+011",
-        "Tile_+008_+002",
-        "Tile_+008_+003",
-        "Tile_+008_+004",
-        "Tile_+008_+005",
-        "Tile_+008_+006",
-        "Tile_+008_+007",
-        "Tile_+008_+008",
-        "Tile_+008_+009",
-        "Tile_+008_+010",
-        "Tile_+008_+011",
-        "Tile_+009_+003",
-        "Tile_+009_+004",
-        "Tile_+009_+005",
-        "Tile_+009_+006",
-        "Tile_+009_+007",
-        "Tile_+009_+008",
-        "Tile_+009_+009",
-        "Tile_+009_+010",
-        "Tile_+009_+011",
-        "Tile_+009_+012",
-        "Tile_+010_+003",
-        "Tile_+010_+004",
-        "Tile_+010_+005",
-        "Tile_+010_+006",
-        "Tile_+010_+007",
-        "Tile_+010_+008",
-        "Tile_+010_+009",
-        "Tile_+010_+010",
-        "Tile_+010_+011",
-        "Tile_+010_+012",
-        "Tile_+010_+013",
-        "Tile_+011_+004",
-        "Tile_+011_+005",
-        "Tile_+011_+006",
-        "Tile_+011_+007",
-        "Tile_+011_+008",
-        "Tile_+011_+009",
-        "Tile_+011_+010",
-        "Tile_+011_+011",
-        "Tile_+011_+012",
-        "Tile_+011_+013",
-        "Tile_+012_+005",
-        "Tile_+012_+006",
-        "Tile_+012_+007",
-        "Tile_+012_+008",
-        "Tile_+012_+009",
-        "Tile_+012_+010",
-        "Tile_+012_+011",
-        "Tile_+012_+012",
-        "Tile_+012_+013",
-        "Tile_+012_+014",
-        "Tile_+013_+005",
-        "Tile_+013_+006",
-        "Tile_+013_+007",
-        "Tile_+013_+008",
-        "Tile_+013_+009",
-        "Tile_+013_+010",
-        "Tile_+013_+011",
-        "Tile_+013_+012",
-        "Tile_+013_+013",
-        "Tile_+013_+014",
-        "Tile_+014_+006",
-        "Tile_+014_+007",
-        "Tile_+014_+008",
-        "Tile_+014_+009",
-        "Tile_+014_+010",
-        "Tile_+014_+011",
-        "Tile_+014_+012",
-        "Tile_+014_+013",
-        "Tile_+014_+014",
-        "Tile_+015_+007",
-        "Tile_+015_+008",
-        "Tile_+015_+009",
-        "Tile_+015_+010",
-        "Tile_+015_+011",
-        "Tile_+015_+012",
-        "Tile_+015_+013",
-        "Tile_+015_+014",
-        "Tile_+016_+007",
-        "Tile_+016_+008",
-        "Tile_+016_+009",
-        "Tile_+016_+010",
-        "Tile_+016_+011",
-        "Tile_+016_+012",
-        "Tile_+016_+013",
-        "Tile_+016_+014",
-        "Tile_+017_+008",
-        "Tile_+017_+009",
-        "Tile_+017_+010",
-        "Tile_+017_+011",
-        "Tile_+017_+012",
-        "Tile_+018_+009",
-        "Tile_+018_+010",
-        "Tile_+018_+011"
-      ]
-      daJiang.forEach(item => {
-        let url = `./models/dajiang_chuanqing/${item}/${item}.fbx`
-        fbxLoader.load(url, obj => {
-          // obj.position.z -= 1220
-          obj.name = item
-          /* x: -84.47580671608989,
-            y: -387.06947844256763,
-            z: -57.20092180768338
-          rotation:
-            x: -1.5312332163306517,
-              y: -0.08366997969891234,
-            z: -1.044044483086044
-          scale:
-            x: 0.3175822390787557,
-              y: 0.3175822390787557,
-            z: 0.3175822390787557 */
-
-          /*
-          * (0.11568685375601717, -0.2940079038826191, 0.10815218419407113)
-          * */
-          /* 1.3105215954361884,
-            y: 0.20346274731982342,
-            z: -0.23855033183707786 */
-          obj.position.set(-84.47580671608989 + 0.11568685375601717 + 1.3105215954361884,
-            -387.06947844256763 - 0.2940079038826191 + 0.20346274731982342,
-            -57.20092180768338 + 0.10815218419407113 + -0.23855033183707786)
-          obj.rotation.set(-1.5312332163306517, -0.08366997969891234, -1.044044483086044)
-          obj.scale.set(0.317582, 0.317582, 0.317582)
-          this.baseGroup.add(obj)
         })
       })
       /* let zonghengBase = [
@@ -1486,9 +1151,8 @@ export default {
       this.group.scale.set(0.32344, 0.32344, 0.32344)
       // this.group.position.y = this.baseGroup.position.y = -1200
 
-      // 地形
       this.scene.add(this.group)
-      this.scene.add(this.baseGroup)
+      // this.scene.add(this.baseGroup)
       // this.scene.add(this.groupController)
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);
@@ -1528,7 +1192,7 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      this.transformControls.attach( this.baseGroup );
+      this.transformControls.attach( this.gps0527Group );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -1569,8 +1233,7 @@ export default {
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
         // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
-        // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
-        let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
+        let intersects = raycaster.intersectObjects(this.group.children,true); // 标记线
         if (intersects.length > 0) {
           /* let list = intersects.filter(item => {
             console.log(item.object.parent)
@@ -1606,27 +1269,10 @@ export default {
               this.markGroup.add( sphere );
             }
           } */
-          console.log(intersects[0])
-          // 1号点
-          if(
-            intersects[0].point.x < -133 &&
-            intersects[0].point.x > -137 &&
-            intersects[0].point.z < -60 &&
-            intersects[0].point.z > -62) {
-            this.calculateCardFlag1 = true
-          }
-          // 2号点
-          // -85.24467, -0.91612, -33.13839
-          if(
-            intersects[0].point.x > -87 &&
-            intersects[0].point.x < -84 &&
-            intersects[0].point.z > -35 &&
-            intersects[0].point.z < -32) {
-            this.calculateCardFlag2 = true
-          }
+          console.log(intersects[0].point)
           this.markList.unshift(intersects[0].point)
           const { point } = intersects[0]
-          const geometry = new THREE.SphereGeometry( 0.05, 8, 8 );
+          const geometry = new THREE.SphereGeometry( 0.2, 8, 8 );
           const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
           const sphere = new THREE.Mesh( geometry, material );
           sphere.position.set(point.x, point.y, point.z)
@@ -1887,22 +1533,6 @@ export default {
     left: 20px
     transition left ease-in-out 0.4s
     //background-color: rgba(220, 220, 220, 0.4)
-  }
-  .calculate-card-1 {
-    position absolute
-    width: 220px
-    height: 100px
-    top: 140px
-    left: 20px
-    color #fff
-    text-shadow 1px 1px 2px #333
-    background-color: rgba(220, 220, 220, 0.4)
-    padding: 20px
-    box-shadow 2px 2px 4px rgba(51, 51, 51, 0.6)
-  }
-  .calculate-card-2 {
-    @extends .channel .calculate-card-1;
-    top: 290px
   }
 }
 </style>

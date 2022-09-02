@@ -3,6 +3,9 @@
     <div class="chart" :style="`left: ${toolsFlag ? '-820' : '20'}px;`">
       <e-chart id="chart" :option="options" style="height: 400px; width: 810px"></e-chart>
     </div>
+    <div class="coordinate">
+      GPS坐标&nbsp;&nbsp;&nbsp;x:{{parseInt(coordinate.x) + parseInt('289162')}}, y:{{parseInt(coordinate.y) + parseInt('4234921')}}
+    </div>
     <div class="main-tool">
       <div>
         比例系数:&nbsp;&nbsp;&nbsp;{{2.73}}m(实测建筑物高度)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
@@ -51,21 +54,21 @@
             管路组定位数据
             <div class="group">
               position: <br>
-              x: <i class="x">{{baseGroup.position.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.position.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.position.z}}</i>
+              x: <i class="x">{{group.position.x}}</i>,<br>
+              y: <i class="y">{{group.position.y}}</i>,<br>
+              z: <i class="z">{{group.position.z}}</i>
             </div>
             <div class="group">
               rotation: <br>
-              x: <i class="x">{{baseGroup.rotation.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.rotation.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.rotation.z}}</i>
+              x: <i class="x">{{group.rotation.x}}</i>,<br>
+              y: <i class="y">{{group.rotation.y}}</i>,<br>
+              z: <i class="z">{{group.rotation.z}}</i>
             </div>
             <div class="group">
               scale: <br>
-              x: <i class="x">{{baseGroup.scale.x}}</i>,<br>
-              y: <i class="y">{{baseGroup.scale.y}}</i>,<br>
-              z: <i class="z">{{baseGroup.scale.z}}</i>
+              x: <i class="x">{{group.scale.x}}</i>,<br>
+              y: <i class="y">{{group.scale.y}}</i>,<br>
+              z: <i class="z">{{group.scale.z}}</i>
             </div>
           </div>
         </div>
@@ -172,6 +175,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial'
 import { Line2 } from 'three/examples/jsm/lines/Line2'
 import * as echarts from 'echarts'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 export default {
   name: 'Channel8WeiYuan',
   data() {
@@ -197,6 +201,7 @@ export default {
       baseGroup: null,
       gpsGroup: null,
       line0527Group: null,
+      line0622Group: null,
       gps0527Group: null,
       gpsLocation0607: null,
       gpsTransform0607: null,
@@ -215,6 +220,7 @@ export default {
       calculateCardFlag1: false,
       calculateCardFlag2: false,
       markGroup: null,
+      gpsRealGroup: null,
       markList: [],
       options: {
         // 80FFA5, 37A2FF, FF3200
@@ -441,17 +447,12 @@ export default {
             ]
           }
         ]
+      },
+      coordinate: {
+        x: 0, y: 0
       }
     }
   },
-  // watch: {
-  //   mX(n) {
-  //     console.log(n)
-  //   },
-  //   mY(n) {
-  //     console.log(n)
-  //   }
-  // },
   computed: {
     measureLength: function () {
       let a = Math.pow(this.measureDataEnd.x - this.measureDataStart.x,2)
@@ -487,7 +488,7 @@ export default {
         // 垂直y轴的平面
         // new THREE.Plane(new THREE.Vector3(0, -1, 0), 0),
         // 垂直z轴的平面
-        new THREE.Plane(new THREE.Vector3(0.4, 0, -1), 40),
+        new THREE.Plane(new THREE.Vector3(1.2, 0, -3), 40),
         new THREE.Plane(new THREE.Vector3(-0.4, 0, 1), 30)
       ];
       this.renderer.clippingPlanes = this.clipFlag ? PlaneArr : ''
@@ -569,7 +570,7 @@ export default {
     },
     init() {
       const canvas = this.$refs.cvs
-      const aspect = this.w/this.h
+      const aspect = this.w / this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
       this.camera.position.z = 100
@@ -584,6 +585,7 @@ export default {
       this.gps0527Group = new THREE.Group()
       this.gpsLocation0607 = new THREE.Group()
       this.gpsTransform0607 = new THREE.Group()
+      this.gpsRealGroup = new THREE.Group()
       let pipeList = [
         [108.59173039, 0, 38.22155125],
         [108.59233119, 0, 38.22185487],
@@ -667,7 +669,7 @@ export default {
       // this.gpsLocation0607.add(line0607_2.joint)
 
       // 5月27日 gps数据 xy反了（吴秉聪原因）
-      let realStackList0527 = [
+      /* let realStackList0527 = [
         [289162, 1.51, 4234921],
         [289183, 1.84, 4234931],
         [289205, 1.56, 4234942],
@@ -691,6 +693,15 @@ export default {
         [289630, 0.71, 4235193],
         [289677, 1.32, 4235214],
       ]
+      let due0620GpsList = []
+      realStackList0527.forEach((item, index) => {
+        let arr = [item[0] - realStackList0527[0][0], 0, item[2] - realStackList0527[0][2]]
+        due0620GpsList.push(arr)
+      })
+      let due0620Line = this.creatFatLine(due0620GpsList, '#fff', 2, true)
+      this.gpsRealGroup.add(due0620Line)
+      this.gpsRealGroup.add(due0620Line.joint)
+      this.scene.add(this.gpsRealGroup) */
       // 5月27日 gps坐标转地形坐标 旋转处理后
       let realGpsToModel0527 = [
         [
@@ -899,12 +910,13 @@ export default {
         [-17.02217, 3.03378, -0.06674],
         [-3.42275, 5.26812, 9.20051],
       ]
+      // gps偏离度
       let lenList = []
       pointList0616.forEach((item, index) => {
         let param = Math.sqrt(Math.pow(item[0] - distanceCalculation[index][0],2) + Math.pow(item[1] - distanceCalculation[index][1],2) + Math.pow(item[2] - distanceCalculation[index][2],2))
         lenList.push((param * 2.90793).toFixed(5))
       })
-      console.log(lenList)
+      // console.log(lenList)
       let pointList0616Line = this.creatFatLine(pointList0616, '#fff', 2, true)
       this.gpsTransform0607.add(pointList0616Line)
       this.gpsTransform0607.add(pointList0616Line.joint)
@@ -933,6 +945,54 @@ export default {
         0.71,
         1.32,
       ]
+      let lineJointList0622 = [
+        [-0.28964, -1.75819, -0.22740],
+        [18.93694, -3.63264, 11.74309],
+        [39.76277, -3.25121, 25.43482],
+        [60.86124, -5.16223, 36.67318],
+        [76.09449, -6.11481, 46.52336],
+        [109.56690, -5.52526, 65.97241],
+        [138.36288, -5.10356, 83.15976],
+        [162.72889, -5.57320, 97.19639],
+        [197.10700, -5.58348, 116.66633],
+        [224.13651, -1.32791, 132.59696],
+        [248.87855, -7.00906, 146.94849],
+        [271.54672, -6.33720, 158.50070],
+        [291.86108, -7.55996, 170.04441],
+        [315.78522, -6.72971, 181.49538],
+        [341.11415, -8.04241, 194.90216],
+        [364.83030, -7.30332, 207.43386],
+        [390.20182, -6.38841, 221.94949],
+        [410.75217, -3.99912, 235.37259],
+        [427.40648, -7.19075, 244.39281],
+        [448.91954, -8.48535, 258.00484],
+        [468.70000, -4.77807, 269.29896],
+        [515.07021, -0.73849, 292.17336]
+      ]
+      // 缩放比例
+      // 真实尺寸(3.22m) / 模型尺寸
+      let modelSizeList = [
+        [-104.94105, -0.01101, 5.12373],
+        [-104.79197, -3.09373, 5.03651]
+      ]
+      let modelSize = Math.sqrt(
+        Math.pow(modelSizeList[0][0] - modelSizeList[1][0],2) +
+        Math.pow(modelSizeList[0][1] - modelSizeList[1][1],2) +
+        Math.pow(modelSizeList[0][2] - modelSizeList[1][2],2)
+      )
+      let scaleParam = 3.22 / modelSize
+      let pipeLine = []
+      lineJointList0622.forEach((item, index) => {
+        let arr = [item[0], item[1] - deepList0527[index] / scaleParam, item[2]]
+        pipeLine.push(arr)
+      })
+      this.line0622Group = new THREE.Group()
+      // 地表特征线
+      // let line0622 = this.creatFatLine(lineJointList0622, '0x22ee22', 2, true)
+      // 地下实际管线
+      let line0622 = this.creatFatLine(pipeLine, 0x00ff66, 2, true)
+      this.line0622Group.add(line0622)
+      this.scene.add(this.line0622Group)
       let realStackList0518 = [
         [4234927, 1.6, 289160],
         [4234935, 2.5, 289182],
@@ -996,7 +1056,7 @@ export default {
       this.gpsGroup.name = 'GPS定位组'
 
       // ↓↓↓↓↓ 5月27日 地形结构图 ↓↓↓↓↓
-      let line0527 = this.creatFatLine(realGpsToModel0527, 0x0055ff, 2, true)
+      let line0527 = this.creatFatLine(realGpsToModel0527, 0x0055ff, 6, true)
       let deepLineList0527 = deepList0527.map((item, index) => {
         return [
           realGpsToModel0527[index][0],
@@ -1035,7 +1095,6 @@ export default {
         this.gps0527Group.add(line)
         this.gps0527Group.add(line.joint)
       })
-
       // ↑↑↑↑↑ 5月27日 地形结构图 ↑↑↑↑↑
 
       let modelLine1 = this.creatFatLine(modelStackList0518, 0xff0000, 2)
@@ -1092,70 +1151,6 @@ export default {
       modelLine2.name = '埋深模型连线'
       standardLine.name = '埋深合规线'
 
-      // 埋深不足区段
-      // -134.42986, -2.86456, -60.82382
-      // -151.26470, -3.65085, -70.63101
-      //
-      // -80.73375, -0.82429, -30.98332
-      // -98.65288, -0.69808, -39.98579
-
-      let offSpec = [
-        [
-          [-151.26470, -3.65085, -70.63101],
-          [-134.42986, -2.86456, -60.82382]
-        ],
-        [
-          [-98.65288, -0.69808, -39.98579],
-          [-80.73375, -0.82429, -30.98332]
-        ],
-      ]
-      offSpec.forEach(item => {
-        let g = new THREE.SphereGeometry( 2, 8, 8 );
-        const s = new THREE.Mesh( g, new THREE.MeshBasicMaterial( { color: '#ffffff' } ) );
-        s.position.set(item[0][0], item[0][1], item[0][2])
-        let offLine = this.creatFatLine(item, '#ff0000', 6, true)
-        let start = s.clone()
-        start.position.set(firstModelMember[0], firstModelMember[1], firstModelMember[2])
-        start.material = new THREE.MeshBasicMaterial( { color: '#ffffff' } )
-        let end = s.clone()
-        end.position.set(lastModelMember[0], lastModelMember[1], lastModelMember[2])
-        end.material = new THREE.MeshBasicMaterial( { color: '#ff000f' } )
-        // this.cubeGroup.add(s)
-        // this.cubeGroup.add(start)
-        // this.cubeGroup.add(end)
-        this.cubeGroup.add(offLine)
-        let angle = {
-          x: Math.atan(
-              (firstModelMember[2]-lastModelMember[2])/(firstModelMember[1]-lastModelMember[1])) -
-            Math.atan((firstGpsMember[2]-lastGpsMember[2])/(firstGpsMember[1]-lastGpsMember[1])
-            ),
-          y: Math.atan(
-              (firstModelMember[0]-lastModelMember[0])/(firstModelMember[2]-lastModelMember[2])) -
-            Math.atan((firstGpsMember[0]-lastGpsMember[0])/(firstGpsMember[2]-lastGpsMember[2])
-            ),
-          z: Math.atan(
-              (firstModelMember[1]-lastModelMember[1])/(firstModelMember[0]-lastModelMember[0])) -
-            Math.atan((firstGpsMember[1]-lastGpsMember[1])/(firstGpsMember[0]-lastGpsMember[0])
-            )
-        }
-        // this.cubeGroup.rotation.set(-angle.x, -angle.y, -angle.z)
-        // this.cubeGroup.scale.set(gtmScaleParam, 1, gtmScaleParam)
-        // this.cubeGroup.position.set(328.79711, -55.32253, 484.70478)
-      })
-
-      // this.baseGroup.add(modelLine1)
-      // this.baseGroup.add(modelLine2)
-      // this.baseGroup.add(standardLine)
-      // 地表分段后（400m）
-      this.scene.add(this.gpsLocation0607)
-      // this.gpsTransform0607.position.y += 1
-      this.scene.add(this.gpsTransform0607)
-      // this.scene.add(this.baseGroup)
-      // this.scene.add(this.gpsGroup)
-      // this.scene.add(this.markGroup)
-      // this.scene.add(this.cubeGroup)
-      // this.scene.add(this.line0527Group)
-      this.scene.add(this.gps0527Group)
       this.gpsGroup.visible = false
 
       // this.group.add(mesh)
@@ -1193,6 +1188,13 @@ export default {
         // 'Tile_+001_+003',
         'Tile_+002_+001',
         'Tile_+002_+002',
+        //
+        'Tile_+003_+001',
+        'Tile_+003_+002',
+        'Tile_+003_+003',
+        'Tile_+004_+001',
+        'Tile_+004_+002',
+        'Tile_+004_+003',
       ]
       // 对比地形模型
       list0617.forEach((item, index) => {
@@ -1204,286 +1206,9 @@ export default {
           this.group.add(obj)
         })
       })
-
-      let daJiang = [
-        // "Tile_+000_+003",
-        // "Tile_+000_+004",
-        // "Tile_+000_+005",
-        // "Tile_+000_+006",
-        // "Tile_+000_+007",
-        // "Tile_+001_+002",
-        // "Tile_+001_+003",
-        // "Tile_+001_+004",
-        // "Tile_+001_+005",
-        // "Tile_+001_+006",
-        // "Tile_+001_+007",
-        "Tile_+002_+001",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        "Tile_+002_+008",
-        "Tile_+003_+000",
-        "Tile_+003_+001",
-        "Tile_+003_+002",
-        "Tile_+003_+003",
-        "Tile_+003_+004",
-        "Tile_+003_+005",
-        "Tile_+003_+006",
-        "Tile_+003_+007",
-        "Tile_+003_+008",
-        "Tile_+003_+009",
-        "Tile_+004_+000",
-        "Tile_+004_+001",
-        "Tile_+004_+002",
-        "Tile_+004_+003",
-        "Tile_+004_+004",
-        "Tile_+004_+005",
-        "Tile_+004_+006",
-        "Tile_+004_+007",
-        "Tile_+004_+008",
-        "Tile_+004_+009",
-        "Tile_+005_+000",
-        "Tile_+005_+001",
-        "Tile_+005_+002",
-        "Tile_+005_+003",
-        "Tile_+005_+004",
-        "Tile_+005_+005",
-        "Tile_+005_+006",
-        "Tile_+005_+007",
-        "Tile_+005_+008",
-        "Tile_+005_+009",
-        "Tile_+005_+010",
-        "Tile_+006_+001",
-        "Tile_+006_+002",
-        "Tile_+006_+003",
-        "Tile_+006_+004",
-        "Tile_+006_+005",
-        "Tile_+006_+006",
-        "Tile_+006_+007",
-        "Tile_+006_+008",
-        "Tile_+006_+009",
-        "Tile_+006_+010",
-        "Tile_+007_+001",
-        "Tile_+007_+002",
-        "Tile_+007_+003",
-        "Tile_+007_+004",
-        "Tile_+007_+005",
-        "Tile_+007_+006",
-        "Tile_+007_+007",
-        "Tile_+007_+008",
-        "Tile_+007_+009",
-        "Tile_+007_+010",
-        "Tile_+007_+011",
-        "Tile_+008_+002",
-        "Tile_+008_+003",
-        "Tile_+008_+004",
-        "Tile_+008_+005",
-        "Tile_+008_+006",
-        "Tile_+008_+007",
-        "Tile_+008_+008",
-        "Tile_+008_+009",
-        "Tile_+008_+010",
-        "Tile_+008_+011",
-        "Tile_+009_+003",
-        "Tile_+009_+004",
-        "Tile_+009_+005",
-        "Tile_+009_+006",
-        "Tile_+009_+007",
-        "Tile_+009_+008",
-        "Tile_+009_+009",
-        "Tile_+009_+010",
-        "Tile_+009_+011",
-        "Tile_+009_+012",
-        "Tile_+010_+003",
-        "Tile_+010_+004",
-        "Tile_+010_+005",
-        "Tile_+010_+006",
-        "Tile_+010_+007",
-        "Tile_+010_+008",
-        "Tile_+010_+009",
-        "Tile_+010_+010",
-        "Tile_+010_+011",
-        "Tile_+010_+012",
-        "Tile_+010_+013",
-        "Tile_+011_+004",
-        "Tile_+011_+005",
-        "Tile_+011_+006",
-        "Tile_+011_+007",
-        "Tile_+011_+008",
-        "Tile_+011_+009",
-        "Tile_+011_+010",
-        "Tile_+011_+011",
-        "Tile_+011_+012",
-        "Tile_+011_+013",
-        "Tile_+012_+005",
-        "Tile_+012_+006",
-        "Tile_+012_+007",
-        "Tile_+012_+008",
-        "Tile_+012_+009",
-        "Tile_+012_+010",
-        "Tile_+012_+011",
-        "Tile_+012_+012",
-        "Tile_+012_+013",
-        "Tile_+012_+014",
-        "Tile_+013_+005",
-        "Tile_+013_+006",
-        "Tile_+013_+007",
-        "Tile_+013_+008",
-        "Tile_+013_+009",
-        "Tile_+013_+010",
-        "Tile_+013_+011",
-        "Tile_+013_+012",
-        "Tile_+013_+013",
-        "Tile_+013_+014",
-        "Tile_+014_+006",
-        "Tile_+014_+007",
-        "Tile_+014_+008",
-        "Tile_+014_+009",
-        "Tile_+014_+010",
-        "Tile_+014_+011",
-        "Tile_+014_+012",
-        "Tile_+014_+013",
-        "Tile_+014_+014",
-        "Tile_+015_+007",
-        "Tile_+015_+008",
-        "Tile_+015_+009",
-        "Tile_+015_+010",
-        "Tile_+015_+011",
-        "Tile_+015_+012",
-        "Tile_+015_+013",
-        "Tile_+015_+014",
-        "Tile_+016_+007",
-        "Tile_+016_+008",
-        "Tile_+016_+009",
-        "Tile_+016_+010",
-        "Tile_+016_+011",
-        "Tile_+016_+012",
-        "Tile_+016_+013",
-        "Tile_+016_+014",
-        "Tile_+017_+008",
-        "Tile_+017_+009",
-        "Tile_+017_+010",
-        "Tile_+017_+011",
-        "Tile_+017_+012",
-        "Tile_+018_+009",
-        "Tile_+018_+010",
-        "Tile_+018_+011"
-      ]
-      daJiang.forEach(item => {
-        let url = `./models/dajiang_chuanqing/${item}/${item}.fbx`
-        fbxLoader.load(url, obj => {
-          // obj.position.z -= 1220
-          obj.name = item
-          /* x: -84.47580671608989,
-            y: -387.06947844256763,
-            z: -57.20092180768338
-          rotation:
-            x: -1.5312332163306517,
-              y: -0.08366997969891234,
-            z: -1.044044483086044
-          scale:
-            x: 0.3175822390787557,
-              y: 0.3175822390787557,
-            z: 0.3175822390787557 */
-
-          /*
-          * (0.11568685375601717, -0.2940079038826191, 0.10815218419407113)
-          * */
-          /* 1.3105215954361884,
-            y: 0.20346274731982342,
-            z: -0.23855033183707786 */
-          obj.position.set(-84.47580671608989 + 0.11568685375601717 + 1.3105215954361884,
-            -387.06947844256763 - 0.2940079038826191 + 0.20346274731982342,
-            -57.20092180768338 + 0.10815218419407113 + -0.23855033183707786)
-          obj.rotation.set(-1.5312332163306517, -0.08366997969891234, -1.044044483086044)
-          obj.scale.set(0.317582, 0.317582, 0.317582)
-          this.baseGroup.add(obj)
-        })
-      })
-      /* let zonghengBase = [
-        "Tile_+000_+003",
-        "Tile_+000_+004",
-        "Tile_+000_+005",
-        "Tile_+000_+006",
-        // "Tile_+000_+007",
-        "Tile_+001_+002",
-        "Tile_+001_+003",
-        "Tile_+001_+004",
-        "Tile_+001_+005",
-        "Tile_+001_+006",
-        // "Tile_+001_+007",
-        "Tile_+002_+002",
-        "Tile_+002_+003",
-        "Tile_+002_+004",
-        "Tile_+002_+005",
-        "Tile_+002_+006",
-        "Tile_+002_+007",
-        // "Tile_+003_+001",
-        // "Tile_+003_+002",
-        // "Tile_+003_+003",
-        // "Tile_+003_+004",
-        // "Tile_+003_+005",
-        // "Tile_+003_+006",
-        // "Tile_+003_+007",
-        // "Tile_+004_+001",
-        // "Tile_+004_+002",
-        // "Tile_+004_+003",
-        // "Tile_+004_+004",
-        // "Tile_+004_+005",
-        // "Tile_+004_+006",
-        // "Tile_+005_+000",
-        // "Tile_+005_+001",
-        // "Tile_+005_+002",
-        // "Tile_+005_+003",
-        // "Tile_+005_+004",
-        // "Tile_+005_+005",
-        // "Tile_+006_+000",
-        // "Tile_+006_+001",
-        // "Tile_+006_+002",
-        // "Tile_+006_+003",
-        // "Tile_+006_+004",
-        // "Tile_+006_+005",
-        // "Tile_+007_+000",
-        // "Tile_+007_+001",
-        // "Tile_+007_+002",
-        // "Tile_+007_+003",
-        // "Tile_+007_+004",
-        // "Tile_+008_+000",
-        // "Tile_+008_+001",
-        // "Tile_+008_+002",
-        // "Tile_+008_+003",
-        // "Tile_+008_+004",
-        // "Tile_+009_+000",
-        // "Tile_+009_+001",
-        // "Tile_+009_+002",
-        // "Tile_+009_+003",
-        // "Tile_+009_+004",
-        // "Tile_+010_+000",
-        // "Tile_+010_+001",
-        // "Tile_+010_+002",
-        // "Tile_+010_+003",
-        // "Tile_+011_+000",
-        // "Tile_+011_+001",
-        // "Tile_+011_+002",
-        // "Tile_+011_+003"
-      ]
-      zonghengBase.forEach((item, index) => {
-        // console.log(item)
-        let url = `./models/sulige_0304/${item}/${item}.fbx`
-        fbxLoader.load(url, obj => {
-          // obj.position.z -= 1270
-          obj.name = item
-          this.baseGroup.add(obj)
-        })
-      }) */
-      // this.group.position.y = this.groupController.position.y = 45
-      // this.baseGroup.rotation.x = -Math.PI / 2
-      this.group.position.set(-95.40945, -14.64555, -41.72357)
-      this.group.rotation.set(-1.58453, -0.03961, -1.04771)
-      this.group.scale.set(0.32344, 0.32344, 0.32344)
+      this.group.position.set(219.57113, -49.88256, 120.00350)
+      this.group.rotation.set(-1.53696, -0.01555, -1.06127)
+      this.group.scale.set(1.04412, 1.04412, 1.04412)
       // this.group.position.y = this.baseGroup.position.y = -1200
 
       // 地形
@@ -1528,7 +1253,7 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      this.transformControls.attach( this.baseGroup );
+      this.transformControls.attach( this.line0622Group );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -1552,7 +1277,8 @@ export default {
       // sigma 控制泛光的锐利程度，值越高，泛光越模糊
       // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
       // const bloomPass = new BloomPass(3, 1.5, 0.4, 1024); //BloomPass通道效果
-      const bloomPass = new BloomPass(0.8, 25, 4.0, 256); //BloomPass通道效果
+      // const bloomPass = new BloomPass(1.1, 25, 4.0, 256); //BloomPass通道效果
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.w, this.h), 1, 0.8, 0);
       //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
       this.bloomComposer = new EffectComposer(this.renderer)
       this.bloomComposer.setSize(this.w, this.h);
@@ -1568,9 +1294,9 @@ export default {
         this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-        // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
+        let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
-        let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
+        // let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
         if (intersects.length > 0) {
           /* let list = intersects.filter(item => {
             console.log(item.object.parent)
@@ -1607,6 +1333,9 @@ export default {
             }
           } */
           console.log(intersects[0])
+          console.log(intersects[0].point)
+          this.coordinate.x = intersects[0].point.x.toFixed(0)
+          this.coordinate.y = intersects[0].point.z.toFixed(0)
           // 1号点
           if(
             intersects[0].point.x < -133 &&
@@ -1744,6 +1473,12 @@ export default {
   background-color: #fff
   // #000428, #004e92
   background-image: linear-gradient(to right bottom, #5ac5da, #0D015B)
+  .coordinate {
+    position absolute
+    top: 20px
+    left: 850px
+    color #ffffff
+  }
   .main-tool {
     position absolute
     top: 20px

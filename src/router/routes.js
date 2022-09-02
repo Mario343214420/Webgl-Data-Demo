@@ -37,6 +37,13 @@ import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
 import Spotlight from '../pages/Channel_spotlight_shadow/index.vue'
 import EdgeGeometry from '../pages/Channel_EdgesGeometry/index.vue'
 import Channel_CanvasIsPointIn from '../pages/Channel_CanvasIsPointIn/index.vue'
+import Sulige_0822 from '../pages/Channel_sulige0822/index.vue'
+import Sulige_0822_0829 from '../pages/Channel_sulige0829_22/index.vue'
+import Sulige_0829 from '../pages/Channel_sulige0829_compare/index.vue'
+import Sulige_0902 from '../pages/Channel_sulige0902_compare/index.vue'
+import Sulige_0902_Just_Model from '../pages/Channel_sulige0902_compare/index_just_for_9.2_model.vue'
+import Channel_three_secret_fun from '../pages/Channel_three_secret_fun/index.vue'
+import WellSite from '../pages/WellSite/index.vue'
 
 const routes = [
   {
@@ -292,6 +299,55 @@ const routes = [
     component: Channel_CanvasIsPointIn,
     meta: {
       title: 'canvas判断是否在区域内（或路径内）'
+    }
+  },
+  {
+    path: '/well_site',
+    component: WellSite,
+    meta: {
+      title: '井队数字化'
+    }
+  },
+  {
+    path: '/0822',
+    component: Sulige_0822,
+    meta: {
+      title: '0822初次'
+    }
+  },
+  {
+    path: '/0822_',
+    component: Sulige_0822_0829,
+    meta: {
+      title: '0822初次 减量'
+    }
+  },
+  {
+    path: '/0829',
+    component: Sulige_0829,
+    meta: {
+      title: '0829 模型对比'
+    }
+  },
+  {
+    path: '/0902',
+    component: Sulige_0902,
+    meta: {
+      title: '0902 管线投影'
+    }
+  },
+  {
+    path: '/0902_just_model',
+    component: Sulige_0902_Just_Model,
+    meta: {
+      title: '0902 纯模型查验'
+    }
+  },
+  {
+    path: '/channel_three_secret_fun',
+    component: Channel_three_secret_fun,
+    meta: {
+      title: 'three隐藏函数'
     }
   },
   {
