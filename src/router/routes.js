@@ -42,7 +42,12 @@ import Sulige_0822_0829 from '../pages/Channel_sulige0829_22/index.vue'
 import Sulige_0829 from '../pages/Channel_sulige0829_compare/index.vue'
 import Sulige_0902 from '../pages/Channel_sulige0902_compare/index.vue'
 import Sulige_0902_Just_Model from '../pages/Channel_sulige0902_compare/index_just_for_9.2_model.vue'
-import Channel_three_secret_fun from '../pages/Channel_three_secret_fun/index.vue'
+import Sulige_0906 from '../pages/Channel_sulige_0906_repaire/index.vue'
+import Sulige_0908 from '../pages/Channel_sulige_0908_repaire/index.vue'
+import Sulige_0913 from '../pages/Channel_sulige_0913_repaire/index.vue'
+import Sulige_0919 from '../pages/Channel_sulige_0919/index.vue'
+import Channel_three_curve from '../pages/Channel_three_secret_fun/curve.vue'
+import Channel_three_plane_angle from '../pages/Channel_three_secret_fun/plane_angle.vue'
 import WellSite from '../pages/WellSite/index.vue'
 
 const routes = [
@@ -344,10 +349,45 @@ const routes = [
     }
   },
   {
-    path: '/channel_three_secret_fun',
-    component: Channel_three_secret_fun,
+    path: '/0906',
+    component: Sulige_0906,
     meta: {
-      title: 'three隐藏函数'
+      title: '0906 确定坐标轴'
+    }
+  },
+  {
+    path: '/0908',
+    component: Sulige_0908,
+    meta: {
+      title: '0908 确定坐标轴'
+    }
+  },
+  {
+    path: '/0913',
+    component: Sulige_0913,
+    meta: {
+      title: '0913 地形对准'
+    }
+  },
+  {
+    path: '/0919',
+    component: Sulige_0919,
+    meta: {
+      title: '0919 地形对准'
+    }
+  },
+  {
+    path: '/channel_three_curve',
+    component: Channel_three_curve,
+    meta: {
+      title: 'three曲线'
+    }
+  },
+  {
+    path: '/channel_three_plane_angle',
+    component: Channel_three_plane_angle,
+    meta: {
+      title: 'three面与向量夹角'
     }
   },
   {

@@ -2,13 +2,6 @@
   <div class="channel" ref="channel">
     <div class="chart" :style="`left: ${toolsFlag ? '-820' : '20'}px;`">
       <e-chart id="chart" :option="options" style="height: 400px; width: 810px"></e-chart>
-      <div class="pip-deep-list">
-        <div v-for="(item, index) in pipeDeepList" :key="index">
-          <i>经度{{parseInt(item[2]) + 4230796}}， </i>
-          <i>纬度{{parseInt(item[0]) + 288258}}， </i>
-          <i :style="item[1] * 1.041 < 2.2 ? 'color: #ff0000' : ''" :title="item[1] * 1.041 < 2.2 ? '埋深不足2.2' : ''">深度{{(item[1] * 1.041 ).toFixed(2)}}</i>
-        </div>
-      </div>
     </div>
     <div class="coordinate">
       GPS坐标&nbsp;&nbsp;&nbsp;x:{{parseInt(coordinate.x) + parseInt('289162')}}, y:{{parseInt(coordinate.y) + parseInt('4234921')}}
@@ -29,8 +22,6 @@
           <div class="btn" @click="compareGroup.visible = !compareGroup.visible">切换对比地形显隐</div>
           <div class="btn" @click="markGroup.visible = !markGroup.visible">切换标记点显隐</div>
           <div class="btn" @click="pipeListGroup.visible = !pipeListGroup.visible">切换管线显隐</div>
-          <div class="btn" @click="finalLinesGroup.visible = !finalLinesGroup.visible">切换GPS路线显隐</div>
-          <div class="btn" @click="verticalGroup.visible = !verticalGroup.visible">切换垂直投影显隐</div>
           <div class="btn" @click="markPointSize++">+</div>
           {{markPointSize}}
           <div class="btn" @click="markPointSize--">-</div>
@@ -471,10 +462,10 @@ export default {
       coordinate: {
         x: 0, y: 0
       },
+
       // 最终对准定位点后的线组
       finalLinesGroup: null,
-      verticalGroup: null,
-      pipeDeepList: []
+      verticalGroup: null
     }
   },
   computed: {
@@ -572,7 +563,7 @@ export default {
       // let tLineParam = this.suitLine([0,0,0], [0, 200, 300], [0, 0, 0], [0, 0, 200])
       // let tlm1 = this.creatFatLine([line1Start, line1End], 0xff0000, 4)
       // let tlm2 = this.creatFatLine([line2Start, line2End], 0x00ff00, 4)
-      let cross = new THREE.Vector3(line1End[0] - line1Start[0], line1End[1] - line1Start[1], line1End[2] - line1Start[2]).cross(new THREE.Vector3(line2End[0] - line2Start[0], line2End[1] - line2Start[1], line2End[2] - line2Start[2]))
+      let cross = new THREE.Vector3(line1End[0] - line1Start[0],line1End[1] - line1Start[1],line1End[2] - line1Start[2]).cross(new THREE.Vector3(line2End[0] - line2Start[0],line2End[1] - line2Start[1],line2End[2] - line2Start[2]))
       let ang = new THREE.Vector3(line1End[0] - line1Start[0],line1End[1] - line1Start[1],line1End[2] - line1Start[2]).normalize().angleTo(new THREE.Vector3(line2End[0] - line2Start[0],line2End[1] - line2Start[1],line2End[2] - line2Start[2]).normalize())
       // let quaternion = new THREE.Quaternion().setFromAxisAngle(
       //   new THREE.Vector3(line1End[0] - line1Start[0],line1End[1] - line1Start[1],line1End[2] - line1Start[2]).normalize().cross(new THREE.Vector3(line2End[0] - line2Start[0],line2End[1] - line2Start[1],line2End[2] - line2Start[2]).normalize()),
@@ -584,11 +575,7 @@ export default {
       //   ang: v1.angleTo(v2),
       //   cross: v1.cross(v2).normalize()
       // }
-      return {
-        scale,
-        ang,
-        cross
-      }
+      return { scale, ang, cross}
     },
     toggleClipMap() {
       this.clipFlag = !this.clipFlag
@@ -604,20 +591,6 @@ export default {
         new THREE.Plane(new THREE.Vector3(-0.4, 0, 1), 30)
       ];
       this.renderer.clippingPlanes = this.clipFlag ? PlaneArr : ''
-    },
-    creatFatCurveLine(points) {
-      // Create a sine-like wave
-      // const curve = new THREE.SplineCurve( [
-      //   new THREE.Vector2( -10, 0 ),
-      //   new THREE.Vector2( -10, 5 ),
-      //   new THREE.Vector2( 0, 0 ),
-      //   new THREE.Vector2( 5, -5 ),
-      //   new THREE.Vector2( 10, 0 )
-      // ] );
-      const geometry = new THREE.BufferGeometry().setFromPoints( points );
-      const material = new THREE.LineBasicMaterial( { color: 0x6eff0f } );
-      const splineObject = new THREE.Line( geometry, material );
-      return splineObject
     },
     // 生成粗线体
     creatFatLine (points, color, lineWidth) {
@@ -669,7 +642,6 @@ export default {
       this.markGroup = new THREE.Group()
       this.compareGroup = new THREE.Group()
       this.pipeJointGroup = new THREE.Group()
-      this.verticalGroup = new THREE.Group()
       const fbxLoader = new FBXLoader()
       /* let list0829 = [
         [
@@ -866,7 +838,7 @@ export default {
       // let modelStep = [6, 25]
       let modelStep = [6, 25]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.95:8000'
+      let simpleBaseUrl = 'http://192.168.1.91:8000'
       // 载入所有模型
       let loadAllModel = arr => {
         arr.forEach((item, index) => {
@@ -894,7 +866,7 @@ export default {
         })
       }
       // 模型载入
-      loadAllModel(list0829)
+      // loadAllModel(list0829)
 
       // this.group.position.set(-1592.6661128974586, -111.68440598717643, 873.1284961341271)
       // this.group.position.set(-1396.13207, -102.06568, 666.00850)
@@ -906,133 +878,17 @@ export default {
       // this.group.position.y = this.baseGroup.position.y = -1200
 
       this.pipeListGroup = new THREE.Group()
-
-      // 地表点 模型映射
-      let part0901point = [
-        [0, 0, 0],
-        [-199.408, -12.766, 169.34],
-        [-447.876, -13.188, 290.186],
-        [-713.221, -26.733, 396.292],
-        [-996.535, -34.790, 469.574],
-        [-1265.926, -44.337, 507.329],
-        [-1507.818, -50.087, 634.891],
-        [-1752.911, -57.106, 777.658],
-        [-1993.776, -65.223, 932.528],
-        [-2239.631, -80.536, 1076.947]
-      ]
-      this.markGroup = new THREE.Group()
-      const geometryJoint = new THREE.SphereGeometry( this.markPointSize * 0.05, 8, 8 );
-      const materialJoint = new THREE.MeshBasicMaterial( { color: 0x22cc22 } );
-      const sphereJoint = new THREE.Mesh( geometryJoint, materialJoint );
-      part0901point.forEach(item => {
-        let clone = sphereJoint.clone()
-        clone.position.set(...item)
-        // this.markGroup.add(clone)
-      })
-
-      // 地表
-      let landCrossPointList = [
-        [0,0,0],
-        [-25.357, -1.582, 19.579],
-        [-47.742, -2.781, 32.654],
-        [-72.629, -1.981, 48.745],
-        [-90.458, -3.485, 57.915],
-        [-113.574, -2.326, 70.413],
-        [-139.225, -3.806, 85.790],
-        [-157.744, -6.342, 104.735],
-        [-172.434, -7.234, 126.816],
-        [-180.030, -8.083, 144.719],
-        [-199.414, -12.758, 169.293],
-        [-223.564, -12.970, 176.554],
-        [-247.610, -14.558, 186.900],
-        [-276.343, -11.352, 199.092],
-        [-303.575, -16.053, 215.016],
-        [-327.071, -17.917, 220.886],
-        [-345.735, -16.544, 236.720],
-        [-383.480, -15.890, 253.459],
-        [-397.990, -16.663, 263.348],
-        [-425.603, -14.757, 278.265],
-        [-447.961, -13.181, 290.189],
-        [-478.031, -16.769, 301.197],
-        [-505.853, -17.472, 308.705],
-        [-535.686, -18.805, 316.647],
-        [-561.840, -23.159, 322.574],
-        [-599.364, -19.560, 332.295],
-        [-628.600, -28.268, 347.192],
-        [-657.252, -29.087, 364.949],
-        [-687.866, -27.667, 378.077],
-        [-713.263, -26.734, 396.274],
-        [-744.188, -30.155, 402.363],
-        [-773.962, -29.838, 403.187],
-        [-800.674, -29.596, 406.377],
-        [-825.695, -31.336, 418.753],
-        [-852.654, -31.369, 426.892],
-        [-877.450, -33.766, 433.192],
-        [-906.358, -35.088, 439.298],
-        [-941.543, -35.062, 449.153],
-        [-963.320, -36.493, 455.550],
-        [-996.601, -34.792, 469.588],
-        [-1019.408, -34.773, 471.523],
-        [-1043.671, -36.399, 475.110],
-        [-1072.153, -38.037, 479.627],
-        [-1100.893, -40.884, 492.085],
-        [-1127.074, -40.596, 499.171],
-        [-1151.612, -41.342, 503.747],
-        [-1182.831, -42.437, 514.530],
-        [-1204.609, -41.936, 516.823],
-        [-1236.447, -37.465, 510.138],
-        [-1265.844, -44.323, 507.315],
-        [-1289.820, -42.509, 513.433],
-        [-1315.072, -42.009, 525.829],
-        [-1340.826, -43.263, 541.799],
-        [-1365.694, -45.141, 552.782],
-        [-1387.818, -47.142, 567.081],
-        [-1414.934, -46.023, 580.308],
-        [-1436.836, -48.819, 592.274],
-        [-1467.767, -47.773, 609.556],
-        [-1482.038, -50.322, 618.821],
-        [-1507.844, -50.102, 634.847],
-        [-1534.578, -50.734, 652.283],
-        [-1556.655, -54.228, 665.881],
-        [-1578.487, -53.556, 675.857],
-        [-1604.787, -54.087, 691.882],
-        [-1630.066, -54.028, 706.052],
-        [-1651.826, -55.147, 718.200],
-        [-1680.851, -54.640, 731.291],
-        [-1705.962, -57.352, 747.527],
-        [-1732.233, -60.264, 763.725],
-        [-1752.967, -57.129, 777.726],
-        [-1778.416, -59.940, 791.643],
-        [-1801.622, -59.426, 805.291],
-        [-1828.135, -59.634, 824.955],
-        [-1849.799, -60.323, 841.080],
-        [-1876.520, -57.450, 854.866],
-        [-1899.468, -60.458, 870.806],
-        [-1919.600, -63.447, 887.179],
-        [-1951.543, -61.358, 904.365],
-        [-1971.322, -64.387, 919.400],
-        [-1993.877, -65.248, 932.580],
-        [-2015.322, -66.349, 945.124],
-        [-2042.104, -68.681, 961.982],
-        [-2066.444, -69.774, 971.780],
-        [-2092.919, -70.193, 989.504],
-        [-2117.074, -71.089, 1001.382],
-        [-2134.286, -74.459, 1017.320],
-        [-2164.469, -75.494, 1030.516],
-        [-2185.574, -74.947, 1047.479],
-        [-2209.568, -77.167, 1061.588],
-        [-2239.700, -80.538, 1076.949]
-      ]
+      // 真实GPS数据
       let pipeList = [
-        // [288187, 4231044, 1.5],
-        // [288196, 4231016, 1.4],
-        // [288206, 4230984, 1.6],
-        // [288212, 4230959, 1.6],
-        // [288221, 4230934, 1.5],
-        // [288228, 4230904, 1.9],
-        // [288239, 4230875, 2.4],
-        // [288246, 4230851, 2.5],
-        // [288250, 4230826, 2.2],
+        [288187, 4231044, 1.5],
+        [288196, 4231016, 1.4],
+        [288206, 4230984, 1.6],
+        [288212, 4230959, 1.6],
+        [288221, 4230934, 1.5],
+        [288228, 4230904, 1.9],
+        [288239, 4230875, 2.4],
+        [288246, 4230851, 2.5],
+        [288250, 4230826, 2.2],
         [288258, 4230796, 2.2],
         [288265, 4230764, 1.6],
         [288274, 4230739, 1.7],
@@ -1123,94 +979,82 @@ export default {
         [288041, 4228375, 3.0],
         [288041, 4228347, 3.1],
         [288043, 4228313, 2.7],
-        // [288039, 4228285, 1.7],
-        // [288041, 4228258, 1.9],
-        // [288040, 4228230, 1.8],
-        // [288041, 4228201, 2.4],
-        // [288040, 4228178, 1.4],
-        // [288044, 4228151, 2.6],
-        // [288041, 4228117, 1.8],
-        // [288046, 4228086, 1.9],
-        // [288046, 4228051, 4.3],
-        // [288045, 4228033, 1.6]
+        [288039, 4228285, 1.7],
+        [288041, 4228258, 1.9],
+        [288040, 4228230, 1.8],
+        [288041, 4228201, 2.4],
+        [288040, 4228178, 1.4],
+        [288044, 4228151, 2.6],
+        [288041, 4228117, 1.8],
+        [288046, 4228086, 1.9],
+        [288046, 4228051, 4.3],
+        [288045, 4228033, 1.6]
       ]
-      // 地表
-      landCrossPointList.forEach(item => {
-        let clone = sphereJoint.clone()
-        clone.position.set(...item)
-        this.markGroup.add(clone)
-      })
-      // 坐标轴转换
-      let culDivideAllRoad = () => {
-        let scaleXY =  Math.sqrt(Math.pow((288043 - 288258),2) + Math.pow(4228313 - 4230796,2)) / Math.sqrt(Math.pow(landCrossPointList[landCrossPointList.length -1][0],2) + Math.pow(landCrossPointList[landCrossPointList.length - 1][2], 2))
-        let scaleH = 1.041
-        // 模型中管线
-        let pipeCurvePoints = landCrossPointList.map((item, index) => new THREE.Vector3(item[0], item[1] - pipeList[index][2] / 1.041, item[2]))
-        let pipeLongitudeAndLatitude = pipeList.map(item => new THREE.Vector3(item[0] - pipeList[0][0], item[2] - pipeList[0][2], item[1] - pipeList[0][1]))
-
-        let pipeLongitudeCurve = new THREE.CatmullRomCurve3(pipeLongitudeAndLatitude).getPoints(500);
-        let pipeLongitudeCurveLine = this.creatFatCurveLine(pipeLongitudeCurve)
-        this.scene.add(pipeLongitudeCurveLine)
-
-        const pipeCurve = new THREE.CatmullRomCurve3(pipeCurvePoints).getPoints(500);
-        // let modelDeepList = []
-        let v1 = new THREE.Vector3((288043 - 288258) / scaleXY, 0.5, (4228313 - 4230796) / scaleXY)
-        let v2 = new THREE.Vector3(
-          Math.round(pipeCurve[500].x),
-          80.538,
-          Math.round(pipeCurve[500].z)
-        )
-        let scale = Math.sqrt(Math.pow(v1.x,2) + Math.pow(v1.y,2) + Math.pow(v1.z,2)) /  Math.sqrt(Math.pow(v2.x,2) + Math.pow(v2.y,2) + Math.pow(v2.z,2))
-        console.log(scale)
-        let ang = new THREE.Vector3(v2.x, 0, v2.y).angleTo(new THREE.Vector3(v1.x, 0, v1.y))
-        let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(v1.x, v1.y, v1.z).cross(new THREE.Vector3(v2.x, v2.y, v2.z)), -ang)
-        pipeCurve.forEach((item, index) => {
-          let v = new THREE.Vector3(item.x, 0,item.z)
-          v.applyQuaternion(quaternion)
-          const {x, z} = v
-          /* console.log(
-            "%c%s",
-            "color: #fff; background: #2879FF; font-size: 14px; border-radius: 6px; padding: 0 6px",
-            ((-v.x / scale + 288258).toFixed(0) + '  ' + (-v.z / scale + 4230796).toFixed(0) ), index
-          ) */
-          this.pipeDeepList[index] = [v.x * scale, Math.abs(item.y * scale), v.z * scale]
+      let drawPipe = (pl) => {
+        let conversion = pl.map(item => [item[0] - baseGPSParam[0], item[1] - baseGPSParam[1], -item[2]])
+        let line = this.creatFatLine(conversion, '#ffffff', 1, true)
+        this.pipeListGroup.add(line)
+        this.markGroup.add(line)
+        const geometryJoint = new THREE.SphereGeometry( 0.1, 8, 8 );
+        const materialJoint = new THREE.MeshBasicMaterial( { color: 0xcc2222 } );
+        const sphereJoint = new THREE.Mesh( geometryJoint, materialJoint );
+        conversion.forEach(item => {
+          let clone = sphereJoint.clone()
+          clone.position.set(item[0], item[1], item[2])
+          this.pipeListGroup.add( clone );
+          this.markGroup.add( clone );
         })
-        // this.verticalGroup.add(this.creatFatCurveLine(pipeCurvePoints))
-
-        // 验证线段旋转经纬度坐标转换准确性
-        const material1 = new THREE.LineBasicMaterial({
-          color: 0xeeee00
-        });
-        const material2 = new THREE.LineBasicMaterial({
-          color: 0x0fff11
-        });
-        const geometry1 = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3( 0, 0, 0 ),
-          new THREE.Vector3( v1.x, 0, v1.y )
-        ]);
-        const geometry2 = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3( 0, 0, 0 ),
-          new THREE.Vector3( v2.x, 0, v2.y )
-        ]);
-        const line1 = new THREE.Line( geometry1, material1 );
-        let qua = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1,  0), new THREE.Vector3(v1.x, 0, v1.z).angleTo(new THREE.Vector3(v2.x, 0, v2.z)))
-        const line2 = new THREE.Line( geometry2, material2 );
-        line2.applyQuaternion(qua)
-        this.scene.add(line1)
-        this.scene.add(line2)
+        this.pipeListGroup.rotation.set(-1.5357, -0.0188, -1.0368)
+        this.pipeJointGroup.rotation.set(-1.5357, -0.0188, -1.0368)
+        this.scene.add(this.pipeListGroup)
+        this.scene.add(this.pipeJointGroup)
       }
-      culDivideAllRoad()
-      this.pipeListGroup.add(this.creatFatLine(landCrossPointList.map((item, index) => {
-        let point = []
-        point[0] = item[0]
-        point[1] = item[1] - pipeList[index][2] / 1.041
-        point[2] = item[2]
-        return point
-      }), 0x4422ee, 2))
-      this.scene.add(this.pipeListGroup)
-      this.scene.add(this.markGroup)
+      // drawPipe(pipeList)
+
+      let copyLine = this.pipeListGroup.clone()
+      copyLine.position.y += 6
+
+      // 标记点位
+      // this.markGroup.add(copyLine)
+      let markList = [
+        [288258, 4230796, 2.2],
+        [288303, 4230532, 1.5],
+        [288280, 4230258, 3.8],
+        [288236, 4229974,	1.2],
+        [288154, 4229700,	1.7],
+        [288045, 4229444,	2.2],
+        [288037, 4229172,	1.5],
+        [288033, 4228887,	2.0],
+        [288043, 4228600,	2.3],
+        [288043, 4228313,	2.7]
+      ]
+      let conversionMarks = markList.map(item => [item[0] - baseGPSParam[0], item[1] - baseGPSParam[1], -item[2]])
+      const geometryJoint = new THREE.SphereGeometry( this.markPointSize * 0.05, 8, 8 );
+      const materialJoint = new THREE.MeshBasicMaterial( { color: 0x22cc22 } );
+      const sphereJoint = new THREE.Mesh( geometryJoint, materialJoint );
+      conversionMarks.forEach(item => {
+        let clone = sphereJoint.clone()
+        clone.position.set(item[0], item[1], item[2])
+        this.markGroup.add( clone );
+      })
+      this.markGroup.rotation.set(...pipeBaseRotation)
+      // this.scene.add(this.markGroup)
+
+      // 地表点 模型映射
+      let part0901point = [
+        [0, 0, 0],
+        [-199.408, -12.766, 169.34],
+        [-447.876, -13.188, 290.186],
+        [-713.221, -26.733, 396.292],
+        [-996.535, -34.790, 469.574],
+        [-1265.926, -44.337, 507.329],
+        [-1507.818, -50.087, 634.891],
+        [-1752.911, -57.106, 777.658],
+        [-1993.776, -65.223, 932.528],
+        [-2239.631, -80.536, 1076.947]
+      ]
       // 分段线列表
-      let adjustLine = (gpsRepair) => {
+      let adjustLine = () => {
         let landLine = [
           [
             [0, 0, 0],
@@ -1370,82 +1214,17 @@ export default {
         let lineGroup = new THREE.Group()
         for (let i = 0; i < verticalGpsList.length; i++) {
           // let baseLine = landLine[i], useLine = verticalGpsList[i]
-          let baseLineStart = landLine[i][0]
-          let baseLineEnd = landLine[i][landLine[i].length - 1]
-          let initBaseLine = landLine[i].map((item, index) => {
-            let point = []
-            point[0] = item[0] - baseLineStart[0]
-            point[1] = item[1] - baseLineStart[1]
-            point[2] = item[2] - baseLineStart[2]
-            return point
-          })
-          let gpsLineStart = verticalGpsList[i][0]
-          // let gpsLineEnd = verticalGpsList[i][verticalGpsList[i].length - 1]
-          let initGPSLine = verticalGpsList[i].map((item, index) => {
-            let point = []
-            point[0] = item[0] - gpsLineStart[0]
-            point[1] = 0
-            point[2] = item[1] - gpsLineStart[1]
-            return point
-          })
-          // console.log(initBaseLine, initGPSLine)
-          let baseLineCan = this.creatFatLine(
-            landLine[i],
-            0xeeff44,
-            1
-          )
-          // let baseLine = this.creatFatLine(
-          //   initBaseLine,
-          //   0xeeff44,
-          //   1
-          // )
-          let p = this.suitLine(
-            baseLineStart,
-            baseLineEnd,
-            initGPSLine[0],
-            initGPSLine[initGPSLine.length - 1],
-          )
-          let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(p.cross.x, p.cross.y, p.cross.z).normalize(), -p.ang)
-          let useLine = this.creatFatLine(
-            initGPSLine,
-            0xee0044,
-            1
-          )
-          // return useLine
-          useLine.applyQuaternion(quaternion)
-          useLine.scale.set(p.scale, p.scale, p.scale)
-          useLine.position.set(baseLineStart[0], baseLineStart[1], baseLineStart[2])
+          let baseLine = this.creatFatLine(landLine[i], 0xee0044, 1)
+          let useLine = this.creatFatLine(verticalGpsList[i], 0xee0044, 1)
+
           lineGroup.add(useLine)
-          // this.scene.add(baseLine)
           // 参考用 后期删
-          // lineGroup.add(baseLine)
-          lineGroup.add(baseLineCan)
-          initGPSLine.forEach((item) => {
-            let v = new THREE.Vector3(item[0], item[1], item[2])
-            v.applyQuaternion(quaternion)
-            let cloneJoint = sphereJoint.clone()
-            let diff = {
-              x: v.x * p.scale + baseLineStart[0],
-              y: v.y * p.scale + baseLineStart[1],
-              z: v.z * p.scale + baseLineStart[2],
-            }
-            cloneJoint.position.set(diff.x, diff.y, diff.z)
-            let vWorld = new THREE.Vector3()
-            cloneJoint.getWorldPosition(vWorld)
-            let line = this.creatFatLine(
-              [[diff.x, diff.y + 10, diff.z], [diff.x, diff.y - 10, diff.z]],
-              0xaafff0,
-              1
-            )
-            this.verticalGroup.add(line)
-          })
+          lineGroup.add(baseLine)
         }
-        // console.log(lineGroup)
-        // this.finalLinesGroup = lineGroup.clone()
         return lineGroup
       }
-      this.finalLinesGroup = adjustLine(baseGPSParam)
-
+      this.finalLinesGroup = adjustLine(part0901point)
+      let realGPSWeb = markList.map(item => { item[2] = 0; return item })
       let deepList = [2.2, 1.5, 3.8, 1.2, 1.7, 2.2, 1.5, 2.0, 2.3, 2.7]
       // 地表点矫正线
       let part0901Lines = []
@@ -1456,8 +1235,137 @@ export default {
         pointEnd[1] -= deepList[i]
         part0901Lines.push([pointStart, pointEnd])
       }
+      // console.log(part0901Lines)
+      // 基于各个点地表特征点，分段绘制
+      /* this.finalLinesGroup = new THREE.Group()
+      part0901Lines.forEach((item, index) => {
+        let rL = [
+          realGPSWeb[index].map((item, index) => {
+            if(index===0){
+              item -= baseGPSParam[0]; return item
+            } else if(index ===1){
+              item -= baseGPSParam[1]; return item
+            } else {
+              return item
+            }}
+          ),
+          realGPSWeb[index + 1].map((item, index) => {
+            if(index===0){
+              item -= baseGPSParam[0]; return item
+            } else if(index ===1){
+              item -= baseGPSParam[1]; return item
+            } else {
+              return item
+            }}
+          ),
+        ].map(item => {
+          let gpsPipePoints = [item[0], item[2], item[1]]
+          return gpsPipePoints
+        })
+        // suit函数负责获取两向量旋转轴与旋转角四元数
+        // realGPSWeb应替换为gps下射法线与地形交点
+        let gpsLine = this.creatFatLine(rL, 0xee0044, 1)
+        gpsLine.position.set(item[0][0]-rL[0][0], item[0][1]-rL[0][1], item[0][2]-rL[0][2])
+        let p = this.suitLine(rL[0], rL[rL.length - 1], item[0], item[1])
+        // gpsLine.applyQuaternion(p.quaternion)
+        // gpsLine.scale.set(p.scale, p.scale, p.scale)
+        console.log(gpsLine)
+        console.log(p)
+        console.log(rL[0], rL[1], item[0], item[1], '对比点')
+        // gpsLine.rotation.set(...pipeBaseRotation)
+        this.finalLinesGroup.add(gpsLine)
+        this.finalLinesGroup.add(this.creatFatLine([item[0], item[1]], 0xee0044, 1))
+      }) */
+      // .applyQuaternion(quaternion)
+      // this.finalLinesGroup
+      // this.creatFatLine()
       this.scene.add(this.finalLinesGroup)
+
+      // 发现gps数据网是平面数据网，故需要打垂直射线得出地面点位
+      // this.verticalGroup = new THREE.Group()
+      let renderVerticalGroup = (list) => {
+        let vGroup = new THREE.Group()
+        // let transformList = list.map(item => [item[0], item[2], item[1]])
+        list.forEach(item => {
+          let startP = item.map((pos, index) => {
+            if (index === 2) {
+              pos += 10
+            } else if(index === 0) {
+              pos -= baseGPSParam[0]
+            } else if (index === 1) {
+              pos -= baseGPSParam[1]
+            }
+            return pos
+          })
+          let endP = item.map((pos, index) => {
+            if (index === 2) {
+              pos -= 10
+            } else if(index === 0) {
+              pos -= baseGPSParam[0]
+            } else if (index === 1) {
+              pos -= baseGPSParam[1]
+            }
+            return pos
+          })
+          let line = this.creatFatLine([startP, endP], 0xffff88, 1)
+          vGroup.add(line)
+        })
+        return vGroup
+      }
+      // 添加法线标定平面数据网下的gps坐标点
+      this.verticalGroup = renderVerticalGroup(pipeList)
+      this.verticalGroup.rotation.set(...pipeBaseRotation)
       this.scene.add(this.verticalGroup)
+
+      this.markPointGroup = this.renderPartPoint(part0901point)
+      this.scene.add(this.markPointGroup)
+
+      /* // 测试转线函数
+      let tL1 = [
+        [0,0,0],
+        [0, 300, 200]
+      ]
+      let tL2 = [
+        [0,0,0],
+        [0, 0, 200]
+      ]
+      let x1 = tL1[1][0] - tL1[0][0]
+      let y1 = tL1[1][1] - tL1[0][1]
+      let z1 = tL1[1][2] - tL1[0][2]
+      let x2 = tL2[1][0] - tL2[0][0]
+      let y2 = tL2[1][1] - tL2[0][1]
+      let z2 = tL2[1][2] - tL2[0][2]
+      let cross = new THREE.Vector3(x1, y1, z1).normalize().cross(new THREE.Vector3(x2, y2, z2).normalize()).normalize()
+      let ang = new THREE.Vector3(x1, y1, z1).normalize().angleTo(new THREE.Vector3(x2, y2, z2).normalize())
+      console.log('ang', ang)
+      // let tLineParam = this.suitLine([0,0,0], [0, 200, 300], [0, 0, 0], [0, 0, 200])
+      let tlm1 = this.creatFatLine(tL1, 0xff0000, 4)
+      let tlm2 = this.creatFatLine(tL2, 0x00ff00, 4)
+      let quaternion = new THREE.Quaternion().setFromAxisAngle(cross, ang)
+      tlm1.applyQuaternion(quaternion)
+      // let euler = new THREE.Euler( 0, 0, 200, 'XYZ' );
+      this.scene.add(tlm1)
+      this.scene.add(tlm2)
+      console.log(quaternion) */
+
+      // 测试轨迹线旋转角
+      let testList = [
+        [288258, 4230796, 2.2],
+        [288303, 4230532, 1.5]
+      ]
+      let x = testList[1][0] - testList[0][0]
+      let y = testList[1][1] - testList[0][1]
+      let tlm1 = this.creatFatLine([[0, 0, 0], [-199.408, -12.766, 169.34]], 0xff0000, 4)
+      let tlm2 = this.creatFatLine([[0, 0, 0], [x, 0, y]], 0x00ff00, 4)
+      let tLineParam = this.suitLine([0, 0, 0], [-199.408, -12.766, 169.34], [0,0,0], [x, 0, y] )
+      let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(tLineParam.cross.x, tLineParam.cross.y, tLineParam.cross.z).normalize(), -tLineParam.ang)
+      tlm2.applyQuaternion(quaternion)
+      tlm2.scale.set(tLineParam.scale, tLineParam.scale, tLineParam.scale)
+      // let euler = new THREE.Euler( 0, 0, 200, 'XYZ' );
+      this.scene.add(tlm1)
+      this.scene.add(tlm2)
+
+      // 分段多线旋转
 
       // 地形
       this.scene.add(this.group)
@@ -1503,7 +1411,7 @@ export default {
       // this.transformControls.attach( this.compareGroup );
       // this.transformControls.attach( this.group );
       // this.transformControls.attach( this.markGroup );
-      this.transformControls.attach( this.group );
+      this.transformControls.attach( this.markGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -1740,7 +1648,7 @@ export default {
   .coordinate {
     position absolute
     top: 20px
-    left: 1250px
+    left: 850px
     color #ffffff
   }
   .main-tool {
@@ -1887,8 +1795,6 @@ export default {
     position absolute
     bottom: 20px
     left: 20px
-    height: 400px
-    overflow auto
     transition left ease-in-out 0.4s
     //background-color: rgba(220, 220, 220, 0.4)
   }

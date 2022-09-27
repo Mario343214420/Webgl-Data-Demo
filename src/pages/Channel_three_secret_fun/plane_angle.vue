@@ -90,55 +90,27 @@ export default {
       const canvas = this.$refs.cvs
       const aspect = this.w / this.h
       this.scene = new THREE.Scene()
-      this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-      this.camera.position.z = 0
+      this.camera = new THREE.OrthographicCamera( this.w / - 2, this.w / 2, this.h / 2, this.h / - 2, 1, 1000 );
+      // this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
+      this.camera.position.z = 40
       this.camera.position.x = 0
-      this.camera.position.y = 40
+      this.camera.position.y = 0
       this.camera.lookAt(new THREE.Vector3(0,-10, 0));
       this.group = new THREE.Group()
 
-      let vList = [
-        new THREE.Vector3(0,0,0),
-        new THREE.Vector3(1,0,0),
-        new THREE.Vector3(0,0,1),
-        new THREE.Vector3(0,1,0)
-      ]
-      let curve = new THREE.CatmullRomCurve3(vList, false, 'catmullrom', 0)
-      const points = curve.getPoints( 50 );
-      const geometry = new THREE.BufferGeometry().setFromPoints( points );
-      const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-      const curveObject = new THREE.Line( geometry, material );
-      this.group.add(curveObject)
+      const geometry = new THREE.PlaneGeometry( 10, 10 );
+      const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+      const planeMesh = new THREE.Mesh( geometry, material );
 
-      const curve1 = new THREE.CatmullRomCurve3( [
-        new THREE.Vector2( -10, 0 ),
-        new THREE.Vector2( -5, 5 ),
-        new THREE.Vector2( 0, 0 ),
-        new THREE.Vector2( 5, -5 ),
-        new THREE.Vector2( 10, 0 )
-      ], false,'catmullrom', -0.001);
-      const curve2 = new THREE.CatmullRomCurve3( [
-        new THREE.Vector2( -10, 0 ),
-        new THREE.Vector2( -5, 5 ),
-        new THREE.Vector2( 0, 0 ),
-        new THREE.Vector2( 5, -5 ),
-        new THREE.Vector2( 10, 0 )
-      ], false,'centripetal');
-      console.log(curve1)
+      this.group.add(planeMesh);
+      const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 1, 0), Math.PI / 4)
+      this.group.applyQuaternion(quaternion)
+      const quaternion2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI / 4)
+      // planeMesh.applyQuaternion(quaternion2)
+      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 0), 10)
 
-      const points1 = curve1.getPoints( 50 );
-      const points2 = curve2.getPoints( 50 );
-      const geometry1 = new THREE.BufferGeometry().setFromPoints( points1 );
-      const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-
-      const material1 = new THREE.LineBasicMaterial( { color: 0xffff00 } );
-      const material2 = new THREE.LineBasicMaterial( { color: 0xff00ff } );
-
-// Create the final object to add to the scene
-      const splineObject = new THREE.Line( geometry1, material1 );
-      const splineObject2 = new THREE.Line( geometry2, material2 );
-      this.group.add(splineObject)
-      this.group.add(splineObject2)
+      const helper = new THREE.PlaneHelper(plane, 50, 0xffff00);
+      this.scene.add(helper);
       this.scene.add(this.group)
       const _ambient = new THREE.AmbientLight(0xffffff);
       this.scene.add(_ambient);

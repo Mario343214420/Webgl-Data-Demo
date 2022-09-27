@@ -3,15 +3,39 @@
     <div class="chart" :style="`left: ${toolsFlag ? '-820' : '20'}px;`">
       <e-chart id="chart" :option="options" style="height: 400px; width: 810px"></e-chart>
       <div class="pip-deep-list">
-        <div v-for="(item, index) in pipeDeepList" :key="index">
-          <i>经度{{parseInt(item[2]) + 4230796}}， </i>
-          <i>纬度{{parseInt(item[0]) + 288258}}， </i>
-          <i :style="item[1] * 1.041 < 2.2 ? 'color: #ff0000' : ''" :title="item[1] * 1.041 < 2.2 ? '埋深不足2.2' : ''">深度{{(item[1] * 1.041 ).toFixed(2)}}</i>
+        <div class="pdl-item">
+          <div v-for="(item, index) in pipeDeepList" :key="index">
+            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}</span>
+          </div>
+        </div>
+        <div class="pdl-item">
+          <div v-for="(item, index) in pipeDeepList" :key="index">
+            <span>{{(parseFloat(item[2]) + 288258).toFixed(0)}}</span>
+          </div>
+        </div>
+        <div class="pdl-item">
+          <div v-for="(item, index) in pipeDeepList" :key="index" :style="Math.abs(item[1] * 1.011) < 2.2 ? 'color: #ff0000' : ''" >
+            <span :title="Math.abs(item[1] * 1.011) < 2.2 ? '埋深不足2.2' : ''">{{Math.abs((item[1] * 1.011 ).toFixed(2))}}</span>
+          </div>
+        </div>
+        <div class="pdl-item">
+          <div v-for="(item, index) in pipeDeepList" :key="index" :style="Math.abs(item[1] * 1.011) < 1.5 ? 'color: #ff0000' : ''" >
+<!--            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>-->
+<!--            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>-->
+            <span :title="Math.abs(item[1] * 1.011) < 1.5 ? '埋深不足1.5' : ''">{{Math.abs((item[1] * 1.011 ).toFixed(2))}}</span>
+          </div>
+        </div>
+        <div class="pdl-item">
+          <div v-for="(item, index) in pipeDeepList" :key="index" :style="Math.abs(item[1] * 1.011) < 0.8 ? 'color: #ff0000' : ''" >
+<!--            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>-->
+<!--            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>-->
+            <span :title="Math.abs(item[1] * 1.011) < 0.8 ? '埋深不足0.8' : ''">{{Math.abs((item[1] * 1.011 ).toFixed(2))}}</span>
+          </div>
         </div>
       </div>
     </div>
     <div class="coordinate">
-      GPS坐标&nbsp;&nbsp;&nbsp;x:{{parseInt(coordinate.x) + parseInt('289162')}}, y:{{parseInt(coordinate.y) + parseInt('4234921')}}
+      GPS坐标&nbsp;&nbsp;&nbsp;x:{{Math.round(coordinate.x) + parseInt('4230796')}}, y:{{Math.round(coordinate.y) + parseInt('288258')}}
     </div>
     <div class="main-tool">
       <div>
@@ -67,21 +91,21 @@
             管路组定位数据
             <div class="group">
               position: <br>
-              x: <i class="x">{{group.position.x}}</i>,<br>
-              y: <i class="y">{{group.position.y}}</i>,<br>
-              z: <i class="z">{{group.position.z}}</i>
+              x: <i class="x">{{Math.round(group.position.x)}}</i>,
+              y: <i class="y">{{Math.round(group.position.y)}}</i>,
+              z: <i class="z">{{group.position.z.toFixed(2)}}</i>
             </div>
             <div class="group">
               rotation: <br>
-              x: <i class="x">{{group.rotation.x}}</i>,<br>
-              y: <i class="y">{{group.rotation.y}}</i>,<br>
-              z: <i class="z">{{group.rotation.z}}</i>
+              x: <i class="x">{{Math.round(group.rotation.x)}}</i>,
+              y: <i class="y">{{Math.round(group.rotation.y)}}</i>,
+              z: <i class="z">{{group.rotation.z.toFixed(2)}}</i>
             </div>
             <div class="group">
               scale: <br>
-              x: <i class="x">{{group.scale.x}}</i>,<br>
-              y: <i class="y">{{group.scale.y}}</i>,<br>
-              z: <i class="z">{{group.scale.z}}</i>
+              x: <i class="x">{{Math.round(group.scale.x)}}</i>,
+              y: <i class="y">{{Math.round(group.scale.y)}}</i>,
+              z: <i class="z">{{group.scale.z.toFixed(2)}}</i>
             </div>
           </div>
         </div>
@@ -487,10 +511,10 @@ export default {
             w: 14,
             h: 5
           },
-          lt: [241.64832, 17.77011, -279.09458],
-          rt: [242.75425, 17.28109, -265.65717],
-          rb: [242.73711, 12.35920, -265.74950],
-          lb: [241.42097, 12.84732, -279.47116]
+          lt: [351.330, 4.443, -117.440],
+          rt: [345.315, 4.498, -105.239],
+          rb: [345.182, -0.445, -105.238],
+          lb: [351.201, -0.322, -117.754]
         },
         {
           label: '2号建筑',
@@ -499,9 +523,9 @@ export default {
             w: 5.07,
             h: 5
           },
-          rt: [264.53304, 17.20819, -255.60393],
-          rb: [264.39420, 12.52602, -255.69377],
-          lt: [264.18606, 17.38703, -263.24567]
+          rt: [359.004, 4.460, -85.477],
+          rb: [358.671, -0.531, -85.496],
+          lt: [362.613, 4.361, -92.192]
         },
         {
           label: '3号建筑',
@@ -510,8 +534,8 @@ export default {
             w: 4.08,
             h: 3.2
           },
-          rt: [264.65109, 15.11086, -251.88596],
-          rb: [264.46159, 11.99097, -252.06597]
+          rt: [356.337, 2.467, -80.429],
+          rb: [355.917, -0.546, -80.405]
         },
       ]
       function cal3dLength(p1, p2) {
@@ -661,10 +685,10 @@ export default {
       const aspect = this.w / this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-      this.camera.position.z = 0
+      this.camera.position.z = 200
       this.camera.position.x = 0
-      this.camera.position.y = 400
-      this.camera.lookAt(new THREE.Vector3(0,-10, 0));
+      this.camera.position.y = 0
+      this.camera.lookAt(new THREE.Vector3(0,0, 0));
       this.group = new THREE.Group()
       this.markGroup = new THREE.Group()
       this.compareGroup = new THREE.Group()
@@ -864,21 +888,570 @@ export default {
         ]
       ]
       // let modelStep = [6, 25]
-      let modelStep = [6, 25]
+      let modelStep = [6, 22]
       // let simpleBaseUrl = './models/'
       let simpleBaseUrl = 'http://192.168.1.95:8000'
+      // 现场gps坐标
+      let pipeList = [
+        [
+          4230796,
+          0,
+          288258
+        ],
+        [
+          4230764,
+          0,
+          288265
+        ],
+        [
+          4230739,
+          0,
+          288274
+        ],
+        [
+          4230710,
+          0,
+          288283
+        ],
+        [
+          4230691,
+          0,
+          288291
+        ],
+        [
+          4230666,
+          0,
+          288301
+        ],
+        [
+          4230637,
+          0,
+          288311
+        ],
+        [
+          4230610,
+          0,
+          288313
+        ],
+        [
+          4230583,
+          0,
+          288310
+        ],
+        [
+          4230564,
+          0,
+          288304
+        ],
+        [
+          4230532,
+          0,
+          288303
+        ],
+        [
+          4230507,
+          0,
+          288305
+        ],
+        [
+          4230481,
+          0,
+          288304
+        ],
+        [
+          4230450,
+          0,
+          288303
+        ],
+        [
+          4230419,
+          0,
+          288298
+        ],
+        [
+          4230395,
+          0,
+          288301
+        ],
+        [
+          4230372,
+          0,
+          288293
+        ],
+        [
+          4230331,
+          0,
+          288291
+        ],
+        [
+          4230314,
+          0,
+          288287
+        ],
+        [
+          4230283,
+          0,
+          288283
+        ],
+        [
+          4230258,
+          0,
+          288280
+        ],
+        [
+          4230226,
+          0,
+          288276
+        ],
+        [
+          4230197,
+          0,
+          288275
+        ],
+        [
+          4230166,
+          0,
+          288274
+        ],
+        [
+          4230139,
+          0,
+          288274
+        ],
+        [
+          4230100,
+          0,
+          288273
+        ],
+        [
+          4230068,
+          0,
+          288265
+        ],
+        [
+          4230036,
+          0,
+          288254
+        ],
+        [
+          4230003,
+          0,
+          288248
+        ],
+        [
+          4229974,
+          0,
+          288236
+        ],
+        [
+          4229944,
+          0,
+          288229
+        ],
+        [
+          4229915,
+          0,
+          288227
+        ],
+        [
+          4229889,
+          0,
+          288223
+        ],
+        [
+          4229865,
+          0,
+          288210
+        ],
+        [
+          4229839,
+          0,
+          288201
+        ],
+        [
+          4229815,
+          0,
+          288194
+        ],
+        [
+          4229787,
+          0,
+          288187
+        ],
+        [
+          4229753,
+          0,
+          288176
+        ],
+        [
+          4229732,
+          0,
+          288169
+        ],
+        [
+          4229700,
+          0,
+          288154
+        ],
+        [
+          4229678,
+          0,
+          288146
+        ],
+        [
+          4229655,
+          0,
+          288136
+        ],
+        [
+          4229628,
+          0,
+          288124
+        ],
+        [
+          4229603,
+          0,
+          288104
+        ],
+        [
+          4229579,
+          0,
+          288090
+        ],
+        [
+          4229556,
+          0,
+          288079
+        ],
+        [
+          4229528,
+          0,
+          288060
+        ],
+        [
+          4229507,
+          0,
+          288052
+        ],
+        [
+          4229474,
+          0,
+          288050
+        ],
+        [
+          4229444,
+          0,
+          288045
+        ],
+        [
+          4229420,
+          0,
+          288050
+        ],
+        [
+          4229392,
+          0,
+          288050
+        ],
+        [
+          4229362,
+          0,
+          288047
+        ],
+        [
+          4229335,
+          0,
+          288048
+        ],
+        [
+          4229309,
+          0,
+          288045
+        ],
+        [
+          4229279,
+          0,
+          288045
+        ],
+        [
+          4229254,
+          0,
+          288044
+        ],
+        [
+          4229219,
+          0,
+          288042
+        ],
+        [
+          4229202,
+          0,
+          288040
+        ],
+        [
+          4229172,
+          0,
+          288037
+        ],
+        [
+          4229140,
+          0,
+          288035
+        ],
+        [
+          4229114,
+          0,
+          288034
+        ],
+        [
+          4229090,
+          0,
+          288036
+        ],
+        [
+          4229059,
+          0,
+          288035
+        ],
+        [
+          4229030,
+          0,
+          288035
+        ],
+        [
+          4229005,
+          0,
+          288035
+        ],
+        [
+          4228973,
+          0,
+          288038
+        ],
+        [
+          4228943,
+          0,
+          288036
+        ],
+        [
+          4228912,
+          0,
+          288035
+        ],
+        [
+          4228887,
+          0,
+          288033
+        ],
+        [
+          4228858,
+          0,
+          288036
+        ],
+        [
+          4228831,
+          0,
+          288038
+        ],
+        [
+          4228798,
+          0,
+          288037
+        ],
+        [
+          4228771,
+          0,
+          288036
+        ],
+        [
+          4228741,
+          0,
+          288040
+        ],
+        [
+          4228713,
+          0,
+          288040
+        ],
+        [
+          4228687,
+          0,
+          288038
+        ],
+        [
+          4228651,
+          0,
+          288042
+        ],
+        [
+          4228626,
+          0,
+          288041
+        ],
+        [
+          4228600,
+          0,
+          288043
+        ],
+        [
+          4228575,
+          0,
+          288043
+        ],
+        [
+          4228543,
+          0,
+          288042
+        ],
+        [
+          4228517,
+          0,
+          288046
+        ],
+        [
+          4228485,
+          0,
+          288044
+        ],
+        [
+          4228458,
+          0,
+          288046
+        ],
+        [
+          4228435,
+          0,
+          288041
+        ],
+        [
+          4228402,
+          0,
+          288045
+        ],
+        [
+          4228375,
+          0,
+          288041
+        ],
+        [
+          4228347,
+          0,
+          288041
+        ],
+        [
+          4228313,
+          0,
+          288043
+        ]
+      ]
+      let deepList = [
+        [288258, 4230796, 2.2],
+        [288265, 4230764, 1.6],
+        [288274, 4230739, 1.7],
+        [288283, 4230710, 2.0],
+        [288291, 4230691, 2.3],
+        [288301, 4230666, 1.8],
+        [288311, 4230637, 1.6],
+        [288313, 4230610, 2.4],
+        [288310, 4230583, 1.2],
+        [288304, 4230564, 1.6],
+        [288303, 4230532, 1.5],
+        [288305, 4230507, 2.1],
+        [288304, 4230481, 1.3],
+        [288303, 4230450, 2.6],
+        [288298, 4230419, 1.8],
+        [288301, 4230395, 1.7],
+        [288293, 4230372, 2.3],
+        [288291, 4230331, 3.0],
+        [288287, 4230314, 2.5],
+        [288283, 4230283, 3.1],
+        [288280, 4230258, 3.8],
+        [288276, 4230226, 3.4],
+        [288275, 4230197, 2.6],
+        [288274, 4230166, 1.6],
+        [288274, 4230139, 2.2],
+        [288273, 4230100, 1.3],
+        [288265, 4230068, 1.5],
+        [288254, 4230036, 1.2],
+        [288248, 4230003, 1.3],
+        [288236, 4229974, 1.2],
+        [288229, 4229944, 2.2],
+        [288227, 4229915, 2.1],
+        [288223, 4229889, 2.3],
+        [288210, 4229865, 2.8],
+        [288201, 4229839, 2.9],
+        [288194, 4229815, 2.2],
+        [288187, 4229787, 2.0],
+        [288176, 4229753, 2.3],
+        [288169, 4229732, 1.6],
+        [288154, 4229700, 1.7],
+        [288146, 4229678, 1.8],
+        [288136, 4229655, 1.6],
+        [288124, 4229628, 1.6],
+        [288104, 4229603, 1.6],
+        [288090, 4229579, 2.0],
+        [288079, 4229556, 1.5],
+        [288060, 4229528, 2.0],
+        [288052, 4229507, 2.0],
+        [288050, 4229474, 1.6],
+        [288045, 4229444, 2.2],
+        [288050, 4229420, 2.2],
+        [288050, 4229392, 2.2],
+        [288047, 4229362, 2.2],
+        [288048, 4229335, 1.3],
+        [288045, 4229309, 2.2],
+        [288045, 4229279, 3.2],
+        [288044, 4229254, 2.4],
+        [288042, 4229219, 2.0],
+        [288040, 4229202, 2.0],
+        [288037, 4229172, 1.5],
+        [288035, 4229140, 1.9],
+        [288034, 4229114, 1.4],
+        [288036, 4229090, 2.0],
+        [288035, 4229059, 2.4],
+        [288035, 4229030, 2.6],
+        [288035, 4229005, 1.5],
+        [288038, 4228973, 1.8],
+        [288036, 4228943, 2.1],
+        [288035, 4228912, 1.9],
+        [288033, 4228887, 2.0],
+        [288036, 4228858, 1.8],
+        [288038, 4228831, 2.0],
+        [288037, 4228798, 2.0],
+        [288036, 4228771, 1.6],
+        [288040, 4228741, 1.9],
+        [288040, 4228713, 2.5],
+        [288038, 4228687, 2.2],
+        [288042, 4228651, 2.6],
+        [288041, 4228626, 1.8],
+        [288043, 4228600, 2.3],
+        [288043, 4228575, 1.7],
+        [288042, 4228543, 1.4],
+        [288046, 4228517, 1.6],
+        [288044, 4228485, 1.6],
+        [288046, 4228458, 1.4],
+        [288041, 4228435, 1.9],
+        [288045, 4228402, 2.4],
+        [288041, 4228375, 3.0],
+        [288041, 4228347, 3.1],
+        [288043, 4228313, 2.7],
+      ]
       // 载入所有模型
-      let loadAllModel = arr => {
+      let compareInnerGroup = new THREE.Group()
+      let loadAllModel = (arr, innerDir) => {
+        console.log(arr, innerDir)
         arr.forEach((item, index) => {
           item.forEach((modelPath, i) => {
+            console.log(modelPath)
             if(i <= modelStep[1] && i >= modelStep[0]) {
               // renderPartArea(modelPath, simpleBaseUrl)
-              let url = `${simpleBaseUrl}/0822_simple/${modelPath}/${modelPath}.fbx`
+              let url = `${simpleBaseUrl}/${innerDir}/${modelPath}/${modelPath}.fbx`
+              console.log(url)
               fbxLoader.load(url, fbx => {
                 const mesh = fbx.children[0].clone()
                 mesh.name = modelPath
                 mesh.position.z -= 1220
-                this.compareGroup.add(mesh)
+                compareInnerGroup.add(mesh)
               })
             }
             // if(i <= modelStep[1] && i >= modelStep[0]) {
@@ -894,14 +1467,344 @@ export default {
         })
       }
       // 模型载入
-      loadAllModel(list0829)
+      const modelList0901 = [
+        [
+          "Tile_+000_+000",
+          "Tile_+000_+001",
+          "Tile_+000_+002",
+          "Tile_+000_+003",
+          "Tile_+000_+004",
+          "Tile_+000_+005",
+          "Tile_+000_+006",
+          "Tile_+000_+007",
+          "Tile_+000_+008",
+          "Tile_+000_+009",
+          "Tile_+000_+010",
+          "Tile_+000_+011",
+          "Tile_+000_+012",
+          "Tile_+000_+013",
+          "Tile_+000_+014",
+          "Tile_+000_+015",
+        ],
+        [
+          "Tile_+001_+000",
+          "Tile_+001_+001",
+          "Tile_+001_+002",
+          "Tile_+001_+003",
+          "Tile_+001_+004",
+          "Tile_+001_+005",
+          "Tile_+001_+006",
+          "Tile_+001_+007",
+          "Tile_+001_+008",
+          "Tile_+001_+009",
+          "Tile_+001_+010",
+          "Tile_+001_+011",
+          "Tile_+001_+012",
+          "Tile_+001_+013",
+          "Tile_+001_+014",
+          "Tile_+001_+015",
+          "Tile_+001_+016",
+          "Tile_+001_+017",
+          "Tile_+001_+018",
+          "Tile_+001_+019",
+          "Tile_+001_+020",
+          "Tile_+001_+021",
+          "Tile_+001_+022",
+          "Tile_+001_+023",
+          "Tile_+001_+024",
+          "Tile_+001_+025",
+        ],
+        [
+          "Tile_+002_+009",
+          "Tile_+002_+010",
+          "Tile_+002_+011",
+          "Tile_+002_+012",
+          "Tile_+002_+013",
+          "Tile_+002_+014",
+          "Tile_+002_+015",
+          "Tile_+002_+016",
+          "Tile_+002_+017",
+          "Tile_+002_+018",
+          "Tile_+002_+019",
+          "Tile_+002_+020",
+          "Tile_+002_+021",
+          "Tile_+002_+022",
+          "Tile_+002_+023",
+          "Tile_+002_+024",
+          "Tile_+002_+025",
+        ],
+        [
+          "Tile_+003_+012",
+          "Tile_+003_+013",
+          "Tile_+003_+014",
+          "Tile_+003_+015",
+          "Tile_+003_+016",
+          "Tile_+003_+017",
+          "Tile_+003_+018",
+          "Tile_+003_+019",
+          "Tile_+003_+020",
+          "Tile_+003_+021",
+          "Tile_+003_+022",
+          "Tile_+003_+023",
+          "Tile_+003_+024",
+          "Tile_+003_+025"
+        ]
+      ]
+      loadAllModel(list0829, '0822_simple')
+      function loadModelList(arr, baseUrl, innerDir, range) {
+        let group = new THREE.Group()
+        for (let i = 0; i < arr.length; i++) {
+          let row = arr[i]
+          for (let idx = 0; idx < row.length; idx++) {
+            if(idx <= range[1] && idx >= range[0]) {
+              let cell = row[idx]
+              fbxLoader.load(`${baseUrl}/${innerDir}/${cell}/${cell}.fbx`, fbx => {
+                const mesh = fbx.children[0].clone()
+                mesh.name = cell
+                mesh.position.z -= 1220
+                group.add(mesh)
+              })
+            }
+          }
+        }
+        group.position.set(-1546.105, -58.581, -97.751)
+        group.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
+        return group
+      }
+      this.baseGroup = new THREE.Group()
+      this.baseGroup.add(loadModelList(modelList0901, simpleBaseUrl, '0901_simple', [0, 25]))
+      this.scene.add(this.baseGroup)
+      // 经纬度投影线与地表交点
+      /* let landCrossPoints0906 = [
+        [0,0,0],
+        [-32.023, -0.708, 6.954],
+        [-57.019, -1.082, 15.978],
+        [-86.017, 0.277, 25.061],
+        [-105.019, 0.242, 33.016],
+        [-130.002, 0.988, 42.999],
+        [-159.028, 1.749, 52.969],
+        [-186.068, 3.080, 54.982],
+        [-213.039, -0.242, 52.006],
+        [-232.050, -2.473, 46.017],
+        [-264.046, -3.133, 45.003],
+        [-289.042, -4.295, 46.977],
+        [-315.042, -4.180, 45.971],
+        [-345.987, -0.612, 45.020],
+        [-377.047, -2.171, 39.977],
+        [-401.055, -3.228, 43.048],
+        [-424.034, -2.738, 34.947],
+        [-465.035, -1.982, 32.960],
+        [-482.050, -0.597, 29.052],
+        [-513.020, 1.204, 24.987],
+        [-538.017, 2.982, 22.035],
+        [-570.028, 0.622, 18.028],
+        [-599.040, -3.611, 16.980],
+        [-630.020, -1.430, 16.004],
+        [-657.038, -0.440, 16.002],
+        [-695.980, -6.831, 15.041],
+        [-728.012, -5.890, 6.996],
+        [-760.008, -4.121, -3.997],
+        [-792.985, -4.389, -10.055],
+        [-822.073, -1.949, -21.992],
+        [-852.045, -3.518, -28.978],
+        [-881.062, -2.473, -31.000],
+        [-907.009, -4.403, -35.020],
+        [-931.009, -3.987, -47.982],
+        [-957.038, -2.818, -56.994],
+        [-981.057, -5.700, -64.003],
+        [-1009.008, -5.797, -70.994],
+        [-1042.989, -5.014, -81.952],
+        [-1064.097, -6.942, -88.985],
+        [-1096.050, -3.416, -104.018],
+        [-1118.058, -2.736, -111.946],
+        [-1141.056, -4.744, -121.975],
+        [-1168.064, -6.055, -133.994],
+        [-1193.069, -6.835, -154.008],
+        [-1217.054, -3.779, -167.965],
+        [-1240.030, -5.271, -179.043],
+        [-1268.050, -2.518, -197.974],
+        [-1288.967, -1.965, -205.985],
+        [-1322.054, -3.773, -207.984],
+        [-1352.047, -7.123, -212.974],
+        [-1376.044, -4.848, -207.977],
+        [-1404.054, -3.496, -208.030],
+        [-1434.006, -4.818, -210.953],
+        [-1461.022, -5.765, -209.978],
+        [-1487.036, -7.502, -212.974],
+        [-1517.021, -3.334, -212.968],
+        [-1542.055, -4.583, -213.970],
+        [-1576.940, -3.753, -215.974],
+        [-1593.919, -6.222, -218.024],
+        [-1623.985, -4.890, -220.924],
+        [-1655.858, -4.568, -222.979],
+        [-1682.602, -7.399, -224.068],
+        [-1706.015, -6.318, -222.007],
+        [-1736.996, -5.928, -222.988],
+        [-1766.041, -5.295, -223.001],
+        [-1791.056, -4.856, -222.957],
+        [-1823.019, -5.593, -220.027],
+        [-1853.007, -5.433, -221.970],
+        [-1884.097, -6.165, -223.034],
+        [-1909.037, -3.476, -224.949],
+        [-1938.061, -5.690, -222.010],
+        [-1964.978, -4.388, -220.001],
+        [-1997.986, -3.347, -220.996],
+        [-2025.034, -3.417, -222.000],
+        [-2055.034, 0.708, -217.972],
+        [-2083.010, -1.175, -217.988],
+        [-2109.053, -3.155, -220.007],
+        [-2145.023, -0.808, -216.023],
+        [-2170.001, -2.178, -217.047],
+        [-2196.008, -2.500, -215.019],
+        [-2221.021, -2.669, -215.011],
+        [-2252.999, -4.655, -215.987],
+        [-2279.022, -4.160, -211.979],
+        [-2311.048, -3.445, -214.041],
+        [-2338.034, -5.071, -212.021],
+        [-2361.012, -7.500, -217.016],
+        [-2394.000, -6.804, -213.054],
+        [-2421.047, -5.098, -217.045],
+        [-2449.035, -7.284, -216.999],
+        [-2483.030, -8.618, -215.050]
+      ] */
+      const landCrossPoints0908 = [
+        [0, 0, 0,],
+        [-32.039, 0.000, 7.014],
+        [-57.428, 0.000, 16.133],
+        [-86.000, 0.410, 25.000],
+        [-105.000, 0.280, 33.000],
+        [-130.000, 1.021, 43.000],
+        [-159.000, 1.759, 53.000],
+        [-186.000, 3.208, 55.000],
+        [-213.000, 0.000, 52.000],
+        [-232.498, 0.000, 45.984],
+        [-264.801, 0.000, 45.064],
+        [-289.885, 0.000, 46.966],
+        [-315.838, 0.000, 45.973],
+        [-346.028, 0.000, 44.995],
+        [-376.573, 0.000, 40.069],
+        [-401.104, 0.000, 42.964],
+        [-424.940, 0.000, 34.954],
+        [-464.756, 0.000, 33.012],
+        [-482.072, 0.000, 28.991],
+        [-513.000, 1.341, 25.000],
+        [-538.000, 2.955, 22.000],
+        [-570.000, 0.661, 18.000],
+        [-599.000, -3.489, 17.000],
+        [-630.186, 0.000, 16.000],
+        [-657.164, 0.000, 15.996],
+        [-696.000, -6.685, 15.000],
+        [-728.000, -5.850, 7.000],
+        [-760.000, -4.105, -4.000],
+        [-792.710, 0.000, -9.947],
+        [-821.897, 0.000, -21.957],
+        [-853.144, 0.000, -29.079],
+        [-881.055, 0.000, -31.008],
+        [-907.381, 0.000, -35.207],
+        [-931.172, 0.000, -48.060],
+        [-956.923, 0.000, -56.973],
+        [-981.000, -5.766, -64.000],
+        [-1009.000, -5.809, -71.000],
+        [-1043.000, -4.873, -82.000],
+        [-1064.000, -6.882, -89.000],
+        [-1095.477, 0.000, -103.755],
+        [-1118.242, 0.000, -112.105],
+        [-1141.000, -4.727, -122.000],
+        [-1168.000, -6.084, -134.000],
+        [-1193.475, 0.000, -154.277],
+        [-1216.365, 0.000, -167.629],
+        [-1241.286, 0.000, -179.872],
+        [-1267.707, 0.000, -197.801],
+        [-1288.924, 0.000, -205.971],
+        [-1322.000, -3.734, -208.000],
+        [-1352.000, -6.949, -213.000],
+        [-1376.000, -4.863, -208.000],
+        [-1404.010, 0.000, -208.001],
+        [-1434.000, -4.824, -211.000],
+        [-1461.000, -5.712, -210.000],
+        [-1487.000, -7.422, -213.000],
+        [-1516.398, 0.000, -213.000],
+        [-1540.793, 0.000, -213.952],
+        [-1575.061, 0.000, -215.889],
+        [-1594.000, -6.175, -218.000],
+        [-1624.000, -4.802, -221.000],
+        [-1655.051, 0.000, -222.941],
+        [-1682.000, -6.728, -224.000],
+        [-1706.000, -6.115, -222.000],
+        [-1737.000, -5.998, -223.000],
+        [-1766.000, -5.296, -223.000],
+        [-1791.000, -4.711, -223.000],
+        [-1823.000, -5.559, -220.000],
+        [-1853.000, -5.342, -222.000],
+        [-1884.000, -6.047, -223.000],
+        [-1908.799, 0.000, -224.984],
+        [-1938.348, 0.000, -221.974],
+        [-1965.505, 0.000, -220.015],
+        [-1997.868, 0.000, -220.996],
+        [-2025.176, 0.000, -221.977],
+        [-2055.000, 0.702, -218.000],
+        [-2082.967, 0.000, -218.000],
+        [-2109.000, -3.141, -220.000],
+        [-2144.830, 0.000, -216.019],
+        [-2169.869, 0.000, -216.995],
+        [-2195.495, 0.000, -215.039],
+        [-2220.382, 0.000, -215.000],
+        [-2253.000, -4.634, -216.000],
+        [-2279.523, 0.000, -212.033],
+        [-2311.000, -3.514, -214.000],
+        [-2338.000, -5.128, -212.000],
+        [-2361.000, -7.466, -217.000],
+        [-2394.000, -6.787, -213.000],
+        [-2421.000, -5.039, -217.000],
+        [-2449.000, -7.262, -217.000],
+        [-2483.000, -8.478, -215.000]
+      ]
+      const landMarkPoints = [
+        [0, 0, 0],
+        [-258.593, -4.017, 44.411],
+        [-534.733, 3.580, 21.461],
+        [-818.120, -2.234, -22.719],
+        [-1099.709, -3.400, -104.485],
+        [-1351.915, -7.533, -209.713],
+        [-1625.608, -5.189, -222.865],
+        [-1909.038, -3.450, -225.019],
+        [-2196.541, -2.630, -214.786],
+        [-2483.000, -8.478, -215.000]
+      ]
 
-      // this.group.position.set(-1592.6661128974586, -111.68440598717643, 873.1284961341271)
-      // this.group.position.set(-1396.13207, -102.06568, 666.00850)
-      this.group.rotation.set(-1.53696, -0.01555, -1.06127)
-      this.compareGroup.position.set(-1396.20616, -102.86670, 665.73779)
-      // this.compareGroup.position.set(-1422.563, -105.142, 788.138)
-      this.compareGroup.rotation.set(-1.53696, -0.01555, -1.06127)
+      // 确定管线模型与地理模型坐标轴的转换
+      function culPipeToLand(v1, v2) {
+        const x1 = v1.x, y1 = v1.y, z1 = v1.z
+        const x2 = v2.x, y2 = v2.y, z2 = v2.z
+        const cross = new THREE.Vector3(x1, y1, z1).cross(new THREE.Vector3(x2, y2, z2)).normalize()
+        const ang = new THREE.Vector3(x1, y1, z1).angleTo(new THREE.Vector3(x2, y2, z2))
+        const scale = Math.sqrt(Math.pow(x1,2) + Math.pow(y1,2) + Math.pow(z1,2)) / Math.sqrt(Math.pow(x2,2) + Math.pow(y2,2) + Math.pow(z2,2))
+        return {
+          cross, ang, scale
+        }
+      }
+      /* console.log(culPipeToLand({
+        x: pipeList[pipeList.length - 1][0] - pipeList[0][0],
+        y: 0,
+        z: pipeList[pipeList.length - 1][2] - pipeList[0][2],
+      }, {
+        x: -2482.2017841745633,
+        y: -9.254886511102313,
+        z: -150.74005023236265
+      })) */
+
+      // this.compareGroup.position.set(0, 0, 0)
+      compareInnerGroup.position.set(-1546.105, -58.581, -97.751)
+      compareInnerGroup.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
+      this.compareGroup.add(compareInnerGroup)
+      this.compareGroup.rotation.set(0, -0.0259873, 0)
+      this.baseGroup.rotation.set(0, -0.0259873, 0)
+      this.compareGroup.scale.set(1.0022113, 1.0022113, 1.0022113)
+      this.baseGroup.scale.set(1.0022113, 1.0022113, 1.0022113)
+      this.baseGroup.position.set(40.693, 3.917, 3.162)
+      // this.compareGroup.position.set(-1546.105, -58.581, -97.751)
+      // this.compareGroup.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
+      // this.compareGroup.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.025598891121951795)
       // this.group.scale.set(1.04412, 1.04412, 1.04412)
       // this.group.position.y = this.baseGroup.position.y = -1200
 
@@ -1023,190 +1926,61 @@ export default {
         [-2209.568, -77.167, 1061.588],
         [-2239.700, -80.538, 1076.949]
       ]
-      let pipeList = [
-        // [288187, 4231044, 1.5],
-        // [288196, 4231016, 1.4],
-        // [288206, 4230984, 1.6],
-        // [288212, 4230959, 1.6],
-        // [288221, 4230934, 1.5],
-        // [288228, 4230904, 1.9],
-        // [288239, 4230875, 2.4],
-        // [288246, 4230851, 2.5],
-        // [288250, 4230826, 2.2],
-        [288258, 4230796, 2.2],
-        [288265, 4230764, 1.6],
-        [288274, 4230739, 1.7],
-        [288283, 4230710, 2.0],
-        [288291, 4230691, 2.3],
-        [288301, 4230666, 1.8],
-        [288311, 4230637, 1.6],
-        [288313, 4230610, 2.4],
-        [288310, 4230583, 1.2],
-        [288304, 4230564, 1.6],
-        [288303, 4230532, 1.5],
-        [288305, 4230507, 2.1],
-        [288304, 4230481, 1.3],
-        [288303, 4230450, 2.6],
-        [288298, 4230419, 1.8],
-        [288301, 4230395, 1.7],
-        [288293, 4230372, 2.3],
-        [288291, 4230331, 3.0],
-        [288287, 4230314, 2.5],
-        [288283, 4230283, 3.1],
-        [288280, 4230258, 3.8],
-        [288276, 4230226, 3.4],
-        [288275, 4230197, 2.6],
-        [288274, 4230166, 1.6],
-        [288274, 4230139, 2.2],
-        [288273, 4230100, 1.3],
-        [288265, 4230068, 1.5],
-        [288254, 4230036, 1.2],
-        [288248, 4230003, 1.3],
-        [288236, 4229974, 1.2],
-        [288229, 4229944, 2.2],
-        [288227, 4229915, 2.1],
-        [288223, 4229889, 2.3],
-        [288210, 4229865, 2.8],
-        [288201, 4229839, 2.9],
-        [288194, 4229815, 2.2],
-        [288187, 4229787, 2.0],
-        [288176, 4229753, 2.3],
-        [288169, 4229732, 1.6],
-        [288154, 4229700, 1.7],
-        [288146, 4229678, 1.8],
-        [288136, 4229655, 1.6],
-        [288124, 4229628, 1.6],
-        [288104, 4229603, 1.6],
-        [288090, 4229579, 2.0],
-        [288079, 4229556, 1.5],
-        [288060, 4229528, 2.0],
-        [288052, 4229507, 2.0],
-        [288050, 4229474, 1.6],
-        [288045, 4229444, 2.2],
-        [288050, 4229420, 2.2],
-        [288050, 4229392, 2.2],
-        [288047, 4229362, 2.2],
-        [288048, 4229335, 1.3],
-        [288045, 4229309, 2.2],
-        [288045, 4229279, 3.2],
-        [288044, 4229254, 2.4],
-        [288042, 4229219, 2.0],
-        [288040, 4229202, 2.0],
-        [288037, 4229172, 1.5],
-        [288035, 4229140, 1.9],
-        [288034, 4229114, 1.4],
-        [288036, 4229090, 2.0],
-        [288035, 4229059, 2.4],
-        [288035, 4229030, 2.6],
-        [288035, 4229005, 1.5],
-        [288038, 4228973, 1.8],
-        [288036, 4228943, 2.1],
-        [288035, 4228912, 1.9],
-        [288033, 4228887, 2.0],
-        [288036, 4228858, 1.8],
-        [288038, 4228831, 2.0],
-        [288037, 4228798, 2.0],
-        [288036, 4228771, 1.6],
-        [288040, 4228741, 1.9],
-        [288040, 4228713, 2.5],
-        [288038, 4228687, 2.2],
-        [288042, 4228651, 2.6],
-        [288041, 4228626, 1.8],
-        [288043, 4228600, 2.3],
-        [288043, 4228575, 1.7],
-        [288042, 4228543, 1.4],
-        [288046, 4228517, 1.6],
-        [288044, 4228485, 1.6],
-        [288046, 4228458, 1.4],
-        [288041, 4228435, 1.9],
-        [288045, 4228402, 2.4],
-        [288041, 4228375, 3.0],
-        [288041, 4228347, 3.1],
-        [288043, 4228313, 2.7],
-        // [288039, 4228285, 1.7],
-        // [288041, 4228258, 1.9],
-        // [288040, 4228230, 1.8],
-        // [288041, 4228201, 2.4],
-        // [288040, 4228178, 1.4],
-        // [288044, 4228151, 2.6],
-        // [288041, 4228117, 1.8],
-        // [288046, 4228086, 1.9],
-        // [288046, 4228051, 4.3],
-        // [288045, 4228033, 1.6]
-      ]
-      // 地表
-      landCrossPointList.forEach(item => {
-        let clone = sphereJoint.clone()
-        clone.position.set(...item)
-        this.markGroup.add(clone)
-      })
-      // 坐标轴转换
-      let culDivideAllRoad = () => {
-        let scaleXY =  Math.sqrt(Math.pow((288043 - 288258),2) + Math.pow(4228313 - 4230796,2)) / Math.sqrt(Math.pow(landCrossPointList[landCrossPointList.length -1][0],2) + Math.pow(landCrossPointList[landCrossPointList.length - 1][2], 2))
-        let scaleH = 1.041
-        // 模型中管线
-        let pipeCurvePoints = landCrossPointList.map((item, index) => new THREE.Vector3(item[0], item[1] - pipeList[index][2] / 1.041, item[2]))
-        let pipeLongitudeAndLatitude = pipeList.map(item => new THREE.Vector3(item[0] - pipeList[0][0], item[2] - pipeList[0][2], item[1] - pipeList[0][1]))
+      let baseVector = {
+        v1: new THREE.Vector3(-2482.175, -9.265, -150.661), // 地理模型管线向量
+        v2: new THREE.Vector3()
+      }
 
-        let pipeLongitudeCurve = new THREE.CatmullRomCurve3(pipeLongitudeAndLatitude).getPoints(500);
-        let pipeLongitudeCurveLine = this.creatFatCurveLine(pipeLongitudeCurve)
-        this.scene.add(pipeLongitudeCurveLine)
+      // let res = culPipeToLand({ x: 1, y: 0, z: 1 }, { x: 1, y: 0, z: 0 })
+      // console.log(res)
 
-        const pipeCurve = new THREE.CatmullRomCurve3(pipeCurvePoints).getPoints(500);
-        // let modelDeepList = []
-        let v1 = new THREE.Vector3((288043 - 288258) / scaleXY, 0.5, (4228313 - 4230796) / scaleXY)
-        let v2 = new THREE.Vector3(
-          Math.round(pipeCurve[500].x),
-          80.538,
-          Math.round(pipeCurve[500].z)
-        )
-        let scale = Math.sqrt(Math.pow(v1.x,2) + Math.pow(v1.y,2) + Math.pow(v1.z,2)) /  Math.sqrt(Math.pow(v2.x,2) + Math.pow(v2.y,2) + Math.pow(v2.z,2))
-        console.log(scale)
-        let ang = new THREE.Vector3(v2.x, 0, v2.y).angleTo(new THREE.Vector3(v1.x, 0, v1.y))
-        let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(v1.x, v1.y, v1.z).cross(new THREE.Vector3(v2.x, v2.y, v2.z)), -ang)
-        pipeCurve.forEach((item, index) => {
-          let v = new THREE.Vector3(item.x, 0,item.z)
-          v.applyQuaternion(quaternion)
-          const {x, z} = v
-          /* console.log(
-            "%c%s",
-            "color: #fff; background: #2879FF; font-size: 14px; border-radius: 6px; padding: 0 6px",
-            ((-v.x / scale + 288258).toFixed(0) + '  ' + (-v.z / scale + 4230796).toFixed(0) ), index
-          ) */
-          this.pipeDeepList[index] = [v.x * scale, Math.abs(item.y * scale), v.z * scale]
-        })
-        // this.verticalGroup.add(this.creatFatCurveLine(pipeCurvePoints))
-
-        // 验证线段旋转经纬度坐标转换准确性
-        const material1 = new THREE.LineBasicMaterial({
-          color: 0xeeee00
+      // 水平管线网络计算
+      function culPipeHorizontalWeb(points) {
+        // let endPoint = points[points.length - 1]
+        let startPoint = points[0]
+        const material = new THREE.LineBasicMaterial({
+          color: 0x00eeee
         });
-        const material2 = new THREE.LineBasicMaterial({
+        let vectors = points.map(item => new THREE.Vector3(item[0] - startPoint[0], item[1] - startPoint[1], item[2] - startPoint[2]))
+        const geometry = new THREE.BufferGeometry().setFromPoints( vectors );
+        return new THREE.Line( geometry, material );
+      }
+      const pipeGPSLine = culPipeHorizontalWeb(pipeList)
+      // const pipeCurve = this.creatFatCurveLine()
+      const initPipeVerticalLinesPoints = pipeList.map(item => [
+        [item[0] - pipeList[0][0], item[1] + 10, item[2] - pipeList[0][2]], [item[0] - pipeList[0][0], item[1] - 10, item[2] - pipeList[0][2]]
+      ])
+
+      function creatVerticalLine(lineList) {
+        const group = new THREE.Group()
+        const material = new THREE.LineBasicMaterial({
           color: 0x0fff11
         });
-        const geometry1 = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3( 0, 0, 0 ),
-          new THREE.Vector3( v1.x, 0, v1.y )
-        ]);
-        const geometry2 = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3( 0, 0, 0 ),
-          new THREE.Vector3( v2.x, 0, v2.y )
-        ]);
-        const line1 = new THREE.Line( geometry1, material1 );
-        let qua = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1,  0), new THREE.Vector3(v1.x, 0, v1.z).angleTo(new THREE.Vector3(v2.x, 0, v2.z)))
-        const line2 = new THREE.Line( geometry2, material2 );
-        line2.applyQuaternion(qua)
-        this.scene.add(line1)
-        this.scene.add(line2)
+        lineList.forEach(item => {
+          const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3( item[0][0], item[0][1], item[0][2] ),
+            new THREE.Vector3( item[1][0], item[1][1], item[1][2] )
+          ]);
+          const line1 = new THREE.Line( geometry, material );
+          group.add(line1)
+        })
+        return group
       }
-      culDivideAllRoad()
-      this.pipeListGroup.add(this.creatFatLine(landCrossPointList.map((item, index) => {
-        let point = []
-        point[0] = item[0]
-        point[1] = item[1] - pipeList[index][2] / 1.041
-        point[2] = item[2]
-        return point
-      }), 0x4422ee, 2))
+      let verticalLines = creatVerticalLine(initPipeVerticalLinesPoints)
+
+      function renderModelPipe(pipeModelPoints, deepList) {
+        let list = pipeModelPoints.map((item, index) => new THREE.Vector3(item[0], item[1] - deepList[index][2] / 1.011, item[2]))
+        let modelPipeCurve = new THREE.CatmullRomCurve3(list).getPoints(500)
+        return modelPipeCurve
+      }
+      let landCrossPoints = new THREE.CatmullRomCurve3(landCrossPoints0908.map(item => new THREE.Vector3(item[0], item[1], item[2]))).getPoints(500)
+      let modelPipePoints = renderModelPipe(landCrossPoints0908, deepList)
+      landCrossPoints.forEach((item, index) => {
+        this.pipeDeepList[index] = [item.x, item.y - modelPipePoints[index].y, item.z]
+      })
+      // let modelPipeLines =
+      this.pipeListGroup.add(pipeGPSLine)
+      this.pipeListGroup.add(verticalLines)
       this.scene.add(this.pipeListGroup)
       this.scene.add(this.markGroup)
       // 分段线列表
@@ -1446,18 +2220,9 @@ export default {
       }
       this.finalLinesGroup = adjustLine(baseGPSParam)
 
-      let deepList = [2.2, 1.5, 3.8, 1.2, 1.7, 2.2, 1.5, 2.0, 2.3, 2.7]
+      // let deepList = [2.2, 1.5, 3.8, 1.2, 1.7, 2.2, 1.5, 2.0, 2.3, 2.7]
       // 地表点矫正线
       let part0901Lines = []
-      for(let i = 0; i < part0901point.length - 1; i++) {
-        let pointStart = part0901point[i]
-        pointStart[1] -= deepList[i]
-        let pointEnd = part0901point[i+1]
-        pointEnd[1] -= deepList[i]
-        part0901Lines.push([pointStart, pointEnd])
-      }
-      this.scene.add(this.finalLinesGroup)
-      this.scene.add(this.verticalGroup)
 
       // 地形
       this.scene.add(this.group)
@@ -1490,6 +2255,7 @@ export default {
       // 拖动控制
       // this.dragControls = new DragControls( [this.baseGroup], this.camera, this.renderer.domElement );
       // this.dragControls.transformGroup = true
+      // console.log(this.transformControls)
       this.transformControls.transformGroup = true
       this.transformControls.addEventListener( 'change', () => {
         this.renderer.render(this.scene, this.camera)
@@ -1503,7 +2269,7 @@ export default {
       // this.transformControls.attach( this.compareGroup );
       // this.transformControls.attach( this.group );
       // this.transformControls.attach( this.markGroup );
-      this.transformControls.attach( this.group );
+      this.transformControls.attach( this.compareGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -1544,10 +2310,11 @@ export default {
         this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-        let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
+        // let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
+        // let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
-        // let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 显示1、2坑数据
+        let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true); // 显示1、2坑数据
         // let intersects = raycaster.intersectObjects(this.markGroup.children,true); // 显示1、2坑数据
         if (intersects.length > 0) {
           /* let list = intersects.filter(item => {
@@ -1611,7 +2378,7 @@ export default {
           const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
           const sphere = new THREE.Mesh( geometry, material );
           sphere.position.set(point.x, point.y, point.z)
-          this.baseGroup.add( sphere );
+          this.scene.add( sphere );
         }
       }
       //新建一个三维单位向量 假设z方向就是0.5
@@ -1891,6 +2658,12 @@ export default {
     overflow auto
     transition left ease-in-out 0.4s
     //background-color: rgba(220, 220, 220, 0.4)
+    .pip-deep-list {
+      display flex
+      .pdl-item {
+        padding: 0 10px;
+      }
+    }
   }
   .calculate-card-1 {
     position absolute
