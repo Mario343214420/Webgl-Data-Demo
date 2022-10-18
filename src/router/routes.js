@@ -46,6 +46,7 @@ import Sulige_0906 from '../pages/Channel_sulige_0906_repaire/index.vue'
 import Sulige_0908 from '../pages/Channel_sulige_0908_repaire/index.vue'
 import Sulige_0913 from '../pages/Channel_sulige_0913_repaire/index.vue'
 import Sulige_0919 from '../pages/Channel_sulige_0919/index.vue'
+import Sulige_1017 from '../pages/Channel_sulige_1017/index.vue'
 import Channel_three_curve from '../pages/Channel_three_secret_fun/curve.vue'
 import Channel_three_plane_angle from '../pages/Channel_three_secret_fun/plane_angle.vue'
 import WellSite from '../pages/WellSite/index.vue'
@@ -374,6 +375,13 @@ const routes = [
     component: Sulige_0919,
     meta: {
       title: '0919 地形对准'
+    }
+  },
+  {
+    path: '/1017',
+    component: Sulige_1017,
+    meta: {
+      title: '1017 刺点测量'
     }
   },
   {

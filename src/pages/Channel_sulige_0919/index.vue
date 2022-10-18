@@ -2427,7 +2427,7 @@ export default {
       /* ↓↓↓↓ 模型变换功能 ↓↓↓↓ */
       // 变换控件
       this.transformControls = new TransformControls(this.camera, this.renderer.domElement)
-      console.log(this.transformControls.getWorldPosition())
+      // console.log(this.transformControls.getWorldPosition())
       // 拖动控制
       // this.dragControls = new DragControls( [this.baseGroup], this.camera, this.renderer.domElement );
       // this.dragControls.transformGroup = true
@@ -2487,7 +2487,7 @@ export default {
         this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-        let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
+        let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
