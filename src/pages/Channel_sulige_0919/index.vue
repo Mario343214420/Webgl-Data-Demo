@@ -780,7 +780,7 @@ export default {
       // let modelStep = [6, 25]
       let modelStep = [6, 20]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.95:8000'
+      let simpleBaseUrl = 'http://192.168.1.87:8000'
       // 现场gps坐标
       let pipeList = [
         [

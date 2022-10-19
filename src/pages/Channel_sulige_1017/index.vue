@@ -3,6 +3,18 @@
     <div class="chart" :style="`left: ${toolsFlag ? '-820' : '20'}px;`">
       <e-chart id="chart" :option="options" style="height: 400px; width: 810px"></e-chart>
       <div class="pip-deep-list">
+        <div class="pdl-item" v-if="pipePosList.length > 0">
+          <div v-for="(item, index) in pipePosList" :key="index">
+            <span>{{item.x, item.y, item.z}}</span>
+          </div>
+        </div>
+        <div class="pdl-item" v-if="deepList.length > 0">
+          <div v-for="(item, index) in deepList" :key="index">
+            <span>{{item}}</span>
+          </div>
+        </div>
+      </div>
+<!--      <div class="pip-deep-list">
         <div class="pdl-item">
           <div v-for="(item, index) in pipeDeepList" :key="index">
             <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}</span>
@@ -20,19 +32,19 @@
         </div>
         <div class="pdl-item">
           <div v-for="(item, index) in pipeDeepList" :key="index" :style="Math.abs(item[1] * 1.011) < 1.5 ? 'color: #ff0000' : ''" >
-            <!--            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>-->
-            <!--            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>-->
+            &lt;!&ndash;            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>&ndash;&gt;
+            &lt;!&ndash;            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>&ndash;&gt;
             <span :title="Math.abs(item[1] * 1.011) < 1.5 ? '埋深不足1.5' : ''">{{Math.abs((item[1] * 1.011 ).toFixed(2))}}</span>
           </div>
         </div>
         <div class="pdl-item">
           <div v-for="(item, index) in pipeDeepList" :key="index" :style="Math.abs(item[1] * 1.011) < 0.8 ? 'color: #ff0000' : ''" >
-            <!--            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>-->
-            <!--            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>-->
+            &lt;!&ndash;            <span>{{(parseFloat(item[0]) + 4230796).toFixed(0)}}，</span>&ndash;&gt;
+            &lt;!&ndash;            <span>Y: {{(parseFloat(item[2]) + 288258).toFixed(0)}}，</span>&ndash;&gt;
             <span :title="Math.abs(item[1] * 1.011) < 0.8 ? '埋深不足0.8' : ''">{{Math.abs((item[1] * 1.011 ).toFixed(2))}}</span>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="coordinate">
       GPS坐标&nbsp;&nbsp;&nbsp;x:{{Math.round(coordinate.x) + parseInt('4230796')}}, y:{{Math.round(coordinate.y) + parseInt('288258')}}
@@ -52,11 +64,13 @@
           <div class="btn" @click="baseGroup.visible = !baseGroup.visible">切换地形显隐</div>
           <div class="btn" @click="compareGroup.visible = !compareGroup.visible">切换对比地形显隐</div>
           <div class="btn" @click="markGroup.visible = !markGroup.visible">切换标记点显隐</div>
-          <div class="btn" @click="pipeListGroup.visible = !pipeListGroup.visible">切换管线显隐</div>
-          <div class="btn" @click="finalLinesGroup.visible = !finalLinesGroup.visible">切换GPS路线显隐</div>
-          <div class="btn" @click="verticalGroup.visible = !verticalGroup.visible">切换垂直投影显隐</div>
-          <div class="btn" @click="ray">射线取点</div>
-          <div class="btn" @click="rayCompare">射线取对比点</div>
+<!--          <div class="btn" @click="pipeListGroup.visible = !pipeListGroup.visible">切换管线显隐</div>-->
+<!--          <div class="btn" @click="finalLinesGroup.visible = !finalLinesGroup.visible">切换GPS路线显隐</div>-->
+<!--          <div class="btn" @click="verticalGroup.visible = !verticalGroup.visible">切换垂直投影显隐</div>-->
+          <div class="btn" @click="rayMap">射线取点</div>
+          <div class="btn" @click="compareDeep">计算埋深情况</div>
+          <div class="btn" @click="mapHandleFlag = !mapHandleFlag">切换标记地图</div>
+<!--          <div class="btn" @click="rayCompare">射线取对比点</div>-->
 <!--          <div class="btn" @click="markPointSize++">+</div>
           {{markPointSize}}
           <div class="btn" @click="markPointSize&#45;&#45;">-</div>-->
@@ -235,22 +249,16 @@ export default {
       deg: 0,
       w: 0,
       h: 0,
-      group: null,
-      groupModel: null,
       boxes: null,
       mX: null,
       mY: null,
       flag: false,
       toolsFlag: true,
       bloomComposer: null,
-      cubeGroup: null,
       baseGroup: null,
-      pipeListGroup: null,
       compareGroup: null,
-      pipeJointGroup: null,
       markGroup: null,
       // 地表标记点位置
-      markPointGroup: null,
       gpsLocation0607: null,
       gpsTransform0607: null,
       measureDataStart: {
@@ -267,7 +275,6 @@ export default {
       clipFlag: false,
       calculateCardFlag1: false,
       calculateCardFlag2: false,
-      gpsRealGroup: null,
       markList: [],
       options: {
         // 80FFA5, 37A2FF, FF3200
@@ -498,11 +505,9 @@ export default {
       coordinate: {
         x: 0, y: 0
       },
-      // 最终对准定位点后的线组
-      finalLinesGroup: null,
-      verticalGroup: null,
-      pipeDeepList: [],
-      pipeModelInfoList: []
+      pipePosList: [],
+      deepList: [],
+      mapHandleFlag: false
     }
   },
   computed: {
@@ -646,6 +651,572 @@ export default {
       this.camera.position.z = 1277
       this.camera.lookAt(new THREE.Vector3(0,-1, 0));
       const fbxLoader = new FBXLoader()
+      function creatPipeGroup() {
+        let pipeList = [
+          [
+            4230796,
+            0,
+            288258
+          ],
+          [
+            4230764,
+            0,
+            288265
+          ],
+          [
+            4230739,
+            0,
+            288274
+          ],
+          [
+            4230710,
+            0,
+            288283
+          ],
+          [
+            4230691,
+            0,
+            288291
+          ],
+          [
+            4230666,
+            0,
+            288301
+          ],
+          [
+            4230637,
+            0,
+            288311
+          ],
+          [
+            4230610,
+            0,
+            288313
+          ],
+          [
+            4230583,
+            0,
+            288310
+          ],
+          [
+            4230564,
+            0,
+            288304
+          ],
+          [
+            4230532,
+            0,
+            288303
+          ],
+          [
+            4230507,
+            0,
+            288305
+          ],
+          [
+            4230481,
+            0,
+            288304
+          ],
+          [
+            4230450,
+            0,
+            288303
+          ],
+          [
+            4230419,
+            0,
+            288298
+          ],
+          [
+            4230395,
+            0,
+            288301
+          ],
+          [
+            4230372,
+            0,
+            288293
+          ],
+          [
+            4230331,
+            0,
+            288291
+          ],
+          [
+            4230314,
+            0,
+            288287
+          ],
+          [
+            4230283,
+            0,
+            288283
+          ],
+          [
+            4230258,
+            0,
+            288280
+          ],
+          [
+            4230226,
+            0,
+            288276
+          ],
+          [
+            4230197,
+            0,
+            288275
+          ],
+          [
+            4230166,
+            0,
+            288274
+          ],
+          [
+            4230139,
+            0,
+            288274
+          ],
+          [
+            4230100,
+            0,
+            288273
+          ],
+          [
+            4230068,
+            0,
+            288265
+          ],
+          [
+            4230036,
+            0,
+            288254
+          ],
+          [
+            4230003,
+            0,
+            288248
+          ],
+          [
+            4229974,
+            0,
+            288236
+          ],
+          [
+            4229944,
+            0,
+            288229
+          ],
+          [
+            4229915,
+            0,
+            288227
+          ],
+          [
+            4229889,
+            0,
+            288223
+          ],
+          [
+            4229865,
+            0,
+            288210
+          ],
+          [
+            4229839,
+            0,
+            288201
+          ],
+          [
+            4229815,
+            0,
+            288194
+          ],
+          [
+            4229787,
+            0,
+            288187
+          ],
+          [
+            4229753,
+            0,
+            288176
+          ],
+          [
+            4229732,
+            0,
+            288169
+          ],
+          [
+            4229700,
+            0,
+            288154
+          ],
+          [
+            4229678,
+            0,
+            288146
+          ],
+          [
+            4229655,
+            0,
+            288136
+          ],
+          [
+            4229628,
+            0,
+            288124
+          ],
+          [
+            4229603,
+            0,
+            288104
+          ],
+          [
+            4229579,
+            0,
+            288090
+          ],
+          [
+            4229556,
+            0,
+            288079
+          ],
+          [
+            4229528,
+            0,
+            288060
+          ],
+          [
+            4229507,
+            0,
+            288052
+          ],
+          [
+            4229474,
+            0,
+            288050
+          ],
+          [
+            4229444,
+            0,
+            288045
+          ],
+          [
+            4229420,
+            0,
+            288050
+          ],
+          [
+            4229392,
+            0,
+            288050
+          ],
+          [
+            4229362,
+            0,
+            288047
+          ],
+          [
+            4229335,
+            0,
+            288048
+          ],
+          [
+            4229309,
+            0,
+            288045
+          ],
+          [
+            4229279,
+            0,
+            288045
+          ],
+          [
+            4229254,
+            0,
+            288044
+          ],
+          [
+            4229219,
+            0,
+            288042
+          ],
+          [
+            4229202,
+            0,
+            288040
+          ],
+          [
+            4229172,
+            0,
+            288037
+          ],
+          [
+            4229140,
+            0,
+            288035
+          ],
+          [
+            4229114,
+            0,
+            288034
+          ],
+          [
+            4229090,
+            0,
+            288036
+          ],
+          [
+            4229059,
+            0,
+            288035
+          ],
+          [
+            4229030,
+            0,
+            288035
+          ],
+          [
+            4229005,
+            0,
+            288035
+          ],
+          [
+            4228973,
+            0,
+            288038
+          ],
+          [
+            4228943,
+            0,
+            288036
+          ],
+          [
+            4228912,
+            0,
+            288035
+          ],
+          [
+            4228887,
+            0,
+            288033
+          ],
+          [
+            4228858,
+            0,
+            288036
+          ],
+          [
+            4228831,
+            0,
+            288038
+          ],
+          [
+            4228798,
+            0,
+            288037
+          ],
+          [
+            4228771,
+            0,
+            288036
+          ],
+          [
+            4228741,
+            0,
+            288040
+          ],
+          [
+            4228713,
+            0,
+            288040
+          ],
+          [
+            4228687,
+            0,
+            288038
+          ],
+          [
+            4228651,
+            0,
+            288042
+          ],
+          [
+            4228626,
+            0,
+            288041
+          ],
+          [
+            4228600,
+            0,
+            288043
+          ],
+          [
+            4228575,
+            0,
+            288043
+          ],
+          [
+            4228543,
+            0,
+            288042
+          ],
+          [
+            4228517,
+            0,
+            288046
+          ],
+          [
+            4228485,
+            0,
+            288044
+          ],
+          [
+            4228458,
+            0,
+            288046
+          ],
+          [
+            4228435,
+            0,
+            288041
+          ],
+          [
+            4228402,
+            0,
+            288045
+          ],
+          [
+            4228375,
+            0,
+            288041
+          ],
+          [
+            4228347,
+            0,
+            288041
+          ],
+          [
+            4228313,
+            0,
+            288043
+          ]
+        ]
+        let deepList = [
+          [288258, 4230796, 2.2],
+          [288265, 4230764, 1.6],
+          [288274, 4230739, 1.7],
+          [288283, 4230710, 2.0],
+          [288291, 4230691, 2.3],
+          [288301, 4230666, 1.8],
+          [288311, 4230637, 1.6],
+          [288313, 4230610, 2.4],
+          [288310, 4230583, 1.2],
+          [288304, 4230564, 1.6],
+          [288303, 4230532, 1.5],
+          [288305, 4230507, 2.1],
+          [288304, 4230481, 1.3],
+          [288303, 4230450, 2.6],
+          [288298, 4230419, 1.8],
+          [288301, 4230395, 1.7],
+          [288293, 4230372, 2.3],
+          [288291, 4230331, 3.0],
+          [288287, 4230314, 2.5],
+          [288283, 4230283, 3.1],
+          [288280, 4230258, 3.8],
+          [288276, 4230226, 3.4],
+          [288275, 4230197, 2.6],
+          [288274, 4230166, 1.6],
+          [288274, 4230139, 2.2],
+          [288273, 4230100, 1.3],
+          [288265, 4230068, 1.5],
+          [288254, 4230036, 1.2],
+          [288248, 4230003, 1.3],
+          [288236, 4229974, 1.2],
+          [288229, 4229944, 2.2],
+          [288227, 4229915, 2.1],
+          [288223, 4229889, 2.3],
+          [288210, 4229865, 2.8],
+          [288201, 4229839, 2.9],
+          [288194, 4229815, 2.2],
+          [288187, 4229787, 2.0],
+          [288176, 4229753, 2.3],
+          [288169, 4229732, 1.6],
+          [288154, 4229700, 1.7],
+          [288146, 4229678, 1.8],
+          [288136, 4229655, 1.6],
+          [288124, 4229628, 1.6],
+          [288104, 4229603, 1.6],
+          [288090, 4229579, 2.0],
+          [288079, 4229556, 1.5],
+          [288060, 4229528, 2.0],
+          [288052, 4229507, 2.0],
+          [288050, 4229474, 1.6],
+          [288045, 4229444, 2.2],
+          [288050, 4229420, 2.2],
+          [288050, 4229392, 2.2],
+          [288047, 4229362, 2.2],
+          [288048, 4229335, 1.3],
+          [288045, 4229309, 2.2],
+          [288045, 4229279, 3.2],
+          [288044, 4229254, 2.4],
+          [288042, 4229219, 2.0],
+          [288040, 4229202, 2.0],
+          [288037, 4229172, 1.5],
+          [288035, 4229140, 1.9],
+          [288034, 4229114, 1.4],
+          [288036, 4229090, 2.0],
+          [288035, 4229059, 2.4],
+          [288035, 4229030, 2.6],
+          [288035, 4229005, 1.5],
+          [288038, 4228973, 1.8],
+          [288036, 4228943, 2.1],
+          [288035, 4228912, 1.9],
+          [288033, 4228887, 2.0],
+          [288036, 4228858, 1.8],
+          [288038, 4228831, 2.0],
+          [288037, 4228798, 2.0],
+          [288036, 4228771, 1.6],
+          [288040, 4228741, 1.9],
+          [288040, 4228713, 2.5],
+          [288038, 4228687, 2.2],
+          [288042, 4228651, 2.6],
+          [288041, 4228626, 1.8],
+          [288043, 4228600, 2.3],
+          [288043, 4228575, 1.7],
+          [288042, 4228543, 1.4],
+          [288046, 4228517, 1.6],
+          [288044, 4228485, 1.6],
+          [288046, 4228458, 1.4],
+          [288041, 4228435, 1.9],
+          [288045, 4228402, 2.4],
+          [288041, 4228375, 3.0],
+          [288041, 4228347, 3.1],
+          [288043, 4228313, 2.7],
+        ]
+        const group = new THREE.Group()
+        let curvePoints = []
+        let startPoint = deepList[0]
+        // deepList.forEach(item => {
+        //   curvePoints.push(new THREE.Vector3(item[0] - startPoint[0], -item[2], -item[1] + startPoint[1]))
+        // })
+        pipeList.forEach(item => {
+          curvePoints.push(new THREE.Vector3(item[0] - pipeList[0][0], 0, item[2] - pipeList[0][2]))
+        })
+        const curve = new THREE.CatmullRomCurve3(curvePoints);
+        const points = curve.getPoints( 50 );
+        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+        const curveObject = new THREE.Line( geometry, material );
+        const pointsSize200 = curve.getPoints( 500 );
+        group.add(curveObject)
+        return group
+      }
+      this.markGroup = creatPipeGroup()
+      this.scene.add(this.markGroup)
+
       let list1017 = [
         [
           'Tile_+001_+001',
@@ -790,6 +1361,258 @@ export default {
           'Tile_+003_+026',
         ]
       ]
+      let list1018 = [
+        [
+          // "Tile_+000_+000",
+          // "Tile_+000_+001",
+          // "Tile_+000_+002",
+          // "Tile_+000_+003",
+          // "Tile_+000_+004",
+          // "Tile_+000_+005",
+          // "Tile_+000_+006",
+          // "Tile_+000_+007",
+          // "Tile_+000_+008",
+          // "Tile_+000_+009",
+          // "Tile_+000_+010",
+          // "Tile_+000_+011",
+          // "Tile_+000_+012",
+          // "Tile_+000_+013",
+          // "Tile_+000_+014",
+          // "Tile_+000_+015",
+          "Tile_+000_+016",
+          "Tile_+000_+017",
+          "Tile_+000_+018",
+          "Tile_+000_+019",
+          "Tile_+000_+020",
+          "Tile_+000_+021",
+          "Tile_+000_+022",
+          "Tile_+000_+023",
+          "Tile_+000_+024",
+          "Tile_+000_+025",
+          "Tile_+000_+026",
+          // "Tile_+000_+027",
+          // "Tile_+000_+028",
+          // "Tile_+000_+029",
+          // "Tile_+000_+030",
+          // "Tile_+000_+031",
+          // "Tile_+000_+032",
+          // "Tile_+000_+033",
+          // "Tile_+000_+034",
+          // "Tile_+000_+035",
+          // "Tile_+000_+036",
+          // "Tile_+000_+037",
+          // "Tile_+000_+038",
+          // "Tile_+000_+039",
+          // "Tile_+000_+040",
+          // "Tile_+000_+041",
+          // "Tile_+000_+042",
+          // "Tile_+000_+043",
+          // "Tile_+000_+044",
+          "Tile_+000_+045",
+          "Tile_+000_+046",
+          "Tile_+000_+047"
+        ],
+        [
+          "Tile_+001_+000",
+          "Tile_+001_+001",
+          "Tile_+001_+002",
+          "Tile_+001_+003",
+          "Tile_+001_+004",
+          "Tile_+001_+005",
+          "Tile_+001_+006",
+          "Tile_+001_+007",
+          "Tile_+001_+008",
+          "Tile_+001_+009",
+          "Tile_+001_+010",
+          "Tile_+001_+011",
+          "Tile_+001_+012",
+          "Tile_+001_+013",
+          "Tile_+001_+014",
+          "Tile_+001_+015",
+          "Tile_+001_+016",
+          "Tile_+001_+017",
+          "Tile_+001_+018",
+          "Tile_+001_+019",
+          "Tile_+001_+020",
+          "Tile_+001_+021",
+          "Tile_+001_+022",
+          "Tile_+001_+023",
+          "Tile_+001_+024",
+          "Tile_+001_+025",
+          "Tile_+001_+026",
+          "Tile_+001_+027",
+          "Tile_+001_+028",
+          // "Tile_+001_+029",
+          // "Tile_+001_+030",
+          // "Tile_+001_+031",
+          // "Tile_+001_+032",
+          // "Tile_+001_+033",
+          // "Tile_+001_+034",
+          // "Tile_+001_+035",
+          // "Tile_+001_+036",
+          // "Tile_+001_+037",
+          // "Tile_+001_+038",
+          // "Tile_+001_+039",
+          // "Tile_+001_+040",
+          // "Tile_+001_+041",
+          // "Tile_+001_+042",
+          // "Tile_+001_+043",
+          "Tile_+001_+044",
+          "Tile_+001_+045",
+          "Tile_+001_+046",
+          "Tile_+001_+047"
+        ],
+        [
+          // "Tile_+002_+000",
+          // "Tile_+002_+001",
+          // "Tile_+002_+002",
+          // "Tile_+002_+003",
+          // "Tile_+002_+004",
+          // "Tile_+002_+005",
+          // "Tile_+002_+006",
+          // "Tile_+002_+007",
+          // "Tile_+002_+008",
+          // "Tile_+002_+009",
+          // "Tile_+002_+010",
+          // "Tile_+002_+011",
+          // "Tile_+002_+012",
+          // "Tile_+002_+013",
+          // "Tile_+002_+014",
+          // "Tile_+002_+015",
+          // "Tile_+002_+016",
+          // "Tile_+002_+017",
+          // "Tile_+002_+018",
+          // "Tile_+002_+019",
+          // "Tile_+002_+020",
+          // "Tile_+002_+021",
+          // "Tile_+002_+022",
+          // "Tile_+002_+023",
+          // "Tile_+002_+024",
+          // "Tile_+002_+025",
+          // "Tile_+002_+026",
+          "Tile_+002_+027",
+          "Tile_+002_+028",
+          "Tile_+002_+029",
+          "Tile_+002_+030",
+          "Tile_+002_+031",
+          "Tile_+002_+032",
+          // "Tile_+002_+033",
+          // "Tile_+002_+034",
+          // "Tile_+002_+035",
+          // "Tile_+002_+036",
+          // "Tile_+002_+037",
+          // "Tile_+002_+038",
+          // "Tile_+002_+039",
+          // "Tile_+002_+040",
+          // "Tile_+002_+041",
+          "Tile_+002_+042",
+          "Tile_+002_+043",
+          "Tile_+002_+044",
+          "Tile_+002_+045",
+          "Tile_+002_+046",
+          "Tile_+002_+047"
+        ],
+        [
+          // "Tile_+003_+000",
+          // "Tile_+003_+001",
+          // "Tile_+003_+002",
+          // "Tile_+003_+003",
+          // "Tile_+003_+004",
+          // "Tile_+003_+005",
+          // "Tile_+003_+006",
+          // "Tile_+003_+007",
+          // "Tile_+003_+008",
+          // "Tile_+003_+009",
+          // "Tile_+003_+010",
+          // "Tile_+003_+011",
+          // "Tile_+003_+012",
+          // "Tile_+003_+013",
+          // "Tile_+003_+014",
+          // "Tile_+003_+015",
+          // "Tile_+003_+016",
+          // "Tile_+003_+017",
+          // "Tile_+003_+018",
+          // "Tile_+003_+019",
+          // "Tile_+003_+020",
+          // "Tile_+003_+021",
+          // "Tile_+003_+022",
+          // "Tile_+003_+023",
+          // "Tile_+003_+024",
+          // "Tile_+003_+025",
+          // "Tile_+003_+026",
+          // "Tile_+003_+027",
+          // "Tile_+003_+028",
+          // "Tile_+003_+029",
+          "Tile_+003_+030",
+          "Tile_+003_+031",
+          "Tile_+003_+032",
+          "Tile_+003_+033",
+          "Tile_+003_+034",
+          "Tile_+003_+035",
+          "Tile_+003_+036",
+          "Tile_+003_+037",
+          "Tile_+003_+038",
+          "Tile_+003_+039",
+          "Tile_+003_+040",
+          "Tile_+003_+041",
+          "Tile_+003_+042",
+          "Tile_+003_+043",
+          "Tile_+003_+044",
+          "Tile_+003_+045",
+          // "Tile_+003_+046",
+          // "Tile_+003_+047"
+        ],
+        [
+          // "Tile_+004_+000",
+          // "Tile_+004_+001",
+          // "Tile_+004_+002",
+          // "Tile_+004_+003",
+          // "Tile_+004_+004",
+          // "Tile_+004_+005",
+          // "Tile_+004_+006",
+          // "Tile_+004_+007",
+          // "Tile_+004_+008",
+          // "Tile_+004_+009",
+          // "Tile_+004_+010",
+          // "Tile_+004_+011",
+          // "Tile_+004_+012",
+          // "Tile_+004_+013",
+          // "Tile_+004_+014",
+          // "Tile_+004_+015",
+          // "Tile_+004_+016",
+          // "Tile_+004_+017",
+          // "Tile_+004_+018",
+          // "Tile_+004_+019",
+          // "Tile_+004_+020",
+          // "Tile_+004_+021",
+          // "Tile_+004_+022",
+          // "Tile_+004_+023",
+          // "Tile_+004_+024",
+          // "Tile_+004_+025",
+          // "Tile_+004_+026",
+          // "Tile_+004_+027",
+          // "Tile_+004_+028",
+          // "Tile_+004_+029",
+          // "Tile_+004_+030",
+          // "Tile_+004_+031",
+          // "Tile_+004_+032",
+          // "Tile_+004_+033",
+          // "Tile_+004_+034",
+          // "Tile_+004_+035",
+          // "Tile_+004_+036",
+          // "Tile_+004_+037",
+          // "Tile_+004_+038",
+          // "Tile_+004_+039",
+          // "Tile_+004_+040",
+          // "Tile_+004_+041",
+          // "Tile_+004_+042",
+          // "Tile_+004_+043",
+          // "Tile_+004_+044",
+          // "Tile_+004_+045",
+          // "Tile_+004_+046",
+          // "Tile_+004_+047"
+        ]
+      ]
       // let modelStep = [6, 25]
       let modelStep = [6, 20]
       // let simpleBaseUrl = './models/'
@@ -907,40 +1730,40 @@ export default {
       ]
       const list0901 = [
         [
-          'Tile_+000_+000',
-          'Tile_+000_+001',
-          'Tile_+000_+002',
-          'Tile_+000_+003',
-          'Tile_+000_+004',
-          'Tile_+000_+005',
-          'Tile_+000_+006',
-          'Tile_+000_+007',
-          'Tile_+000_+008',
-          'Tile_+000_+009',
-          'Tile_+000_+010',
-          'Tile_+000_+011',
-          'Tile_+000_+012',
-          'Tile_+000_+013',
-          'Tile_+000_+014',
-          'Tile_+000_+015',
-          'Tile_+000_+016',
-          'Tile_+000_+017',
-          'Tile_+000_+018',
-          'Tile_+000_+019',
-          'Tile_+000_+020',
-          'Tile_+000_+021',
-          'Tile_+000_+022',
-          'Tile_+000_+023',
-          'Tile_+000_+024',
-          'Tile_+000_+025',
+          // 'Tile_+000_+000',
+          // 'Tile_+000_+001',
+          // 'Tile_+000_+002',
+          // 'Tile_+000_+003',
+          // 'Tile_+000_+004',
+          // 'Tile_+000_+005',
+          // 'Tile_+000_+006',
+          // 'Tile_+000_+007',
+          // 'Tile_+000_+008',
+          // 'Tile_+000_+009',
+          // 'Tile_+000_+010',
+          // 'Tile_+000_+011',
+          // 'Tile_+000_+012',
+          // 'Tile_+000_+013',
+          // 'Tile_+000_+014',
+          // 'Tile_+000_+015',
+          // 'Tile_+000_+016',
+          // 'Tile_+000_+017',
+          // 'Tile_+000_+018',
+          // 'Tile_+000_+019',
+          // 'Tile_+000_+020',
+          // 'Tile_+000_+021',
+          // 'Tile_+000_+022',
+          // 'Tile_+000_+023',
+          // 'Tile_+000_+024',
+          // 'Tile_+000_+025',
         ],
         [
-          'Tile_+001_+000',
-          'Tile_+001_+001',
-          'Tile_+001_+002',
-          'Tile_+001_+003',
-          'Tile_+001_+004',
-          'Tile_+001_+005',
+          // 'Tile_+001_+000',
+          // 'Tile_+001_+001',
+          // 'Tile_+001_+002',
+          // 'Tile_+001_+003',
+          // 'Tile_+001_+004',
+          // 'Tile_+001_+005',
           'Tile_+001_+006',
           'Tile_+001_+007',
           'Tile_+001_+008',
@@ -952,32 +1775,32 @@ export default {
           'Tile_+001_+014',
           'Tile_+001_+015',
           'Tile_+001_+016',
-          'Tile_+001_+017',
-          'Tile_+001_+018',
-          'Tile_+001_+019',
-          'Tile_+001_+020',
-          'Tile_+001_+021',
-          'Tile_+001_+022',
-          'Tile_+001_+023',
+          // 'Tile_+001_+017',
+          // 'Tile_+001_+018',
+          // 'Tile_+001_+019',
+          // 'Tile_+001_+020',
+          // 'Tile_+001_+021',
+          // 'Tile_+001_+022',
+          // 'Tile_+001_+023',
           'Tile_+001_+024',
           'Tile_+001_+025',
         ],
         [
-          'Tile_+002_+000',
-          'Tile_+002_+001',
-          'Tile_+002_+002',
-          'Tile_+002_+003',
-          'Tile_+002_+004',
-          'Tile_+002_+005',
-          'Tile_+002_+006',
-          'Tile_+002_+007',
-          'Tile_+002_+008',
-          'Tile_+002_+009',
-          'Tile_+002_+010',
-          'Tile_+002_+011',
-          'Tile_+002_+012',
-          'Tile_+002_+013',
-          'Tile_+002_+014',
+          // 'Tile_+002_+000',
+          // 'Tile_+002_+001',
+          // 'Tile_+002_+002',
+          // 'Tile_+002_+003',
+          // 'Tile_+002_+004',
+          // 'Tile_+002_+005',
+          // 'Tile_+002_+006',
+          // 'Tile_+002_+007',
+          // 'Tile_+002_+008',
+          // 'Tile_+002_+009',
+          // 'Tile_+002_+010',
+          // 'Tile_+002_+011',
+          // 'Tile_+002_+012',
+          // 'Tile_+002_+013',
+          // 'Tile_+002_+014',
           'Tile_+002_+015',
           'Tile_+002_+016',
           'Tile_+002_+017',
@@ -991,22 +1814,22 @@ export default {
           'Tile_+002_+025',
         ],
         [
-          'Tile_+003_+001',
-          'Tile_+003_+002',
-          'Tile_+003_+006',
-          'Tile_+003_+007',
-          'Tile_+003_+008',
-          'Tile_+003_+009',
-          'Tile_+003_+010',
-          'Tile_+003_+011',
-          'Tile_+003_+012',
-          'Tile_+003_+013',
-          'Tile_+003_+014',
-          'Tile_+003_+015',
-          'Tile_+003_+016',
-          'Tile_+003_+017',
-          'Tile_+003_+018',
-          'Tile_+003_+019',
+          // 'Tile_+003_+001',
+          // 'Tile_+003_+002',
+          // 'Tile_+003_+006',
+          // 'Tile_+003_+007',
+          // 'Tile_+003_+008',
+          // 'Tile_+003_+009',
+          // 'Tile_+003_+010',
+          // 'Tile_+003_+011',
+          // 'Tile_+003_+012',
+          // 'Tile_+003_+013',
+          // 'Tile_+003_+014',
+          // 'Tile_+003_+015',
+          // 'Tile_+003_+016',
+          // 'Tile_+003_+017',
+          // 'Tile_+003_+018',
+          // 'Tile_+003_+019',
           'Tile_+003_+020',
           'Tile_+003_+021',
           'Tile_+003_+022',
@@ -1015,27 +1838,109 @@ export default {
           'Tile_+003_+025'
         ]
       ]
-      function loadModelList(arr, baseUrl, innerDir) {
+      /* const list0901 = [
+        [
+          'Tile_+001_+006',
+          'Tile_+001_+007',
+          'Tile_+001_+008',
+          'Tile_+001_+024',
+          'Tile_+001_+025',
+        ],
+        [
+          'Tile_+002_+022',
+          'Tile_+002_+023',
+          'Tile_+002_+024',
+          'Tile_+002_+025',
+        ],
+        [
+          'Tile_+003_+022',
+          'Tile_+003_+023',
+          'Tile_+003_+024',
+          'Tile_+003_+025'
+        ]
+      ] */
+      function loadModelList(arr, baseUrl, innerDir, range) {
         let group = new THREE.Group()
         for (let i = 0; i < arr.length; i++) {
           let row = arr[i]
           for (let idx = 0; idx < row.length; idx++) {
             let cell = row[idx]
-            fbxLoader.load(`${baseUrl}/${innerDir}/${cell}/${cell}.fbx`, fbx => {
-              const mesh = fbx.children[0].clone()
-              mesh.name = cell
-              // 1508.727, 1277.447, 95.806
-              mesh.rotation.set(-Math.PI / 2, 0, 0)
-              mesh.position.y -= 1200
-              group.add(mesh)
-            })
+            // if(idx >= range[0] && idx <= range[1]) {
+              if(cell) {
+                fbxLoader.load(`${baseUrl}/${innerDir}/${cell}/${cell}.fbx`, fbx => {
+                  const mesh = fbx.children[0].clone()
+                  mesh.name = cell
+                  // 1508.727, 1277.447, 95.806
+                  mesh.rotation.set(-Math.PI / 2, 0, 0)
+                  mesh.position.x -= 95.53797
+                  mesh.position.y -= 1274.61653
+                  mesh.position.z += 1505.34453
+
+                  // x: 95.53796787661986
+                  // y: 74.61653428472982
+                  // z: -1505.3445283518283
+                  group.add(mesh)
+                })
+              }
+            // } else {
+            //   console.log(cell, range, idx)
+            // }
           }
         }
+        // group.applyQuaternion(quaternion)
+        // group.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(v1.x, v1.y, v1.z).normalize(), ang2))
+        // this.baseGroup.
+        // x: -150.30925115741144
+        // y: -7.774872262875988
+        // z: 2482.2247396356606
         return group
       }
-      // this.baseGroup = loadModelList(list0901, simpleBaseUrl, '0901_simple')
-      this.compareGroup = loadModelList(list1017Pipe, simpleBaseUrl, '1017_simple')
-      // this.scene.add(this.baseGroup)
+      // this.baseGroup = loadModelList(list1018, simpleBaseUrl, '1018_simple', [0, 17])
+      this.baseGroup = new THREE.Group()
+      this.baseGroup.add(loadModelList(list0901, simpleBaseUrl, '0901_simple'))
+
+      const v1 = new THREE.Vector3(-150.4215572373783, -7.817985039002451, 2482.3952942058504)
+      const v2List = [[
+        4230796,
+        0,
+        288258
+      ],[
+        4228313,
+        0,
+        288043
+      ]]
+      const v2 = new THREE.Vector3(v2List[1][0]-v2List[0][0], v2List[1][1]-v2List[0][1], v2List[1][2]-v2List[0][2])
+      const copy = v1.clone()
+      const cross = copy.cross(v2)
+      const ang = v1.angleTo(v2)
+      let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(cross.x, cross.y, cross.z).normalize(), ang)
+      this.baseGroup.children[0].applyQuaternion(quaternion)
+      const scaleParam = Math.sqrt(
+        Math.pow(v2.x,2) +
+        Math.pow(v2.y,2) +
+        Math.pow(v2.z,2)
+      ) / Math.sqrt(
+        Math.pow(v1.x,2) +
+        Math.pow(v1.y,2) +
+        Math.pow(v1.z,2)
+      )
+      this.baseGroup.children[0].scale.set(scaleParam, scaleParam, scaleParam)
+      this.compareGroup = loadModelList(list1018, simpleBaseUrl, '1018_simple')
+      this.compareGroup.scale.set(1.002,1.002,1.002)
+      // this.compareGroup = new THREE.Group()
+      // fbxLoader.load(`${simpleBaseUrl}/1018_simple/Tile_+000_+002/Tile_+000_+002.fbx`, fbx => {
+      //   // console.log(fbx)
+      //   const mesh = fbx.children[0].clone()
+      //   mesh.name = 'Tile_+000_+002'
+      //   // 1508.727, 1277.447, 95.806
+      //   // mesh.rotation.set(-Math.PI / 2, 0, 0)
+      //   // mesh.position.x -= 95.44056
+      //   // mesh.position.y -= 1295.44056
+      //   // mesh.position.z += 1505.24687
+      //   // this.baseGroup.add(mesh)
+      //   this.compareGroup.add(mesh)
+      // })
+      this.scene.add(this.baseGroup)
       this.scene.add(this.compareGroup)
       // 地形
       const _ambient = new THREE.AmbientLight(0xffffff);
@@ -1078,12 +1983,12 @@ export default {
       this.transformControls.addEventListener( 'dragging-changed',  ( event ) => {
         this.controls.enabled = ! event.value;
       } );
-      // this.transformControls.attach( this.compareGroup );
+      this.transformControls.attach( this.compareGroup );
       // this.transformControls.attach( this.group );
       // this.transformControls.attach( this.markGroup );
       // this.transformControls.attach( this.baseGroup );
       // 变换控制
-      // this.scene.add(this.transformControls)
+      this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
     },
     animate() {
@@ -1122,7 +2027,7 @@ export default {
         this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-        let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
+        let intersects = raycaster.intersectObjects(this.mapHandleFlag ? this.compareGroup.children : this.baseGroup.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
         // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
@@ -1165,7 +2070,8 @@ export default {
             }
           } */
           console.log(intersects[0])
-          console.log(intersects[0].point)
+          // console.log(intersects[0].object.name)
+          // console.log(intersects[0].point)
           this.coordinate.x = intersects[0].point.x.toFixed(0)
           this.coordinate.y = intersects[0].point.z.toFixed(0)
           // 1号点
@@ -1306,8 +2212,146 @@ export default {
     queryTransfer() {
       console.log(this.transformControls)
     },
-    ray() {
-      /* const pos = this.pipeModelInfoList[0]
+    rayMap() {
+      let rayPoints = []
+      let deepList = [
+        [288258, 4230796, 2.2],
+        [288265, 4230764, 1.6],
+        [288274, 4230739, 1.7],
+        [288283, 4230710, 2.0],
+        [288291, 4230691, 2.3],
+        [288301, 4230666, 1.8],
+        [288311, 4230637, 1.6],
+        [288313, 4230610, 2.4],
+        [288310, 4230583, 1.2],
+        [288304, 4230564, 1.6],
+        [288303, 4230532, 1.5],
+        [288305, 4230507, 2.1],
+        [288304, 4230481, 1.3],
+        [288303, 4230450, 2.6],
+        [288298, 4230419, 1.8],
+        [288301, 4230395, 1.7],
+        [288293, 4230372, 2.3],
+        [288291, 4230331, 3.0],
+        [288287, 4230314, 2.5],
+        [288283, 4230283, 3.1],
+        [288280, 4230258, 3.8],
+        [288276, 4230226, 3.4],
+        [288275, 4230197, 2.6],
+        [288274, 4230166, 1.6],
+        [288274, 4230139, 2.2],
+        [288273, 4230100, 1.3],
+        [288265, 4230068, 1.5],
+        [288254, 4230036, 1.2],
+        [288248, 4230003, 1.3],
+        [288236, 4229974, 1.2],
+        [288229, 4229944, 2.2],
+        [288227, 4229915, 2.1],
+        [288223, 4229889, 2.3],
+        [288210, 4229865, 2.8],
+        [288201, 4229839, 2.9],
+        [288194, 4229815, 2.2],
+        [288187, 4229787, 2.0],
+        [288176, 4229753, 2.3],
+        [288169, 4229732, 1.6],
+        [288154, 4229700, 1.7],
+        [288146, 4229678, 1.8],
+        [288136, 4229655, 1.6],
+        [288124, 4229628, 1.6],
+        [288104, 4229603, 1.6],
+        [288090, 4229579, 2.0],
+        [288079, 4229556, 1.5],
+        [288060, 4229528, 2.0],
+        [288052, 4229507, 2.0],
+        [288050, 4229474, 1.6],
+        [288045, 4229444, 2.2],
+        [288050, 4229420, 2.2],
+        [288050, 4229392, 2.2],
+        [288047, 4229362, 2.2],
+        [288048, 4229335, 1.3],
+        [288045, 4229309, 2.2],
+        [288045, 4229279, 3.2],
+        [288044, 4229254, 2.4],
+        [288042, 4229219, 2.0],
+        [288040, 4229202, 2.0],
+        [288037, 4229172, 1.5],
+        [288035, 4229140, 1.9],
+        [288034, 4229114, 1.4],
+        [288036, 4229090, 2.0],
+        [288035, 4229059, 2.4],
+        [288035, 4229030, 2.6],
+        [288035, 4229005, 1.5],
+        [288038, 4228973, 1.8],
+        [288036, 4228943, 2.1],
+        [288035, 4228912, 1.9],
+        [288033, 4228887, 2.0],
+        [288036, 4228858, 1.8],
+        [288038, 4228831, 2.0],
+        [288037, 4228798, 2.0],
+        [288036, 4228771, 1.6],
+        [288040, 4228741, 1.9],
+        [288040, 4228713, 2.5],
+        [288038, 4228687, 2.2],
+        [288042, 4228651, 2.6],
+        [288041, 4228626, 1.8],
+        [288043, 4228600, 2.3],
+        [288043, 4228575, 1.7],
+        [288042, 4228543, 1.4],
+        [288046, 4228517, 1.6],
+        [288044, 4228485, 1.6],
+        [288046, 4228458, 1.4],
+        [288041, 4228435, 1.9],
+        [288045, 4228402, 2.4],
+        [288041, 4228375, 3.0],
+        [288041, 4228347, 3.1],
+        [288043, 4228313, 2.7],
+      ]
+      let curvePoints = []
+      let startPoint = deepList[0]
+      // deepList.forEach(item => {
+      //   curvePoints.push(new THREE.Vector3(item[0] - startPoint[0], -item[2], -item[1] + startPoint[1]))
+      // })
+      deepList.forEach(item => {
+        curvePoints.push(new THREE.Vector3(item[1] - deepList[0][1], 0, item[0] - deepList[0][0]))
+      })
+      const curve = new THREE.CatmullRomCurve3(curvePoints, false, 'catmullrom', 0);
+      const points = curve.getPoints( 499 );
+      points.forEach(item => {
+        const rayOrigin = new THREE.Vector3(item.x, item.y + 50, item.z)
+        const rayDirection = new THREE.Vector3(0, -1, 0)
+        const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
+        let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true);
+
+        const geometry = new THREE.SphereGeometry( 0.5, 32, 16 );
+        const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+        const sphere = new THREE.Mesh( geometry, material );
+
+        if(intersects.length > 0 && intersects[0].point) {
+          rayPoints.push(intersects[0].point)
+          let clone = sphere.clone()
+          clone.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z)
+          this.markGroup.add(clone)
+          this.pipePosList.push({
+            x: intersects[0].point.x,
+            y: intersects[0].point.y,
+            z: intersects[0].point.z
+          })
+        }
+      })
+    },
+    compareDeep() {
+      this.pipePosList.map(item => {
+        const rayOrigin = new THREE.Vector3(item.x, item.y + 50, item.z)
+        const rayDirection = new THREE.Vector3(0, -1, 0)
+        const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
+        let intersects = raycaster.intersectObjects(this.compareGroup.children[0].children,true);
+        if(intersects.length > 0 && intersects[0].point) {
+          this.deepList.push(item.y - intersects[0].point.y)
+        }
+      })
+    }
+    /* ray() {
+      /!* const pos = this.pipeModelInfoList[0]
       const _self = this
       function test (x, y, z, aspect, pointSize) {
         const crbJoint = new THREE.SphereGeometry( pointSize, 8, 8 );
@@ -1332,7 +2376,7 @@ export default {
         return group
       }
 
-      this.baseGroup.add(test(pos.x, pos.y, pos.z, this.w / this.h, 10)) */
+      this.baseGroup.add(test(pos.x, pos.y, pos.z, this.w / this.h, 10)) *!/
       this.pipeModelInfoList.forEach((item, index) => {
         const rayOrigin = new THREE.Vector3(item.x, item.y + 40, item.z)
         const rayDirection  = new THREE.Vector3(0, -1, 0)
@@ -1359,7 +2403,7 @@ export default {
         // const intersect = raycaster.intersectObject(this.baseGroup.children, true)
         this.pipeDeepList[index] = [item.x, intersects[0].point.y - item.y, item.z]
       })
-    }
+    } */
   }
 }
 </script>
