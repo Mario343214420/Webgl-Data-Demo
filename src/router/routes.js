@@ -47,6 +47,9 @@ import Sulige_0908 from '../pages/Channel_sulige_0908_repaire/index.vue'
 import Sulige_0913 from '../pages/Channel_sulige_0913_repaire/index.vue'
 import Sulige_0919 from '../pages/Channel_sulige_0919/index.vue'
 import Sulige_1017 from '../pages/Channel_sulige_1017/index.vue'
+import Sulige_1021 from '../pages/Channel_sulige_1021/index.vue'
+import Sulige_1021_final from '../pages/Channel_sulige_1021/index_final.vue'
+import Sulige_0901_1018 from '../pages/Channel_sulige_1021/index_0901_1018.vue'
 import Channel_three_curve from '../pages/Channel_three_secret_fun/curve.vue'
 import Channel_three_plane_angle from '../pages/Channel_three_secret_fun/plane_angle.vue'
 import WellSite from '../pages/WellSite/index.vue'
@@ -381,7 +384,28 @@ const routes = [
     path: '/1017',
     component: Sulige_1017,
     meta: {
-      title: '1017 刺点测量'
+      title: '1017'
+    }
+  },
+  {
+    path: '/1021',
+    component: Sulige_1021,
+    meta: {
+      title: '1021 测量'
+    }
+  },
+  {
+    path: '/1021_f',
+    component: Sulige_1021_final,
+    meta: {
+      title: '1021 最终版'
+    }
+  },
+  {
+    path: '/0901_compare_with_1018',
+    component: Sulige_0901_1018,
+    meta: {
+      title: '0901对比1018'
     }
   },
   {

@@ -49,17 +49,15 @@
           <div class="btn" @click="toggleClipMap">地形切割</div>
         </div>
         <div class="visible-control-group">
-          <div class="btn" @click="baseGroup.visible = !baseGroup.visible">切换地形显隐</div>
+          <div class="btn" @click="group.visible = !group.visible">切换地形显隐</div>
           <div class="btn" @click="compareGroup.visible = !compareGroup.visible">切换对比地形显隐</div>
           <div class="btn" @click="markGroup.visible = !markGroup.visible">切换标记点显隐</div>
           <div class="btn" @click="pipeListGroup.visible = !pipeListGroup.visible">切换管线显隐</div>
           <div class="btn" @click="finalLinesGroup.visible = !finalLinesGroup.visible">切换GPS路线显隐</div>
           <div class="btn" @click="verticalGroup.visible = !verticalGroup.visible">切换垂直投影显隐</div>
-          <div class="btn" @click="ray">射线取点</div>
-          <div class="btn" @click="rayCompare">射线取对比点</div>
-<!--          <div class="btn" @click="markPointSize++">+</div>
+          <div class="btn" @click="markPointSize++">+</div>
           {{markPointSize}}
-          <div class="btn" @click="markPointSize&#45;&#45;">-</div>-->
+          <div class="btn" @click="markPointSize--">-</div>
           <!--          <div class="btn" @click="baseGroup.visible = !baseGroup.visible">切换基础显隐</div>-->
           <!--          <div class="btn" @click="gpsTransform0607.visible = !gpsTransform0607.visible">切换管线显隐</div>-->
         </div>
@@ -113,7 +111,6 @@
         </div>
         <div>
           <span @click="queryPipeRotPos">查看模拟管线状态</span><br>
-          <span @click="queryBasePos">查看基本层状态</span><br>
           <span @click="queryComparePos">查看染绿对比层状态</span><br>
           <span @click="queryTransfer">查看控制器</span>
         </div>
@@ -501,8 +498,7 @@ export default {
       // 最终对准定位点后的线组
       finalLinesGroup: null,
       verticalGroup: null,
-      pipeDeepList: [],
-      pipeModelInfoList: []
+      pipeDeepList: []
     }
   },
   computed: {
@@ -689,16 +685,130 @@ export default {
       const aspect = this.w / this.h
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-      this.camera.position.z = 0
+      this.camera.position.z = 200
       this.camera.position.x = 0
-      this.camera.position.y = 200
-      this.camera.lookAt(new THREE.Vector3(0,-1, 0));
+      this.camera.position.y = 0
+      this.camera.lookAt(new THREE.Vector3(0,0, 0));
       this.group = new THREE.Group()
       this.markGroup = new THREE.Group()
       this.compareGroup = new THREE.Group()
       this.pipeJointGroup = new THREE.Group()
       this.verticalGroup = new THREE.Group()
       const fbxLoader = new FBXLoader()
+      /* let list0829 = [
+        [
+          // "Tile_+000_+000",
+          // "Tile_+000_+001",
+          // "Tile_+000_+002",
+          // "Tile_+000_+003",
+          // "Tile_+000_+004",
+          // "Tile_+000_+005",
+          // "Tile_+000_+006",
+          // "Tile_+000_+007",
+          // "Tile_+000_+008",
+          // "Tile_+000_+009",
+          // "Tile_+000_+010",
+          // "Tile_+000_+011",
+          // "Tile_+000_+012",
+          // "Tile_+000_+013",
+          // "Tile_+000_+014",
+          // "Tile_+000_+015",
+          // "Tile_+000_+016",
+          // "Tile_+000_+017",
+          // "Tile_+000_+018",
+          // "Tile_+000_+019",
+          // "Tile_+000_+020",
+          // "Tile_+000_+021",
+          // "Tile_+000_+022",
+          // "Tile_+000_+023",
+          // "Tile_+000_+024",
+          // "Tile_+000_+025"
+        ],
+        [
+          // "Tile_+001_+000",
+          // "Tile_+001_+001",
+          // "Tile_+001_+002",
+          // "Tile_+001_+003",
+          // "Tile_+001_+004",
+          // "Tile_+001_+005",
+          // "Tile_+001_+006",
+          // "Tile_+001_+007",
+          // "Tile_+001_+008",
+          // "Tile_+001_+009",
+          // "Tile_+001_+010",
+          // "Tile_+001_+011",
+          // "Tile_+001_+012",
+          // "Tile_+001_+013",
+          // "Tile_+001_+014",
+          // "Tile_+001_+015",
+          // "Tile_+001_+016",
+          "Tile_+001_+017",
+          "Tile_+001_+018",
+          // "Tile_+001_+019",
+          // "Tile_+001_+020",
+          // "Tile_+001_+021",
+          // "Tile_+001_+022",
+          // "Tile_+001_+023",
+          "Tile_+001_+024",
+          "Tile_+001_+025"
+        ],
+        [
+          // "Tile_+002_+000",
+          // "Tile_+002_+001",
+          // "Tile_+002_+002",
+          // "Tile_+002_+003",
+          // "Tile_+002_+004",
+          // "Tile_+002_+005",
+          // "Tile_+002_+006",
+          // "Tile_+002_+007",
+          // "Tile_+002_+008",
+          // "Tile_+002_+009",
+          // "Tile_+002_+010",
+          // "Tile_+002_+011",
+          // "Tile_+002_+012",
+          // "Tile_+002_+013",
+          // "Tile_+002_+014",
+          // "Tile_+002_+015",
+          // "Tile_+002_+016",
+          "Tile_+002_+017",
+          "Tile_+002_+018",
+          "Tile_+002_+019",
+          "Tile_+002_+020",
+          "Tile_+002_+021",
+          "Tile_+002_+022",
+          "Tile_+002_+023",
+          "Tile_+002_+024",
+          "Tile_+002_+025"
+        ],
+        [
+          // "Tile_+003_+000",
+          // "Tile_+003_+001",
+          // "Tile_+003_+002",
+          // "Tile_+003_+003",
+          // "Tile_+003_+004",
+          // "Tile_+003_+005",
+          // "Tile_+003_+006",
+          // "Tile_+003_+007",
+          // "Tile_+003_+008",
+          // "Tile_+003_+009",
+          // "Tile_+003_+010",
+          // "Tile_+003_+011",
+          // "Tile_+003_+012",
+          // "Tile_+003_+013",
+          // "Tile_+003_+014",
+          // "Tile_+003_+015",
+          // "Tile_+003_+016",
+          "Tile_+003_+017",
+          "Tile_+003_+018",
+          "Tile_+003_+019",
+          "Tile_+003_+020",
+          "Tile_+003_+021",
+          "Tile_+003_+022",
+          "Tile_+003_+023",
+          "Tile_+003_+024",
+          "Tile_+003_+025"
+        ]
+      ] */
       let list0829 = [
         [
           "Tile_+000_+000",
@@ -778,7 +888,7 @@ export default {
         ]
       ]
       // let modelStep = [6, 25]
-      let modelStep = [6, 20]
+      let modelStep = [6, 22]
       // let simpleBaseUrl = './models/'
       let simpleBaseUrl = 'http://192.168.1.88:8000'
       // 现场gps坐标
@@ -1329,11 +1439,14 @@ export default {
       // 载入所有模型
       let compareInnerGroup = new THREE.Group()
       let loadAllModel = (arr, innerDir) => {
+        console.log(arr, innerDir)
         arr.forEach((item, index) => {
           item.forEach((modelPath, i) => {
+            console.log(modelPath)
             if(i <= modelStep[1] && i >= modelStep[0]) {
               // renderPartArea(modelPath, simpleBaseUrl)
               let url = `${simpleBaseUrl}/${innerDir}/${modelPath}/${modelPath}.fbx`
+              console.log(url)
               fbxLoader.load(url, fbx => {
                 const mesh = fbx.children[0].clone()
                 mesh.name = modelPath
@@ -1393,11 +1506,11 @@ export default {
           "Tile_+001_+016",
           "Tile_+001_+017",
           "Tile_+001_+018",
-          // "Tile_+001_+019",
-          // "Tile_+001_+020",
-          // "Tile_+001_+021",
-          // "Tile_+001_+022",
-          // "Tile_+001_+023",
+          "Tile_+001_+019",
+          "Tile_+001_+020",
+          "Tile_+001_+021",
+          "Tile_+001_+022",
+          "Tile_+001_+023",
           "Tile_+001_+024",
           "Tile_+001_+025",
         ],
@@ -1447,35 +1560,19 @@ export default {
               let cell = row[idx]
               fbxLoader.load(`${baseUrl}/${innerDir}/${cell}/${cell}.fbx`, fbx => {
                 const mesh = fbx.children[0].clone()
-                mesh.scale.set(1.0022113, 1.0022113, 1.0022113)
                 mesh.name = cell
-                mesh.position.x -= 95.806
-                mesh.position.y -= 1508.727
-                mesh.position.z -= 1277.447
-                // 1508.727, 1277.447, 95.806
+                mesh.position.z -= 1220
                 group.add(mesh)
               })
             }
           }
         }
-        // group.position.set(-1546.105, -58.581, -97.751)
+        group.position.set(-1546.105, -58.581, -97.751)
         group.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
-        const v1 = new THREE.Vector3(-2453.505, -7.817, -299.317)
-        const v2 = new THREE.Vector3(-2445.183, -8.857, -362.709)
-        const ang = v1.angleTo(v2)
-        const cross = v1.cross(v2)
-        const v3 = new THREE.Vector3(-2545.307, -6.240, -126.151)
-        const v4 = new THREE.Vector3(-2545.144, -6.613, -126.344)
-        const v5 = v3.sub(v1)
-        const v6 = v4.sub(v1)
-        const ang2 = (v5).angleTo(v6)
-        let quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(cross.x, cross.y, cross.z).normalize(), ang)
-        group.applyQuaternion(quaternion)
-        group.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(v1.x, v1.y, v1.z).normalize(), ang2))
         return group
       }
       this.baseGroup = new THREE.Group()
-      this.baseGroup.add(loadModelList(modelList0901, simpleBaseUrl, '0901_simple', [6, 20]))
+      this.baseGroup.add(loadModelList(modelList0901, simpleBaseUrl, '0901_simple', [0, 25]))
       this.scene.add(this.baseGroup)
       // 经纬度投影线与地表交点
       /* let landCrossPoints0906 = [
@@ -1662,190 +1759,6 @@ export default {
         [-2449.000, -7.262, -217.000],
         [-2483.000, -8.478, -215.000]
       ]
-      /* const landCrossPoints0913 = [
-        [0, 0, 0],
-        [-32.228, 0.000, 7.082],
-        [-57.276, 0.000, 16.086],
-        [-86.000, 0.168, 25.000],
-        [-105.000, 0.293, 33.000],
-        [-130.000, 1.023, 43.000],
-        [-159.000, 1.857, 53.000],
-        [-186.000, 3.369, 55.000],
-        [-213.030, 0.000, 51.990],
-        [-232.000, -2.153, 46.000],
-        [-264.000, -3.373, 45.000],
-        [-289.000, -4.056, 47.000],
-        [-315.000, -4.149, 46.000],
-        [-346.148, 0.000, 44.976],
-        [-377.000, -1.880, 40.000],
-        [-401.000, -3.231, 43.000],
-        [-424.000, -2.160, 35.000],
-        [-465.111, 0.000, 32.974],
-        [-482.087, 0.000, 28.989],
-        [-513.000, 1.389, 25.000],
-        [-538.000, 3.389, 22.000],
-        [-570.000, 0.878, 18.000],
-        [-599.000, -3.452, 17.000],
-        [-629.929, 0.000, 16.002],
-        [-657.000, 0.255, 16.000],
-        [-696.000, -5.258, 15.000],
-        [-728.000, -6.189, 7.000],
-        [-760.000, -4.106, -4.000],
-        [-793.000, -3.722, -10.000],
-        [-822.115, 0.000, -22.027],
-        [-852.000, -2.640, -29.000],
-        [-881.000, -1.905, -31.000],
-        [-907.000, -3.560, -35.000],
-        [-931.000, -3.829, -48.000],
-        [-957.000, -2.230, -57.000],
-        [-981.000, -5.236, -64.000],
-        [-1009.000, -5.289, -71.000],
-        [-1043.000, -4.260, -82.000],
-        [-1064.000, -6.244, -89.000],
-        [-1096.000, -2.570, -104.000],
-        [-1118.000, -2.307, -112.000],
-        [-1141.000, -4.054, -122.000],
-        [-1168.000, -4.943, -134.000],
-        [-1193.000, -6.092, -154.000],
-        [-1217.000, -2.901, -168.000],
-        [-1240.000, -4.790, -179.000],
-        [-1268.000, -1.751, -198.000],
-        [-1289.196, 0.000, -206.012],
-        [-1322.000, -3.028, -208.000],
-        [-1352.000, -6.806, -213.000],
-        [-1376.000, -4.899, -208.000],
-        [-1404.000, -3.027, -208.000],
-        [-1434.000, -3.897, -211.000],
-        [-1461.000, -5.930, -210.000],
-        [-1487.000, -7.673, -213.000],
-        [-1517.000, -3.438, -213.000],
-        [-1542.000, -4.772, -214.000],
-        [-1577.000, -4.017, -216.000],
-        [-1594.000, -6.495, -218.000],
-        [-1624.000, -5.241, -221.000],
-        [-1656.000, -4.926, -223.000],
-        [-1682.000, -7.081, -224.000],
-        [-1706.000, -6.684, -222.000],
-        [-1737.000, -6.386, -223.000],
-        [-1766.000, -5.765, -223.000],
-        [-1791.000, -5.114, -223.000],
-        [-1823.000, -5.970, -220.000],
-        [-1853.000, -5.844, -222.000],
-        [-1884.000, -6.586, -223.000],
-        [-1909.000, -4.045, -225.000],
-        [-1938.000, -6.177, -222.000],
-        [-1965.000, -4.873, -220.000],
-        [-1998.000, -3.791, -221.000],
-        [-2025.000, -3.884, -222.000],
-        [-2055.000, 0.145, -218.000],
-        [-2083.012, 0.000, -218.001],
-        [-2109.000, -3.534, -220.000],
-        [-2145.000, -1.336, -216.000],
-        [-2170.000, -2.505, -217.000],
-        [-2196.000, -2.777, -215.000],
-        [-2221.000, -3.352, -215.000],
-        [-2253.000, -4.837, -216.000],
-        [-2279.000, -4.336, -212.000],
-        [-2311.000, -5.244, -214.000],
-        [-2338.000, -5.247, -212.000],
-        [-2361.000, -7.886, -217.000],
-        [-2394.000, -7.724, -213.000],
-        [-2421.000, -5.431, -217.000],
-        [-2449.000, -7.788, -217.000],
-        [-2483.000, -9.357, -215.000]
-      ] */
-      const landCrossPoints0913 = [
-        [	-0.023,-0.090,-0.010	],
-        [	-32.018,-0.668,7.006	],
-        [	-57.030,-0.969,15.945	],
-        [	-86.027,0.033,24.958	],
-        [	-105.031,0.284,32.996	],
-        [	-129.992,1.015,42.984	],
-        [	-158.986,1.840,53.013	],
-        [	-186.001,3.304,54.978	],
-        [	-213.036,-0.367,51.920	],
-        [	-232.015,-2.251,45.989	],
-        [	-264.023,-3.726,44.683	],
-        [	-288.997,-4.098,47.014	],
-        [	-315.019,-4.164,45.996	],
-        [	-346.002,-0.713,44.935	],
-        [	-376.998,-1.895,40.026	],
-        [	-401.005,-3.283,42.975	],
-        [	-423.984,-2.158,35.003	],
-        [	-465.005,-1.659,32.991	],
-        [	-482.021,-0.376,28.976	],
-        [	-512.995,1.357,24.978	],
-        [	-537.995,3.353,22.004	],
-        [	-570.019,0.874,17.978	],
-        [	-598.989,-3.430,16.977	],
-        [	-630.005,-1.593,15.990	],
-        [	-656.996,0.233,15.959	],
-        [	-696.001,-5.293,14.992	],
-        [	-728.009,-6.170,6.988	],
-        [	-760.005,-4.107,-3.996	],
-        [	-793.001,-3.703,-10.002	],
-        [	-821.999,-1.498,-22.035	],
-        [	-852.016,-2.678,-28.998	],
-        [	-881.006,-1.916,-31.005	],
-        [	-907.018,-3.578,-35.004	],
-        [	-931.026,-3.814,-47.987	],
-        [	-957.001,-2.228,-56.978	],
-        [	-980.998,-5.244,-64.015	],
-        [	-1008.995,-5.299,-70.998	],
-        [	-1043.015,-4.300,-82.012	],
-        [	-1064.006,-6.286,-89.038	],
-        [	-1096.016,-2.613,-104.003	],
-        [	-1118.015,-2.312,-112.001	],
-        [	-1141.003,-4.033,-122.007	],
-        [	-1167.998,-4.960,-134.023	],
-        [	-1193.003,-6.107,-154.002	],
-        [	-1217.010,-2.931,-168.004	],
-        [	-1240.000,-4.797,-179.004	],
-        [	-1268.005,-1.763,-197.997	],
-        [	-1289.002,-1.150,-206.000	],
-        [	-1321.995,-3.045,-208.006	],
-        [	-1352.013,-6.872,-213.031	],
-        [	-1375.997,-4.929,-208.006	],
-        [	-1403.996,-3.056,-208.017	],
-        [	-1434.005,-3.925,-210.995	],
-        [	-1461.016,-5.949,-209.985	],
-        [	-1487.002,-7.671,-213.002	],
-        [	-1516.989,-3.471,-213.007	],
-        [	-1542.001,-4.803,-214.007	],
-        [	-1576.998,-4.030,-216.005	],
-        [	-1594.023,-6.545,-217.998	],
-        [	-1624.006,-5.299,-221.019	],
-        [	-1656.013,-4.967,-222.996	],
-        [	-1682.906,-7.748,-223.923	],
-        [	-1706.018,-6.738,-222.003	],
-        [	-1737.005,-6.387,-223.009	],
-        [	-1766.011,-5.792,-223.008	],
-        [	-1791.009,-5.133,-223.009	],
-        [	-1823.001,-6.006,-219.993	],
-        [	-1853.021,-5.870,-221.998	],
-        [	-1884.004,-6.631,-222.988	],
-        [	-1908.996,-4.041,-225.000	],
-        [	-1938.004,-6.199,-222.007	],
-        [	-1965.016,-4.852,-220.007	],
-        [	-1997.998,-3.801,-221.000	],
-        [	-2024.996,-3.909,-221.990	],
-        [	-2055.001,0.128,-218.000	],
-        [	-2083.007,-1.373,-218.034	],
-        [	-2109.014,-3.536,-220.018	],
-        [	-2145.001,-1.330,-216.014	],
-        [	-2170.000,-2.519,-217.019	],
-        [	-2195.993,-2.793,-215.020	],
-        [	-2221.006,-3.358,-215.010	],
-        [	-2252.997,-4.852,-216.009	],
-        [	-2279.011,-4.355,-212.013	],
-        [	-2311.003,-5.271,-214.019	],
-        [	-2338.005,-5.253,-212.018	],
-        [	-2361.010,-7.878,-216.980	],
-        [	-2394.010,-7.743,-213.026	],
-        [	-2421.008,-5.462,-217.017	],
-        [	-2448.999,-7.783,-216.987	],
-        [	-2483.007,-9.367, -215.000	]
-      ]
       const landMarkPoints = [
         [0, 0, 0],
         [-258.593, -4.017, 44.411],
@@ -1885,7 +1798,10 @@ export default {
       compareInnerGroup.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
       this.compareGroup.add(compareInnerGroup)
       this.compareGroup.rotation.set(0, -0.0259873, 0)
+      this.baseGroup.rotation.set(0, -0.0259873, 0)
       this.compareGroup.scale.set(1.0022113, 1.0022113, 1.0022113)
+      this.baseGroup.scale.set(1.0022113, 1.0022113, 1.0022113)
+      this.baseGroup.position.set(40.693, 3.917, 3.162)
       // this.compareGroup.position.set(-1546.105, -58.581, -97.751)
       // this.compareGroup.rotation.set( - Math.PI / 2, 0, -Math.PI / 2)
       // this.compareGroup.quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.025598891121951795)
@@ -2019,99 +1935,6 @@ export default {
       // console.log(res)
 
       // 水平管线网络计算
-      let base0909 = [
-        [0, 0, 0],
-        [-32.008, -0.626, 7.002],
-        [-57.012, -0.912, 15.997],
-        [-86.010, 0.147, 25.005],
-        [-105.003, 0.363, 32.998],
-        [-130.007, 1.120, 42.999],
-        [-159.014, 1.958, 53.002],
-        [-186.011, 3.434, 54.978],
-        [-213.020, -0.202, 51.961],
-        [-231.998, -2.081, 45.985],
-        [-263.966, -3.596, 44.715],
-        [-288.997, -3.902, 46.983],
-        [-315.010, -3.945, 45.978],
-        [-346.007, -0.480, 44.974],
-        [-376.989, -1.669, 39.971],
-        [-401.020, -3.019, 42.992],
-        [-424.010, -1.889, 34.987],
-        [-465.015, -1.357, 32.993],
-        [-482.016, -0.075, 29.004],
-        [-513.014, 1.670, 24.992],
-        [-538.001, 3.696, 21.986],
-        [-570.009, 1.242, 17.996],
-        [-598.996, -3.055, 16.996],
-        [-629.999, -1.194, 15.996],
-        [-657.010, 0.648, 16.007],
-        [-696.016, -4.863, 15.004],
-        [-728.012, -5.716, 7.020],
-        [-760.001, -3.626, -4.007],
-        [-793.020, -3.202, -9.998],
-        [-822.013, -0.970, -21.980],
-        [-851.994, -2.138, -28.984],
-        [-880.989, -1.366, -31.010],
-        [-907.005, -3.003, -35.005],
-        [-931.014, -3.233, -48.002],
-        [-957.013, -1.647, -57.008],
-        [-981.009, -4.628, -64.006],
-        [-1009.015, -4.669, -71.030],
-        [-1043.008, -3.649, -81.991],
-        [-1064.007, -5.623, -88.970],
-        [-1096.009, -1.924, -104.008],
-        [-1118.017, -1.615, -111.995],
-        [-1141.019, -3.323, -121.993],
-        [-1168.011, -4.225, -133.969],
-        [-1193.025, -5.363, -153.998],
-        [-1216.990, -2.169, -168.028],
-        [-1240.010, -4.028, -179.016],
-        [-1267.998, -0.982, -197.993],
-        [-1289.018, -0.352, -206.001],
-        [-1322.002, -2.223, -207.991],
-        [-1352.002, -6.027, -213.004],
-        [-1376.011, -4.075, -207.995],
-        [-1404.014, -2.177, -207.988],
-        [-1434.004, -3.056, -211.010],
-        [-1460.992, -5.044, -210.014],
-        [-1487.014, -6.758, -212.995],
-        [-1517.013, -2.527, -213.008],
-        [-1542.019, -3.852, -214.001],
-        [-1577.013, -3.058, -215.997],
-        [-1594.023, -5.570, -218.028],
-        [-1624.011, -4.297, -221.005],
-        [-1656.001, -3.954, -222.973],
-        [-1682.026, -6.122, -223.977],
-        [-1705.994, -5.688, -221.982],
-        [-1737.009, -5.331, -222.981],
-        [-1766.001, -4.711, -222.993],
-        [-1791.014, -4.033, -222.993],
-        [-1823.007, -4.885, -219.992],
-        [-1853.006, -4.724, -221.977],
-        [-1884.023, -5.479, -222.998],
-        [-1909.022, -2.872, -224.974],
-        [-1938.016, -5.008, -222.015],
-        [-1964.989, -3.650, -219.997],
-        [-1998.014, -2.575, -220.999],
-        [-2025.002, -2.667, -221.993],
-        [-2055.011, 1.389, -217.993],
-        [-2083.006, -0.084, -218.010],
-        [-2109.010, -2.242, -220.003],
-        [-2145.004, -0.019, -215.986],
-        [-2170.003, -1.190, -217.013],
-        [-2196.018, -1.450, -215.002],
-        [-2221.016, -2.012, -214.986],
-        [-2253.009, -3.469, -215.996],
-        [-2279.005, -2.951, -211.987],
-        [-2310.949, -3.865, -214.075],
-        [-2338.008, -3.821, -211.998],
-        [-2360.991, -6.439, -217.007],
-        [-2394.034, -6.269, -212.981],
-        [-2421.006, -3.982, -217.007],
-        [-2449.006, -6.293, -217.026],
-        [-2483.054, -7.846, -215.095]
-      ]
-
       function culPipeHorizontalWeb(points) {
         // let endPoint = points[points.length - 1]
         let startPoint = points[0]
@@ -2152,12 +1975,10 @@ export default {
       }
       let landCrossPoints = new THREE.CatmullRomCurve3(landCrossPoints0908.map(item => new THREE.Vector3(item[0], item[1], item[2]))).getPoints(500)
       let modelPipePoints = renderModelPipe(landCrossPoints0908, deepList)
-
-      this.pipeModelInfoList = modelPipePoints
-
-      const crbJoint = new THREE.SphereGeometry( this.markPointSize * 0.01, 8, 8 );
-      const crbJointMaterial = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-      const srb = new THREE.Mesh( crbJoint, crbJointMaterial );
+      landCrossPoints.forEach((item, index) => {
+        this.pipeDeepList[index] = [item.x, item.y - modelPipePoints[index].y, item.z]
+      })
+      // let modelPipeLines =
       this.pipeListGroup.add(pipeGPSLine)
       this.pipeListGroup.add(verticalLines)
       this.scene.add(this.pipeListGroup)
@@ -2399,6 +2220,10 @@ export default {
       }
       this.finalLinesGroup = adjustLine(baseGPSParam)
 
+      // let deepList = [2.2, 1.5, 3.8, 1.2, 1.7, 2.2, 1.5, 2.0, 2.3, 2.7]
+      // 地表点矫正线
+      let part0901Lines = []
+
       // 地形
       this.scene.add(this.group)
       this.scene.add(this.compareGroup)
@@ -2427,7 +2252,6 @@ export default {
       /* ↓↓↓↓ 模型变换功能 ↓↓↓↓ */
       // 变换控件
       this.transformControls = new TransformControls(this.camera, this.renderer.domElement)
-      // console.log(this.transformControls.getWorldPosition())
       // 拖动控制
       // this.dragControls = new DragControls( [this.baseGroup], this.camera, this.renderer.domElement );
       // this.dragControls.transformGroup = true
@@ -2445,8 +2269,7 @@ export default {
       // this.transformControls.attach( this.compareGroup );
       // this.transformControls.attach( this.group );
       // this.transformControls.attach( this.markGroup );
-      this.transformControls.attach( this.baseGroup );
-      console.log(this.transformControls)
+      this.transformControls.attach( this.compareGroup );
       // 变换控制
       this.scene.add(this.transformControls)
       /* ↑↑↑↑ 模型变换功能 ↑↑↑↑ */
@@ -2459,26 +2282,6 @@ export default {
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
     },
-    addBloomPass() {
-      // RenderPass这个通道会渲染场景，但不会将渲染结果输出到屏幕上
-      const renderScene = new RenderPass(this.scene, this.camera)
-      const effectCopy = new ShaderPass(CopyShader); //传入了CopyShader着色器，用于拷贝渲染结果
-      effectCopy.renderToScreen = true;
-      // THREE.BloomPass(strength, kernelSize, sigma, Resolution)
-      // strength 定义泛光效果的强度，值越高，明亮的区域越明亮，而且渗入较暗区域的也就越多
-      // kernelSize 控制泛光的偏移量
-      // sigma 控制泛光的锐利程度，值越高，泛光越模糊
-      // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
-      // const bloomPass = new BloomPass(3, 1.5, 0.4, 1024); //BloomPass通道效果
-      // const bloomPass = new BloomPass(1.1, 25, 4.0, 256); //BloomPass通道效果
-      const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.w, this.h), 1, 0.8, 0);
-      //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
-      this.bloomComposer = new EffectComposer(this.renderer)
-      this.bloomComposer.setSize(this.w, this.h);
-      this.bloomComposer.addPass(renderScene);
-      this.bloomComposer.addPass(bloomPass);
-      this.bloomComposer.addPass(effectCopy);
-    },
     onDocumentMouseDown(e) {
       e.preventDefault();
       if (e.ctrlKey && e.button === 0) {
@@ -2487,48 +2290,8 @@ export default {
         this.mY = -(e.clientY / window.innerHeight) * 2 + 1;
         let raycaster = new THREE.Raycaster();
         raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-        let intersects = raycaster.intersectObjects(this.baseGroup.children,true); // 标记地形
-        // let intersects = raycaster.intersectObjects(this.compareGroup.children,true); // 标记地形
-        // let intersects = raycaster.intersectObjects(this.group.children,true); // 标记地形
-        // let intersects = raycaster.intersectObjects(this.gps0527Group.children,true); // 标记线
-        // let intersects = raycaster.intersectObjects(this.pipeListGroup.children,true); // 投影线标记
-        // let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true); // 显示1、2坑数据
-        // let intersects = raycaster.intersectObjects(this.markGroup.children,true); // 显示1、2坑数据
+        let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true); // 显示1、2坑数据
         if (intersects.length > 0) {
-          /* let list = intersects.filter(item => {
-            console.log(item.object.parent)
-            item.object.parent.name ? console.log(item.object.parent.name, '是当前选中块') : ''
-            return item.object.parent.name
-          })
-          // 当穿透两层地图时，直接测出两点距离
-          if(list.length === 2) {
-            this.measureDataStart.x = list[0].point.x
-            this.measureDataStart.y = list[0].point.y
-            this.measureDataStart.z = list[0].point.z
-            this.measureDataEnd.x = list[1].point.x
-            this.measureDataEnd.y = list[1].point.y
-            this.measureDataEnd.z = list[1].point.z
-          }
-          // 当穿透一层地图时，检查是否已标记
-          if(list.length === 1) {
-            if (this.measuredFlag) {
-              // 已标记则记为终点
-              this.measureDataStart.x = list[1].point.x
-              this.measureDataStart.y = list[1].point.y
-              this.measureDataStart.z = list[1].point.z
-            } else {
-              // 未标记则记为起始点
-              this.measureDataStart.x = list[0].point.x
-              this.measureDataStart.y = list[0].point.y
-              this.measureDataStart.z = list[0].point.z
-
-              const geometry = new THREE.SphereGeometry( 1, 8, 8 );
-              const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-              const sphere = new THREE.Mesh( geometry, material );
-              sphere.position.set(list[0].point.x, list[0].point.y, list[0].point.z)
-              this.markGroup.add( sphere );
-            }
-          } */
           console.log(intersects[0])
           console.log(intersects[0].point)
           this.coordinate.x = intersects[0].point.x.toFixed(0)
@@ -2552,41 +2315,13 @@ export default {
           }
           this.markList.unshift(intersects[0].point)
           const { point } = intersects[0]
-          const geometry = new THREE.SphereGeometry( 0.05, 8, 8 );
+          const geometry = new THREE.SphereGeometry( 0.1, 8, 8 );
           const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
           const sphere = new THREE.Mesh( geometry, material );
           sphere.position.set(point.x, point.y, point.z)
           this.scene.add( sphere );
         }
       }
-      //新建一个三维单位向量 假设z方向就是0.5
-      //根据照相机，把这个向量转换到视点坐标系
-      // let vector = new THREE.Vector3(this.mX, this.mY,0.5).unproject(this.camera);
-
-      //在视点坐标系中形成射线,射线的起点向量是照相机， 射线的方向向量是照相机到点击的点，这个向量应该归一标准化。
-      /* let raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera( {x: this.mX, y: this.mY}, this.camera );
-      let intersects = raycaster.intersectObjects(this.scene.children,true);
-      if (intersects.length > 0) {
-        let list = intersects.filter(item => {
-          item.object.parent.name ? console.log(item.object.parent.name, '是当前选中块') : ''
-          return item.object.parent.name
-        })
-        if(list.length === 2) {
-          let lX = Math.pow((list[0].point.x - list[1].point.x), 2)
-          let lY = Math.pow((list[0].point.x - list[1].point.x), 2)
-          let lZ = Math.pow((list[0].point.x - list[1].point.x), 2)
-          let changeLength = Math.sqrt(lX + lY + lZ)
-          this.renderCard(
-            [
-              `地块编号: ${list[0].object.parent.name}`,
-              `地形变化: ${changeLength}`,
-            ],
-            [list[0].point.x, list[0].point.y, list[0].point.z],
-            [list[0].point.x + 6, list[0].point.y + 10, list[0].point.z],
-          )
-        }
-      } */
     },
     // 切换变换模式
     changeTransformStyle(v) {
@@ -2659,9 +2394,6 @@ export default {
     clearMeasureMark() {
       this.markList = []
     },
-    queryBasePos() {
-      console.log(this.baseGroup)
-    },
     queryPipeRotPos() {
       console.log(this.markGroup)
     },
@@ -2670,60 +2402,6 @@ export default {
     },
     queryTransfer() {
       console.log(this.transformControls)
-    },
-    ray() {
-      /* const pos = this.pipeModelInfoList[0]
-      const _self = this
-      function test (x, y, z, aspect, pointSize) {
-        const crbJoint = new THREE.SphereGeometry( pointSize, 8, 8 );
-        const crbJointMaterial = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-        const srb = new THREE.Mesh( crbJoint, crbJointMaterial );
-
-        const rayDirection  = new THREE.Vector3(0, 1, 0)
-        let camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000)
-        camera.position.set(x, y, z)
-        camera.lookAt(rayDirection);
-        const raycaster = new THREE.Raycaster()
-        raycaster.setFromCamera( {x: 0, y: 0}, camera );
-        let intersects = raycaster.intersectObjects(_self.baseGroup.children[0].children,true);
-        // const intersect = raycaster.intersectObject(this.baseGroup.children, true)
-        console.log(intersects)
-        let group = new THREE.Group()
-        intersects.forEach(item => {
-          let clone = srb.clone()
-          clone.position.set(item.point.x, item.point.y, item.point.z)
-          group.add(clone)
-        })
-        return group
-      }
-
-      this.baseGroup.add(test(pos.x, pos.y, pos.z, this.w / this.h, 10)) */
-      this.pipeModelInfoList.forEach((item, index) => {
-        const rayOrigin = new THREE.Vector3(item.x, item.y + 40, item.z)
-        const rayDirection  = new THREE.Vector3(0, -1, 0)
-        // let camera = new THREE.PerspectiveCamera(50, this.w / this.h, 1, 5000)
-        // camera.position.set(item.x, item.y, item.z)
-        // camera.lookAt(rayDirection);
-        const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
-        // raycaster.setFromCamera( {x: 0, y: 0}, camera );
-        let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true);
-        // const intersect = raycaster.intersectObject(this.baseGroup.children, true)
-        this.pipeDeepList[index] = [item.x, intersects[0].point.y - item.y, item.z]
-      })
-    },
-    rayCompare() {
-      this.pipeModelInfoList.forEach((item, index) => {
-        const rayOrigin = new THREE.Vector3(item.x, item.y + 40, item.z)
-        const rayDirection  = new THREE.Vector3(0, -1, 0)
-        // let camera = new THREE.PerspectiveCamera(50, this.w / this.h, 1, 5000)
-        // camera.position.set(item.x, item.y, item.z)
-        // camera.lookAt(rayDirection);
-        const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
-        // raycaster.setFromCamera( {x: 0, y: 0}, camera );
-        let intersects = raycaster.intersectObjects(this.compareGroup.children[0].children,true);
-        // const intersect = raycaster.intersectObject(this.baseGroup.children, true)
-        this.pipeDeepList[index] = [item.x, intersects[0].point.y - item.y, item.z]
-      })
     }
   }
 }

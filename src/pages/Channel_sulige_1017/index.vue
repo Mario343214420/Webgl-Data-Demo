@@ -5,12 +5,12 @@
       <div class="pip-deep-list">
         <div class="pdl-item" v-if="pipePosList.length > 0">
           <div v-for="(item, index) in pipePosList" :key="index">
-            <span>{{item.x, item.y, item.z}}</span>
+            <span>坐标：</span><span>{{item.x, item.y, item.z}}</span>
           </div>
         </div>
         <div class="pdl-item" v-if="deepList.length > 0">
           <div v-for="(item, index) in deepList" :key="index">
-            <span>{{item}}</span>
+            <span>埋深：</span><span>{{item}}</span>
           </div>
         </div>
       </div>
@@ -69,13 +69,33 @@
 <!--          <div class="btn" @click="verticalGroup.visible = !verticalGroup.visible">切换垂直投影显隐</div>-->
           <div class="btn" @click="rayMap">射线取点</div>
           <div class="btn" @click="compareDeep">计算埋深情况</div>
-          <div class="btn" @click="mapHandleFlag = !mapHandleFlag">切换标记地图</div>
+          <div class="btn" @click="mapHandleFlag = !mapHandleFlag">切换标记地图({{mapHandleFlag ? '基本' : '对比'}})</div>
+
 <!--          <div class="btn" @click="rayCompare">射线取对比点</div>-->
 <!--          <div class="btn" @click="markPointSize++">+</div>
           {{markPointSize}}
           <div class="btn" @click="markPointSize&#45;&#45;">-</div>-->
           <!--          <div class="btn" @click="baseGroup.visible = !baseGroup.visible">切换基础显隐</div>-->
           <!--          <div class="btn" @click="gpsTransform0607.visible = !gpsTransform0607.visible">切换管线显隐</div>-->
+        </div>
+        <div class="visible-control-group">
+          <div class="btn">
+            <input type="text" style="width: 50px" v-model="changeStep">
+            <span class="handle-btn" @click="rotationAdd(0)">XR+</span>
+            <span class="handle-btn" @click="rotationMinus(0)">XR-</span>
+            <span class="handle-btn" @click="positionAdd(0)">XP+</span>
+            <span class="handle-btn" @click="positionMinus(0)">XP-</span>
+
+            <span class="handle-btn" @click="rotationAdd(1)">YR+</span>
+            <span class="handle-btn" @click="rotationMinus(1)">YR-</span>
+            <span class="handle-btn" @click="positionAdd(1)">YP+</span>
+            <span class="handle-btn" @click="positionMinus(1)">YP-</span>
+
+            <span class="handle-btn" @click="rotationAdd(2)">ZR+</span>
+            <span class="handle-btn" @click="rotationMinus(2)">ZR-</span>
+            <span class="handle-btn" @click="positionAdd(2)">ZP+</span>
+            <span class="handle-btn" @click="positionMinus(2)">ZP-</span>
+          </div>
         </div>
       </div>
     </div>
@@ -507,7 +527,9 @@ export default {
       },
       pipePosList: [],
       deepList: [],
-      mapHandleFlag: false
+      mapHandleFlag: false,
+      changeStep: '',
+      changeAxis: ''
     }
   },
   computed: {
@@ -1413,16 +1435,16 @@ export default {
           "Tile_+000_+047"
         ],
         [
-          "Tile_+001_+000",
-          "Tile_+001_+001",
-          "Tile_+001_+002",
-          "Tile_+001_+003",
-          "Tile_+001_+004",
-          "Tile_+001_+005",
-          "Tile_+001_+006",
-          "Tile_+001_+007",
-          "Tile_+001_+008",
-          "Tile_+001_+009",
+          // "Tile_+001_+000",
+          // "Tile_+001_+001",
+          // "Tile_+001_+002",
+          // "Tile_+001_+003",
+          // "Tile_+001_+004",
+          // "Tile_+001_+005",
+          // "Tile_+001_+006",
+          // "Tile_+001_+007",
+          // "Tile_+001_+008",
+          // "Tile_+001_+009",
           "Tile_+001_+010",
           "Tile_+001_+011",
           "Tile_+001_+012",
@@ -1616,7 +1638,7 @@ export default {
       // let modelStep = [6, 25]
       let modelStep = [6, 20]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.87:8000'
+      let simpleBaseUrl = 'http://192.168.1.88:8000'
       // 载入所有模型
       let compareInnerGroup = new THREE.Group()
       let loadAllModel = (arr, innerDir) => {
@@ -1730,34 +1752,6 @@ export default {
       ]
       const list0901 = [
         [
-          // 'Tile_+000_+000',
-          // 'Tile_+000_+001',
-          // 'Tile_+000_+002',
-          // 'Tile_+000_+003',
-          // 'Tile_+000_+004',
-          // 'Tile_+000_+005',
-          // 'Tile_+000_+006',
-          // 'Tile_+000_+007',
-          // 'Tile_+000_+008',
-          // 'Tile_+000_+009',
-          // 'Tile_+000_+010',
-          // 'Tile_+000_+011',
-          // 'Tile_+000_+012',
-          // 'Tile_+000_+013',
-          // 'Tile_+000_+014',
-          // 'Tile_+000_+015',
-          // 'Tile_+000_+016',
-          // 'Tile_+000_+017',
-          // 'Tile_+000_+018',
-          // 'Tile_+000_+019',
-          // 'Tile_+000_+020',
-          // 'Tile_+000_+021',
-          // 'Tile_+000_+022',
-          // 'Tile_+000_+023',
-          // 'Tile_+000_+024',
-          // 'Tile_+000_+025',
-        ],
-        [
           // 'Tile_+001_+000',
           // 'Tile_+001_+001',
           // 'Tile_+001_+002',
@@ -1836,6 +1830,380 @@ export default {
           'Tile_+003_+023',
           'Tile_+003_+024',
           'Tile_+003_+025'
+        ]
+      ]
+      const list0901_part1 = [
+        [
+          'Tile_+001_+006',
+          'Tile_+001_+007',
+          'Tile_+001_+008',
+          'Tile_+001_+009',
+          'Tile_+001_+010',
+        ]
+      ]
+      const list0901_part2 = [
+        [
+          'Tile_+001_+011',
+          'Tile_+001_+012',
+          'Tile_+001_+013',
+          'Tile_+001_+014',
+          'Tile_+001_+015'
+        ],
+        [
+          'Tile_+002_+015'
+        ]
+      ]
+      const list0901_part3 = [
+        [
+          'Tile_+001_+016'
+        ],
+        [
+          'Tile_+002_+016',
+          'Tile_+002_+017',
+          'Tile_+002_+018',
+          'Tile_+002_+019',
+          'Tile_+002_+020'
+        ],
+        [
+          'Tile_+003_+020'
+        ]
+      ]
+      const list0901_part4 = [
+        [
+          'Tile_+001_+024',
+          'Tile_+001_+025',
+        ],
+        [
+          'Tile_+002_+021',
+          'Tile_+002_+022',
+          'Tile_+002_+023',
+          'Tile_+002_+024',
+          'Tile_+002_+025',
+        ],
+        [
+          'Tile_+003_+021',
+          'Tile_+003_+022',
+          'Tile_+003_+023',
+          'Tile_+003_+024',
+          'Tile_+003_+025'
+        ]
+      ]
+
+      const list1018_part1 = [
+        [
+          "Tile_+000_+016",
+          "Tile_+000_+017",
+          "Tile_+000_+018"
+        ],
+        [
+          "Tile_+001_+010",
+          "Tile_+001_+011",
+          "Tile_+001_+012",
+          "Tile_+001_+013",
+          "Tile_+001_+014",
+          "Tile_+001_+015",
+          "Tile_+001_+016",
+          "Tile_+001_+017",
+          "Tile_+001_+018",
+        ]
+      ]
+      const list1018_part2 = [
+        [
+          "Tile_+000_+019",
+          "Tile_+000_+020",
+          "Tile_+000_+021",
+          "Tile_+000_+022",
+          "Tile_+000_+023",
+          "Tile_+000_+024",
+          "Tile_+000_+025",
+          "Tile_+000_+026"
+        ],
+        [
+          "Tile_+001_+019",
+          "Tile_+001_+020",
+          "Tile_+001_+021",
+          "Tile_+001_+022",
+          "Tile_+001_+023",
+          "Tile_+001_+024",
+          "Tile_+001_+025",
+          "Tile_+001_+026",
+          "Tile_+001_+027"
+        ],
+        [
+          "Tile_+002_+027"
+        ]
+      ]
+      const list1018_part3 = [
+        [
+          "Tile_+001_+028"
+        ],
+        [
+          "Tile_+002_+027",
+          "Tile_+002_+028",
+          "Tile_+002_+029",
+          "Tile_+002_+030",
+          "Tile_+002_+031",
+          "Tile_+002_+032",
+        ],
+        [
+          "Tile_+003_+030",
+          "Tile_+003_+031",
+          "Tile_+003_+032",
+          "Tile_+003_+033",
+          "Tile_+003_+034",
+          "Tile_+003_+035"
+        ]
+      ]
+      const list1018_part4 = [
+        [
+          // "Tile_+000_+000",
+          // "Tile_+000_+001",
+          // "Tile_+000_+002",
+          // "Tile_+000_+003",
+          // "Tile_+000_+004",
+          // "Tile_+000_+005",
+          // "Tile_+000_+006",
+          // "Tile_+000_+007",
+          // "Tile_+000_+008",
+          // "Tile_+000_+009",
+          // "Tile_+000_+010",
+          // "Tile_+000_+011",
+          // "Tile_+000_+012",
+          // "Tile_+000_+013",
+          // "Tile_+000_+014",
+          // "Tile_+000_+015",
+          "Tile_+000_+016",
+          "Tile_+000_+017",
+          "Tile_+000_+018",
+          "Tile_+000_+019",
+          "Tile_+000_+020",
+          "Tile_+000_+021",
+          "Tile_+000_+022",
+          "Tile_+000_+023",
+          "Tile_+000_+024",
+          "Tile_+000_+025",
+          "Tile_+000_+026",
+          // "Tile_+000_+027",
+          // "Tile_+000_+028",
+          // "Tile_+000_+029",
+          // "Tile_+000_+030",
+          // "Tile_+000_+031",
+          // "Tile_+000_+032",
+          // "Tile_+000_+033",
+          // "Tile_+000_+034",
+          // "Tile_+000_+035",
+          // "Tile_+000_+036",
+          // "Tile_+000_+037",
+          // "Tile_+000_+038",
+          // "Tile_+000_+039",
+          // "Tile_+000_+040",
+          // "Tile_+000_+041",
+          // "Tile_+000_+042",
+          // "Tile_+000_+043",
+          // "Tile_+000_+044",
+          "Tile_+000_+045",
+          "Tile_+000_+046",
+          "Tile_+000_+047"
+        ],
+        [
+          // "Tile_+001_+000",
+          // "Tile_+001_+001",
+          // "Tile_+001_+002",
+          // "Tile_+001_+003",
+          // "Tile_+001_+004",
+          // "Tile_+001_+005",
+          // "Tile_+001_+006",
+          // "Tile_+001_+007",
+          // "Tile_+001_+008",
+          // "Tile_+001_+009",
+          "Tile_+001_+010",
+          "Tile_+001_+011",
+          "Tile_+001_+012",
+          "Tile_+001_+013",
+          "Tile_+001_+014",
+          "Tile_+001_+015",
+          "Tile_+001_+016",
+          "Tile_+001_+017",
+          "Tile_+001_+018",
+          "Tile_+001_+019",
+          "Tile_+001_+020",
+          "Tile_+001_+021",
+          "Tile_+001_+022",
+          "Tile_+001_+023",
+          "Tile_+001_+024",
+          "Tile_+001_+025",
+          "Tile_+001_+026",
+          "Tile_+001_+027",
+          "Tile_+001_+028",
+          // "Tile_+001_+029",
+          // "Tile_+001_+030",
+          // "Tile_+001_+031",
+          // "Tile_+001_+032",
+          // "Tile_+001_+033",
+          // "Tile_+001_+034",
+          // "Tile_+001_+035",
+          // "Tile_+001_+036",
+          // "Tile_+001_+037",
+          // "Tile_+001_+038",
+          // "Tile_+001_+039",
+          // "Tile_+001_+040",
+          // "Tile_+001_+041",
+          // "Tile_+001_+042",
+          // "Tile_+001_+043",
+          "Tile_+001_+044",
+          "Tile_+001_+045",
+          "Tile_+001_+046",
+          "Tile_+001_+047"
+        ],
+        [
+          // "Tile_+002_+000",
+          // "Tile_+002_+001",
+          // "Tile_+002_+002",
+          // "Tile_+002_+003",
+          // "Tile_+002_+004",
+          // "Tile_+002_+005",
+          // "Tile_+002_+006",
+          // "Tile_+002_+007",
+          // "Tile_+002_+008",
+          // "Tile_+002_+009",
+          // "Tile_+002_+010",
+          // "Tile_+002_+011",
+          // "Tile_+002_+012",
+          // "Tile_+002_+013",
+          // "Tile_+002_+014",
+          // "Tile_+002_+015",
+          // "Tile_+002_+016",
+          // "Tile_+002_+017",
+          // "Tile_+002_+018",
+          // "Tile_+002_+019",
+          // "Tile_+002_+020",
+          // "Tile_+002_+021",
+          // "Tile_+002_+022",
+          // "Tile_+002_+023",
+          // "Tile_+002_+024",
+          // "Tile_+002_+025",
+          // "Tile_+002_+026",
+          "Tile_+002_+027",
+          "Tile_+002_+028",
+          "Tile_+002_+029",
+          "Tile_+002_+030",
+          "Tile_+002_+031",
+          "Tile_+002_+032",
+          // "Tile_+002_+033",
+          // "Tile_+002_+034",
+          // "Tile_+002_+035",
+          // "Tile_+002_+036",
+          // "Tile_+002_+037",
+          // "Tile_+002_+038",
+          // "Tile_+002_+039",
+          // "Tile_+002_+040",
+          // "Tile_+002_+041",
+          "Tile_+002_+042",
+          "Tile_+002_+043",
+          "Tile_+002_+044",
+          "Tile_+002_+045",
+          "Tile_+002_+046",
+          "Tile_+002_+047"
+        ],
+        [
+          // "Tile_+003_+000",
+          // "Tile_+003_+001",
+          // "Tile_+003_+002",
+          // "Tile_+003_+003",
+          // "Tile_+003_+004",
+          // "Tile_+003_+005",
+          // "Tile_+003_+006",
+          // "Tile_+003_+007",
+          // "Tile_+003_+008",
+          // "Tile_+003_+009",
+          // "Tile_+003_+010",
+          // "Tile_+003_+011",
+          // "Tile_+003_+012",
+          // "Tile_+003_+013",
+          // "Tile_+003_+014",
+          // "Tile_+003_+015",
+          // "Tile_+003_+016",
+          // "Tile_+003_+017",
+          // "Tile_+003_+018",
+          // "Tile_+003_+019",
+          // "Tile_+003_+020",
+          // "Tile_+003_+021",
+          // "Tile_+003_+022",
+          // "Tile_+003_+023",
+          // "Tile_+003_+024",
+          // "Tile_+003_+025",
+          // "Tile_+003_+026",
+          // "Tile_+003_+027",
+          // "Tile_+003_+028",
+          // "Tile_+003_+029",
+          "Tile_+003_+030",
+          "Tile_+003_+031",
+          "Tile_+003_+032",
+          "Tile_+003_+033",
+          "Tile_+003_+034",
+          "Tile_+003_+035",
+          "Tile_+003_+036",
+          "Tile_+003_+037",
+          "Tile_+003_+038",
+          "Tile_+003_+039",
+          "Tile_+003_+040",
+          "Tile_+003_+041",
+          "Tile_+003_+042",
+          "Tile_+003_+043",
+          "Tile_+003_+044",
+          "Tile_+003_+045",
+          // "Tile_+003_+046",
+          // "Tile_+003_+047"
+        ],
+        [
+          // "Tile_+004_+000",
+          // "Tile_+004_+001",
+          // "Tile_+004_+002",
+          // "Tile_+004_+003",
+          // "Tile_+004_+004",
+          // "Tile_+004_+005",
+          // "Tile_+004_+006",
+          // "Tile_+004_+007",
+          // "Tile_+004_+008",
+          // "Tile_+004_+009",
+          // "Tile_+004_+010",
+          // "Tile_+004_+011",
+          // "Tile_+004_+012",
+          // "Tile_+004_+013",
+          // "Tile_+004_+014",
+          // "Tile_+004_+015",
+          // "Tile_+004_+016",
+          // "Tile_+004_+017",
+          // "Tile_+004_+018",
+          // "Tile_+004_+019",
+          // "Tile_+004_+020",
+          // "Tile_+004_+021",
+          // "Tile_+004_+022",
+          // "Tile_+004_+023",
+          // "Tile_+004_+024",
+          // "Tile_+004_+025",
+          // "Tile_+004_+026",
+          // "Tile_+004_+027",
+          // "Tile_+004_+028",
+          // "Tile_+004_+029",
+          // "Tile_+004_+030",
+          // "Tile_+004_+031",
+          // "Tile_+004_+032",
+          // "Tile_+004_+033",
+          // "Tile_+004_+034",
+          // "Tile_+004_+035",
+          // "Tile_+004_+036",
+          // "Tile_+004_+037",
+          // "Tile_+004_+038",
+          // "Tile_+004_+039",
+          // "Tile_+004_+040",
+          // "Tile_+004_+041",
+          // "Tile_+004_+042",
+          // "Tile_+004_+043",
+          // "Tile_+004_+044",
+          // "Tile_+004_+045",
+          // "Tile_+004_+046",
+          // "Tile_+004_+047"
         ]
       ]
       /* const list0901 = [
@@ -1925,8 +2293,10 @@ export default {
         Math.pow(v1.z,2)
       )
       this.baseGroup.children[0].scale.set(scaleParam, scaleParam, scaleParam)
-      this.compareGroup = loadModelList(list1018, simpleBaseUrl, '1018_simple')
+      this.compareGroup = loadModelList(list1018_part1, simpleBaseUrl, '1018_simple')
       this.compareGroup.scale.set(1.002,1.002,1.002)
+      this.compareGroup.position.set(20.9, -3.353, 2.502)
+      this.compareGroup.rotation.set(-2.9751462, -1.546094439, -2.9734964256)
       // this.compareGroup = new THREE.Group()
       // fbxLoader.load(`${simpleBaseUrl}/1018_simple/Tile_+000_+002/Tile_+000_+002.fbx`, fbx => {
       //   // console.log(fbx)
@@ -2316,39 +2686,140 @@ export default {
       })
       const curve = new THREE.CatmullRomCurve3(curvePoints, false, 'catmullrom', 0);
       const points = curve.getPoints( 499 );
-      points.forEach(item => {
+      let arr = []
+      points.forEach((item, index) => {
         const rayOrigin = new THREE.Vector3(item.x, item.y + 50, item.z)
         const rayDirection = new THREE.Vector3(0, -1, 0)
         const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
         let intersects = raycaster.intersectObjects(this.baseGroup.children[0].children,true);
 
-        const geometry = new THREE.SphereGeometry( 0.5, 32, 16 );
-        const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+        let color = null
+        let radius = 0.1
+        const colorList = [
+          0x00ff00,
+          0x0000ff,
+          0x00ffff,
+          0x0011aa,
+          0x00aa00
+        ]
+        if((index+1) % 100 === 0) {
+          color = colorList[(index+1) % 100]
+          radius = 0.4
+        }
+        const geometry = new THREE.SphereGeometry( radius, 32, 16 );
+        const material = new THREE.MeshBasicMaterial( { color } );
         const sphere = new THREE.Mesh( geometry, material );
-
+        const sphereGroup = new THREE.Group()
         if(intersects.length > 0 && intersects[0].point) {
           rayPoints.push(intersects[0].point)
           let clone = sphere.clone()
           clone.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z)
-          this.markGroup.add(clone)
-          this.pipePosList.push({
-            x: intersects[0].point.x,
-            y: intersects[0].point.y,
-            z: intersects[0].point.z
-          })
+          sphereGroup.add(clone)
+          this.pipePosList.push(intersects[0].point)
+          arr.push(intersects[0].point)
         }
+        this.markGroup.add(sphereGroup)
       })
+      console.log(arr)
     },
     compareDeep() {
+      let arr = []
       this.pipePosList.map(item => {
         const rayOrigin = new THREE.Vector3(item.x, item.y + 50, item.z)
         const rayDirection = new THREE.Vector3(0, -1, 0)
         const raycaster = new THREE.Raycaster(rayOrigin, rayDirection, 0, 200)
-        let intersects = raycaster.intersectObjects(this.compareGroup.children[0].children,true);
+        let intersects = raycaster.intersectObjects(this.compareGroup.children,true);
+
         if(intersects.length > 0 && intersects[0].point) {
           this.deepList.push(item.y - intersects[0].point.y)
+          arr.push(intersects[0].point)
         }
       })
+      console.log(arr)
+    },
+    rotationAdd(v) {
+      let step = parseFloat(this.changeStep)
+      if(this.mapHandleFlag) {
+        if(v === 0) {
+          this.baseGroup.rotation.x += step
+        } else if(v === 1) {
+          this.baseGroup.rotation.y += step
+        } else if(v === 2) {
+          // this.baseGroup.rotation.z += step
+          this.baseGroup.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), step))
+        }
+      } else {
+        if(v === 0) {
+          this.compareGroup.rotation.x += step
+        } else if(v === 1) {
+          this.compareGroup.rotation.y += step
+        } else if(v === 2) {
+          // this.compareGroup.rotation.z += step
+          this.compareGroup.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), step))
+        }
+      }
+    },
+    rotationMinus(v) {
+      let step = parseFloat(this.changeStep)
+      if(this.mapHandleFlag) {
+        if(v === 0) {
+          this.baseGroup.rotation.x -= step
+        } else if(v === 1) {
+          this.baseGroup.rotation.y -= step
+        } else if(v === 2) {
+          // this.baseGroup.rotation.z -= step
+          this.baseGroup.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -step))
+        }
+      } else {
+        if(v === 0) {
+          this.compareGroup.rotation.x -= step
+        } else if(v === 1) {
+          this.compareGroup.rotation.y -= step
+        } else if(v === 2) {
+          // this.compareGroup.rotation.z -= step
+          this.compareGroup.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -step))
+        }
+      }
+    },
+    positionAdd(v) {
+      let step = parseFloat(this.changeStep)
+      if(this.mapHandleFlag) {
+        if(v === 0) {
+          this.baseGroup.position.x += step
+        } else if(v === 1) {
+          this.baseGroup.position.y += step
+        } else if(v === 2) {
+          this.baseGroup.position.z += step
+        }
+      } else {
+        if(v === 0) {
+          this.compareGroup.position.x += step
+        } else if(v === 1) {
+          this.compareGroup.position.y += step
+        } else if(v === 2) {
+          this.compareGroup.position.z += step
+        }
+      }
+    },
+    positionMinus(v) {
+      let step = parseFloat(this.changeStep)
+      if(this.mapHandleFlag) {
+        if(v === 0) {
+          this.baseGroup.position.x -= step
+        } else if(v === 1) {
+          this.baseGroup.position.y -= step
+        } else if(v === 2) {
+          this.baseGroup.position.z -= step
+        }
+      } else {
+        if(v === 0) {
+          this.compareGroup.position.x -= step
+        } else if(v === 1) {
+          this.compareGroup.position.y -= step
+        } else if(v === 2) {
+          this.compareGroup.position.z -= step
+        }
+      }
     }
     /* ray() {
       /!* const pos = this.pipeModelInfoList[0]
@@ -2464,6 +2935,10 @@ export default {
           width auto
           cursor pointer
           font-size 12px
+          .handle-btn {
+            margin: 0 4px;
+            border: 1px solid #000
+          }
         }
       }
     }
