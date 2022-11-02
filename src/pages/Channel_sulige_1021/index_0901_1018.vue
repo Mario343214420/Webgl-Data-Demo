@@ -900,7 +900,7 @@ export default {
         ]
       ]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.93:8000'
+      let simpleBaseUrl = 'http://192.168.1.92:8000'
       // 现场gps坐标
       let pipeList = [
         [
