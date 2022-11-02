@@ -866,7 +866,7 @@ export default {
       // let modelStep = [6, 25]
       let modelStep = [6, 25]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.95:8000'
+      let simpleBaseUrl = 'http://192.168.1.88:8000'
       // 载入所有模型
       let loadAllModel = arr => {
         arr.forEach((item, index) => {
