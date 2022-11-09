@@ -775,7 +775,7 @@ export default {
           "Tile_+003_+022"
         ]
       ]
-      const list1018_base = [
+      let list1018_base = [
         [
           // "Tile_+000_+000",
           // "Tile_+000_+001",
@@ -1025,51 +1025,6 @@ export default {
           // "Tile_+004_+045",
           // "Tile_+004_+046",
           // "Tile_+004_+047"
-        ]
-      ]
-
-      const frontPart10 = [
-        [
-          "Tile_+003_+035",
-          "Tile_+003_+036",
-          "Tile_+003_+037",
-          "Tile_+003_+038",
-          "Tile_+003_+039",
-          "Tile_+003_+040",
-          "Tile_+003_+041",
-          "Tile_+003_+042",
-          "Tile_+003_+043",
-          "Tile_+003_+044",
-          "Tile_+003_+045",
-        ],
-        [
-          "Tile_+002_+042",
-          "Tile_+002_+043",
-          "Tile_+002_+044",
-          "Tile_+002_+045",
-          "Tile_+002_+046",
-          "Tile_+002_+047"
-        ]
-      ]
-      const frontPart09 = [
-        [
-          "Tile_+003_+019",
-          "Tile_+003_+020",
-          "Tile_+003_+021",
-          "Tile_+003_+022"
-        ],
-        [
-          "Tile_+002_+019",
-          "Tile_+002_+020",
-          "Tile_+002_+021",
-          "Tile_+002_+022",
-          "Tile_+002_+023",
-          "Tile_+002_+024",
-          "Tile_+002_+025"
-        ],
-        [
-          "Tile_+001_+024",
-          "Tile_+001_+025"
         ]
       ]
 
@@ -1571,7 +1526,7 @@ export default {
         ]
       ]
       // let simpleBaseUrl = './models/'
-      let simpleBaseUrl = 'http://192.168.1.95:8000'
+      let simpleBaseUrl = 'http://192.168.1.92:8000'
       // 现场gps坐标
       let pipeList = [
         [
@@ -2189,7 +2144,7 @@ export default {
           "Tile_+003_+022"
         ]
       ]
-      this.baseGroup = loadAllModel(frontPart09, '0901_simple', {x: -97.63837534956002, y: -1278.5395523400814, z: 1545.98137857454})
+      this.baseGroup = loadAllModel(modelList0901_base, '0901_simple', {x: -97.63837534956002, y: -1278.5395523400814, z: 1545.98137857454})
       function calQua(x,y,z) {
         let pipe = [[
             4230796,
@@ -2467,7 +2422,7 @@ export default {
           // "Tile_+004_+047"
         ]
       ]
-      this.compareGroup = loadAllModel(frontPart10, '1018_simple', {x: -93.14169082323335 -40.787055528893234, y: -1277.9074312344567 - 3.6614499045407953, z: 1484.4335890020654 - 3.595499001614243})
+      this.compareGroup = loadAllModel(list1018_base, '1018_simple', {x: -93.14169082323335 -40.787055528893234, y: -1277.9074312344567 - 3.6614499045407953, z: 1484.4335890020654 - 3.595499001614243})
       const compareCalRes = calQua(-151.63345293225692,-8.672837603539392,2483.088052458162)
       this.compareGroup.applyQuaternion(compareCalRes.quaternion)
       this.compareGroup.position.set(-45.26645637, -0.23304769, 37.300278734)
