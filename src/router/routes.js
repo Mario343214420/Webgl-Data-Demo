@@ -37,6 +37,7 @@ import FangPenQi from '../pages/Channel_fangpenqi/index.vue'
 import Spotlight from '../pages/Channel_spotlight_shadow/index.vue'
 import EdgeGeometry from '../pages/Channel_EdgesGeometry/index.vue'
 import Channel_CanvasIsPointIn from '../pages/Channel_CanvasIsPointIn/index.vue'
+import Channel_homepage from '../pages/Channel_homepage/index.vue'
 import Sulige_0822 from '../pages/Channel_sulige0822/index.vue'
 import Sulige_0822_0829 from '../pages/Channel_sulige0829_22/index.vue'
 import Sulige_0829 from '../pages/Channel_sulige0829_compare/index.vue'
@@ -420,6 +421,13 @@ const routes = [
     component: Channel_three_plane_angle,
     meta: {
       title: 'three面与向量夹角'
+    }
+  },
+  {
+    path: '/homepage',
+    component: Channel_homepage,
+    meta: {
+      title: '页面样例'
     }
   },
   {
