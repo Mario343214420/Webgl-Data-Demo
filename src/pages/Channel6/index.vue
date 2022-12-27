@@ -35,7 +35,6 @@ export default {
       this.init();
       this.animate()
     })
-    console.log(tt)
   },
   methods: {
     init() {
@@ -66,6 +65,11 @@ export default {
         console.log(fbx)
         fbx.scale.set(4,4,4)
         fbx.position.set(0,200, 0)
+        this.scene.add(fbx)
+      })
+      fbxLoader.load('http://192.168.1.95:8000/pidaisilie.fbx', fbx => {
+        console.log(fbx)
+        fbx.position.set(90, 0, 0)
         this.scene.add(fbx)
       })
       /*// fbxLoader.load('./models/complete_model/c4d/钻杆模型.fbx', fbx => {
