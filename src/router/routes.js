@@ -54,6 +54,7 @@ import Sulige_0901_1018 from '../pages/Channel_sulige_1021/index_0901_1018.vue'
 import Channel_three_curve from '../pages/Channel_three_secret_fun/curve.vue'
 import Channel_three_plane_angle from '../pages/Channel_three_secret_fun/plane_angle.vue'
 import WellSite from '../pages/WellSite/index.vue'
+import Channel_camera_animate from '../pages/Channel_camera_animate/index.vue'
 
 const routes = [
   {
@@ -428,6 +429,13 @@ const routes = [
     component: Channel_homepage,
     meta: {
       title: '页面样例'
+    }
+  },
+  {
+    path: '/camera_animate',
+    component: Channel_camera_animate,
+    meta: {
+      title: '镜头动画'
     }
   },
   {
