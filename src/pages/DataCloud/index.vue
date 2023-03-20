@@ -35,13 +35,13 @@ export default {
   methods: {
     initBaseEle() {
       let baseEl = this.$el
-      const {clientHeight, clientWidth} = baseEl
+      const { clientHeight, clientWidth } = baseEl
       this.h = clientHeight
       this.w = clientWidth
     },
     render() {
       const canvas = this.$refs.cvs
-      this.renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true})
+      this.renderer = new THREE.WebGLRenderer({canvas, antialias: false, alpha: true})
       this.renderer.setSize(this.w, this.h)
       this.renderer.shadowMap.enabled = true;
       this.camera = new THREE.PerspectiveCamera( 45, this.w / this.h, 1, 2000 );
