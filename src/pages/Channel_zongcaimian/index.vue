@@ -88,7 +88,7 @@ export default {
       this.group = new THREE.Group()
       this.group1 = new THREE.Group()
       const fbxLoader = new FBXLoader()
-      fbxLoader.load("http://192.168.1.47:8000/gemeiji.FBX", fbx => {
+      fbxLoader.load("http://localhost:9001/gemeiji.FBX", fbx => {
         // fbx.children.shift()
         //   textureLoader.load('http://localhost:8000/windmill/Mat_Base_Color.tga.png', (texture) => {
         //     fbx.children[2].material.map = texture
@@ -99,11 +99,11 @@ export default {
         fbx.castShadow = true
         this.scene.add(fbx)
       });
-      fbxLoader.load("http://192.168.1.47:8000/guabanji.FBX", fbx => {
+      fbxLoader.load("http://localhost:9001/guabanji.FBX", fbx => {
         // this.scene.add(fbx)
         console.log(fbx)
       });
-      fbxLoader.load("http://192.168.1.47:8000/yeyazhijia.FBX", fbx => {
+      fbxLoader.load("http://localhost:9001/yeyazhijia.FBX", fbx => {
         console.log(fbx)
         this.scene.add(fbx)
         this.clock = new THREE.Clock();
