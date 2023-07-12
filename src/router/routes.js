@@ -56,6 +56,8 @@ import Channel_three_plane_angle from '../pages/Channel_three_secret_fun/plane_a
 import WellSite from '../pages/WellSite/index.vue'
 import Channel_camera_animate from '../pages/Channel_camera_animate/index.vue'
 import Channel_kuangqu from '../pages/Channel_kuangqu/index.vue'
+import Channel_cube from '../pages/Channel_cube/index.vue'
+
 
 const routes = [
   {
@@ -444,6 +446,13 @@ const routes = [
     component: Channel_kuangqu,
     meta: {
       title: '哈密矿区模型'
+    }
+  },
+  {
+    path: '/cube',
+    component: Channel_cube,
+    meta: {
+      title: '双层地形'
     }
   },
   {

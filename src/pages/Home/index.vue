@@ -74,6 +74,12 @@ export default {
 </script>
 
 <style scoped>
+.home {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
 .path {
   display: inline-block;
   width: 300px;
