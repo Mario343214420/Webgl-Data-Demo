@@ -1,5 +1,12 @@
-<script setup>
-
+<script>
+// 新增轨迹动画参考
+new Vue({
+  data() {
+    return {
+      curve: null
+    }
+  }
+})
 </script>
 
 <template>
