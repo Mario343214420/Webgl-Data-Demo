@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     Home<br>
-    <div v-for="(item, index) in $router.options.routes">
+    <div v-for="(item, index) in $router.options.routes" class="route-item">
       <router-link :to="item.path"><span class="path">{{item.path}}</span>--> {{item.meta?item.meta.title:''}}</router-link>
     </div>
     <div>
@@ -22,7 +22,7 @@ export default {
     }
   },
   mounted () {
-    // this.init();
+    this.init();
     // let slope = 3/4
     // console.log(Math.tan(Math.PI / 6))
     // console.log(Math.sin(Math.PI / 6))
@@ -79,6 +79,13 @@ export default {
   top: 0;
   left: 0;
   overflow: auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.route-item {
+  width: 48%;
 }
 .path {
   display: inline-block;
