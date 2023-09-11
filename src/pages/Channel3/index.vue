@@ -56,6 +56,7 @@ export default {
       // this.scene.add(sphere).
       const loader = new GLTFLoader()
       loader.load('./models/earth/scene.gltf', (obj) => {
+        console.log(obj);
         obj.scene.traverse( function ( child ) {
           if ( child.isMesh ) {
             child.material.emissive =  child.material.color;

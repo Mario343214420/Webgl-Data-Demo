@@ -102,8 +102,8 @@ export default {
         this.scene.add(_spotLight);
       })*/
       const loader = new GLTFLoader()
-      console.log(loader)
-      loader.load('./models/dragoner/scene.gltf', gltf => {
+      // console.log(loader)
+      loader.load('http://192.168.10.2:8000/dragoner/scene.gltf', gltf => {
         console.log(gltf)
         // const meshes =
         gltf.scene.position.y = -100
@@ -130,9 +130,9 @@ export default {
       this.controls.autoRotate = true;
     },
     animate() {
-      if(this.bloomComposer) {
-        this.bloomComposer.render()
-      }
+      // if(this.bloomComposer) {
+      //   this.bloomComposer.render()
+      // }
       // 镜头旋转（未生效）
       this.deg++
       this.camera.rotateY(this.deg/30000)
