@@ -116,21 +116,21 @@ const routes = [
     path: '/channel8-sulige',
     component: Channel8SuLiGe,
     meta: {
-      title: '苏里格井场'
+      title: 'Sulige井场'
     }
   },
   {
     path: '/channel8_sulige_pipe',
     component: Channel8_sulige_pipe,
     meta: {
-      title: '苏里格地下管路'
+      title: 'Sulige地下管路'
     }
   },
   {
     path: '/channel8-sulige_part_control',
     component: Channel8_sulige_part_control,
     meta: {
-      title: '苏里格瓦片万向控制'
+      title: 'Sulige瓦片万向控制'
     }
   },
   {
@@ -207,7 +207,7 @@ const routes = [
     path: '/channel19',
     component: Channel19,
     meta: {
-      title: '天玛'
+      title: 'TM'
     }
   },
   {
@@ -235,7 +235,7 @@ const routes = [
     path: '/coal',
     component: CoalCube,
     meta: {
-      title: '天玛动态数据接口'
+      title: 'TM动态数据接口'
     }
   },
   {
@@ -263,42 +263,42 @@ const routes = [
     path: '/sulige_0428',
     component: Sulige_0428,
     meta: {
-      title: '4月28日苏里格'
+      title: '4月28日Sulige'
     }
   },
   {
     path: '/sulige_zongheng',
     component: ChannelSuligeZongHeng,
     meta: {
-      title: '苏里格纵横'
+      title: 'Sulige纵横'
     }
   },
   {
     path: '/sulige_zongheng_output_gps',
     component: ChannelSuligeZongHengOutPutGps,
     meta: {
-      title: '苏里格纵横--直出GPS'
+      title: 'Sulige纵横--直出GPS'
     }
   },
   {
     path: '/sulige_zongheng_0617',
     component: ChannelSuligeZongHeng0617,
     meta: {
-      title: '苏里格纵横--GPS偏离度'
+      title: 'Sulige纵横--GPS偏离度'
     }
   },
   {
     path: '/sulige_zongheng0531',
     component: ChannelSuligeZongHeng0531,
     meta: {
-      title: '苏里格纵横5月31日存档'
+      title: 'Sulige纵横5月31日存档'
     }
   },
   {
     path: '/sulige_zongheng0607',
     component: ChannelSuligeZongHengGpsCompare,
     meta: {
-      title: '苏里格纵横6月7日 点距测量'
+      title: 'Sulige纵横6月7日 点距测量'
     }
   },
   {
