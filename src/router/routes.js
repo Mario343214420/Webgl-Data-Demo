@@ -57,7 +57,7 @@ import WellSite from '../pages/WellSite/index.vue'
 import Channel_camera_animate from '../pages/Channel_camera_animate/index.vue'
 import Channel_kuangqu from '../pages/Channel_kuangqu/index.vue'
 import Channel_cube from '../pages/Channel_cube/index.vue'
-
+import Channel_fall_star from '../pages/Channel_fall_star'
 
 const routes = [
   {
@@ -453,6 +453,13 @@ const routes = [
     component: Channel_cube,
     meta: {
       title: '双层地形'
+    }
+  },
+  {
+    path: '/fallStar',
+    component: Channel_fall_star,
+    meta: {
+      title: '流星'
     }
   },
   {
