@@ -69,7 +69,7 @@ export default {
         if (item.position.x > - this.w / 2) {
           item.position.x-=0.1
           item.position.y-=0.1
-          item.position.z+=0.1
+          item.position.z+=0.01
         } else {
           item.position.x = (Math.random() - 0.5) * this.grid.xLimit
           item.position.y = (Math.random() - 0.5) * this.grid.yLimit
