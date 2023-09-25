@@ -29,8 +29,18 @@ export default {
       const grid = this.grid
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(50, aspect, 1, 1000)
-      this.camera.position.z = 500
+      this.camera.position.z = 6
       this.group = new THREE.Group()
+      // const _ambient = new THREE.AmbientLight(0xffffff, 1);
+      // this.scene.add(_ambient);
+      // const _spotLight = new THREE.SpotLight(0xf6f6f6, 0.5);
+      // _spotLight.castShadow = true;
+      // _spotLight.position.set(4,4,-4);
+      // const _spotLight1 = new THREE.SpotLight(0xffffff, 0.8);
+      // _spotLight1.castShadow = true;
+      // _spotLight1.position.set(-4,4,-4);
+      // this.scene.add(_spotLight);
+      // this.scene.add(_spotLight1);
       const geometry = new THREE.BoxGeometry(10, 10, 10)
       const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
@@ -51,8 +61,14 @@ export default {
         clone.position.x = pos.x
         clone.position.y = pos.y
         clone.position.z = pos.z
-        this.group.add(clone)
+        // this.group.add(clone)
       }
+
+      const loader = new GLTFLoader()
+
+      loader.load('http://192.168.10.2:8000/1.gltf', gltf => {
+        this.scene.add(gltf.scene)
+      })
 
       this.scene.add(this.group)
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true})
@@ -60,22 +76,22 @@ export default {
       this.renderer.autoClear = false
 
       this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      // this.controls.autoRotate = true;
+      this.controls.autoRotate = true;
     },
     animate() {
       this.controls.update()
-      for(let i = 0; i<this.group.children.length; i++) {
-        let item = this.group.children[i]
-        if (item.position.x > - this.w / 2) {
-          item.position.x-=1
-          item.position.y-=1
-          item.position.z+=0.5
-        } else {
-          item.position.x = (Math.random() - 0.5) * this.grid.xLimit
-          item.position.y = (Math.random() - 0.5) * this.grid.yLimit
-          item.position.z = (Math.random() - 0.5) * this.grid.zLimit
-        }
-      }
+      // for(let i = 0; i<this.group.children.length; i++) {
+      //   let item = this.group.children[i]
+      //   if (item.position.x > - this.w / 2) {
+      //     item.position.x-=0.1
+      //     item.position.y-=0.1
+      //     item.position.z+=0.01
+      //   } else {
+      //     item.position.x = (Math.random() - 0.5) * this.grid.xLimit
+      //     item.position.y = (Math.random() - 0.5) * this.grid.yLimit
+      //     item.position.z = (Math.random() - 0.5) * this.grid.zLimit
+      //   }
+      // }
       this.renderer.render(this.scene, this.camera)
       requestAnimationFrame(this.animate)
     }
