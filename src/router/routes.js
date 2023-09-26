@@ -58,6 +58,7 @@ import Channel_camera_animate from '../pages/Channel_camera_animate/index.vue'
 import Channel_kuangqu from '../pages/Channel_kuangqu/index.vue'
 import Channel_cube from '../pages/Channel_cube/index.vue'
 import Channel_fall_star from '../pages/Channel_fall_star'
+import Channel_nebula from '../pages/Channel_nebula'
 
 const routes = [
   {
@@ -460,6 +461,13 @@ const routes = [
     component: Channel_fall_star,
     meta: {
       title: '流星'
+    }
+  },
+  {
+    path: '/nebula',
+    component: Channel_nebula,
+    meta: {
+      title: '星云'
     }
   },
   {
