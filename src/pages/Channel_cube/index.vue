@@ -181,13 +181,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #000;
+  //background-color: #000;
 }
 
 canvas {

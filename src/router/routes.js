@@ -59,6 +59,10 @@ import Channel_kuangqu from '../pages/Channel_kuangqu/index.vue'
 import Channel_cube from '../pages/Channel_cube/index.vue'
 import Channel_fall_star from '../pages/Channel_fall_star'
 import Channel_nebula from '../pages/Channel_nebula'
+import Channel_strangeStar from '../pages/Channel_nebula/index_stange_star.vue'
+import Channel_information_singularity from '../pages/Channel_nebula/information_singularity.vue'
+import Channel_partical_wave from '../pages/Channel_nebula/partical_wave.vue'
+import ChannelVideo from '../pages/ChannelVideo/index.vue'
 
 const routes = [
   {
@@ -470,6 +474,34 @@ const routes = [
       title: '星云'
     }
   },
+  {
+    path: '/strange_star',
+    component: Channel_strangeStar,
+    meta: {
+      title: '异星'
+    }
+  },
+  {
+    path: '/information_singularity',
+    component: Channel_information_singularity,
+    meta: {
+      title: 'information_singularity'
+    }
+  },
+  {
+    path: '/partical_wave',
+    component: Channel_partical_wave,
+    meta: {
+      title: 'partical_wave'
+    }
+  },
+  // {
+  //   path: '/video',
+  //   component: ChannelVideo,
+  //   meta: {
+  //     title: 'rtmp-video'
+  //   }
+  // },
   {
     path: '/',
     redirect: '/home'

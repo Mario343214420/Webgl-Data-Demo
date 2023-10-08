@@ -55,7 +55,8 @@ export default {
         v: '',
       },
       mixer: null,
-      clock: null
+      clock: null,
+      model: null
     }
   },
   watch: {
