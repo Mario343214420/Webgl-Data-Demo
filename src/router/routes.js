@@ -62,6 +62,7 @@ import Channel_nebula from '../pages/Channel_nebula'
 import Channel_strangeStar from '../pages/Channel_nebula/index_stange_star.vue'
 import Channel_information_singularity from '../pages/Channel_nebula/information_singularity.vue'
 import Channel_partical_wave from '../pages/Channel_nebula/partical_wave.vue'
+import Channel_pipe_sys from '../pages/Channel_pipe_sys/index.vue'
 import ChannelVideo from '../pages/ChannelVideo/index.vue'
 
 const routes = [
@@ -493,6 +494,13 @@ const routes = [
     component: Channel_partical_wave,
     meta: {
       title: 'partical_wave'
+    }
+  },
+  {
+    path: '/pipe_sys',
+    component: Channel_pipe_sys,
+    meta: {
+      title: '皮带装置'
     }
   },
   // {
