@@ -34,8 +34,6 @@ fork的大佬们，顺手点个star，谢谢。
 
 新方向：webgl应用组件开发，引入shader贴图渲染。
 
-[预览 v1.0.0 版本（可预览）](https://mario4420.gitee.io/big-data-demo-dist-master)
-
 [预览 v1.0.1 版本（可预览）](http://mario4420.gitee.io/big-data-demo-dist/dist_v1.0.1/#/home)
 
 [预览 v1.0.2 版本（可预览）](http://mario4420.gitee.io/big-data-demo-dist/dist_v1.0.2/#/home)
