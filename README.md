@@ -16,6 +16,8 @@ fork的大佬们，顺手点个star，谢谢。
 
 ![Imgur](https://imgur.com/jbCqIST)
 
+![](https://cdn.jsdelivr.net/gh/Mario343214420/show_poic_bed@master/fangzhen.gif)
+
 ![项目展示](https://s2.loli.net/2022/06/08/kIVcNEHuXS7QiAe.gif)
 
 <!-- [![OGdJXT.md.gif](https://s1.ax1x.com/2022/05/09/OGdJXT.md.gif)](https://imgtu.com/i/OGdJXT) -->
