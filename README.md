@@ -14,7 +14,7 @@ fork的大佬们，顺手点个star，谢谢。
 
 最新版：
 
-![Imgur](https://i.imgur.com/jbCqIST.gifv)
+![Imgur]([https://i.imgur.com/jbCqIST.gifv](https://github.com/Mario343214420/show_pic_bed/blob/main/fangzhen.gif?raw=true))
 
 ![项目展示](https://s2.loli.net/2022/06/08/kIVcNEHuXS7QiAe.gif)
 
