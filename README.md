@@ -14,7 +14,7 @@ fork的大佬们，顺手点个star，谢谢。
 
 最新版：
 
-![demo](https://cdn.jsdelivr.net/gh/Mario343214420/show_poic_bed@main/fangzhen.gif)
+[Imgur](https://i.imgur.com/jbCqIST.gifv)
 
 ![项目展示](https://s2.loli.net/2022/06/08/kIVcNEHuXS7QiAe.gif)
 
