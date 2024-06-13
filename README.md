@@ -14,7 +14,7 @@ fork的大佬们，顺手点个star，谢谢。
 
 最新版：
 
-![Imgur](https://imgur.com/ipcsHVR)
+![Imgur](https://imgur.com/jbCqIST)
 
 ![项目展示](https://s2.loli.net/2022/06/08/kIVcNEHuXS7QiAe.gif)
 
