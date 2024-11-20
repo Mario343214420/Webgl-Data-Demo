@@ -20,7 +20,7 @@
     "build:doc": "vuepress build docs"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.2",
     "bin-ui": "^3.2.2",
     "bmap": "^1.0.1",
     "core-js": "^2.6.5",
