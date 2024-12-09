@@ -1,6 +1,6 @@
 # 大数据展示项目
 
-<!-- ![后续项目迁移至 http://www.goodmario.top 预览，如需代码或合作，请邮件联系。](https://www.goodmario.top) -->
+[后续项目迁移至 http://www.goodmario.top 预览，如需代码或合作，请邮件联系。](https://www.goodmario.top)
 
 ```
 
